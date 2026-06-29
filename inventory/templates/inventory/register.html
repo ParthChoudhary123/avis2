@@ -2,106 +2,281 @@
 
 {% block title %}Register - AVIS{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* Full Page Positioning with Mesh Background */
+    .register-wrapper {
+        position: relative;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 45px 0;
+    }
+
+    /* Floating Colorful Ambient Lights (Consistent with Login Page) */
+    .glowing-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(100px);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.55;
+        animation: pulse-orbs 10s infinite alternate ease-in-out;
+    }
+
+    .orb-cyan {
+        width: 450px;
+        height: 450px;
+        background: radial-gradient(circle, rgba(0, 255, 204, 0.22) 0%, rgba(0, 255, 204, 0) 70%);
+        top: -10%;
+        right: 15%;
+    }
+
+    .orb-purple {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0) 70%);
+        bottom: -10%;
+        left: 15%;
+        animation-delay: -5s;
+    }
+
+    @keyframes pulse-orbs {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(-40px, 40px) scale(1.15); }
+    }
+
+    /* Premium Centered Glassmorphic Registration Card */
+    .register-card {
+        position: relative;
+        z-index: 1;
+        background: rgba(10, 17, 31, 0.65);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transition: border-color 0.5s;
+    }
+
+    .register-card:hover {
+        border-color: rgba(0, 255, 204, 0.2);
+    }
+
+    /* Floating input groups with icons */
+    .input-group-custom {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        z-index: 10;
+        font-size: 1.05rem;
+        transition: all 0.3s;
+    }
+
+    .input-group-custom input, .input-group-custom select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #f3f4f6 !important;
+        border-radius: 12px;
+        padding: 13px 15px 13px 48px !important;
+        font-size: 0.95rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .input-group-custom input:focus, .input-group-custom select:focus {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-color: #00ffcc;
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+    }
+
+    .input-group-custom input:focus ~ .input-icon, .input-group-custom select:focus ~ .input-icon {
+        color: #00ffcc;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    /* Action buttons and hover lines */
+    .btn-submit-gradient {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #00ffcc 100%);
+        background-size: 200% auto;
+        color: #080d1a !important;
+        border: none;
+        border-radius: 12px;
+        padding: 14px 30px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        transition: all 0.4s ease;
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-submit-gradient:hover {
+        background-position: right center;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
+    }
+
+    .hover-underline {
+        color: #00ffcc;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .hover-underline:hover {
+        color: #3b82f6;
+        text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+
+    .form-section-title {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-weight: 700;
+        color: #00ffcc;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-7 col-lg-6">
-        <div class="card glass-card p-5 my-3">
+<div class="register-wrapper">
+    <!-- Ambient Background Lighting -->
+    <div class="glowing-orb orb-cyan"></div>
+    <div class="glowing-orb orb-purple"></div>
+
+    <div class="col-md-8 col-lg-6">
+        <div class="card register-card p-5">
             <div class="text-center mb-4">
-                <i class="fa-solid fa-user-plus text-info fs-1 mb-3"></i>
-                <h2 class="fw-bold">Create Account</h2>
-                <p class="text-muted">Register as a Store Manager or Vendor</p>
+                <i class="fa-solid fa-user-plus text-info fs-1 mb-2"></i>
+                <h2 class="fw-bold text-white">Create Portal Account</h2>
+                <p class="text-muted small">Register to coordinate warehouse inventory and supplier pipelines</p>
             </div>
             
             <form method="post" id="register-form" class="needs-validation" novalidate>
                 {% csrf_token %}
                 
                 {% if form.non_field_errors %}
-                    <div class="alert alert-danger py-2 mb-3 small" role="alert">
+                    <div class="alert alert-danger py-2 mb-3 small glass-card border-danger-subtle text-light" role="alert" style="background: rgba(239, 68, 68, 0.08);">
                         {% for error in form.non_field_errors %}
-                            {{ error }}
+                            <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>{{ error }}
                         {% endfor %}
                     </div>
                 {% endif %}
                 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="id_username" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Username</label>
-                        {{ form.username }}
-                        {% if form.username.errors %}
-                            <div class="text-danger small mt-1">{% for error in form.username.errors %}{{ error }}{% endfor %}</div>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6">
-                        <label for="id_email" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Email Address</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                            <div class="text-danger small mt-1">{% for error in form.email.errors %}{{ error }}{% endfor %}</div>
-                        {% endif %}
-                    </div>
-                </div>
-                
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="id_password" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Password</label>
-                        {{ form.password }}
-                        {% if form.password.errors %}
-                            <div class="text-danger small mt-1">{% for error in form.password.errors %}{{ error }}{% endfor %}</div>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6">
-                        <label for="id_password_confirm" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Confirm Password</label>
-                        {{ form.password_confirm }}
-                        {% if form.password_confirm.errors %}
-                            <div class="text-danger small mt-1">{% for error in form.password_confirm.errors %}{{ error }}{% endfor %}</div>
-                        {% endif %}
-                    </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label for="id_role" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">System Role</label>
+                <!-- 1. System Role Choice FIRST -->
+                <label for="id_role" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">1. Choose System Role</label>
+                <div class="input-group-custom">
                     {{ form.role }}
+                    <i class="fa-solid fa-user-gear input-icon"></i>
                     {% if form.role.errors %}
                         <div class="text-danger small mt-1">{% for error in form.role.errors %}{{ error }}{% endfor %}</div>
                     {% endif %}
                 </div>
+
+                <div class="form-section-title mt-4">
+                    <i class="fa-solid fa-id-card me-2"></i>2. User Credentials
+                </div>
+
+                <!-- 2. Username -->
+                <label for="id_username" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Username</label>
+                <div class="input-group-custom">
+                    {{ form.username }}
+                    <i class="fa-solid fa-user-shield input-icon"></i>
+                    {% if form.username.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.username.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+
+                <!-- 3. Email Address -->
+                <label for="id_email" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Email Address</label>
+                <div class="input-group-custom">
+                    {{ form.email }}
+                    <i class="fa-solid fa-envelope input-icon"></i>
+                    {% if form.email.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.email.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
                 
-                <!-- Vendor specific fields (dynamically shown via JS) -->
-                <div id="vendor-fields" class="p-3 mb-4 rounded border border-secondary" style="display: none; background: rgba(255,255,255,0.02);">
-                    <h5 class="text-info fw-bold mb-3"><i class="fa-solid fa-building me-2"></i>Supplier Profile Information</h5>
-                    
-                    <div class="mb-3">
-                        <label for="id_vendor_name" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Vendor Name / Business</label>
-                        {{ form.vendor_name }}
-                        {% if form.vendor_name.errors %}
-                            <div class="text-danger small mt-1">{% for error in form.vendor_name.errors %}{{ error }}{% endfor %}</div>
-                        {% endif %}
+                <!-- 4. Password -->
+                <label for="id_password" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Password</label>
+                <div class="input-group-custom">
+                    {{ form.password }}
+                    <i class="fa-solid fa-key input-icon"></i>
+                    {% if form.password.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.password.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+
+                <!-- 5. Confirm Password -->
+                <label for="id_password_confirm" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Confirm Password</label>
+                <div class="input-group-custom">
+                    {{ form.password_confirm }}
+                    <i class="fa-solid fa-circle-check input-icon"></i>
+                    {% if form.password_confirm.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.password_confirm.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- 6. Vendor specific fields (Dynamically shown via JS at the bottom) -->
+                <div id="vendor-fields" class="p-4 mb-4 rounded border border-secondary" style="display: none; background: rgba(0, 255, 204, 0.02); border-color: rgba(0, 255, 204, 0.15) !important;">
+                    <div class="form-section-title" style="border-bottom-color: rgba(0, 255, 204, 0.15); color: #00ffcc;">
+                        <i class="fa-solid fa-building me-2"></i>3. Supplier Profile Information
                     </div>
                     
                     <div class="mb-3">
-                        <label for="id_vendor_city" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Operating City (for Weather Warnings)</label>
-                        {{ form.vendor_city }}
-                        {% if form.vendor_city.errors %}
-                            <div class="text-danger small mt-1">{% for error in form.vendor_city.errors %}{{ error }}{% endfor %}</div>
-                        {% endif %}
-                        <div class="form-text text-muted small">We check the weather in this city to alert the manager of delay risks. Try "Seattle" (Rain), "Buffalo" (Snow) or "Miami" (Storm) to test alerts.</div>
+                        <label for="id_vendor_name" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Vendor Name / Business</label>
+                        <div class="input-group-custom">
+                            {{ form.vendor_name }}
+                            <i class="fa-solid fa-industry input-icon"></i>
+                            {% if form.vendor_name.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.vendor_name.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_vendor_city" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Operating City (for Logistics Weather tracking)</label>
+                        <div class="input-group-custom">
+                            {{ form.vendor_city }}
+                            <i class="fa-solid fa-city input-icon"></i>
+                            {% if form.vendor_city.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.vendor_city.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-text text-muted small mt-1" style="font-size: 0.8rem;">Enter **Seattle** (Rain), **Buffalo** (Snow), or **Miami** (Storm) to test API alerts.</div>
                     </div>
                     
                     <div class="mb-0">
-                        <label for="id_vendor_address" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Operating Address</label>
-                        {{ form.vendor_address }}
-                        {% if form.vendor_address.errors %}
-                            <div class="text-danger small mt-1">{% for error in form.vendor_address.errors %}{{ error }}{% endfor %}</div>
-                        {% endif %}
+                        <label for="id_vendor_address" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Operating Address</label>
+                        <div class="input-group-custom mb-0">
+                            {{ form.vendor_address }}
+                            <i class="fa-solid fa-map-location-dot input-icon" style="top: 25px;"></i>
+                            {% if form.vendor_address.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.vendor_address.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn btn-glow w-100 py-3" id="register-submit-btn">
+                <button type="submit" class="btn btn-submit-gradient w-100 py-3 text-uppercase tracking-wide fw-bold mt-3" id="register-submit-btn">
                     <i class="fa-solid fa-user-plus me-2"></i>Create Account
                 </button>
             </form>
             
-            <div class="text-center mt-4 pt-3 border-top border-secondary">
-                <p class="text-muted mb-0">Already registered? <a href="{% url 'login' %}" class="text-info fw-bold text-decoration-none">Sign In Here</a></p>
+            <div class="text-center mt-4 pt-3 border-top border-secondary" style="border-top-color: rgba(255,255,255,0.08) !important;">
+                <p class="text-muted mb-0 small">
+                    Already registered? 
+                    <a href="{% url 'login' %}" class="hover-underline ms-1">Sign In Here</a>
+                </p>
             </div>
         </div>
     </div>
@@ -122,10 +297,7 @@
             }
         }
 
-        // Toggle on change
         roleSelect.addEventListener("change", toggleVendorFields);
-        
-        // Initial run in case of validation failures reloading the form
         toggleVendorFields();
     });
 </script>
