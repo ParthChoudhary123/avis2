@@ -1,0 +1,91 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Cryptographic Audit Ledger - AVIS{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-7">
+        <h1 class="fw-bold"><i class="fa-solid fa-shield-halved text-info me-2"></i>Cryptographic Audit Ledger</h1>
+        <p class="text-muted">Tamper-Proof Block-Linked Ledger for Finalized Orders (SHA-256)</p>
+    </div>
+    <div class="col-md-5 text-md-end d-flex align-items-center justify-content-md-end gap-2">
+        <a href="{% url 'blockchain_restore' %}" class="btn btn-outline-glow btn-sm" id="btn-rebuild-ledger" onclick="return confirm('This will rebuild the cryptographic chain hash links from clean database orders. Proceed?');">
+            <i class="fa-solid fa-rotate me-1"></i>Rebuild/Repair Chain
+        </a>
+    </div>
+</div>
+
+<!-- Ledger Verification Banner -->
+<div class="card glass-card p-4 mb-4 {% if is_valid %}border-success-subtle{% else %}border-danger-subtle pulse-warning{% endif %}" style="background: {% if is_valid %}rgba(16, 185, 129, 0.05){% else %}rgba(239, 68, 68, 0.05){% endif %};">
+    <div class="d-flex align-items-center gap-3">
+        {% if is_valid %}
+            <i class="fa-solid fa-circle-check text-success fs-1"></i>
+            <div>
+                <h4 class="fw-bold text-success mb-1">Audit Verification: Passed</h4>
+                <p class="text-muted small mb-0">Every block signature matches the sequential block headers. All transactional records match the historical state hash links.</p>
+            </div>
+        {% else %}
+            <i class="fa-solid fa-triangle-exclamation text-danger fs-1"></i>
+            <div>
+                <h4 class="fw-bold text-danger mb-1">Audit Verification: COMPROMISED!</h4>
+                <p class="text-light small mb-2">Hash link integrity verification failed. Data mismatch caught in sequential hashes. Review the errors below.</p>
+                <div class="p-3 bg-dark rounded border border-danger-subtle font-monospace text-danger small">
+                    {% for error in errors %}
+                        <div>&middot; {{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Blocks Table -->
+<div class="card glass-card p-4">
+    <h4 class="fw-bold text-light mb-4"><i class="fa-solid fa-database text-muted me-2"></i>Sequential Blockchain Logs</h4>
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle mb-0" style="background: transparent; font-size: 0.9rem;">
+            <thead>
+                <tr class="text-muted small uppercase">
+                    <th class="border-secondary text-center" style="width: 80px;">Index</th>
+                    <th class="border-secondary" style="width: 180px;">Timestamp</th>
+                    <th class="border-secondary">Block Details & Hash Links</th>
+                    <th class="border-secondary">Order Payload (JSON)</th>
+                    <th class="border-secondary text-center" style="width: 150px;">Security Demo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if blocks %}
+                    {% for block in blocks %}
+                        <tr id="block-row-{{ block.index }}">
+                            <td class="text-center border-secondary fw-bold text-info">#{{ block.index }}</td>
+                            <td class="text-muted border-secondary small">{{ block.timestamp|date:"M d, Y H:i:s" }}</td>
+                            <td class="border-secondary">
+                                <div class="mb-1">
+                                    <span class="text-muted small">Prev Hash:</span>
+                                    <code class="text-secondary small">{{ block.previous_hash|slice:":16" }}...{{ block.previous_hash|slice:"-8:" }}</code>
+                                </div>
+                                <div>
+                                    <span class="text-muted small">Block Hash:</span>
+                                    <code class="text-success small fw-bold">{{ block.hash|slice:":16" }}...{{ block.hash|slice:"-8:" }}</code>
+                                </div>
+                            </td>
+                            <td class="border-secondary">
+                                <pre class="mb-0 text-light p-2 rounded small" style="background: rgba(255,255,255,0.02); font-family: monospace; font-size: 0.75rem; white-space: pre-wrap;">{{ block.order_data }}</pre>
+                            </td>
+                            <td class="text-center border-secondary">
+                                <a href="{% url 'blockchain_tamper' block.pk %}" class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="return confirm('This will intentionally change the order details of block #{{ block.index }} in the database without updating the hashes. It simulates a database intrusion to test cryptographic verification. Proceed?');">
+                                    <i class="fa-solid fa-virus me-1"></i>Tamper DB
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-5 border-secondary">No blocks written yet. The ledger updates when a Supplier flags an order as Delivered.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

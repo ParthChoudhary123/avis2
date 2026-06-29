@@ -1,0 +1,105 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Supplier Panel - AVIS{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-7">
+        <h1 class="fw-bold"><i class="fa-solid fa-truck-field text-info me-2"></i>{{ vendor.name }}</h1>
+        <p class="text-muted">Supplier Fulfillment Hub & Logistics Interface</p>
+    </div>
+    <!-- Local Weather Radar Widget -->
+    <div class="col-md-5">
+        <div class="card glass-card p-3 border-0" style="background: rgba(255, 255, 255, 0.03);">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="text-muted uppercase tracking-wider small mb-1"><i class="fa-solid fa-location-dot me-1"></i>Warehouse Location</h6>
+                    <h5 class="fw-bold text-white mb-0">{{ vendor.city }}</h5>
+                </div>
+                <div class="text-end">
+                    {% if weather_info.has_warning %}
+                        <span class="badge bg-danger pulse-warning py-2 px-3 text-uppercase"><i class="fa-solid fa-triangle-exclamation me-1"></i>Delay Warning</span>
+                        <div class="small text-muted mt-1">{{ weather_info.condition }} Alert</div>
+                    {% else %}
+                        <span class="badge bg-success py-2 px-3 text-uppercase"><i class="fa-solid fa-cloud-sun me-1"></i>Weather Clear</span>
+                        <div class="small text-muted mt-1">Good transit flow</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if weather_info.has_warning %}
+                <div class="alert alert-danger border-0 p-2 mb-0 mt-2 small text-light" style="background: rgba(239, 68, 68, 0.1);">
+                    <strong>Logistics Notice:</strong> {{ weather_info.description }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Assigned Purchase Orders -->
+<div class="card glass-card p-4">
+    <h4 class="fw-bold text-light mb-4"><i class="fa-solid fa-box-open text-warning me-2"></i>Assigned Purchase Orders</h4>
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+            <thead>
+                <tr class="text-muted small uppercase">
+                    <th class="border-secondary">Order ID</th>
+                    <th class="border-secondary">Item Name</th>
+                    <th class="border-secondary text-end">Quantity Requested</th>
+                    <th class="border-secondary text-center">Status</th>
+                    <th class="border-secondary text-center">Date Assigned</th>
+                    <th class="border-secondary text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if orders %}
+                    {% for order in orders %}
+                        <tr id="order-row-{{ order.id }}">
+                            <td class="fw-bold text-info border-secondary">PO-{{ order.id }}</td>
+                            <td class="text-light border-secondary">
+                                {{ order.product.name }}
+                                <div class="small text-muted">{{ order.product.sku }}</div>
+                            </td>
+                            <td class="text-light text-end fw-bold border-secondary">{{ order.quantity }}</td>
+                            <td class="text-center border-secondary">
+                                {% if order.status == 'Pending' %}
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Pending Confirmation</span>
+                                {% elif order.status == 'Shipped' %}
+                                    <span class="badge bg-primary text-white px-3 py-2 rounded-pill">In Transit (Shipped)</span>
+                                {% else %}
+                                    <span class="badge bg-success text-white px-3 py-2 rounded-pill">Delivered & Closed</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-muted text-center border-secondary small">{{ order.created_at|date:"M d, Y H:i" }}</td>
+                            <td class="text-center border-secondary">
+                                {% if order.status == 'Pending' %}
+                                    <form method="post" action="{% url 'vendor_order_status_update' order.pk %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="status" value="Shipped">
+                                        <button type="submit" class="btn btn-primary btn-sm rounded-pill px-3">
+                                            <i class="fa-solid fa-truck-fast me-1"></i>Accept & Ship
+                                        </button>
+                                    </form>
+                                {% elif order.status == 'Shipped' %}
+                                    <form method="post" action="{% url 'vendor_order_status_update' order.pk %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="status" value="Delivered">
+                                        <button type="submit" class="btn btn-success btn-sm rounded-pill px-3">
+                                            <i class="fa-solid fa-circle-check me-1"></i>Mark Delivered
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <span class="text-muted small"><i class="fa-solid fa-lock me-1"></i>Fulfilled & Locked</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5 border-secondary">No purchase orders assigned to your supplier profile yet.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

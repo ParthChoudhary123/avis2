@@ -1,0 +1,53 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Login - AVIS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="col-md-5">
+        <div class="card glass-card p-5">
+            <div class="text-center mb-4">
+                <i class="fa-solid fa-lock-open text-info fs-1 mb-3"></i>
+                <h2 class="fw-bold">Sign In to AVIS</h2>
+                <p class="text-muted">Enter credentials to manage stock or shipments</p>
+            </div>
+            
+            <form method="post" id="login-form">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger py-2 mb-3 small" role="alert">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div class="mb-3">
+                    <label for="id_username" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Username</label>
+                    <input type="text" name="username" autofocus required class="form-control" placeholder="Username" id="id_username">
+                    {% if form.username.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.username.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="id_password" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Password</label>
+                    <input type="password" name="password" required class="form-control" placeholder="Password" id="id_password">
+                    {% if form.password.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.password.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="btn btn-glow w-100 py-3 mt-2" id="login-submit-btn">
+                    <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Sign In
+                </button>
+            </form>
+            
+            <div class="text-center mt-4 pt-3 border-top border-secondary">
+                <p class="text-muted mb-0">Don't have an account? <a href="{% url 'register' %}" class="text-info fw-bold text-decoration-none">Register Here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

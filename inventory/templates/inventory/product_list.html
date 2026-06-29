@@ -1,0 +1,85 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Product Catalog & Inventory - AVIS{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h1 class="fw-bold"><i class="fa-solid fa-boxes-stacked text-info me-2"></i>Product Catalog</h1>
+        <p class="text-muted">Real-Time Stock Quantities & AI Demand Projections</p>
+    </div>
+    <div class="col-md-4 text-md-end">
+        <a href="{% url 'product_create' %}" class="btn btn-glow" id="btn-create-product">
+            <i class="fa-solid fa-plus me-2"></i>Create New Product
+        </a>
+    </div>
+</div>
+
+<div class="card glass-card p-4">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+            <thead>
+                <tr class="text-muted small uppercase">
+                    <th class="border-secondary">SKU</th>
+                    <th class="border-secondary">Product Details</th>
+                    <th class="border-secondary text-end">Price</th>
+                    <th class="border-secondary text-end">Current Stock</th>
+                    <th class="border-secondary text-end">Safety Stock (ROP)</th>
+                    <th class="border-secondary text-end">AI Forecast (Next Mo)</th>
+                    <th class="border-secondary text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if products %}
+                    {% for item in products %}
+                        <tr id="product-row-{{ item.product.id }}">
+                            <td class="fw-bold text-info border-secondary">{{ item.product.sku }}</td>
+                            <td class="border-secondary">
+                                <span class="text-light fw-semibold fs-6">{{ item.product.name }}</span>
+                                {% if item.product.description %}
+                                    <div class="small text-muted text-truncate" style="max-width: 300px;">{{ item.product.description }}</div>
+                                {% endif %}
+                            </td>
+                            <td class="text-light text-end border-secondary">${{ item.product.price }}</td>
+                            <td class="text-end border-secondary">
+                                <span class="fw-bold {% if item.forecast.needs_reorder %}text-danger{% else %}text-success{% endif %}">
+                                    {{ item.product.stock.current_quantity }}
+                                </span>
+                                {% if item.forecast.needs_reorder %}
+                                    <i class="fa-solid fa-circle-exclamation text-danger ms-1" title="Stock falls below AI threshold!"></i>
+                                {% endif %}
+                            </td>
+                            <td class="text-light text-end border-secondary text-muted">
+                                {{ item.product.stock.min_threshold }} 
+                                <span class="small text-info d-block" style="font-size: 0.75rem;">AI target: {{ item.forecast.reorder_point }}</span>
+                            </td>
+                            <td class="text-end border-secondary">
+                                <span class="badge badge-ai py-2 px-3">
+                                    <i class="fa-solid fa-brain me-1" style="font-size: 0.8rem;"></i>{{ item.forecast.projected_sales }}
+                                </span>
+                            </td>
+                            <td class="text-center border-secondary">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'stock_update' item.product.pk %}" class="btn btn-outline-info" title="Adjust Stock levels">
+                                        <i class="fa-solid fa-square-poll-vertical"></i> Stock
+                                    </a>
+                                    <a href="{% url 'product_edit' item.product.pk %}" class="btn btn-outline-warning" title="Edit details">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'product_delete' item.product.pk %}" class="btn btn-outline-danger" title="Delete product">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-5 border-secondary">No products in catalog yet. Click Create New Product above.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

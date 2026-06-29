@@ -1,0 +1,210 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Store Manager Dashboard - AVIS{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1 class="fw-bold"><span class="text-info">AVIS</span> Control Center</h1>
+        <p class="text-muted">AI-Assisted Operations & Cryptographic Supply Chain Audits</p>
+    </div>
+    <div class="col-md-4 text-md-end d-flex align-items-center justify-content-md-end gap-2">
+        <a href="{% url 'order_create' %}" class="btn btn-glow" id="btn-create-order-shortcut">
+            <i class="fa-solid fa-file-invoice-dollar me-2"></i>New Order
+        </a>
+        <a href="{% url 'product_create' %}" class="btn btn-outline-glow btn-sm" id="btn-create-product-shortcut">
+            <i class="fa-solid fa-plus me-1"></i>Add Product
+        </a>
+    </div>
+</div>
+
+<!-- KPI Cards -->
+<div class="row mb-4 g-3">
+    <div class="col-md-4">
+        <div class="card glass-card p-4 text-center">
+            <i class="fa-solid fa-box-open text-primary fs-2 mb-2"></i>
+            <h5 class="text-uppercase tracking-wider fw-bold text-muted small">Total Products</h5>
+            <h2 class="fw-extrabold text-white mb-0" id="kpi-total-products">{{ products_count }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card glass-card p-4 text-center">
+            <i class="fa-solid fa-truck-ramp-box text-success fs-2 mb-2"></i>
+            <h5 class="text-uppercase tracking-wider fw-bold text-muted small">Active Suppliers</h5>
+            <h2 class="fw-extrabold text-white mb-0" id="kpi-total-vendors">{{ vendors_count }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card glass-card p-4 text-center">
+            <i class="fa-solid fa-receipt text-warning fs-2 mb-2"></i>
+            <h5 class="text-uppercase tracking-wider fw-bold text-muted small">Purchase Orders</h5>
+            <h2 class="fw-extrabold text-white mb-0" id="kpi-total-orders">{{ orders_count }}</h2>
+        </div>
+    </div>
+</div>
+
+<!-- Warning / Alert Panels (Weather + Smart Reorder) -->
+<div class="row mb-4 g-4">
+    <!-- Smart AI Reorder Alerts -->
+    <div class="col-lg-6">
+        <div class="card glass-card h-100 p-4">
+            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-secondary pb-2">
+                <h4 class="fw-bold text-light mb-0">
+                    <i class="fa-solid fa-brain text-purple me-2"></i>Smart Reorder Alerts
+                </h4>
+                <span class="badge badge-ai px-2 py-1">AI Predictive Model</span>
+            </div>
+            
+            {% if smart_alerts %}
+                <div class="overflow-auto" style="max-height: 280px;">
+                    {% for alert in smart_alerts %}
+                        <div class="p-3 mb-2 rounded border border-danger-subtle d-flex justify-content-between align-items-center" style="background: rgba(239, 68, 68, 0.05);">
+                            <div>
+                                <h6 class="fw-bold text-light mb-1">{{ alert.product.name }} ({{ alert.product.sku }})</h6>
+                                <span class="text-muted small">Current Qty: <strong class="text-danger">{{ alert.current_qty }}</strong></span>
+                                <span class="mx-2 text-muted">|</span>
+                                <span class="text-muted small">AI ROP threshold: <strong>{{ alert.reorder_point }}</strong></span>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-danger pulse-warning text-uppercase px-2 py-1 mb-1">Reorder Required</span>
+                                <div class="text-muted small">Projected Sales: <strong>{{ alert.projected_sales }}</strong> / mo</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-circle-check text-success fs-2 mb-3"></i>
+                    <p class="mb-0">All stock items are well above AI-predicted reorder safety lines.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Weather Logistics Delay Warnings -->
+    <div class="col-lg-6">
+        <div class="card glass-card h-100 p-4">
+            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-secondary pb-2">
+                <h4 class="fw-bold text-light mb-0">
+                    <i class="fa-solid fa-cloud-bolt text-danger me-2"></i>Logistics Delay Engine
+                </h4>
+                <span class="badge badge-weather px-2 py-1">Weather API Radar</span>
+            </div>
+            
+            {% if weather_alerts %}
+                <div class="overflow-auto" style="max-height: 280px;">
+                    {% for alert in weather_alerts %}
+                        <div class="p-3 mb-2 rounded border border-warning-subtle d-flex align-items-start gap-3" style="background: rgba(245, 158, 11, 0.05);">
+                            <i class="fa-solid fa-cloud-showers-heavy text-warning fs-4 mt-1"></i>
+                            <div>
+                                <h6 class="fw-bold text-light mb-1">PO-{{ alert.order.id }} &middot; {{ alert.order.product.name }}</h6>
+                                <p class="text-muted small mb-1">
+                                    Supplier: <strong>{{ alert.order.vendor.name }}</strong> ({{ alert.city }}) &middot; Status: <span class="badge bg-info">{{ alert.order.status }}</span>
+                                </p>
+                                <span class="badge bg-warning text-dark font-monospace small"><i class="fa-solid fa-triangle-exclamation me-1"></i>{{ alert.condition }} Alert: {{ alert.description }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-cloud-sun text-success fs-2 mb-3"></i>
+                    <p class="mb-0">All supply chains clear. Current supplier weather checks forecast no delays.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Active Orders & Cryptographic Ledger Audit -->
+<div class="row g-4">
+    <!-- Active Purchase Orders Table -->
+    <div class="col-xl-8">
+        <div class="card glass-card p-4 h-100">
+            <h4 class="fw-bold text-light mb-4"><i class="fa-solid fa-file-waveform text-info me-2"></i>Recent Orders</h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+                    <thead>
+                        <tr class="text-muted small uppercase">
+                            <th class="border-secondary">Order ID</th>
+                            <th class="border-secondary">Product</th>
+                            <th class="border-secondary">Supplier</th>
+                            <th class="border-secondary text-end">Quantity</th>
+                            <th class="border-secondary text-center">Status</th>
+                            <th class="border-secondary text-center">Date Placed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if orders %}
+                            {% for order in orders %}
+                                <tr id="order-row-{{ order.id }}">
+                                    <td class="fw-bold text-info border-secondary">PO-{{ order.id }}</td>
+                                    <td class="text-light border-secondary">
+                                        {{ order.product.name }}
+                                        <div class="small text-muted">{{ order.product.sku }}</div>
+                                    </td>
+                                    <td class="text-muted border-secondary">{{ order.vendor.name }}</td>
+                                    <td class="text-light text-end fw-bold border-secondary">{{ order.quantity }}</td>
+                                    <td class="text-center border-secondary">
+                                        {% if order.status == 'Pending' %}
+                                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Pending</span>
+                                        {% elif order.status == 'Shipped' %}
+                                            <span class="badge bg-primary text-white px-3 py-2 rounded-pill">Shipped</span>
+                                        {% else %}
+                                            <span class="badge bg-success text-white px-3 py-2 rounded-pill">Delivered</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-muted text-center border-secondary small">{{ order.created_at|date:"M d, Y H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4 border-secondary">No purchase orders placed yet.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cryptographic Ledger Summary -->
+    <div class="col-xl-4">
+        <div class="card glass-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h4 class="fw-bold text-light mb-0"><i class="fa-solid fa-lock text-success me-2"></i>Ledger Integrity</h4>
+                <a href="{% url 'blockchain_view' %}" class="btn btn-outline-glow btn-sm">Full Ledger</a>
+            </div>
+            
+            <div class="text-center p-3 mb-4 rounded d-flex flex-column align-items-center justify-content-center" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border);">
+                {% if ledger_valid %}
+                    <i class="fa-solid fa-shield-halved text-success fs-1 mb-2"></i>
+                    <h5 class="fw-bold text-success mb-1">Chain Secured</h5>
+                    <p class="text-muted small mb-0">Cryptographic audit log is 100% integral and verified.</p>
+                {% else %}
+                    <i class="fa-solid fa-triangle-exclamation text-danger fs-1 mb-2 pulse-warning"></i>
+                    <h5 class="fw-bold text-danger mb-1">Chain Corrupted!</h5>
+                    <p class="text-muted small mb-0">A database mismatch was detected. Unauthorized block edit occurred.</p>
+                {% endif %}
+            </div>
+
+            <h6 class="fw-bold text-muted text-uppercase tracking-wider small mb-3">Audit Logs (Latest Blocks)</h6>
+            <div class="d-flex flex-column gap-2" id="block-list-summary">
+                {% if recent_blocks %}
+                    {% for block in recent_blocks %}
+                        <div class="p-2 rounded border border-secondary d-flex align-items-center justify-content-between" style="background: rgba(255,255,255,0.01); font-size: 0.85rem;">
+                            <div>
+                                <strong class="text-info">Block #{{ block.index }}</strong>
+                                <div class="text-muted small" style="font-family: monospace;">Hash: {{ block.hash|slice:":12" }}...</div>
+                            </div>
+                            <span class="badge bg-secondary font-monospace">{{ block.timestamp|date:"H:i:s" }}</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-4 text-muted small">No audit ledger entries written yet. Finalize an order to write.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

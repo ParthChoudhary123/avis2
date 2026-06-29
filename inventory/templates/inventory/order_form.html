@@ -1,0 +1,51 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Draft Purchase Order - AVIS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card glass-card p-5">
+            <h2 class="fw-bold mb-2 text-center text-info"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Draft Purchase Order</h2>
+            <p class="text-muted text-center mb-4">Establish supply pipeline requests</p>
+            
+            <form method="post" id="order-form" novalidate>
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="id_product" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Target Product</label>
+                    {{ form.product }}
+                    {% if form.product.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.product.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_vendor" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Assigned Supplier</label>
+                    {{ form.vendor }}
+                    {% if form.vendor.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.vendor.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="id_quantity" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Purchase Quantity</label>
+                    {{ form.quantity }}
+                    {% if form.quantity.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.quantity.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="{% url 'manager_dashboard' %}" class="btn btn-outline-secondary px-4 py-2">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-glow px-4 py-2" id="order-submit-btn">
+                        <i class="fa-solid fa-paper-plane me-1"></i>Issue Purchase Order
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

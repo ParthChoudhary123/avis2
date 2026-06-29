@@ -1,0 +1,58 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}{{ title }} - AVIS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card glass-card p-5">
+            <h2 class="fw-bold mb-4 text-center text-info">{{ title }}</h2>
+            
+            <form method="post" id="product-form" novalidate>
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="id_sku" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Product SKU</label>
+                    {{ form.sku }}
+                    {% if form.sku.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.sku.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_name" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Product Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.name.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_price" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Unit Price ($)</label>
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.price.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="id_description" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger small mt-1">{% for error in form.description.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-secondary px-4 py-2">
+                        <i class="fa-solid fa-arrow-left me-1"></i>Back
+                    </a>
+                    <button type="submit" class="btn btn-glow px-4 py-2" id="product-submit-btn">
+                        <i class="fa-solid fa-floppy-disk me-1"></i>Save Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
