@@ -99,6 +99,25 @@
             color: #fff;
         }
 
+        .btn-nav-glow {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
+            color: #fff !important;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-nav-glow:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(59, 130, 246, 0.5);
+            color: #fff !important;
+        }
+
         .btn-outline-glow {
             background: transparent;
             border: 2px solid var(--accent-glow);
@@ -231,11 +250,11 @@
                             </a>
                         </li>
                     {% else %}
-                        <li class="nav-item me-2">
+                        <li class="nav-item me-lg-2 mb-2 mb-lg-0">
                             <a class="nav-link" href="{% url 'login' %}" id="nav-login-btn">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-glow" href="{% url 'register' %}" id="nav-register-btn">Register</a>
+                            <a class="btn btn-nav-glow" href="{% url 'register' %}" id="nav-register-btn">Register</a>
                         </li>
                     {% endif %}
                 </ul>
