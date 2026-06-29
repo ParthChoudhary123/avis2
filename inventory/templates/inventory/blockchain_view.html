@@ -2,6 +2,113 @@
 
 {% block title %}Cryptographic Audit Ledger - Avis AI{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* Glowing Blockchain Timeline System */
+    .blockchain-timeline-container {
+        position: relative;
+        padding: 20px 0;
+    }
+
+    .blockchain-timeline {
+        position: relative;
+        padding-left: 55px;
+    }
+
+    /* Vertical neon pipeline wire */
+    .blockchain-wire {
+        position: absolute;
+        left: 20px;
+        top: 15px;
+        bottom: 15px;
+        width: 6px;
+        border-radius: 4px;
+        z-index: 1;
+        transition: all 0.5s ease;
+    }
+
+    .wire-ok {
+        background: linear-gradient(to bottom, #10b981 0%, #00ffcc 100%);
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+    }
+
+    .wire-broken {
+        background: linear-gradient(to bottom, #ef4444 0%, #f59e0b 100%);
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.65);
+        animation: wire-vibrate 0.15s infinite alternate;
+    }
+
+    @keyframes wire-vibrate {
+        0% { transform: translateX(-0.8px); }
+        100% { transform: translateX(0.8px); }
+    }
+
+    /* Node details */
+    .block-node {
+        position: relative;
+        margin-bottom: 40px;
+        z-index: 2;
+    }
+
+    .block-node:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Circular indicator point sitting on the wire */
+    .node-point {
+        position: absolute;
+        left: -51px;
+        top: 22px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.95rem;
+        z-index: 3;
+        transition: all 0.4s ease;
+    }
+
+    .node-point-ok {
+        background: #00ffcc;
+        color: #080d1a;
+        border: 3px solid #10b981;
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.7);
+    }
+
+    .node-point-broken {
+        background: #ef4444;
+        color: #fff;
+        border: 3px solid #b91c1c;
+        box-shadow: 0 0 18px rgba(239, 68, 68, 0.9);
+        animation: node-pulse-warn 1.5s infinite;
+    }
+
+    @keyframes node-pulse-warn {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+
+    /* Detailed block card customization */
+    .block-card {
+        background: rgba(18, 28, 48, 0.4);
+        border-color: rgba(255,255,255,0.06);
+    }
+
+    .block-card-broken {
+        border-color: rgba(239, 68, 68, 0.3) !important;
+        box-shadow: 0 12px 30px rgba(239, 68, 68, 0.08) !important;
+    }
+
+    .block-card-broken::before {
+        background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%) !important;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="row mb-4 align-items-center">
     <div class="col-md-7">
@@ -16,7 +123,7 @@
 </div>
 
 <!-- Ledger Verification Banner -->
-<div class="card glass-card p-4 mb-4 {% if is_valid %}border-success-subtle{% else %}border-danger-subtle pulse-warning{% endif %}" style="background: {% if is_valid %}rgba(16, 185, 129, 0.05){% else %}rgba(239, 68, 68, 0.05){% endif %};">
+<div class="card glass-card p-4 mb-5 {% if is_valid %}border-success-subtle{% else %}border-danger-subtle pulse-warning{% endif %}" style="background: {% if is_valid %}rgba(16, 185, 129, 0.05){% else %}rgba(239, 68, 68, 0.05){% endif %};">
     <div class="d-flex align-items-center gap-3">
         {% if is_valid %}
             <i class="fa-solid fa-circle-check text-success fs-1"></i>
@@ -29,7 +136,7 @@
             <div>
                 <h4 class="fw-bold text-danger mb-1">Audit Verification: COMPROMISED!</h4>
                 <p class="text-light small mb-2">Hash link integrity verification failed. Data mismatch caught in sequential hashes. Review the errors below.</p>
-                <div class="p-3 bg-dark rounded border border-danger-subtle font-monospace text-danger small">
+                <div class="p-3 bg-dark rounded border border-danger-subtle font-monospace text-danger small" style="background: rgba(8,12,24,0.6) !important;">
                     {% for error in errors %}
                         <div>&middot; {{ error }}</div>
                     {% endfor %}
@@ -39,53 +146,73 @@
     </div>
 </div>
 
-<!-- Blocks Table -->
-<div class="card glass-card p-4">
-    <h4 class="fw-bold text-light mb-4"><i class="fa-solid fa-database text-muted me-2"></i>Sequential Blockchain Logs</h4>
-    <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle mb-0" style="background: transparent; font-size: 0.9rem;">
-            <thead>
-                <tr class="text-muted small uppercase">
-                    <th class="border-secondary text-center" style="width: 80px;">Index</th>
-                    <th class="border-secondary" style="width: 180px;">Timestamp</th>
-                    <th class="border-secondary">Block Details & Hash Links</th>
-                    <th class="border-secondary">Order Payload (JSON)</th>
-                    <th class="border-secondary text-center" style="width: 150px;">Security Demo</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if blocks %}
-                    {% for block in blocks %}
-                        <tr id="block-row-{{ block.index }}">
-                            <td class="text-center border-secondary fw-bold text-info">#{{ block.index }}</td>
-                            <td class="text-muted border-secondary small">{{ block.timestamp|date:"M d, Y H:i:s" }}</td>
-                            <td class="border-secondary">
-                                <div class="mb-1">
-                                    <span class="text-muted small">Prev Hash:</span>
-                                    <code class="text-secondary small">{{ block.previous_hash|slice:":16" }}...{{ block.previous_hash|slice:"-8:" }}</code>
+<!-- Visual Blockchain Timeline -->
+<div class="blockchain-timeline-container">
+    {% if blocks %}
+        <div class="blockchain-timeline">
+            <!-- The vertical pipe running down -->
+            <div class="blockchain-wire {% if is_valid %}wire-ok{% else %}wire-broken{% endif %}"></div>
+            
+            {% for block in blocks %}
+                <div class="block-node" id="block-node-{{ block.index }}">
+                    <!-- Circle node sitting directly on the line -->
+                    <div class="node-point {% if block.is_valid %}node-point-ok{% else %}node-point-broken{% endif %}">
+                        {{ block.index }}
+                    </div>
+                    
+                    <!-- Glassmorphic Details Card -->
+                    <div class="card glass-card block-card p-4 {% if not block.is_valid %}block-card-broken{% endif %}">
+                        <div class="row align-items-center">
+                            <!-- Block Signatures & Details -->
+                            <div class="col-lg-6 mb-3 mb-lg-0">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h5 class="fw-bold text-info mb-0">Block #{{ block.index }}</h5>
+                                    <span class="badge {% if block.is_valid %}bg-success-subtle text-success border border-success-subtle{% else %}bg-danger-subtle text-danger border border-danger-subtle{% endif %} px-3 py-1">
+                                        {% if block.is_valid %}
+                                            <i class="fa-solid fa-shield-halved me-1"></i>Secured
+                                        {% else %}
+                                            <i class="fa-solid fa-triangle-exclamation me-1"></i>Tampered
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <div class="small text-muted mb-2">
+                                    <i class="fa-solid fa-clock me-1"></i>Timestamp: <span class="text-light">{{ block.timestamp|date:"M d, Y H:i:s" }}</span>
+                                </div>
+                                <div class="p-3 rounded mb-3" style="background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.03);">
+                                    <div class="mb-2">
+                                        <div class="text-muted small fw-semibold uppercase tracking-wider mb-1">Previous Block Hash</div>
+                                        <code class="text-secondary small" style="font-size: 0.825rem; font-family: monospace; word-break: break-all;">{{ block.previous_hash }}</code>
+                                    </div>
+                                    <div class="mb-0">
+                                        <div class="text-muted small fw-semibold uppercase tracking-wider mb-1">Current Block Signature</div>
+                                        <code class="{% if block.is_valid %}text-success{% else %}text-danger{% endif %} small fw-bold" style="font-size: 0.825rem; font-family: monospace; word-break: break-all;">{{ block.hash }}</code>
+                                    </div>
                                 </div>
                                 <div>
-                                    <span class="text-muted small">Block Hash:</span>
-                                    <code class="text-success small fw-bold">{{ block.hash|slice:":16" }}...{{ block.hash|slice:"-8:" }}</code>
+                                    <a href="{% url 'blockchain_tamper' block.pk %}" class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="return confirm('This will intentionally change the order details of block #{{ block.index }} in the database without updating the hashes. It simulates a database intrusion to test cryptographic verification. Proceed?');">
+                                        <i class="fa-solid fa-virus me-1"></i>Tamper DB Payload
+                                    </a>
                                 </div>
-                            </td>
-                            <td class="border-secondary">
-                                <pre class="mb-0 text-light p-2 rounded small" style="background: rgba(255,255,255,0.02); font-family: monospace; font-size: 0.75rem; white-space: pre-wrap;">{{ block.order_data }}</pre>
-                            </td>
-                            <td class="text-center border-secondary">
-                                <a href="{% url 'blockchain_tamper' block.pk %}" class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="return confirm('This will intentionally change the order details of block #{{ block.index }} in the database without updating the hashes. It simulates a database intrusion to test cryptographic verification. Proceed?');">
-                                    <i class="fa-solid fa-virus me-1"></i>Tamper DB
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td colspan="5" class="text-center text-muted py-5 border-secondary">No blocks written yet. The ledger updates when a Supplier flags an order as Delivered.</td>
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
-    </div>
+                            </div>
+                            
+                            <!-- Block Payload JSON Data -->
+                            <div class="col-lg-6">
+                                <div class="text-muted small fw-semibold uppercase tracking-wider mb-2">
+                                    <i class="fa-solid fa-code me-1 text-info"></i>Order Data Payload (JSON)
+                                </div>
+                                <pre class="mb-0 text-light p-3 rounded" style="background: rgba(8,12,24,0.6); border: 1px solid rgba(255,255,255,0.04); font-family: monospace; font-size: 0.775rem; white-space: pre-wrap; max-height: 200px; overflow-y: auto;">{{ block.order_data }}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card glass-card p-5 text-center text-muted">
+            <i class="fa-solid fa-circle-nodes fs-1 mb-3 text-info"></i>
+            <h4 class="text-light fw-bold">No Audit Blocks Recorded</h4>
+            <p class="mb-0">The sequential blockchain ledger will automatically initialize when a Supplier panel user marks a purchase order as Delivered.</p>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

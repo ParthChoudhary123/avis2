@@ -44,13 +44,32 @@
             border: 1px solid var(--card-border);
             border-radius: 16px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+        }
+
+        .glass-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 16px;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: background 0.4s ease;
+            z-index: 1;
         }
 
         .glass-card:hover {
-            border-color: rgba(0, 255, 204, 0.3);
-            box-shadow: 0 12px 40px 0 rgba(0, 255, 204, 0.1);
-            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(0, 255, 204, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .glass-card:hover::before {
+            background: linear-gradient(135deg, #00ffcc 0%, #3b82f6 50%, #8b5cf6 100%);
         }
 
         /* Header Navigation */

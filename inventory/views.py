@@ -107,15 +107,39 @@ def manager_dashboard(request):
     return render(request, 'inventory/manager_dashboard.html', context)
 
 
+def get_sparkline_coords(product):
+    logs = SalesLog.objects.filter(product=product).order_by('month')[:6]
+    if not logs.exists():
+        vals = [10, 20, 15, 25, 20, 30]
+    else:
+        vals = [log.quantity_sold for log in logs]
+        
+    if len(vals) < 6:
+        vals = [10]*(6-len(vals)) + vals
+        
+    max_val = max(vals) if max(vals) > 0 else 10
+    min_val = min(vals)
+    diff = max_val - min_val if max_val != min_val else 10
+    
+    points = []
+    for i, val in enumerate(vals):
+        x = i * 24
+        y = 25 - ((val - min_val) / diff * 20)
+        points.append(f"{x},{int(y)}")
+    return "M " + " L ".join(points)
+
+
 @manager_required
 def product_list(request):
     products = Product.objects.all()
     product_data = []
     for product in products:
         forecast = get_product_forecast(product)
+        sparkline = get_sparkline_coords(product)
         product_data.append({
             'product': product,
-            'forecast': forecast
+            'forecast': forecast,
+            'sparkline': sparkline
         })
     return render(request, 'inventory/product_list.html', {'products': product_data})
 
@@ -305,8 +329,24 @@ def vendor_order_status_update(request, pk):
 
 @manager_required
 def blockchain_view(request):
-    blocks = AuditBlock.objects.order_by('index')
+    blocks = list(AuditBlock.objects.order_by('index'))
     is_valid, errors = verify_chain_integrity()
+    
+    # Annotate block validity for custom node styling
+    previous_hash = "0" * 64
+    for block in blocks:
+        ts = int(block.timestamp.timestamp())
+        block_string = json.dumps({
+            "index": block.index,
+            "timestamp": ts,
+            "order_data": block.order_data,
+            "previous_hash": block.previous_hash
+        }, sort_keys=True)
+        calculated_hash = hashlib.sha256(block_string.encode('utf-8')).hexdigest()
+        
+        block.is_valid = (block.hash == calculated_hash) and (block.previous_hash == previous_hash)
+        previous_hash = block.hash
+        
     return render(request, 'inventory/blockchain_view.html', {
         'blocks': blocks,
         'is_valid': is_valid,

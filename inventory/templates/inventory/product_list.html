@@ -25,6 +25,7 @@
                     <th class="border-secondary text-end">Price</th>
                     <th class="border-secondary text-end">Current Stock</th>
                     <th class="border-secondary text-end">Safety Stock (ROP)</th>
+                    <th class="border-secondary text-center" style="width: 140px;">Sales Trend (6mo)</th>
                     <th class="border-secondary text-end">AI Forecast (Next Mo)</th>
                     <th class="border-secondary text-center">Actions</th>
                 </tr>
@@ -52,6 +53,17 @@
                             <td class="text-light text-end border-secondary text-muted">
                                 {{ item.product.stock.min_threshold }} 
                                 <span class="small text-info d-block" style="font-size: 0.75rem;">AI target: {{ item.forecast.reorder_point }}</span>
+                            </td>
+                            <td class="text-center border-secondary">
+                                <svg width="120" height="30" style="overflow: visible;">
+                                    <path d="{{ item.sparkline }}" fill="none" stroke="url(#sparklineGrad-{{ item.product.id }})" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 2px 4px rgba(0, 255, 204, 0.35));" />
+                                    <defs>
+                                        <linearGradient id="sparklineGrad-{{ item.product.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#3b82f6" />
+                                            <stop offset="100%" stop-color="#00ffcc" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
                             </td>
                             <td class="text-end border-secondary">
                                 <span class="badge badge-ai py-2 px-3">
