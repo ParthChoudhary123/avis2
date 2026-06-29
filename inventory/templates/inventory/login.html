@@ -4,98 +4,126 @@
 
 {% block extra_css %}
 <style>
-    /* Premium Split Layout Page Styles */
-    .login-container {
-        min-height: 75vh;
+    /* Full Page Positioning with Mesh Background */
+    .login-wrapper {
+        position: relative;
+        min-height: 80vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px 0;
+        overflow: hidden;
+        padding: 40px 0;
     }
 
+    /* Floating Colorful Ambient Lights */
+    .glowing-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(100px);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.55;
+        animation: pulse-orbs 10s infinite alternate ease-in-out;
+    }
+
+    .orb-cyan {
+        width: 450px;
+        height: 450px;
+        background: radial-gradient(circle, rgba(0, 255, 204, 0.3) 0%, rgba(0, 255, 204, 0) 70%);
+        top: -10%;
+        left: 15%;
+    }
+
+    .orb-purple {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0) 70%);
+        bottom: -10%;
+        right: 15%;
+        animation-delay: -5s;
+    }
+
+    @keyframes pulse-orbs {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(40px, -40px) scale(1.15); }
+    }
+
+    /* Premium Split Card Container */
     .split-card {
-        background: rgba(18, 28, 48, 0.45);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 24px;
+        position: relative;
+        z-index: 1;
+        background: rgba(10, 17, 31, 0.65);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
         overflow: hidden;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transition: border-color 0.5s;
+    }
+
+    .split-card:hover {
+        border-color: rgba(0, 255, 204, 0.2);
     }
 
     /* Left panel: Info & brand */
     .brand-side {
-        background: linear-gradient(135deg, #0d1e36 0%, #060a12 100%);
+        background: linear-gradient(145deg, rgba(15, 23, 42, 0.75) 0%, rgba(8, 12, 24, 0.9) 100%);
         border-right: 1px solid rgba(255, 255, 255, 0.05);
-        position: relative;
-        overflow: hidden;
-        padding: 50px;
+        padding: 55px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-    }
-
-    /* Glowing decorative orbs */
-    .brand-side::before {
-        content: '';
-        position: absolute;
-        width: 250px;
-        height: 250px;
-        background: radial-gradient(circle, rgba(0, 255, 204, 0.12) 0%, rgba(0,0,0,0) 70%);
-        top: -50px;
-        left: -50px;
-        border-radius: 50%;
-        pointer-events: none;
-    }
-
-    .brand-side::after {
-        content: '';
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(0,0,0,0) 70%);
-        bottom: -80px;
-        right: -80px;
-        border-radius: 50%;
-        pointer-events: none;
+        position: relative;
     }
 
     .brand-logo-glow {
-        font-size: 2.8rem;
+        font-size: 3rem;
         font-weight: 800;
         letter-spacing: 2px;
-        background: linear-gradient(to right, #00ffcc, #3b82f6);
+        background: linear-gradient(135deg, #00ffcc 0%, #3b82f6 50%, #8b5cf6 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 25px;
         display: inline-block;
+        filter: drop-shadow(0 2px 10px rgba(0, 255, 204, 0.15));
     }
 
     .feature-item {
         display: flex;
         align-items: flex-start;
         margin-bottom: 24px;
-        gap: 15px;
+        gap: 18px;
     }
 
     .feature-icon-wrapper {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.08);
         display: flex;
         align-items: center;
         justify-content: center;
         color: #00ffcc;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         flex-shrink: 0;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        transition: all 0.3s;
+    }
+    
+    .feature-item:hover .feature-icon-wrapper {
+        color: #fff;
+        background: rgba(0, 255, 204, 0.1);
+        border-color: #00ffcc;
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+        transform: translateY(-2px);
     }
 
     /* Right panel: Login form */
     .form-side {
-        padding: 50px;
+        padding: 55px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -109,27 +137,57 @@
 
     .input-icon {
         position: absolute;
-        left: 15px;
+        left: 16px;
         top: 50%;
         transform: translateY(-50%);
-        color: #9ca3af;
+        color: #6b7280;
         z-index: 10;
-        font-size: 1rem;
-        transition: color 0.3s;
+        font-size: 1.1rem;
+        transition: all 0.3s;
     }
 
     .input-group-custom input {
         width: 100%;
-        padding: 14px 15px 14px 45px !important;
-        border-radius: 12px;
-        font-weight: 400;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #f3f4f6 !important;
+        border-radius: 14px;
+        padding: 15px 15px 15px 48px !important;
+        font-size: 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .input-group-custom input:focus {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-color: #00ffcc;
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
     }
 
     .input-group-custom input:focus ~ .input-icon {
         color: #00ffcc;
+        transform: translateY(-50%) scale(1.1);
     }
 
-    /* Micro-interactive link */
+    /* Premium Gradient Action Button */
+    .btn-submit-gradient {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #00ffcc 100%);
+        background-size: 200% auto;
+        color: #080d1a !important;
+        border: none;
+        border-radius: 14px;
+        padding: 15px 30px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        transition: all 0.4s ease;
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-submit-gradient:hover {
+        background-position: right center;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
+    }
+
     .hover-underline {
         color: #00ffcc;
         text-decoration: none;
@@ -145,12 +203,16 @@
 {% endblock %}
 
 {% block content %}
-<div class="login-container">
+<div class="login-wrapper">
+    <!-- Background Ambient Lights -->
+    <div class="glowing-orb orb-cyan"></div>
+    <div class="glowing-orb orb-purple"></div>
+
     <div class="col-xl-10 col-lg-11">
-        <div class="row split-card g-0">
-            <!-- Left Panel (Brand / Info) -->
+        <div class="row split-card g-0 align-items-stretch">
+            <!-- Left Panel (Brand / Features) -->
             <div class="col-lg-6 brand-side d-none d-lg-flex">
-                <div>
+                <div class="w-100">
                     <span class="brand-logo-glow"><i class="fa-solid fa-layer-group me-2"></i>AVIS</span>
                     <h3 class="fw-bold text-white mb-3">AI-Assisted Operations & Cryptographic Control</h3>
                     <p class="text-muted mb-5" style="font-size: 1.05rem; line-height: 1.6;">
@@ -158,8 +220,8 @@
                     </p>
 
                     <div class="feature-item">
-                        <div class="feature-icon-wrapper">
-                            <i class="fa-solid fa-brain"></i>
+                        <div class="feature-icon-wrapper" style="box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);">
+                            <i class="fa-solid fa-brain" style="color: #8b5cf6;"></i>
                         </div>
                         <div>
                             <h6 class="fw-bold text-light mb-1">AI-Powered Demand Projections</h6>
@@ -168,8 +230,8 @@
                     </div>
 
                     <div class="feature-item">
-                        <div class="feature-icon-wrapper">
-                            <i class="fa-solid fa-cloud-bolt"></i>
+                        <div class="feature-icon-wrapper" style="box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
+                            <i class="fa-solid fa-cloud-bolt" style="color: #3b82f6;"></i>
                         </div>
                         <div>
                             <h6 class="fw-bold text-light mb-1">Weather Logistics Delays Radar</h6>
@@ -178,8 +240,8 @@
                     </div>
 
                     <div class="feature-item mb-0">
-                        <div class="feature-icon-wrapper">
-                            <i class="fa-solid fa-shield-halved"></i>
+                        <div class="feature-icon-wrapper" style="box-shadow: 0 4px 12px rgba(0, 255, 204, 0.3);">
+                            <i class="fa-solid fa-shield-halved" style="color: #00ffcc;"></i>
                         </div>
                         <div>
                             <h6 class="fw-bold text-light mb-1">Tamper-Proof Audit Ledgers</h6>
@@ -231,7 +293,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-glow w-100 py-3 text-uppercase tracking-wide fw-bold" id="login-submit-btn">
+                        <button type="submit" class="btn btn-submit-gradient w-100 py-3 text-uppercase tracking-wide fw-bold" id="login-submit-btn">
                             <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Sign In to Portal
                         </button>
                     </form>
