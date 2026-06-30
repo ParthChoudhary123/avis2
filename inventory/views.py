@@ -15,6 +15,10 @@ from .predictor import get_product_forecast
 
 # --- AUTHENTICATION VIEWS ---
 
+def landing_view(request):
+    return render(request, 'inventory/landing.html')
+
+
 def register_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard')

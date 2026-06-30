@@ -1,0 +1,379 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Avis AI - Intelligent Enterprise Decision-Support System{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Premium Landing Page CSS */
+    .landing-wrapper {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    /* Ambient Glowing Mesh Lights */
+    .glowing-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.45;
+        animation: rotate-orbs 20s infinite alternate ease-in-out;
+    }
+
+    .orb-cyan {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(0, 255, 204, 0.25) 0%, rgba(0,0,0,0) 70%);
+        top: -5%;
+        left: -10%;
+    }
+
+    .orb-purple {
+        width: 650px;
+        height: 650px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(0,0,0,0) 70%);
+        top: 40%;
+        right: -10%;
+        animation-delay: -10s;
+    }
+
+    @keyframes rotate-orbs {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        100% { transform: translate(60px, -60px) rotate(180deg); }
+    }
+
+    /* Hero Banner Section */
+    .hero-section {
+        padding: 90px 0 60px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.5px;
+        background: linear-gradient(135deg, #ffffff 30%, #e2e8f0 70%, #00ffcc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 24px;
+    }
+
+    .hero-title span {
+        background: linear-gradient(135deg, #00ffcc 0%, #3b82f6 50%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 2px 15px rgba(0, 255, 204, 0.25));
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 40px;
+        max-width: 700px;
+    }
+
+    /* Visual Stack Badges */
+    .tech-badge {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 30px;
+        padding: 8px 18px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #f3f4f6;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s;
+    }
+
+    .tech-badge:hover {
+        background: rgba(0, 255, 204, 0.05);
+        border-color: #00ffcc;
+        box-shadow: 0 0 12px rgba(0, 255, 204, 0.25);
+        transform: translateY(-2px);
+    }
+
+    /* Mockup Dashboard Display */
+    .mockup-dashboard {
+        position: relative;
+        border-radius: 20px;
+        background: rgba(10, 17, 31, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65), 
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        padding: 25px;
+        overflow: hidden;
+    }
+
+    .mockup-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+    }
+
+    /* Sections Divider */
+    .section-spacing {
+        padding: 80px 0;
+        position: relative;
+        z-index: 2;
+    }
+
+    .section-title {
+        font-size: 2.25rem;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 50px;
+        background: linear-gradient(135deg, #fff 50%, #9ca3af 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Future roadmap timeline cards */
+    .timeline-node {
+        position: relative;
+        border-left: 2px solid rgba(0, 255, 204, 0.2);
+        padding-left: 30px;
+        margin-left: 15px;
+        padding-bottom: 40px;
+    }
+
+    .timeline-node:last-child {
+        border-left: none;
+        padding-bottom: 0;
+    }
+
+    .timeline-dot {
+        position: absolute;
+        left: -8px;
+        top: 5px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #00ffcc;
+        box-shadow: 0 0 10px #00ffcc;
+    }
+
+    /* CTA Card System */
+    .cta-card {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+        border: 1px solid rgba(0, 255, 204, 0.15) !important;
+        box-shadow: 0 20px 50px rgba(0, 255, 204, 0.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="landing-wrapper">
+    <!-- Background glowing visual mesh lights -->
+    <div class="glowing-orb orb-cyan"></div>
+    <div class="glowing-orb orb-purple"></div>
+
+    <!-- 1. Hero Banner Section -->
+    <section class="hero-section text-center text-lg-start">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center justify-content-lg-start">
+                        <span class="tech-badge"><i class="fa-brands fa-python text-info"></i>Python</span>
+                        <span class="tech-badge"><i class="fa-brands fa-square-js text-warning"></i>Django</span>
+                        <span class="tech-badge"><i class="fa-solid fa-database text-primary"></i>PostgreSQL</span>
+                        <span class="tech-badge"><i class="fa-solid fa-network-wired text-purple"></i>Katana AI</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Intelligent Enterprise Logistics, <span>Sliced to Perfection.</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Powered by the Katana AI predictive engine, logistics weather API trackers, and immutable cryptographic block auditing ledgers. Avis AI eliminates decision-making latency.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'dashboard' %}" class="btn btn-glow py-3 px-4">
+                                <i class="fa-solid fa-circle-play me-2"></i>Launch Control Panel
+                            </a>
+                        {% else %}
+                            <a href="{% url 'register' %}" class="btn btn-glow py-3 px-4" id="btn-register-cta">
+                                <i class="fa-solid fa-user-plus me-2"></i>Create Account
+                            </a>
+                            <a href="{% url 'login' %}" class="btn btn-outline-glow py-3 px-4" id="btn-login-cta">
+                                <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Sign In
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Introductory mockups showing visual card dashboard elements -->
+                <div class="col-lg-6">
+                    <div class="mockup-dashboard">
+                        <div class="border-bottom border-secondary pb-2 mb-3 d-flex align-items-center">
+                            <span class="mockup-dot bg-danger"></span>
+                            <span class="mockup-dot bg-warning"></span>
+                            <span class="mockup-dot bg-success"></span>
+                            <span class="text-muted small ms-2" style="font-family: monospace;">avis_ai_dashboard.py</span>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="p-3 rounded border border-secondary" style="background: rgba(0, 255, 204, 0.02);">
+                                    <div class="small text-muted"><i class="fa-solid fa-brain me-1 text-purple"></i>Katana AI Forecast</div>
+                                    <h4 class="fw-bold text-light mb-0 mt-1">450 units</h4>
+                                    <div class="small text-success mt-1"><i class="fa-solid fa-arrow-trend-up"></i> +12.4% demand</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 rounded border border-secondary" style="background: rgba(239, 68, 68, 0.02);">
+                                    <div class="small text-muted"><i class="fa-solid fa-cloud-bolt me-1 text-danger"></i>Weather delays</div>
+                                    <h4 class="fw-bold text-danger mb-0 mt-1">1 warning</h4>
+                                    <div class="small text-muted mt-1">Heavy Rain: Seattle</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-3 rounded border border-secondary" style="background: rgba(16, 185, 129, 0.02);">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div class="small text-muted"><i class="fa-solid fa-shield-halved me-1 text-success"></i>Cryptographic Verification</div>
+                                        <span class="badge bg-success-subtle text-success small">SECURED</span>
+                                    </div>
+                                    <code class="text-success small font-monospace d-block text-truncate" style="font-size: 0.7rem;">Block 01 Hash: a2b988a03a311fd12fae29cb234a...</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. About the Project Section -->
+    <section class="section-spacing" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+        <div class="container">
+            <h2 class="section-title">About Avis AI</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-9 text-center">
+                    <p class="text-light leading-relaxed" style="font-size: 1.15rem; line-height: 1.8;">
+                        Avis AI is designed to tackle the common corporate challenges of data fragmentation and high latency in operational workflows. Often, retail managers must manually coordinate stock balances across disconnected supply systems, monitor external logistical disruption points, and perform audits. 
+                    </p>
+                    <p class="text-muted mt-3" style="font-size: 1.05rem; line-height: 1.8;">
+                        By binding the python-based Django architecture with the Katana AI cognitive engine, Avis AI streamlines retail operations. It combines live forecasting models, logistics delay warnings, and a block-linked cryptographic auditing system, enabling managers and vendors to cooperate seamlessly inside a unified dashboard.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Features Section -->
+    <section class="section-spacing">
+        <div class="container">
+            <h2 class="section-title">Core Subsystem Features</h2>
+            <div class="row g-4">
+                <!-- Katana AI Forecasting -->
+                <div class="col-lg-4">
+                    <div class="card glass-card p-4 h-100">
+                        <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-brain text-purple fs-4"></i>
+                        </div>
+                        <h4 class="fw-bold text-light mb-3">Katana AI Forecasting</h4>
+                        <p class="text-muted small mb-0">
+                            Uses scikit-learn Linear Regression models to evaluate sales history on Pandas dataframes, predicting seasonal demand trends and automatically adjusting optimal safety stock thresholds. Runs asynchronously in background threads.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Weather Logistics Radar -->
+                <div class="col-lg-4">
+                    <div class="card glass-card p-4 h-100">
+                        <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-cloud-bolt text-info fs-4"></i>
+                        </div>
+                        <h4 class="fw-bold text-light mb-3">Logistics Delay Radar</h4>
+                        <p class="text-muted small mb-0">
+                            Connects to the OpenWeatherMap API to fetch current atmospheric states in supplier operating cities. Flags active orders automatically with heavy rain, snow, or storm warnings on the manager's panel.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cryptographic Ledger -->
+                <div class="col-lg-4">
+                    <div class="card glass-card p-4 h-100">
+                        <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(0, 255, 204, 0.1); border-color: rgba(0, 255, 204, 0.3); display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-shield-halved text-success fs-4"></i>
+                        </div>
+                        <h4 class="fw-bold text-light mb-3">Cryptographic Audits</h4>
+                        <p class="text-muted small mb-0">
+                            Constructs a SHA-256 block-linked hash chain for every finalized transaction. If any details are altered directly in the database, the integrity validator flags a mismatched signature immediately.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Future Vision of the Project Section -->
+    <section class="section-spacing" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+        <div class="container">
+            <h2 class="section-title">Future Vision & Roadmap</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!-- Timeline node 1 -->
+                    <div class="timeline-node">
+                        <div class="timeline-dot"></div>
+                        <h5 class="fw-bold text-info">Q3 2026: Multi-Agent Conversational Insights</h5>
+                        <p class="text-muted small mb-0">
+                            Integration of the Katana AI chat interface, allowing managers to query natural language logs ("How are widgets selling?") and receive real-time business insights.
+                        </p>
+                    </div>
+                    <!-- Timeline node 2 -->
+                    <div class="timeline-node">
+                        <div class="timeline-dot"></div>
+                        <h5 class="fw-bold text-info">Q4 2026: IoT RFID Hardware Syncing</h5>
+                        <p class="text-muted small mb-0">
+                            Connecting physical RFID sensor hardware pipelines directly to the database. Real-time physical warehouse intakes will automatically update Django stock levels.
+                        </p>
+                    </div>
+                    <!-- Timeline node 3 -->
+                    <div class="timeline-node">
+                        <div class="timeline-dot"></div>
+                        <h5 class="fw-bold text-info">Q1 2027: Automated Supplier Smart Payments</h5>
+                        <p class="text-muted small mb-0">
+                            Triggering payment routing channels (e.g. Stripe or smart contracts) immediately when a block is successfully written to the audit chain, streamlining vendor settle periods.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Call-to-Action (CTA) Section -->
+    <section class="section-spacing text-center">
+        <div class="container">
+            <div class="col-lg-8 mx-auto">
+                <div class="card glass-card cta-card p-5">
+                    <h2 class="fw-bold text-white mb-3">Empower Your Supply Chain Today</h2>
+                    <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto;">
+                        Reduce decision-making latency, protect transactional audit trails, and optimize your catalog safety margins with the Katana AI cognitive engine.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'dashboard' %}" class="btn btn-glow px-4 py-3">
+                                Launch Avis AI Panel
+                            </a>
+                        {% else %}
+                            <a href="{% url 'register' %}" class="btn btn-glow px-4 py-3">
+                                Register Portal Account
+                            </a>
+                            <a href="{% url 'login' %}" class="btn btn-outline-glow px-4 py-3">
+                                Access Sign In
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
