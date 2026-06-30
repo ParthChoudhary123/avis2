@@ -168,6 +168,124 @@
         border: 1px solid rgba(0, 255, 204, 0.15) !important;
         box-shadow: 0 20px 50px rgba(0, 255, 204, 0.05);
     }
+
+    /* SIKKA Photo-inspired Tech Stack Cards */
+    .tech-card {
+        background: rgba(15, 23, 42, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .tech-card::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        border-radius: 18px;
+        padding: 1.5px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        transition: background 0.4s ease;
+    }
+
+    .tech-card:hover {
+        transform: translateY(-5px) scale(1.02);
+    }
+
+    .tech-card-icon {
+        font-size: 2.5rem;
+        transition: transform 0.4s ease;
+    }
+
+    .tech-card:hover .tech-card-icon,
+    .tech-card:hover .rounded-circle {
+        transform: scale(1.15) rotate(5deg);
+    }
+
+    /* Vibrant, eye-catching technology colors & borders matching photo */
+    .card-python:hover::before {
+        background: linear-gradient(135deg, #ffd43b 0%, #3572a5 100%);
+    }
+    .card-python:hover {
+        box-shadow: 0 15px 35px rgba(255, 212, 59, 0.22);
+    }
+    .text-python {
+        color: #ffd43b;
+        text-shadow: 0 0 15px rgba(255, 212, 59, 0.4);
+    }
+
+    .card-django:hover::before {
+        background: linear-gradient(135deg, #00ff88 0%, #10b981 100%);
+    }
+    .card-django:hover {
+        box-shadow: 0 15px 35px rgba(16, 185, 129, 0.22);
+    }
+    .text-django {
+        color: #10b981;
+        text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    }
+
+    .card-postgres:hover::before {
+        background: linear-gradient(135deg, #00d2ff 0%, #336791 100%);
+    }
+    .card-postgres:hover {
+        box-shadow: 0 15px 35px rgba(0, 210, 255, 0.22);
+    }
+    .text-postgres {
+        color: #00d2ff;
+        text-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+    }
+
+    .card-blockchain:hover::before {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+    }
+    .card-blockchain:hover {
+        box-shadow: 0 15px 35px rgba(255, 179, 0, 0.25);
+    }
+    .text-blockchain {
+        color: #ffb300;
+        text-shadow: 0 0 15px rgba(255, 179, 0, 0.45);
+    }
+
+    .card-bootstrap:hover::before {
+        background: linear-gradient(135deg, #c084fc 0%, #7952b3 100%);
+    }
+    .card-bootstrap:hover {
+        box-shadow: 0 15px 35px rgba(192, 132, 252, 0.22);
+    }
+    .text-bootstrap {
+        color: #c084fc;
+        text-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
+    }
+
+    .card-github:hover::before {
+        background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+    }
+    .card-github:hover {
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.15);
+    }
+    .text-github {
+        color: #f3f4f6;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .card-rest:hover::before {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    }
+    .card-rest:hover {
+        box-shadow: 0 15px 35px rgba(59, 130, 246, 0.22);
+    }
+    .text-rest {
+        color: #3b82f6;
+        text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
 </style>
 {% endblock %}
 
@@ -250,7 +368,7 @@
     </section>
 
     <!-- 2. About the Project Section -->
-    <section class="section-spacing" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+    <section class="section-spacing" id="about" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
         <div class="container">
             <h2 class="section-title">About Avis AI</h2>
             <div class="row justify-content-center">
@@ -266,8 +384,116 @@
         </div>
     </section>
 
-    <!-- 3. Features Section -->
+    <!-- Technology Stack Integration Grid (SIKKA Photo Layout & Order) -->
     <section class="section-spacing">
+        <div class="container">
+            <h2 class="section-title">Integrated Technology Ecosystem</h2>
+            
+            <!-- Row 1: 5 Columns -->
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-4 justify-content-center">
+                <!-- 1. Python -->
+                <div class="col">
+                    <div class="tech-card card-python p-4 text-center h-100">
+                        <i class="fa-brands fa-python tech-card-icon text-python mb-3"></i>
+                        <h5 class="fw-bold text-light mb-1">Python</h5>
+                        <div class="small text-muted">Core Backend</div>
+                    </div>
+                </div>
+                <!-- 2. Django -->
+                <div class="col">
+                    <div class="tech-card card-django p-4 text-center h-100 d-flex flex-column align-items-center justify-content-center">
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-circle fw-bold text-dark" style="width: 48px; height: 48px; background: #10b981; font-size: 1.15rem; font-family: monospace; box-shadow: 0 0 15px rgba(16, 185, 129, 0.45); transition: transform 0.4s ease;">DJ</div>
+                        <h5 class="fw-bold text-light mb-1">Django</h5>
+                        <div class="small text-muted">Web Framework</div>
+                    </div>
+                </div>
+                <!-- 3. PostgreSQL -->
+                <div class="col">
+                    <div class="tech-card card-postgres p-4 text-center h-100 d-flex flex-column align-items-center justify-content-center">
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-circle fw-bold text-dark" style="width: 48px; height: 48px; background: #00d2ff; font-size: 1.15rem; font-family: monospace; box-shadow: 0 0 15px rgba(0, 210, 255, 0.45); transition: transform 0.4s ease;">PG</div>
+                        <h5 class="fw-bold text-light mb-1">PostgreSQL</h5>
+                        <div class="small text-muted">Database</div>
+                    </div>
+                </div>
+                <!-- 4. Blockchain -->
+                <div class="col">
+                    <div class="tech-card card-blockchain p-4 text-center h-100">
+                        <i class="fa-solid fa-cubes-stacked tech-card-icon text-blockchain mb-3"></i>
+                        <h5 class="fw-bold text-light mb-1">Blockchain</h5>
+                        <div class="small text-muted">Core Technology</div>
+                    </div>
+                </div>
+                <!-- 5. Bootstrap -->
+                <div class="col">
+                    <div class="tech-card card-bootstrap p-4 text-center h-100">
+                        <i class="fa-brands fa-bootstrap tech-card-icon text-bootstrap mb-3"></i>
+                        <h5 class="fw-bold text-light mb-1">Bootstrap</h5>
+                        <div class="small text-muted">UI Framework</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Row 2: 2 Columns centered below -->
+            <div class="row g-4 justify-content-center mt-3">
+                <!-- 6. GitHub -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="tech-card card-github p-4 text-center">
+                        <i class="fa-brands fa-github tech-card-icon text-github mb-3"></i>
+                        <h5 class="fw-bold text-light mb-1">GitHub</h5>
+                        <div class="small text-muted">Version Control</div>
+                    </div>
+                </div>
+                <!-- 7. REST API -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="tech-card card-rest p-4 text-center">
+                        <i class="fa-solid fa-plug tech-card-icon text-rest mb-3"></i>
+                        <h5 class="fw-bold text-light mb-1">REST API</h5>
+                        <div class="small text-muted">API Architecture</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. How It Works Section -->
+    <section class="section-spacing" id="how-it-works" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="row g-4 text-center justify-content-center">
+                <div class="col-md-3">
+                    <div class="p-3">
+                        <div class="fs-1 text-info mb-2"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <h5 class="fw-bold text-light">1. Request Order</h5>
+                        <p class="text-muted small">Store Manager creates a purchase order and sets expected quantities.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3">
+                        <div class="fs-1 text-danger mb-2"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+                        <h5 class="fw-bold text-light">2. Check Radar</h5>
+                        <p class="text-muted small">Logistics Radar scans supplier's city weather to flag delay warning alerts.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3">
+                        <div class="fs-1 text-success mb-2"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                        <h5 class="fw-bold text-light">3. Vendor Delivers</h5>
+                        <p class="text-muted small">Supplier logs fulfillment progress and marks order status as Delivered.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3">
+                        <div class="fs-1 text-purple mb-2"><i class="fa-solid fa-link"></i></div>
+                        <h5 class="fw-bold text-light">4. Audit Sealed</h5>
+                        <p class="text-muted small">The system cryptographically seals order records into the SHA-256 ledger.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Features Section -->
+    <section class="section-spacing" id="features">
         <div class="container">
             <h2 class="section-title">Core Subsystem Features</h2>
             <div class="row g-4">
@@ -313,8 +539,8 @@
         </div>
     </section>
 
-    <!-- 4. Future Vision of the Project Section -->
-    <section class="section-spacing" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+    <!-- 5. Future Vision of the Project Section -->
+    <section class="section-spacing" id="vision" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
         <div class="container">
             <h2 class="section-title">Future Vision & Roadmap</h2>
             <div class="row justify-content-center">
@@ -348,8 +574,38 @@
         </div>
     </section>
 
-    <!-- 5. Call-to-Action (CTA) Section -->
-    <section class="section-spacing text-center">
+    <!-- 6. Contact Section -->
+    <section class="section-spacing" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card glass-card p-4">
+                        <form method="POST" action="#" onsubmit="alert('Thank you for reaching out! Avis AI support team will contact you shortly.'); return false;">
+                            <div class="mb-3">
+                                <label class="form-label text-muted small uppercase">Full Name</label>
+                                <input type="text" class="form-control bg-dark border-secondary text-light rounded px-3 py-2" placeholder="Your Name" required style="background: rgba(255,255,255,0.02) !important; border: 1px solid rgba(255,255,255,0.08) !important;">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted small uppercase">Email Address</label>
+                                <input type="email" class="form-control bg-dark border-secondary text-light rounded px-3 py-2" placeholder="name@company.com" required style="background: rgba(255,255,255,0.02) !important; border: 1px solid rgba(255,255,255,0.08) !important;">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted small uppercase">Message</label>
+                                <textarea class="form-control bg-dark border-secondary text-light rounded px-3 py-2" rows="4" placeholder="How can we help optimize your operations?" required style="background: rgba(255,255,255,0.02) !important; border: 1px solid rgba(255,255,255,0.08) !important;"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-get-started w-100 py-3 text-uppercase tracking-wider">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Call-to-Action (CTA) Section -->
+    <section class="section-spacing text-center" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border);">
         <div class="container">
             <div class="col-lg-8 mx-auto">
                 <div class="card glass-card cta-card p-5">
@@ -359,11 +615,11 @@
                     </p>
                     <div class="d-flex justify-content-center gap-3">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'dashboard' %}" class="btn btn-glow px-4 py-3">
+                            <a href="{% url 'dashboard' %}" class="btn btn-get-started px-4 py-3">
                                 Launch Avis AI Panel
                             </a>
                         {% else %}
-                            <a href="{% url 'register' %}" class="btn btn-glow px-4 py-3">
+                            <a href="{% url 'register' %}" class="btn btn-get-started px-4 py-3">
                                 Register Portal Account
                             </a>
                             <a href="{% url 'login' %}" class="btn btn-outline-glow px-4 py-3">
