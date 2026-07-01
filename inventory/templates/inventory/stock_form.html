@@ -1,19 +1,19 @@
 {% extends 'inventory/base_dashboard.html' %}
 
-{% block title %}Update Stock - AVIS{% endblock %}
+{% block title %}Update Stock - AVIS AI{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
         <div class="card glass-card p-5">
-            <h2 class="fw-bold mb-2 text-center text-info">Update Stock levels</h2>
-            <p class="text-muted text-center mb-4">{{ stock.product.name }} (SKU: {{ stock.product.sku }})</p>
+            <h2 class="fw-bold mb-2 text-center text-primary">Update Stock levels</h2>
+            <p class="text-secondary text-center mb-4">{{ stock.product.name }} (SKU: {{ stock.product.sku }})</p>
             
             <form method="post" id="stock-form" novalidate>
                 {% csrf_token %}
                 
                 <div class="mb-3">
-                    <label for="id_current_quantity" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Current Quantity on Hand</label>
+                    <label for="id_current_quantity" class="form-label small text-uppercase tracking-wider fw-semibold text-secondary">Current Quantity on Hand</label>
                     {{ form.current_quantity }}
                     {% if form.current_quantity.errors %}
                         <div class="text-danger small mt-1">{% for error in form.current_quantity.errors %}{{ error }}{% endfor %}</div>
@@ -21,16 +21,16 @@
                 </div>
                 
                 <div class="mb-4">
-                    <label for="id_min_threshold" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Minimum Safety Threshold (ROP)</label>
+                    <label for="id_min_threshold" class="form-label small text-uppercase tracking-wider fw-semibold text-secondary">Minimum Safety Threshold (ROP)</label>
                     {{ form.min_threshold }}
                     {% if form.min_threshold.errors %}
                         <div class="text-danger small mt-1">{% for error in form.min_threshold.errors %}{{ error }}{% endfor %}</div>
                     {% endif %}
-                    <div class="form-text text-muted small">The system will flag this item if active stock falls below this quantity.</div>
+                    <div class="form-text text-secondary small">The system will flag this item if active stock falls below this quantity.</div>
                 </div>
                 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <a href="{% url 'product_list' %}" class="btn btn-outline-secondary px-4 py-2">
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-glow px-4 py-2">
                         <i class="fa-solid fa-arrow-left me-1"></i>Cancel
                     </a>
                     <button type="submit" class="btn btn-glow px-4 py-2" id="stock-submit-btn">

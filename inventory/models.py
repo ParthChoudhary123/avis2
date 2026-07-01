@@ -28,7 +28,7 @@ class Product(models.Model):
 
 
 class Stock(models.Model):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='stock')
+    product = models.OneToOneField(Product, on_delete=models.PROTECT, related_name='stock')
     current_quantity = models.IntegerField(default=0)
     min_threshold = models.IntegerField(default=10)
 
@@ -50,11 +50,12 @@ class Vendor(models.Model):
 class Order(models.Model):
     STATUS_CHOICES = (
         ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
         ('Shipped', 'Shipped'),
         ('Delivered', 'Delivered'),
     )
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='orders')
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name='orders')
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='orders')
+    vendor = models.ForeignKey(Vendor, on_delete=models.PROTECT, related_name='orders')
     quantity = models.IntegerField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -66,7 +67,7 @@ class Order(models.Model):
 
 class AuditBlock(models.Model):
     index = models.IntegerField(unique=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField()
     order_data = models.TextField()  # JSON representation of order
     previous_hash = models.CharField(max_length=64)
     hash = models.CharField(max_length=64)

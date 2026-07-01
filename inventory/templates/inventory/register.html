@@ -1,72 +1,35 @@
 {% extends 'inventory/base.html' %}
 
-{% block title %}Register - Avis AI{% endblock %}
+{% block title %}Register - AVIS AI{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* Full Page Positioning with Mesh Background */
+    /* Clean light background styling */
+    body {
+        background-color: #f8fafc !important; 
+        color: #0f172a !important;
+    }
+
     .register-wrapper {
-        position: relative;
         min-height: 80vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
         padding: 45px 0;
     }
 
-    /* Floating Colorful Ambient Lights (Consistent with Login Page) */
-    .glowing-orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.55;
-        animation: pulse-orbs 10s infinite alternate ease-in-out;
-    }
-
-    .orb-cyan {
-        width: 450px;
-        height: 450px;
-        background: radial-gradient(circle, rgba(0, 255, 204, 0.22) 0%, rgba(0, 255, 204, 0) 70%);
-        top: -10%;
-        right: 15%;
-    }
-
-    .orb-purple {
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0) 70%);
-        bottom: -10%;
-        left: 15%;
-        animation-delay: -5s;
-    }
-
-    @keyframes pulse-orbs {
-        0% { transform: translate(0, 0) scale(1); }
-        100% { transform: translate(-40px, 40px) scale(1.15); }
-    }
-
-    /* Premium Centered Glassmorphic Registration Card */
+    /* Minimalist centered card matching Katana */
     .register-card {
-        position: relative;
-        z-index: 1;
-        background: rgba(10, 17, 31, 0.65);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 28px;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        transition: border-color 0.5s;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 45px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+        max-width: 580px;
+        width: 100%;
     }
 
-    .register-card:hover {
-        border-color: rgba(0, 255, 204, 0.2);
-    }
-
-    /* Floating input groups with icons */
+    /* Clean inputs with icons */
     .input-group-custom {
         position: relative;
         margin-bottom: 20px;
@@ -77,95 +40,85 @@
         left: 16px;
         top: 50%;
         transform: translateY(-50%);
-        color: #6b7280;
-        z-index: 10;
+        color: #94a3b8;
         font-size: 1.05rem;
-        transition: all 0.3s;
+        transition: color 0.3s;
     }
 
-    .input-group-custom input, .input-group-custom select {
+    .input-group-custom input, .input-group-custom select, .input-group-custom textarea {
         width: 100%;
-        background: rgba(255, 255, 255, 0.02) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: #f3f4f6 !important;
-        border-radius: 12px;
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1;
+        color: #0f172a !important;
+        border-radius: 8px;
         padding: 13px 15px 13px 48px !important;
         font-size: 0.95rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.2s;
     }
 
-    .input-group-custom input:focus, .input-group-custom select:focus {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border-color: #00ffcc;
-        box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+    .input-group-custom input:focus, .input-group-custom select:focus, .input-group-custom textarea:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        background-color: #ffffff !important;
     }
 
     .input-group-custom input:focus ~ .input-icon, .input-group-custom select:focus ~ .input-icon {
-        color: #00ffcc;
-        transform: translateY(-50%) scale(1.1);
+        color: #2563eb;
     }
 
-    /* Action buttons and hover lines */
+    /* Primary action button */
     .btn-submit-gradient {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #00ffcc 100%);
-        background-size: 200% auto;
-        color: #080d1a !important;
+        background-color: #111827 !important;
+        color: #ffffff !important;
         border: none;
-        border-radius: 12px;
+        border-radius: 8px;
         padding: 14px 30px;
         font-weight: 700;
-        letter-spacing: 0.5px;
-        transition: all 0.4s ease;
-        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+        transition: all 0.2s;
+        box-shadow: none;
     }
 
     .btn-submit-gradient:hover {
-        background-position: right center;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
+        background-color: #e1f533 !important;
+        color: #111827 !important;
     }
 
     .hover-underline {
-        color: #00ffcc;
+        color: #2563eb;
         text-decoration: none;
         font-weight: 600;
-        transition: all 0.3s;
+        transition: all 0.2s;
     }
 
     .hover-underline:hover {
-        color: #3b82f6;
-        text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        color: #1d4ed8;
     }
 
     .form-section-title {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid #e2e8f0;
         padding-bottom: 10px;
         margin-bottom: 20px;
         font-weight: 700;
-        color: #00ffcc;
+        color: #2563eb;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="register-wrapper">
-    <!-- Ambient Background Lighting -->
-    <div class="glowing-orb orb-cyan"></div>
-    <div class="glowing-orb orb-purple"></div>
-
     <div class="col-md-8 col-lg-6">
-        <div class="card register-card p-5">
+        <div class="card register-card">
             <div class="text-center mb-4">
-                <i class="fa-solid fa-user-plus text-info fs-1 mb-2"></i>
-                <h2 class="fw-bold text-white">Create Avis AI Account</h2>
-                <p class="text-muted small">Register to coordinate warehouse inventory and supplier pipelines</p>
+                <i class="fa-solid fa-user-plus text-primary fs-2 mb-2"></i>
+                <h2 class="fw-bold text-dark">Create AVIS AI Account</h2>
+                <p class="text-secondary small">Register to coordinate warehouse inventory and supplier pipelines</p>
             </div>
             
             <form method="post" id="register-form" class="needs-validation" novalidate>
                 {% csrf_token %}
                 
                 {% if form.non_field_errors %}
-                    <div class="alert alert-danger py-2 mb-3 small glass-card border-danger-subtle text-light" role="alert" style="background: rgba(239, 68, 68, 0.08);">
+                    <div class="alert alert-danger py-2 mb-3 small border-0 text-dark" role="alert" style="background: #fef2f2;">
                         {% for error in form.non_field_errors %}
                             <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>{{ error }}
                         {% endfor %}
@@ -173,7 +126,7 @@
                 {% endif %}
                 
                 <!-- 1. System Role Choice FIRST -->
-                <label for="id_role" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">1. Choose System Role</label>
+                <label for="id_role" class="form-label small text-uppercase tracking-wider fw-bold text-secondary mb-2">1. Choose System Role</label>
                 <div class="input-group-custom">
                     {{ form.role }}
                     <i class="fa-solid fa-user-gear input-icon"></i>
@@ -187,7 +140,7 @@
                 </div>
 
                 <!-- 2. Username -->
-                <label for="id_username" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Username</label>
+                <label for="id_username" class="form-label small text-uppercase tracking-wider fw-bold text-secondary mb-2">Username</label>
                 <div class="input-group-custom">
                     {{ form.username }}
                     <i class="fa-solid fa-user-shield input-icon"></i>
@@ -197,7 +150,7 @@
                 </div>
 
                 <!-- 3. Email Address -->
-                <label for="id_email" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Email Address</label>
+                <label for="id_email" class="form-label small text-uppercase tracking-wider fw-bold text-secondary mb-2">Email Address</label>
                 <div class="input-group-custom">
                     {{ form.email }}
                     <i class="fa-solid fa-envelope input-icon"></i>
@@ -207,7 +160,7 @@
                 </div>
                 
                 <!-- 4. Password -->
-                <label for="id_password" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Password</label>
+                <label for="id_password" class="form-label small text-uppercase tracking-wider fw-bold text-secondary mb-2">Password</label>
                 <div class="input-group-custom">
                     {{ form.password }}
                     <i class="fa-solid fa-key input-icon"></i>
@@ -217,7 +170,7 @@
                 </div>
 
                 <!-- 5. Confirm Password -->
-                <label for="id_password_confirm" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Confirm Password</label>
+                <label for="id_password_confirm" class="form-label small text-uppercase tracking-wider fw-bold text-secondary mb-2">Confirm Password</label>
                 <div class="input-group-custom">
                     {{ form.password_confirm }}
                     <i class="fa-solid fa-circle-check input-icon"></i>
@@ -226,14 +179,14 @@
                     {% endif %}
                 </div>
                 
-                <!-- 6. Vendor specific fields (Dynamically shown via JS at the bottom) -->
-                <div id="vendor-fields" class="p-4 mb-4 rounded border border-secondary" style="display: none; background: rgba(0, 255, 204, 0.02); border-color: rgba(0, 255, 204, 0.15) !important;">
-                    <div class="form-section-title" style="border-bottom-color: rgba(0, 255, 204, 0.15); color: #00ffcc;">
+                <!-- 6. Vendor specific fields -->
+                <div id="vendor-fields" class="p-4 mb-4 rounded border" style="display: none; background: #f8fafc; border-color: #e2e8f0 !important;">
+                    <div class="form-section-title" style="color: #2563eb;">
                         <i class="fa-solid fa-building me-2"></i>3. Supplier Profile Information
                     </div>
                     
                     <div class="mb-3">
-                        <label for="id_vendor_name" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Vendor Name / Business</label>
+                        <label for="id_vendor_name" class="form-label small text-uppercase tracking-wider fw-bold text-secondary mb-2">Vendor Name / Business</label>
                         <div class="input-group-custom">
                             {{ form.vendor_name }}
                             <i class="fa-solid fa-industry input-icon"></i>
@@ -244,7 +197,7 @@
                     </div>
                     
                     <div class="mb-3">
-                        <label for="id_vendor_city" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Operating City (for Logistics Weather tracking)</label>
+                        <label for="id_vendor_city" class="form-label small text-uppercase tracking-wider fw-bold text-secondary mb-2">Operating City (for Weather tracking)</label>
                         <div class="input-group-custom">
                             {{ form.vendor_city }}
                             <i class="fa-solid fa-city input-icon"></i>
@@ -252,30 +205,30 @@
                                 <div class="text-danger small mt-1">{% for error in form.vendor_city.errors %}{{ error }}{% endfor %}</div>
                             {% endif %}
                         </div>
-                        <div class="form-text text-muted small mt-1" style="font-size: 0.8rem;">Enter **Seattle** (Rain), **Buffalo** (Snow), or **Miami** (Storm) to test API alerts.</div>
                     </div>
                     
-                    <div class="mb-0">
-                        <label for="id_vendor_address" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Operating Address</label>
-                        <div class="input-group-custom mb-0">
+                    <div class="mb-3">
+                        <label for="id_vendor_address" class="form-label small text-uppercase tracking-wider fw-bold text-secondary mb-2">Business Address</label>
+                        <div class="input-group-custom">
                             {{ form.vendor_address }}
-                            <i class="fa-solid fa-map-location-dot input-icon" style="top: 25px;"></i>
+                            <i class="fa-solid fa-map-location-dot input-icon"></i>
                             {% if form.vendor_address.errors %}
                                 <div class="text-danger small mt-1">{% for error in form.vendor_address.errors %}{{ error }}{% endfor %}</div>
                             {% endif %}
                         </div>
                     </div>
                 </div>
-                
-                <button type="submit" class="btn btn-submit-gradient w-100 py-3 text-uppercase tracking-wide fw-bold mt-3" id="register-submit-btn">
-                    <i class="fa-solid fa-user-plus me-2"></i>Create Account
+
+                <!-- Action button -->
+                <button type="submit" class="btn btn-submit-gradient w-100 py-3 text-uppercase tracking-wide fw-bold mb-4" id="register-submit-btn">
+                    <i class="fa-solid fa-user-plus me-2"></i>Register Account
                 </button>
             </form>
-            
-            <div class="text-center mt-4 pt-3 border-top border-secondary" style="border-top-color: rgba(255,255,255,0.08) !important;">
-                <p class="text-muted mb-0 small">
-                    Already registered? 
-                    <a href="{% url 'login' %}" class="hover-underline ms-1">Sign In Here</a>
+
+            <div class="text-center mt-3 pt-3 border-top" style="border-top-color: #e2e8f0 !important;">
+                <p class="text-secondary mb-0 small">
+                    Already have an operating account? 
+                    <a href="{% url 'login' %}" class="hover-underline ms-1">Sign In</a>
                 </p>
             </div>
         </div>
@@ -287,18 +240,22 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const roleSelect = document.getElementById("id_role");
-        const vendorFields = document.getElementById("vendor-fields");
-
+        const vendorFieldsDiv = document.getElementById("vendor-fields");
+        
         function toggleVendorFields() {
             if (roleSelect.value === "vendor") {
-                vendorFields.style.display = "block";
+                vendorFieldsDiv.style.display = "block";
+                document.getElementById("id_vendor_name").setAttribute("required", "required");
+                document.getElementById("id_vendor_city").setAttribute("required", "required");
             } else {
-                vendorFields.style.display = "none";
+                vendorFieldsDiv.style.display = "none";
+                document.getElementById("id_vendor_name").removeAttribute("required");
+                document.getElementById("id_vendor_city").removeAttribute("required");
             }
         }
-
+        
         roleSelect.addEventListener("change", toggleVendorFields);
-        toggleVendorFields();
+        toggleVendorFields(); // Run on startup
     });
 </script>
 {% endblock %}

@@ -1,16 +1,40 @@
 {% extends 'inventory/base_dashboard.html' %}
 
-{% block title %}Control Center - Avis AI{% endblock %}
+{% block title %}Control Center - AVIS AI{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Add extra spacing and clean visual overrides */
+    .kpi-card {
+        border-left: 4px solid var(--accent-blue) !important;
+    }
+    .kpi-card-danger {
+        border-left: 4px solid #ef4444 !important;
+    }
+    .kpi-card-warning {
+        border-left: 4px solid #f59e0b !important;
+    }
+    .kpi-card-info {
+        border-left: 4px solid #06b6d4 !important;
+    }
+    
+    .btn-outline-glow.active {
+        background-color: #111827 !important;
+        color: #ffffff !important;
+        border-color: #111827 !important;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="row mb-4">
+<div class="row mb-4 align-items-center">
     <div class="col-md-8">
-        <h1 class="fw-bold"><span class="text-info">Avis AI</span> Control Center</h1>
-        <p class="text-muted">Powered by Katana AI Predictive Engine & Cryptographic Audit Ledgers</p>
+        <h1 class="fw-bold text-dark"><span class="text-primary">AVIS AI</span> Control Center</h1>
+        <p class="text-secondary small mb-0">Katana AI Predictive Operations & Cryptographic Ledger Audit</p>
     </div>
     <div class="col-md-4 text-md-end d-flex align-items-center justify-content-md-end gap-2">
         <a href="{% url 'order_create' %}" class="btn btn-glow" id="btn-create-order-shortcut">
-            <i class="fa-solid fa-file-invoice-dollar me-2"></i>New Order
+            <i class="fa-solid fa-file-invoice-dollar me-2"></i>New Purchase Order
         </a>
         <a href="{% url 'product_create' %}" class="btn btn-outline-glow btn-sm" id="btn-create-product-shortcut">
             <i class="fa-solid fa-plus me-1"></i>Add Product
@@ -18,116 +42,181 @@
     </div>
 </div>
 
-<!-- KPI Cards -->
+<!-- 1. Top Metrics Ribbon (Four KPI Panels) -->
 <div class="row mb-4 g-3">
-    <div class="col-md-4">
-        <div class="card glass-card p-4 text-center">
-            <i class="fa-solid fa-box-open text-primary fs-2 mb-2"></i>
-            <h5 class="text-uppercase tracking-wider fw-bold text-muted small">Total Products</h5>
-            <h2 class="fw-extrabold text-white mb-0" id="kpi-total-products">{{ products_count }}</h2>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card glass-card p-4 text-center">
-            <i class="fa-solid fa-truck-ramp-box text-success fs-2 mb-2"></i>
-            <h5 class="text-uppercase tracking-wider fw-bold text-muted small">Active Suppliers</h5>
-            <h2 class="fw-extrabold text-white mb-0" id="kpi-total-vendors">{{ vendors_count }}</h2>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card glass-card p-4 text-center">
-            <i class="fa-solid fa-receipt text-warning fs-2 mb-2"></i>
-            <h5 class="text-uppercase tracking-wider fw-bold text-muted small">Purchase Orders</h5>
-            <h2 class="fw-extrabold text-white mb-0" id="kpi-total-orders">{{ orders_count }}</h2>
-        </div>
-    </div>
-</div>
-
-<!-- Warning / Alert Panels (Weather + Smart Reorder) -->
-<div class="row mb-4 g-4">
-    <!-- Smart AI Reorder Alerts -->
-    <div class="col-lg-6">
-        <div class="card glass-card h-100 p-4">
-            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-secondary pb-2">
-                <h4 class="fw-bold text-light mb-0">
-                    <i class="fa-solid fa-brain text-purple me-2"></i>Smart Reorder Alerts
-                </h4>
-                <span class="badge badge-ai px-2 py-1" style="background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3);">Katana AI Engine</span>
-            </div>
-            
-            <div id="smart-alerts-container">
-                <div class="text-center py-5 text-muted">
-                    <i class="fa-solid fa-spinner fa-spin fs-2 mb-3 text-info"></i>
-                    <p class="mb-0">Loading dynamic AI forecasts...</p>
+    <!-- Active SKUs -->
+    <div class="col-md-3">
+        <div class="card glass-card kpi-card kpi-card-info p-4 text-start">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="kpi-title">Total Active SKUs</h5>
+                    <h2 class="kpi-value mb-0" id="kpi-total-skus">{{ products_count }}</h2>
                 </div>
+                <i class="fa-solid fa-boxes-stacked text-info fs-3"></i>
             </div>
         </div>
     </div>
-
-    <!-- Weather Logistics Delay Warnings -->
-    <div class="col-lg-6">
-        <div class="card glass-card h-100 p-4">
-            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-secondary pb-2">
-                <h4 class="fw-bold text-light mb-0">
-                    <i class="fa-solid fa-cloud-bolt text-danger me-2"></i>Logistics Delay Engine
-                </h4>
-                <span class="badge badge-weather px-2 py-1" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3);">Weather API Radar</span>
-            </div>
-            
-            <div id="weather-alerts-container">
-                <div class="text-center py-5 text-muted">
-                    <i class="fa-solid fa-spinner fa-spin fs-2 mb-3 text-info"></i>
-                    <p class="mb-0">Scanning active supplier weather radar...</p>
+    <!-- Pending Requests -->
+    <div class="col-md-3">
+        <div class="card glass-card kpi-card p-4 text-start">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="kpi-title">Pending Requests</h5>
+                    <h2 class="kpi-value mb-0" id="kpi-pending-requests">{{ pending_requests_count }}</h2>
                 </div>
+                <i class="fa-solid fa-clock-rotate-left text-primary fs-3"></i>
+            </div>
+        </div>
+    </div>
+    <!-- Critical Low Items -->
+    <div class="col-md-3">
+        <div class="card glass-card kpi-card {% if critical_low_count > 0 %}kpi-card-danger{% else %}kpi-card-info{% endif %} p-4 text-start">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="kpi-title">Critical Low Items</h5>
+                    <h2 class="kpi-value {% if critical_low_count > 0 %}text-danger{% endif %} mb-0" id="kpi-low-items">{{ critical_low_count }}</h2>
+                </div>
+                <i class="fa-solid fa-triangle-exclamation {% if critical_low_count > 0 %}text-danger pulse-warning{% else %}text-muted{% endif %} fs-3"></i>
+            </div>
+        </div>
+    </div>
+    <!-- Flagged Logistics Anomalies -->
+    <div class="col-md-3">
+        <div class="card glass-card kpi-card {% if logistics_anomalies_count > 0 %}kpi-card-warning{% else %}kpi-card-info{% endif %} p-4 text-start">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="kpi-title">Logistics Anomalies</h5>
+                    <h2 class="kpi-value {% if logistics_anomalies_count > 0 %}text-warning{% endif %} mb-0" id="kpi-logistics-anomalies">{{ logistics_anomalies_count }}</h2>
+                </div>
+                <i class="fa-solid fa-cloud-bolt {% if logistics_anomalies_count > 0 %}text-warning pulse-warning{% else %}text-muted{% endif %} fs-3"></i>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Active Orders & Cryptographic Ledger Audit -->
-<div class="row g-4">
-    <!-- Active Purchase Orders Table -->
-    <div class="col-xl-8">
-        <div class="card glass-card p-4 h-100">
-            <h4 class="fw-bold text-light mb-4"><i class="fa-solid fa-file-waveform text-info me-2"></i>Recent Orders</h4>
+<!-- 2. The Dynamic Alert Banner -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card glass-card p-4">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-bell text-warning me-2"></i>Dynamic Operations Radar</h5>
+            <div id="dynamic-alerts-banner">
+                <!-- Asynchronously loaded warnings and suggestions -->
+                <div class="text-center py-3 text-muted">
+                    <i class="fa-solid fa-circle-notch fa-spin fs-4 mb-2 text-primary"></i>
+                    <p class="mb-0 small">Querying automated forecasting models and weather satellites...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Consolidated Inventory & Order Management Datagrid -->
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="card glass-card p-0 overflow-hidden">
+            <div class="px-4 py-3 border-bottom d-flex align-items-center justify-content-between bg-light">
+                <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-table-list text-primary me-2"></i>Master Operations Datagrid</h5>
+                <span class="badge bg-secondary text-white font-monospace px-2 py-1">GRID LOOKUP: ON</span>
+            </div>
+            
+            <!-- Professional Search & Filter Controls -->
+            <div class="p-3 border-bottom d-flex flex-wrap align-items-center justify-content-between gap-3 bg-white">
+                <div class="input-group" style="max-width: 320px;">
+                    <span class="input-group-text bg-light border-end-0 text-muted" style="border-color: #cbd5e1;"><i class="fa-solid fa-magnifying-glass fs-6"></i></span>
+                    <input type="text" id="masterGridSearch" class="form-control ps-1" placeholder="Search SKU or Product Name..." style="font-size: 0.88rem; border-color: #cbd5e1;">
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-sm btn-outline-glow px-3 py-1.5 active" id="filter-btn-all" onclick="filterMasterGrid('all')">All Items</button>
+                    <button class="btn btn-sm btn-outline-glow px-3 py-1.5" id="filter-btn-low" onclick="filterMasterGrid('low')">Low Stock</button>
+                    <button class="btn btn-sm btn-outline-glow px-3 py-1.5" id="filter-btn-pending" onclick="filterMasterGrid('pending')">Pending Orders</button>
+                </div>
+            </div>
+
             <div class="table-responsive">
-                <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+                <table class="table table-hover align-middle mb-0">
                     <thead>
                         <tr class="text-muted small uppercase">
-                            <th class="border-secondary">Order ID</th>
-                            <th class="border-secondary">Product</th>
-                            <th class="border-secondary">Supplier</th>
-                            <th class="border-secondary text-end">Quantity</th>
-                            <th class="border-secondary text-center">Status</th>
-                            <th class="border-secondary text-center">Date Placed</th>
+                            <th>SKU / Product</th>
+                            <th>Stock Level</th>
+                            <th>Smart Reorder Point</th>
+                            <th>Active Supply Order</th>
+                            <th>Vendor</th>
+                            <th>Logistics Status</th>
+                            <th class="text-center">Audit Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% if orders %}
-                            {% for order in orders %}
-                                <tr id="order-row-{{ order.id }}">
-                                    <td class="fw-bold text-info border-secondary">PO-{{ order.id }}</td>
-                                    <td class="text-light border-secondary">
-                                        {{ order.product.name }}
-                                        <div class="small text-muted">{{ order.product.sku }}</div>
+                        {% if datagrid_items %}
+                            {% for item in datagrid_items %}
+                                <tr>
+                                    <!-- SKU / Product -->
+                                    <td>
+                                        <span class="fw-bold text-primary">{{ item.product.sku }}</span>
+                                        <div class="text-dark small fw-semibold">{{ item.product.name }}</div>
                                     </td>
-                                    <td class="text-muted border-secondary">{{ order.vendor.name }}</td>
-                                    <td class="text-light text-end fw-bold border-secondary">{{ order.quantity }}</td>
-                                    <td class="text-center border-secondary">
-                                        {% if order.status == 'Pending' %}
-                                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Pending</span>
-                                        {% elif order.status == 'Shipped' %}
-                                            <span class="badge bg-primary text-white px-3 py-2 rounded-pill">Shipped</span>
+                                    <!-- Stock Level -->
+                                    <td class="fw-bold text-dark">
+                                        {{ item.qty }} units
+                                    </td>
+                                    <!-- Smart Reorder Point -->
+                                    <td>
+                                        {% if item.triggered %}
+                                            <span class="text-danger fw-bold"><i class="fa-solid fa-circle-down me-1"></i>{{ item.rop }} units (Triggered)</span>
                                         {% else %}
-                                            <span class="badge bg-success text-white px-3 py-2 rounded-pill">Delivered</span>
+                                            <span class="text-secondary">{{ item.rop }} units</span>
                                         {% endif %}
                                     </td>
-                                    <td class="text-muted text-center border-secondary small">{{ order.created_at|date:"M d, Y H:i" }}</td>
+                                    <!-- Active Supply Order -->
+                                    <td>
+                                        {% if item.latest_order %}
+                                            <span class="fw-bold text-dark">#SO-{{ item.latest_order.id }}</span>
+                                        {% else %}
+                                            <span class="text-muted">None</span>
+                                        {% endif %}
+                                    </td>
+                                    <!-- Vendor -->
+                                    <td class="text-secondary">
+                                        {% if item.latest_order %}
+                                            {{ item.latest_order.vendor.name }}
+                                        {% else %}
+                                            None
+                                        {% endif %}
+                                    </td>
+                                    <!-- Logistics Status -->
+                                    <td>
+                                        {% if item.latest_order %}
+                                            {% if item.latest_order.status == 'Pending' %}
+                                                <span class="badge badge-pending px-3 py-1 rounded-pill">Pending</span>
+                                            {% elif item.latest_order.status == 'Accepted' %}
+                                                <span class="badge badge-accepted px-3 py-1 rounded-pill">Accepted</span>
+                                            {% elif item.latest_order.status == 'Shipped' %}
+                                                <span class="badge badge-shipped px-3 py-1 rounded-pill">Shipped</span>
+                                            {% else %}
+                                                <span class="badge badge-delivered px-3 py-1 rounded-pill">Delivered</span>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <!-- Audit Status -->
+                                    <td class="text-center">
+                                        {% if item.latest_order %}
+                                            {% if not ledger_valid %}
+                                                <span class="badge bg-danger text-white px-3 py-1 rounded-pill"><i class="fa-solid fa-circle-xmark me-1"></i>Corrupted ❌</span>
+                                            {% elif item.latest_order.status == 'Delivered' %}
+                                                <span class="badge badge-delivered px-3 py-1 rounded-pill"><i class="fa-solid fa-lock me-1"></i>Immutable 🔒</span>
+                                            {% else %}
+                                                <span class="badge badge-accepted px-3 py-1 rounded-pill"><i class="fa-solid fa-circle-check me-1"></i>Verified ✅</span>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-4 border-secondary">No purchase orders placed yet.</td>
+                                <td colspan="7" class="text-center text-muted py-4">No products exist in your inventory database catalog.</td>
                             </tr>
                         {% endif %}
                     </tbody>
@@ -135,136 +224,152 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Cryptographic Ledger Summary -->
-    <div class="col-xl-4">
+<!-- Recent Ledger Blocks Summary -->
+<div class="row g-4">
+    <div class="col-md-6">
         <div class="card glass-card p-4 h-100">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <h4 class="fw-bold text-light mb-0"><i class="fa-solid fa-lock text-success me-2"></i>Ledger Integrity</h4>
-                <a href="{% url 'blockchain_view' %}" class="btn btn-outline-glow btn-sm">Full Ledger</a>
-            </div>
-            
-            <div class="text-center p-3 mb-4 rounded d-flex flex-column align-items-center justify-content-center" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border);">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-shield-halved text-success me-2"></i>Ledger Status</h5>
+            <div class="text-center p-3 mb-4 rounded d-flex flex-column align-items-center justify-content-center" style="background: #f8fafc; border: 1px solid var(--border-color);">
                 {% if ledger_valid %}
-                    <i class="fa-solid fa-shield-halved text-success fs-1 mb-2"></i>
+                    <i class="fa-solid fa-circle-check text-success fs-1 mb-2"></i>
                     <h5 class="fw-bold text-success mb-1">Chain Secured</h5>
-                    <p class="text-muted small mb-0">Cryptographic audit log is 100% integral and verified.</p>
+                    <p class="text-secondary small mb-0">Cryptographic audit log is 100% integral and verified.</p>
                 {% else %}
                     <i class="fa-solid fa-triangle-exclamation text-danger fs-1 mb-2 pulse-warning"></i>
-                    <h5 class="fw-bold text-danger mb-1">Chain Corrupted!</h5>
-                    <p class="text-muted small mb-0">A database mismatch was detected. Unauthorized block edit occurred.</p>
+                    <h5 class="fw-bold text-danger mb-1">Chain Mismatch!</h5>
+                    <p class="text-secondary small mb-0">Database values modified without authorization. Block edit detected.</p>
                 {% endif %}
             </div>
-
-            <h6 class="fw-bold text-muted text-uppercase tracking-wider small mb-3">Audit Logs (Latest Blocks)</h6>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card glass-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-cubes text-primary me-2"></i>Latest Blocks</h5>
+                <a href="{% url 'blockchain_view' %}" class="btn btn-outline-glow btn-sm">Full Ledger</a>
+            </div>
             <div class="d-flex flex-column gap-2" id="block-list-summary">
                 {% if recent_blocks %}
                     {% for block in recent_blocks %}
-                        <div class="p-2 rounded border border-secondary d-flex align-items-center justify-content-between" style="background: rgba(255,255,255,0.01); font-size: 0.85rem;">
+                        <div class="p-2 rounded d-flex align-items-center justify-content-between" style="background: #f1f5f9; border: 1px solid var(--border-color); font-size: 0.85rem;">
                             <div>
-                                <strong class="text-info">Block #{{ block.index }}</strong>
-                                <div class="text-muted small" style="font-family: monospace;">Hash: {{ block.hash|slice:":12" }}...</div>
+                                <strong class="text-primary">Block #{{ block.index }}</strong>
+                                <div class="text-secondary small" style="font-family: monospace; word-break: break-all;">Hash: {{ block.hash|slice:":12" }}...</div>
                             </div>
                             <span class="badge bg-secondary font-monospace">{{ block.timestamp|date:"H:i:s" }}</span>
                         </div>
                     {% endfor %}
                 {% else %}
-                    <div class="text-center py-4 text-muted small">No audit ledger entries written yet. Finalize an order to write.</div>
+                    <div class="text-center py-4 text-secondary small">No audit ledger entries written yet. Finalize an order to write.</div>
                 {% endif %}
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // Asynchronously fetch and display Smart AI alerts
-    fetch("{% url 'api_reorder_alerts' %}")
-        .then(res => res.json())
-        .then(data => {
-            const container = document.getElementById('smart-alerts-container');
-            if (data.alerts && data.alerts.length > 0) {
-                let html = '<div class="overflow-auto" style="max-height: 280px;">';
-                data.alerts.forEach(alert => {
-                    html += `
-                        <div class="p-3 mb-2 rounded border border-danger-subtle d-flex justify-content-between align-items-center" style="background: rgba(239, 68, 68, 0.05);">
-                            <div>
-                                <h6 class="fw-bold text-light mb-1">${alert.product_name}</h6>
-                                <span class="text-muted small">Current Qty: <strong class="text-danger">${alert.current_qty}</strong></span>
-                                <span class="mx-2 text-muted">|</span>
-                                <span class="text-muted small">AI ROP threshold: <strong class="text-success">${alert.reorder_point}</strong></span>
-                            </div>
-                            <div class="text-end d-flex flex-column align-items-end gap-1">
-                                <span class="badge bg-danger text-uppercase px-2 py-1" style="font-size: 0.75rem;">Reorder Required</span>
-                                <div class="text-muted small" style="font-size: 0.75rem;">Projected Sales: <strong>${alert.projected_sales}</strong> / mo</div>
-                                <a href="/manager/products/${alert.product_id}/quick-order/" class="btn btn-sm btn-success px-3 rounded-pill fw-bold mt-1" style="font-size: 0.78rem; box-shadow: 0 0 10px rgba(25,135,84,0.35);">
-                                    <i class="fa-solid fa-circle-check me-1"></i>Accept
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-                container.innerHTML = html;
+    // Javascript search and filter implementation for the Master Operations Datagrid
+    document.getElementById('masterGridSearch').addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase().trim();
+        const rows = document.querySelectorAll('tbody tr');
+        
+        rows.forEach(row => {
+            const cells = row.cells;
+            if (cells.length < 2) return;
+            
+            const sku = cells[0].innerText.toLowerCase();
+            
+            if (sku.includes(query)) {
+                row.style.display = '';
             } else {
-                container.innerHTML = `
-                    <div class="text-center py-5 text-muted">
-                        <i class="fa-solid fa-circle-check text-success fs-2 mb-3"></i>
-                        <p class="mb-0">All stock items are well above AI-predicted reorder safety lines.</p>
-                    </div>
-                `;
+                row.style.display = 'none';
             }
-        })
-        .catch(err => {
-            console.error(err);
-            document.getElementById('smart-alerts-container').innerHTML = `
-                <div class="text-center py-5 text-danger">
-                    <i class="fa-solid fa-circle-exclamation fs-2 mb-3"></i>
-                    <p class="mb-0">Failed to connect to the AI forecasting server.</p>
-                </div>
-            `;
         });
+    });
 
-    // Asynchronously fetch and display Weather alerts
-    fetch("{% url 'api_weather_alerts' %}")
-        .then(res => res.json())
-        .then(data => {
-            const container = document.getElementById('weather-alerts-container');
-            if (data.alerts && data.alerts.length > 0) {
-                let html = '<div class="overflow-auto" style="max-height: 280px;">';
-                data.alerts.forEach(alert => {
-                    html += `
-                        <div class="p-3 mb-2 rounded border border-warning-subtle d-flex align-items-start gap-3" style="background: rgba(245, 158, 11, 0.05);">
-                            <i class="fa-solid fa-cloud-showers-heavy text-warning fs-4 mt-1"></i>
+    function filterMasterGrid(filterType) {
+        // Toggle active states on filter buttons
+        document.querySelectorAll('.btn-outline-glow').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`filter-btn-${filterType}`).classList.add('active');
+        
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            if (row.cells.length < 7) return; // Ignore headers / empty states
+            
+            if (filterType === 'all') {
+                row.style.display = '';
+            } else if (filterType === 'low') {
+                const hasTrigger = row.innerHTML.includes('Triggered');
+                row.style.display = hasTrigger ? '' : 'none';
+            } else if (filterType === 'pending') {
+                const hasPending = row.innerHTML.includes('badge-pending');
+                row.style.display = hasPending ? '' : 'none';
+            }
+        });
+    }
+
+    // Asynchronously fetch weather and reorder alerts, and combine them into a single warning ribbon
+    const weatherPromise = fetch("{% url 'api_weather_alerts' %}").then(res => res.json());
+    const reorderPromise = fetch("{% url 'api_reorder_alerts' %}").then(res => res.json());
+
+    Promise.all([weatherPromise, reorderPromise])
+        .then(([weatherData, reorderData]) => {
+            const container = document.getElementById('dynamic-alerts-banner');
+            let alertsHtml = '';
+
+            // Handle weather anomalies (Logistics warnings)
+            if (weatherData.alerts && weatherData.alerts.length > 0) {
+                weatherData.alerts.forEach(alert => {
+                    alertsHtml += `
+                        <div class="alert alert-warning border-0 p-3 mb-2 rounded d-flex align-items-start gap-2" style="background: #fffbeb; color: #b45309; border: 1px solid #fef3c7 !important;">
+                            <span class="fs-5">⚠️</span>
                             <div>
-                                <h6 class="fw-bold text-light mb-1">PO-${alert.order_id} &middot; ${alert.product_name}</h6>
-                                <p class="text-muted small mb-1">
-                                    Supplier: <strong>${alert.vendor_name}</strong> (${alert.city})
-                                </p>
-                                <span class="badge bg-warning text-dark font-monospace small" style="font-size: 0.75rem;">
-                                    <i class="fa-solid fa-triangle-exclamation me-1"></i>${alert.condition} Alert: ${alert.description}
-                                </span>
+                                <strong>Logistics Warning:</strong> Heavy Storms (${alert.condition}) forecasted in [${alert.city}]. Potential 24-48hr delay on Order #SO-${alert.order_id}.
                             </div>
                         </div>
                     `;
                 });
-                html += '</div>';
-                container.innerHTML = html;
-            } else {
+            }
+
+            // Handle automatic reorders
+            if (reorderData.alerts && reorderData.alerts.length > 0) {
+                reorderData.alerts.forEach(alert => {
+                    alertsHtml += `
+                        <div class="alert alert-danger border-0 p-3 mb-2 rounded d-flex align-items-center justify-content-between" style="background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2 !important;">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fs-5">🤖</span>
+                                <div>
+                                    <strong>AI Suggestion:</strong> Stock of <strong>${alert.product_name}</strong> is low (${alert.current_qty} units). Smart ROP is ${alert.reorder_point} units.
+                                </div>
+                            </div>
+                            <a href="/manager/products/${alert.product_id}/quick-order/" class="btn btn-sm btn-danger rounded-pill px-3 py-1 font-weight-bold" style="font-size: 0.78rem;">
+                                Quick Reorder
+                            </a>
+                        </div>
+                    `;
+                });
+            }
+
+            if (alertsHtml === '') {
                 container.innerHTML = `
-                    <div class="text-center py-5 text-muted">
-                        <i class="fa-solid fa-cloud-sun text-success fs-2 mb-3"></i>
-                        <p class="mb-0">All supply chains clear. Current supplier weather checks forecast no delays.</p>
+                    <div class="text-center py-3 text-success">
+                        <i class="fa-solid fa-circle-check fs-3 mb-2"></i>
+                        <p class="mb-0 small fw-semibold text-secondary">All systems nominal. No weather warning alerts or AI reorders detected.</p>
                     </div>
                 `;
+            } else {
+                container.innerHTML = alertsHtml;
             }
         })
         .catch(err => {
             console.error(err);
-            document.getElementById('weather-alerts-container').innerHTML = `
-                <div class="text-center py-5 text-danger">
-                    <i class="fa-solid fa-circle-exclamation fs-2 mb-3"></i>
-                    <p class="mb-0">Failed to connect to the Logistics weather API.</p>
+            document.getElementById('dynamic-alerts-banner').innerHTML = `
+                <div class="alert alert-danger border-0 p-3 mb-0 rounded" style="background: #fef2f2; color: #991b1b;">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>Failed to fetch real-time operational telemetry.
                 </div>
             `;
         });

@@ -1,33 +1,33 @@
 {% extends 'inventory/base_dashboard.html' %}
 
-{% block title %}Supplier Panel - Avis AI{% endblock %}
+{% block title %}Supplier Panel - AVIS AI{% endblock %}
 
 {% block content %}
 <div class="row mb-4 align-items-center">
     <div class="col-md-7">
-        <h1 class="fw-bold"><i class="fa-solid fa-truck-field text-info me-2"></i>{{ vendor.name }}</h1>
-        <p class="text-muted">Supplier Fulfillment Hub & Logistics Interface</p>
+        <h1 class="fw-bold text-dark"><i class="fa-solid fa-truck-field text-primary me-2"></i>{{ vendor.name }}</h1>
+        <p class="text-secondary small mb-0">Supplier Fulfillment Hub & Logistics Interface</p>
     </div>
     <!-- Local Weather Radar Widget -->
     <div class="col-md-5">
-        <div class="card glass-card p-3 border-0" style="background: rgba(255, 255, 255, 0.03);">
+        <div class="card glass-card p-3 border-0" style="background: #ffffff; border: 1px solid var(--border-color) !important;">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <h6 class="text-muted uppercase tracking-wider small mb-1"><i class="fa-solid fa-location-dot me-1"></i>Warehouse Location</h6>
-                    <h5 class="fw-bold text-white mb-0">{{ vendor.city }}</h5>
+                    <h6 class="text-secondary uppercase tracking-wider small mb-1"><i class="fa-solid fa-location-dot me-1"></i>Warehouse Location</h6>
+                    <h5 class="fw-bold text-dark mb-0">{{ vendor.city }}</h5>
                 </div>
                 <div class="text-end">
                     {% if weather_info.has_warning %}
                         <span class="badge bg-danger pulse-warning py-2 px-3 text-uppercase"><i class="fa-solid fa-triangle-exclamation me-1"></i>Delay Warning</span>
-                        <div class="small text-muted mt-1">{{ weather_info.condition }} Alert</div>
+                        <div class="small text-secondary mt-1">{{ weather_info.condition }} Alert</div>
                     {% else %}
                         <span class="badge bg-success py-2 px-3 text-uppercase"><i class="fa-solid fa-cloud-sun me-1"></i>Weather Clear</span>
-                        <div class="small text-muted mt-1">Good transit flow</div>
+                        <div class="small text-secondary mt-1">Good transit flow</div>
                     {% endif %}
                 </div>
             </div>
             {% if weather_info.has_warning %}
-                <div class="alert alert-danger border-0 p-2 mb-0 mt-2 small text-light" style="background: rgba(239, 68, 68, 0.1);">
+                <div class="alert alert-danger border-0 p-2 mb-0 mt-2 small text-dark" style="background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2 !important;">
                     <strong>Logistics Notice:</strong> {{ weather_info.description }}
                 </div>
             {% endif %}
@@ -35,67 +35,90 @@
     </div>
 </div>
 
-<!-- Assigned Purchase Orders -->
-<div class="card glass-card p-4">
-    <h4 class="fw-bold text-light mb-4"><i class="fa-solid fa-box-open text-warning me-2"></i>Assigned Purchase Orders</h4>
+<!-- Permanent Cryptographic Guarantee Banner -->
+<div class="card mb-4" style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;">
+    <div class="card-body p-3 d-flex align-items-center gap-3">
+        <span class="fs-4">🔒</span>
+        <div class="text-success small fw-semibold" id="crypto-guarantee-badge" style="color: #15803d !important;">
+            Contract Finalized via SHA-256 Block Verification. This transaction payload is permanently locked.
+        </div>
+    </div>
+</div>
+
+<!-- Inbound Orders Ledger -->
+<div class="card glass-card p-0 overflow-hidden">
+    <div class="px-4 py-3 border-bottom d-flex align-items-center justify-content-between bg-light">
+        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-receipt text-primary me-2"></i>Inbound Orders Ledger</h5>
+        <span class="badge bg-secondary text-white font-monospace px-2 py-1">INBOUND PO</span>
+    </div>
     <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+        <table class="table table-hover align-middle mb-0">
             <thead>
                 <tr class="text-muted small uppercase">
-                    <th class="border-secondary">Order ID</th>
-                    <th class="border-secondary">Item Name</th>
-                    <th class="border-secondary text-end">Quantity Requested</th>
-                    <th class="border-secondary text-center">Status</th>
-                    <th class="border-secondary text-center">Date Assigned</th>
-                    <th class="border-secondary text-center">Action</th>
+                    <th>Order ID</th>
+                    <th>Item Name</th>
+                    <th class="text-end">Quantity Requested</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Date Assigned</th>
+                    <th class="text-center">Fulfillment Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% if orders %}
                     {% for order in orders %}
                         <tr id="order-row-{{ order.id }}">
-                            <td class="fw-bold text-info border-secondary">PO-{{ order.id }}</td>
-                            <td class="text-light border-secondary">
-                                {{ order.product.name }}
+                            <td class="fw-bold text-primary">PO-{{ order.id }}</td>
+                            <td>
+                                <span class="text-dark fw-semibold">{{ order.product.name }}</span>
                                 <div class="small text-muted">{{ order.product.sku }}</div>
                             </td>
-                            <td class="text-light text-end fw-bold border-secondary">{{ order.quantity }}</td>
-                            <td class="text-center border-secondary">
+                            <td class="text-dark text-end fw-bold">{{ order.quantity }}</td>
+                            <td class="text-center">
                                 {% if order.status == 'Pending' %}
-                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Pending Confirmation</span>
+                                    <span class="badge badge-pending px-3 py-2 rounded-pill">Pending</span>
+                                {% elif order.status == 'Accepted' %}
+                                    <span class="badge badge-accepted px-3 py-2 rounded-pill">Accepted</span>
                                 {% elif order.status == 'Shipped' %}
-                                    <span class="badge bg-primary text-white px-3 py-2 rounded-pill">In Transit (Shipped)</span>
+                                    <span class="badge badge-shipped px-3 py-2 rounded-pill">Shipped</span>
                                 {% else %}
-                                    <span class="badge bg-success text-white px-3 py-2 rounded-pill">Delivered & Closed</span>
+                                    <span class="badge badge-delivered px-3 py-2 rounded-pill">Delivered</span>
                                 {% endif %}
                             </td>
-                            <td class="text-muted text-center border-secondary small">{{ order.created_at|date:"M d, Y H:i" }}</td>
-                            <td class="text-center border-secondary">
+                            <td class="text-secondary text-center small">{{ order.created_at|date:"M d, Y H:i" }}</td>
+                            <td class="text-center">
                                 {% if order.status == 'Pending' %}
                                     <form method="post" action="{% url 'vendor_order_status_update' order.pk %}" class="d-inline">
                                         {% csrf_token %}
+                                        <input type="hidden" name="status" value="Accepted">
+                                        <button type="submit" class="btn btn-glow btn-sm rounded px-3 py-1 font-weight-bold">
+                                            <i class="fa-solid fa-circle-check me-1"></i>Accept Order
+                                        </button>
+                                    </form>
+                                {% elif order.status == 'Accepted' %}
+                                    <form method="post" action="{% url 'vendor_order_status_update' order.pk %}" class="d-inline">
+                                        {% csrf_token %}
                                         <input type="hidden" name="status" value="Shipped">
-                                        <button type="submit" class="btn btn-primary btn-sm rounded-pill px-3">
-                                            <i class="fa-solid fa-truck-fast me-1"></i>Accept & Ship
+                                        <button type="submit" class="btn btn-glow btn-sm rounded px-3 py-1 font-weight-bold">
+                                            <i class="fa-solid fa-truck-fast me-1"></i>Mark as Shipped
                                         </button>
                                     </form>
                                 {% elif order.status == 'Shipped' %}
                                     <form method="post" action="{% url 'vendor_order_status_update' order.pk %}" class="d-inline">
                                         {% csrf_token %}
                                         <input type="hidden" name="status" value="Delivered">
-                                        <button type="submit" class="btn btn-success btn-sm rounded-pill px-3">
-                                            <i class="fa-solid fa-circle-check me-1"></i>Mark Delivered
+                                        <button type="submit" class="btn btn-glow btn-sm rounded px-3 py-1 font-weight-bold">
+                                            <i class="fa-solid fa-box-open me-1"></i>Mark Delivered
                                         </button>
                                     </form>
                                 {% else %}
-                                    <span class="text-muted small"><i class="fa-solid fa-lock me-1"></i>Fulfilled & Locked</span>
+                                    <span class="text-secondary small"><i class="fa-solid fa-lock me-1"></i>Immutable Block Locked</span>
                                 {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="6" class="text-center text-muted py-5 border-secondary">No purchase orders assigned to your supplier profile yet.</td>
+                        <td colspan="6" class="text-center text-secondary py-5">No purchase orders assigned to your supplier profile yet.</td>
                     </tr>
                 {% endif %}
             </tbody>

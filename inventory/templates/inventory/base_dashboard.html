@@ -3,235 +3,396 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Avis Dashboard - Operations Console{% endblock %}</title>
+    <title>{% block title %}avis ai - Operations Portal{% endblock %}</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
-    <!-- Dashboard Style Variables -->
+    <!-- Neo-Brutalist Dashboard Stylesheet -->
     <style>
         :root {
-            --bg-primary: #080d1a;
-            --bg-secondary: #0b1120;
-            --card-glass: rgba(18, 28, 48, 0.55);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --accent-glow: #00ffcc;
-            --accent-blue: #3b82f6;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --font-family: 'Outfit', sans-serif;
+            --bg-lavender: #D2C4FB;
+            --brand-lime: #DFFF00;
+            --bg-cream: #FAF9F6;
+            --text-dark: #1A1A24;
+            --status-green-bg: #E2F6D3;
+            --status-green-text: #2E6B12;
+            --status-red-bg: #FFE5E5;
+            --status-red-text: #CC0000;
+            --status-yellow-bg: #FFF2CC;
+            --status-yellow-text: #8C6B00;
+            --border-color: #1A1A24;
+            --border-main: 2px solid var(--border-color);
+            --font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: var(--bg-secondary);
-            color: var(--text-main);
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
             font-family: var(--font-family);
             min-height: 100vh;
-            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Glassmorphism Cards */
+        /* Top Header Navbar - Neo-Brutalist White */
+        .katana-navbar {
+            background-color: #ffffff !important;
+            border-bottom: var(--border-main);
+            padding: 0 !important;
+        }
+
+        .katana-brand {
+            font-weight: 900;
+            color: var(--text-dark) !important;
+            font-size: 1.4rem;
+            text-transform: lowercase;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            padding: 15px 24px;
+            border-right: var(--border-main);
+        }
+
+        /* Top Navigation Tabs */
+        .katana-nav-tabs {
+            display: flex;
+            margin-bottom: 0;
+            padding-left: 0;
+            list-style: none;
+            height: 100%;
+        }
+
+        .katana-nav-item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .katana-nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 18px 20px !important;
+            text-decoration: none;
+            transition: all 0.1s;
+            border-bottom: 4px solid transparent;
+            display: inline-block;
+        }
+
+        .katana-nav-link:hover {
+            background-color: var(--bg-lavender);
+        }
+
+        .katana-nav-link.active {
+            border-bottom-color: var(--text-dark) !important;
+            background-color: var(--bg-lavender);
+            font-weight: 800;
+        }
+
+        /* User section */
+        .navbar-user-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-right: 24px;
+        }
+
+        .user-pill {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            border: var(--border-main);
+            box-shadow: 2px 2px 0px var(--border-color);
+        }
+
+        .btn-logout-katana {
+            color: var(--text-dark) !important;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 800;
+            border: var(--border-main);
+            border-radius: 8px;
+            padding: 6px 12px;
+            background: #ffffff;
+            box-shadow: 2px 2px 0px var(--border-color);
+            transition: all 0.15s;
+        }
+
+        .btn-logout-katana:hover {
+            background-color: #ff5f56;
+            color: #ffffff !important;
+        }
+
+        /* Neo-Brutalist Card Panels */
         .glass-card {
-            background: var(--card-glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
+            background: #ffffff;
+            border: var(--border-main);
             border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-        }
-
-        .glass-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 16px;
-            padding: 1.5px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            z-index: 1;
+            box-shadow: 4px 4px 0px var(--border-color);
+            transition: all 0.15s ease-out;
         }
 
         .glass-card:hover {
-            box-shadow: 0 16px 40px rgba(0, 255, 204, 0.08);
-            transform: translateY(-3px);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--border-color);
         }
 
-        .glass-card:hover::before {
-            background: linear-gradient(135deg, #00ffcc 0%, #3b82f6 50%, #8b5cf6 100%);
+        /* Neo-Brutalist Grid Tables */
+        .table-responsive {
+            border: var(--border-main);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #ffffff;
         }
 
-        /* Glow buttons */
-        .btn-glow {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 24px;
+        .table {
+            color: var(--text-dark) !important;
+            margin-bottom: 0 !important;
+        }
+
+        .table th {
+            background-color: var(--text-dark) !important;
+            color: #ffffff !important;
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 16px;
+            border-bottom: var(--border-main);
+        }
+
+        .table td {
+            font-size: 0.88rem;
+            padding: 14px 16px;
+            border-bottom: var(--border-main);
+            background-color: #ffffff;
+        }
+
+        .table-hover tbody tr:hover td {
+            background-color: var(--bg-lavender) !important;
+        }
+
+        .table tr:nth-child(even) td {
+            background-color: var(--bg-cream);
+        }
+
+        /* Neo-Brutalist Form Inputs */
+        .form-control, .form-select {
+            background-color: #ffffff !important;
+            border: var(--border-main) !important;
+            color: var(--text-dark) !important;
+            border-radius: 8px !important;
+            padding: 12px 16px !important;
+            font-size: 0.95rem;
             font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+            box-shadow: 2px 2px 0px var(--border-color);
+            transition: all 0.15s ease-in-out;
+        }
+
+        .form-control:focus, .form-select:focus {
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px var(--border-color);
+            outline: none;
+        }
+
+        /* Neo-Brutalist Button Tokens */
+        .btn-glow {
+            background-color: var(--brand-lime) !important;
+            color: var(--text-dark) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 800;
+            font-size: 0.88rem;
+            padding: 10px 20px !important;
+            box-shadow: 3px 3px 0px var(--border-color);
+            transition: all 0.1s ease-in-out;
         }
 
         .btn-glow:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-            color: #fff;
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px var(--border-color);
         }
 
         .btn-outline-glow {
-            border: 1px solid rgba(0, 255, 204, 0.4);
-            color: var(--accent-glow) !important;
-            background: transparent;
-            border-radius: 10px;
-            padding: 8px 20px;
-            font-weight: 600;
-            transition: all 0.3s;
+            background-color: #ffffff !important;
+            color: var(--text-dark) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 800;
+            font-size: 0.88rem;
+            padding: 10px 20px !important;
+            box-shadow: 3px 3px 0px var(--border-color);
+            transition: all 0.1s ease-in-out;
         }
 
         .btn-outline-glow:hover {
-            background: rgba(0, 255, 204, 0.08);
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-            border-color: var(--accent-glow);
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px var(--border-color);
+            background-color: var(--bg-cream) !important;
         }
 
-        /* Fixed Sidebar styling */
-        .sidebar {
-            background-color: #080d1a !important;
-            border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+        /* KPI widgets */
+        .kpi-title {
+            color: var(--text-dark);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
 
-        .sidebar .nav-link {
-            color: #94a3b8 !important;
-            padding: 14px 20px !important;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            transition: all 0.25s ease;
-            margin: 2px 8px;
-            display: flex;
-            align-items: center;
-            font-weight: 500;
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
         }
 
-        .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            color: #00ffcc !important;
-            background: rgba(0, 255, 204, 0.08) !important;
-            box-shadow: inset 4px 0 0 #00ffcc;
+        /* Badge status styling (border radius 8px) */
+        .badge-delivered, .badge-success-clean {
+            background-color: var(--status-green-bg) !important;
+            color: var(--status-green-text) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 10px;
         }
 
-        .badge-ai {
-            background: rgba(139, 92, 246, 0.15);
-            color: #c084fc;
-            border: 1px solid rgba(139, 92, 246, 0.3);
+        .badge-shipped, .badge-primary-clean {
+            background-color: var(--bg-lavender) !important;
+            color: var(--text-dark) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 10px;
         }
 
-        /* Pulse indicators */
+        .badge-pending, .badge-warning-clean {
+            background-color: var(--status-yellow-bg) !important;
+            color: var(--status-yellow-text) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+        }
+        
+        .badge-accepted {
+            background-color: var(--bg-lavender) !important;
+            color: var(--text-dark) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+        }
+
         .pulse-warning {
-            animation: warning-pulse 2s infinite;
+            animation: pulse-warning-glow 1.5s infinite alternate;
         }
-        @keyframes warning-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+
+        @keyframes pulse-warning-glow {
+            0% { border-color: var(--border-color); }
+            100% { border-color: #ef4444; }
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-    <!-- 1. Fixed Sidebar Navigation Layout -->
-    <div class="d-flex" style="min-height: 100vh;">
-        <!-- Left Sidebar Navigation -->
-        <aside class="sidebar bg-dark text-light border-end" style="width: 260px; min-height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000;">
-            <div class="p-4 d-flex align-items-center border-bottom border-secondary" style="border-color: rgba(255,255,255,0.06) !important;">
-                <i class="fa-solid fa-layer-group me-2 fs-4" style="color: #00ffcc;"></i>
-                <span class="fs-5 fw-bold text-white tracking-wider" style="font-family: 'Outfit', sans-serif;">Avis Console</span>
+    <!-- Top Navigation Header -->
+    <header class="navbar navbar-expand-lg katana-navbar navbar-light sticky-top">
+        <div class="container-fluid p-0 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center h-100">
+                <!-- Brand logo -->
+                <a class="katana-brand" href="{% url 'landing' %}">
+                    avis ai
+                </a>
+                
+                <!-- Tab lists -->
+                <nav class="h-100 ms-2">
+                    <ul class="katana-nav-tabs">
+                        {% if user.is_manager %}
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link {% if request.resolver_match.url_name == 'manager_dashboard' %}active{% endif %}" href="{% url 'manager_dashboard' %}">
+                                    <i class="fa-solid fa-chart-line me-1"></i>Stock Control
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}" href="{% url 'product_list' %}">
+                                    <i class="fa-solid fa-boxes-stacked me-1"></i>Items
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link {% if request.resolver_match.url_name == 'vendor_list' %}active{% endif %}" href="{% url 'vendor_list' %}">
+                                    <i class="fa-solid fa-truck-field me-1"></i>Contacts
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link {% if request.resolver_match.url_name == 'blockchain_view' %}active{% endif %}" href="{% url 'blockchain_view' %}">
+                                    <i class="fa-solid fa-shield-halved me-1"></i>Audit Ledger
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link {% if request.resolver_match.url_name == 'vendor_dashboard' %}active{% endif %}" href="{% url 'vendor_dashboard' %}">
+                                    <i class="fa-solid fa-warehouse me-1"></i>Fulfillment Ledger
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
             
-            <div class="py-3 px-1">
-                <ul class="nav flex-column gap-1">
-                    {% if user.is_manager %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'manager_dashboard' %}active{% endif %}" href="{% url 'manager_dashboard' %}">
-                                <i class="fa-solid fa-chart-line me-2"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if 'products' in request.path %}active{% endif %}" href="{% url 'product_list' %}">
-                                <i class="fa-solid fa-boxes-stacked me-2"></i>Inventory
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if 'vendors' in request.path %}active{% endif %}" href="{% url 'vendor_list' %}">
-                                <i class="fa-solid fa-truck-field me-2"></i>Vendors
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if 'blockchain' in request.path %}active{% endif %}" href="{% url 'blockchain_view' %}">
-                                <i class="fa-solid fa-shield-halved me-2"></i>Audit Chain
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'vendor_dashboard' %}active{% endif %}" href="{% url 'vendor_dashboard' %}">
-                                <i class="fa-solid fa-warehouse me-2"></i>Supplier Panel
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
+            <!-- User pill profile in top right -->
+            <div class="navbar-user-section">
+                <span class="user-pill">
+                    <i class="fa-solid fa-circle-user me-1 text-primary"></i>
+                    <strong>{{ user.username }}</strong> &middot; <span class="text-secondary">{{ user.get_role_display }}</span>
+                </span>
+                <a class="btn-logout-katana" href="{% url 'logout' %}">
+                    <i class="fa-solid fa-sign-out-alt"></i> Logout
+                </a>
             </div>
-        </aside>
-
-        <!-- Right Side Main Content Panel -->
-        <div class="flex-grow-1 d-flex flex-column" style="margin-left: 260px; min-height: 100vh; background: #0b1120;">
-            <!-- Top Dashboard Header Bar -->
-            <header class="navbar navbar-expand-lg navbar-dark border-bottom px-4 py-3" style="background: #080d1a; border-color: rgba(255,255,255,0.06) !important;">
-                <span class="navbar-brand fs-6 fw-normal text-muted" style="letter-spacing: 0.5px;">Katana AI Engine Active</span>
-                <div class="ms-auto d-flex align-items-center gap-3">
-                    <span class="text-white small">
-                        <i class="fa-solid fa-circle-user me-1" style="color: #00ffcc;"></i>
-                        <strong>{{ user.username }}</strong>
-                        <span class="badge bg-secondary ms-1">{{ user.get_role_display }}</span>
-                    </span>
-                    <a class="btn btn-outline-danger btn-sm px-3 rounded-pill" href="{% url 'logout' %}" style="font-size: 0.8rem; border-color: rgba(220,53,69,0.35);">
-                        <i class="fa-solid fa-sign-out-alt me-1"></i>Logout
-                    </a>
-                </div>
-            </header>
-
-            <!-- Alerts Container -->
-            <div class="px-4 pt-4">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% else %}info{% endif %} alert-dismissible fade show border-0 mb-3 text-light" role="alert" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px);">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-circle-info me-2 fs-5 text-info"></i>
-                                <div>{{ message }}</div>
-                            </div>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-
-            <!-- Page Block Content -->
-            <main class="flex-grow-1 p-4">
-                {% block content %}{% endblock %}
-            </main>
-
-            <!-- Mini Dashboard Footer -->
-            <footer class="text-center py-4 border-top mt-auto" style="border-color: rgba(255,255,255,0.06) !important;">
-                <p class="mb-1 text-muted small">© 2026 Avis AI - Next-Gen Operations Panel</p>
-            </footer>
         </div>
+    </header>
+
+    <!-- Public Message Notification system -->
+    <div class="container-fluid px-4 mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% else %}info{% endif %} alert-dismissible fade show border-0" role="alert" style="background-color: #ffffff; border: var(--border-main) !important; box-shadow: 3px 3px 0px var(--border-color);">
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-circle-info me-2 fs-5"></i>
+                        <div>{{ message }}</div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
+
+    <!-- Main Content Panel -->
+    <main class="flex-grow-1 p-4">
+        <div class="container-fluid">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-3 border-top mt-auto" style="background-color: #ffffff; border-top: var(--border-main) !important;">
+        <p class="mb-0 text-muted small">© 2026 AVIS AI &middot; Active Environment: PostgreSQL &middot; Neo-Brutalist Engine</p>
+    </footer>
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/dist/js/bootstrap.bundle.min.js"></script>

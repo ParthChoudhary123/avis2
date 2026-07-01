@@ -94,15 +94,9 @@ def _train_and_predict(product_id):
         predicted_sales = max(0.0, predicted_sales)
         
         # Calculate Smart Reorder Point
-        try:
-            safety_stock = product.stock.min_threshold
-        except Stock.DoesNotExist:
-            safety_stock = 10
-            
-        lead_time_days = 7
-        daily_sales_projection = predicted_sales / 30.0
-        reorder_point = (daily_sales_projection * lead_time_days) + safety_stock
-        reorder_point = round(reorder_point, 2)
+        # Smart Reorder Point math: Forecasted sales volume plus 20% safety margin
+        smart_reorder_point = int(predicted_sales * 1.20)
+        reorder_point = max(smart_reorder_point, 5)
         
         with cache_lock:
             PREDICTION_CACHE[product_id] = {

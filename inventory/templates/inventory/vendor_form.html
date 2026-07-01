@@ -1,18 +1,18 @@
 {% extends 'inventory/base_dashboard.html' %}
 
-{% block title %}{{ title }} - AVIS{% endblock %}
+{% block title %}Supplier Profile - AVIS AI{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
         <div class="card glass-card p-5">
-            <h2 class="fw-bold mb-4 text-center text-info">{{ title }}</h2>
+            <h2 class="fw-bold mb-4 text-center text-primary">{{ title }}</h2>
             
             <form method="post" id="vendor-form" novalidate>
                 {% csrf_token %}
                 
                 <div class="mb-3">
-                    <label for="id_name" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Vendor Name / Business</label>
+                    <label for="id_name" class="form-label small text-uppercase tracking-wider fw-semibold text-secondary">Vendor Name / Business</label>
                     {{ form.name }}
                     {% if form.name.errors %}
                         <div class="text-danger small mt-1">{% for error in form.name.errors %}{{ error }}{% endfor %}</div>
@@ -20,7 +20,7 @@
                 </div>
                 
                 <div class="mb-3">
-                    <label for="id_email" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Email Address</label>
+                    <label for="id_email" class="form-label small text-uppercase tracking-wider fw-semibold text-secondary">Email Address</label>
                     {{ form.email }}
                     {% if form.email.errors %}
                         <div class="text-danger small mt-1">{% for error in form.email.errors %}{{ error }}{% endfor %}</div>
@@ -28,16 +28,16 @@
                 </div>
                 
                 <div class="mb-3">
-                    <label for="id_city" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Operating City (for Logistics Weather checks)</label>
+                    <label for="id_city" class="form-label small text-uppercase tracking-wider fw-semibold text-secondary">Operating City (for Logistics Weather checks)</label>
                     {{ form.city }}
                     {% if form.city.errors %}
                         <div class="text-danger small mt-1">{% for error in form.city.errors %}{{ error }}{% endfor %}</div>
                     {% endif %}
-                    <div class="form-text text-muted small">We look up weather for this city to flag potential shipping delays. Try "Seattle", "Buffalo", or "Miami" for demo warnings.</div>
+                    <div class="form-text text-secondary small">We look up weather for this city to flag potential shipping delays. Try "Seattle", "Buffalo", or "Miami" for demo warnings.</div>
                 </div>
                 
                 <div class="mb-4">
-                    <label for="id_address" class="form-label small text-uppercase tracking-wider fw-semibold text-muted">Full Address</label>
+                    <label for="id_address" class="form-label small text-uppercase tracking-wider fw-semibold text-secondary">Full Address</label>
                     {{ form.address }}
                     {% if form.address.errors %}
                         <div class="text-danger small mt-1">{% for error in form.address.errors %}{{ error }}{% endfor %}</div>
@@ -45,7 +45,7 @@
                 </div>
                 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <a href="{% url 'vendor_list' %}" class="btn btn-outline-secondary px-4 py-2">
+                    <a href="{% url 'vendor_list' %}" class="btn btn-outline-glow px-4 py-2">
                         <i class="fa-solid fa-arrow-left me-1"></i>Cancel
                     </a>
                     <button type="submit" class="btn btn-glow px-4 py-2" id="vendor-submit-btn">

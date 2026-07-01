@@ -1,12 +1,12 @@
 {% extends 'inventory/base_dashboard.html' %}
 
-{% block title %}Supplier Network - Avis AI{% endblock %}
+{% block title %}Supplier Network - AVIS AI{% endblock %}
 
 {% block content %}
 <div class="row mb-4 align-items-center">
     <div class="col-md-8">
-        <h1 class="fw-bold"><i class="fa-solid fa-truck-field text-info me-2"></i>Supplier Network</h1>
-        <p class="text-muted">Registered Vendor Profiles, Locations & Contact Details</p>
+        <h1 class="fw-bold text-dark"><i class="fa-solid fa-truck-field text-primary me-2"></i>Supplier Network</h1>
+        <p class="text-secondary small mb-0">Registered Vendor Profiles, Locations & Contact Details</p>
     </div>
     <div class="col-md-4 text-md-end">
         <a href="{% url 'vendor_create' %}" class="btn btn-glow" id="btn-create-vendor">
@@ -15,45 +15,49 @@
     </div>
 </div>
 
-<div class="card glass-card p-4">
+<div class="card glass-card p-0 overflow-hidden">
+    <div class="px-4 py-3 border-bottom d-flex align-items-center justify-content-between bg-light">
+        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-address-book text-primary me-2"></i>Supplier Contacts Directory</h5>
+        <span class="badge bg-secondary text-white font-monospace px-2 py-1">VENDORS LIST</span>
+    </div>
     <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+        <table class="table table-hover align-middle mb-0">
             <thead>
                 <tr class="text-muted small uppercase">
-                    <th class="border-secondary">Vendor Name</th>
-                    <th class="border-secondary">Email Address</th>
-                    <th class="border-secondary">City</th>
-                    <th class="border-secondary">Address</th>
-                    <th class="border-secondary text-center">Linked Portal User</th>
-                    <th class="border-secondary text-center">Actions</th>
+                    <th>Vendor Name</th>
+                    <th>Email Address</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th class="text-center">Linked Portal User</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% if vendors %}
                     {% for vendor in vendors %}
                         <tr id="vendor-row-{{ vendor.id }}">
-                            <td class="fw-bold text-light border-secondary fs-6">{{ vendor.name }}</td>
-                            <td class="text-muted border-secondary">{{ vendor.email }}</td>
-                            <td class="border-secondary">
-                                <span class="badge bg-dark border border-secondary text-light px-3 py-1">
+                            <td class="fw-bold text-dark fs-6">{{ vendor.name }}</td>
+                            <td class="text-secondary">{{ vendor.email }}</td>
+                            <td>
+                                <span class="badge badge-accepted text-dark px-3 py-1 rounded-pill">
                                     <i class="fa-solid fa-location-dot me-1"></i>{{ vendor.city }}
                                 </span>
                             </td>
-                            <td class="text-muted border-secondary small">{{ vendor.address|default:"N/A" }}</td>
-                            <td class="text-center border-secondary">
+                            <td class="text-secondary small">{{ vendor.address|default:"N/A" }}</td>
+                            <td class="text-center">
                                 {% if vendor.user %}
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><i class="fa-solid fa-link me-1"></i>{{ vendor.user.username }}</span>
+                                    <span class="badge badge-delivered px-2 py-1 rounded-pill"><i class="fa-solid fa-link me-1"></i>{{ vendor.user.username }}</span>
                                 {% else %}
-                                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1"><i class="fa-solid fa-triangle-exclamation me-1"></i>No Portal Account</span>
+                                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1 rounded-pill"><i class="fa-solid fa-triangle-exclamation me-1"></i>No Portal Account</span>
                                 {% endif %}
                             </td>
-                            <td class="text-center border-secondary">
+                            <td class="text-center">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="{% url 'vendor_edit' vendor.pk %}" class="btn btn-outline-warning" title="Edit Supplier details">
-                                        <i class="fa-solid fa-edit"></i>
+                                    <a href="{% url 'vendor_edit' vendor.pk %}" class="btn btn-outline-secondary btn-sm" title="Edit Supplier details">
+                                        <i class="fa-solid fa-edit text-warning"></i>
                                     </a>
-                                    <a href="{% url 'vendor_delete' vendor.pk %}" class="btn btn-outline-danger" title="Remove Supplier">
-                                        <i class="fa-solid fa-trash-can"></i>
+                                    <a href="{% url 'vendor_delete' vendor.pk %}" class="btn btn-outline-secondary btn-sm" title="Remove Supplier">
+                                        <i class="fa-solid fa-trash-can text-danger"></i>
                                     </a>
                                 </div>
                             </td>
@@ -61,7 +65,7 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="6" class="text-center text-muted py-5 border-secondary">No suppliers registered in AVIS. Click Add New Supplier above.</td>
+                        <td colspan="6" class="text-center text-muted py-5">No suppliers registered in AVIS. Click Add New Supplier above.</td>
                     </tr>
                 {% endif %}
             </tbody>

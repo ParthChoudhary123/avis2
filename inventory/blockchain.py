@@ -1,27 +1,30 @@
 import hashlib
 import json
+import time
 from django.utils import timezone
 from .models import AuditBlock
 
-class Block:
-    def __init__(self, index, timestamp, order_data, previous_hash):
+class OrderBlock:
+    def __init__(self, index, previous_hash, order_payload, timestamp=None):
         self.index = index
-        self.timestamp = timestamp
-        self.order_data = order_data
+        self.timestamp = timestamp if timestamp is not None else time.time()
         self.previous_hash = previous_hash
-        self.hash = self.calculate_hash()
+        self.order_payload = order_payload
+        self.hash = self.compute_block_hash()
 
-    def calculate_hash(self):
+    def compute_block_hash(self):
         # Normalize timestamp to integer UNIX timestamp to prevent string/timezone format mismatches across databases
         ts = self.timestamp
         if not isinstance(ts, (int, float)):
             ts = int(ts.timestamp())
+        else:
+            ts = int(ts)
             
         block_string = json.dumps({
             "index": self.index,
             "timestamp": ts,
-            "order_data": self.order_data,
-            "previous_hash": self.previous_hash
+            "previous_hash": self.previous_hash,
+            "order_payload": self.order_payload
         }, sort_keys=True)
         return hashlib.sha256(block_string.encode('utf-8')).hexdigest()
 
@@ -49,17 +52,17 @@ def add_order_to_ledger(order):
         next_index = 1
         previous_hash = "0" * 64
 
-    new_block = Block(
+    new_block = OrderBlock(
         index=next_index,
-        timestamp=timezone.now(),
-        order_data=payload_str,
-        previous_hash=previous_hash
+        previous_hash=previous_hash,
+        order_payload=payload_str,
+        timestamp=timezone.now()
     )
 
     AuditBlock.objects.create(
         index=new_block.index,
         timestamp=new_block.timestamp,
-        order_data=new_block.order_data,
+        order_data=new_block.order_payload,
         previous_hash=new_block.previous_hash,
         hash=new_block.hash
     )
@@ -76,20 +79,16 @@ def verify_chain_integrity():
     
     previous_hash = "0" * 64
     for block in blocks:
-        ts = block.timestamp
-        if not isinstance(ts, (int, float)):
-            ts = int(ts.timestamp())
-            
-        block_string = json.dumps({
-            "index": block.index,
-            "timestamp": ts,
-            "order_data": block.order_data,
-            "previous_hash": block.previous_hash
-        }, sort_keys=True)
-        calculated_hash = hashlib.sha256(block_string.encode('utf-8')).hexdigest()
+        # Reconstruct OrderBlock from DB record to check signature
+        ob = OrderBlock(
+            index=block.index,
+            previous_hash=block.previous_hash,
+            order_payload=block.order_data,
+            timestamp=block.timestamp
+        )
 
-        if block.hash != calculated_hash:
-            errors.append(f"Block #{block.index} hash mismatch. Database hash: {block.hash}, calculated: {calculated_hash}")
+        if block.hash != ob.hash:
+            errors.append(f"Block #{block.index} hash mismatch. Database hash: {block.hash}, calculated: {ob.hash}")
         
         if block.previous_hash != previous_hash:
             errors.append(f"Block #{block.index} link mismatch. Previous hash field: {block.previous_hash}, expected: {previous_hash}")
@@ -97,3 +96,4 @@ def verify_chain_integrity():
         previous_hash = block.hash
 
     return len(errors) == 0, errors
+

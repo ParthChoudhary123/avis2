@@ -3,121 +3,484 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Avis AI - Enterprise Decision-Support System{% endblock %}</title>
-    <meta name="description" content="Avis AI: An Intelligent Enterprise Decision-Support System Powered by Katana AI, featuring predictive logistics, machine learning forecasts, and tamper-proof cryptographic ledgers.">
+    <title>{% block title %}avis ai - Enterprise Decision-Support System{% endblock %}</title>
+    <meta name="description" content="Avis AI: An Intelligent Enterprise Decision-Support System featuring predictive logistics, machine learning forecasts, and tamper-proof cryptographic ledgers.">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter (Body), Plus Jakarta Sans (Headings), JetBrains Mono (Code) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
-    <!-- Custom Glassmorphic Premium Stylesheet -->
+    <!-- Neo-Brutalist Style Rules -->
     <style>
         :root {
-            --bg-primary: #080d1a;
-            --bg-secondary: #0f1626;
-            --card-glass: rgba(18, 28, 48, 0.55);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --accent-glow: #00ffcc;
-            --accent-blue: #3b82f6;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --font-family: 'Outfit', sans-serif;
+            --bg-lavender: #D2C4FB; /* Main landing hero blocks */
+            --brand-lime: #DFFF00; /* High-contrast interactive actions & CTAs */
+            --bg-cream: #FAF9F6; /* Alternate row backdrops */
+            --text-dark: #1A1A24; /* Typography, lines, and system borders */
+            --status-green-bg: #E2F6D3;
+            --status-green-text: #2E6B12;
+            --status-red-bg: #FFE5E5;
+            --status-red-text: #CC0000;
+            --status-yellow-bg: #FFF2CC;
+            --status-yellow-text: #8C6B00;
+            --border-width: 2px;
+            --border-color: #1A1A24;
+            --border-main: 2px solid var(--border-color);
+            --font-sans: 'Inter', sans-serif;
+            --font-headings: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         body {
-            background-color: #ffffff;
-            color: #1f2937;
-            font-family: var(--font-family);
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            font-family: var(--font-sans);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Glassmorphism Card system */
-        .glass-card {
-            background: var(--card-glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-headings);
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+
+        /* Component 1: Global Header Navigation Bar */
+        .marketing-nav-bar {
+            background-color: #ffffff;
+            border: var(--border-main);
+            border-radius: 50px;
+            margin: 20px auto 10px;
+            padding: 8px 24px;
+            width: calc(100% - 40px);
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 4px 4px 0px var(--border-color);
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+        }
+
+        .navbar-brand-custom {
+            font-family: var(--font-headings);
+            font-weight: 900;
+            color: var(--text-dark);
+            font-size: 1.45rem;
+            text-transform: lowercase;
+            letter-spacing: -1.2px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Horizontal Menu Links */
+        .nav-horizontal-menu {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-horizontal-item {
+            display: inline-block;
             position: relative;
+            padding-bottom: 15px; /* Hover helper bridge */
+            margin-bottom: -15px;
         }
 
-        /* Header Navigation */
-        .glass-nav {
-            background: #080d1a !important;
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .navbar-brand {
+        .nav-horizontal-link {
+            color: var(--text-dark);
+            text-decoration: none;
             font-weight: 800;
-            color: #fd3c65 !important;
+            font-size: 0.92rem;
+            transition: color 0.12s ease;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .nav-horizontal-link:hover {
+            color: #4f46e5;
+        }
+
+        /* Dropdown Windows (Mega Menus) appearing just below taskbar */
+        .nav-dropdown-window {
+            display: none;
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 580px;
+            background-color: #ffffff;
+            border: var(--border-main);
+            border-radius: 16px;
+            box-shadow: 6px 6px 0px var(--border-color);
+            padding: 24px;
+            z-index: 1100;
+            text-align: left;
+        }
+
+        .nav-horizontal-item:hover .nav-dropdown-window {
+            display: block;
+        }
+
+        .dropdown-title {
+            font-family: var(--font-headings);
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 1.5rem;
+            color: #4f46e5;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 6px;
         }
 
-        .nav-link {
-            color: rgba(255, 255, 255, 0.75) !important;
-            font-weight: 500;
-            transition: color 0.2s;
-            margin: 0 5px;
-            padding: 8px 16px !important;
+        .dropdown-item-link {
+            display: block;
+            padding: 8px 10px;
             border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.1s;
         }
 
-        .nav-link:hover, .nav-link.active {
-            color: #fd3c65 !important;
-            background: rgba(255, 255, 255, 0.05);
+        .dropdown-item-link:hover {
+            background-color: var(--bg-cream);
+            color: #4f46e5;
+        }
+
+        /* Right Actions Bar Group */
+        .nav-horizontal-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Neo-Brutalist Button Tokens */
+        .btn-neo-lime {
+            background-color: var(--brand-lime) !important;
+            color: var(--text-dark) !important;
+            border: var(--border-main) !important;
+            border-radius: 30px !important;
+            font-weight: 800;
+            font-size: 0.88rem;
+            padding: 8px 20px !important;
+            box-shadow: 2px 2px 0px var(--border-color);
+            transition: all 0.1s ease-in-out;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-neo-lime:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px var(--border-color);
+        }
+
+        .btn-neo-lime:active {
+            transform: translate(1px, 1px);
+            box-shadow: 0px 0px 0px var(--border-color);
+        }
+
+        .btn-neo-outline {
+            background-color: transparent !important;
+            color: var(--text-dark) !important;
+            border: var(--border-main) !important;
+            border-radius: 30px !important;
+            font-weight: 800;
+            font-size: 0.88rem;
+            padding: 8px 20px !important;
+            box-shadow: 2px 2px 0px var(--border-color);
+            transition: all 0.1s ease-in-out;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-neo-outline:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px var(--border-color);
+            background-color: #f3f4f6 !important;
+        }
+
+        /* Universal Container/Card Tokens */
+        .neo-card {
+            background: #ffffff;
+            border: var(--border-main);
+            border-radius: 16px;
+            box-shadow: 5px 5px 0px var(--border-color);
+            transition: all 0.15s ease-out;
+        }
+
+        .neo-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px var(--border-color);
+        }
+
+        /* Status Capsule Badges */
+        .badge-status-green {
+            background-color: var(--status-green-bg) !important;
+            color: var(--status-green-text) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+        }
+
+        .badge-status-red {
+            background-color: var(--status-red-bg) !important;
+            color: var(--status-red-text) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+        }
+
+        .badge-status-yellow {
+            background-color: var(--status-yellow-bg) !important;
+            color: var(--status-yellow-text) !important;
+            border: var(--border-main) !important;
+            border-radius: 8px !important;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+        }
+
+        /* Footer styling - Deep Charcoal & Symmetrical Horizontal rows */
+        .marketing-footer {
+            background-color: #1A1A24 !important;
+            border-top: var(--border-main);
+            color: #9ca3af;
+            padding: 70px 0 40px;
+        }
+
+        .footer-category-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #2e2e3a;
+        }
+
+        .footer-row-heading {
+            font-family: var(--font-headings);
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            min-width: 160px;
+            padding-top: 2px;
+            text-align: left;
+        }
+
+        .footer-row-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 20px;
+        }
+
+        .footer-row-link {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.12s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .footer-row-link:hover {
+            color: var(--brand-lime);
+        }
+
+        .footer-row-link:not(:last-child)::after {
+            content: "•";
+            color: #4b5563;
+            margin-left: 20px;
+            pointer-events: none;
+        }
+
+        .footer-bottom-logo {
+            font-family: var(--font-headings);
+            font-size: 5.5rem;
+            font-weight: 900;
+            color: #2e2e3a;
+            text-transform: lowercase;
+            letter-spacing: -3px;
+            line-height: 1;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            user-select: none;
+        }
+
+        @media (max-width: 991px) {
+            .nav-horizontal-menu {
+                display: none !important;
+            }
+            .marketing-nav-bar {
+                border-radius: 16px;
+                padding: 10px 16px;
+            }
+            .footer-category-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .footer-row-heading {
+                min-width: auto;
+            }
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-    <!-- Main Navigation Bar for Public Guests -->
-    <nav class="navbar navbar-expand-lg navbar-dark glass-nav sticky-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'landing' %}" id="nav-brand-logo">
-                <i class="fa-solid fa-layer-group me-2" style="color: #fd3c65;"></i>Avis AI
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="{% url 'landing' %}#home" style="font-size: 0.9rem;">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="{% url 'landing' %}#about" style="font-size: 0.9rem;">About</a></li>
-                    <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="{% url 'landing' %}#features" style="font-size: 0.9rem;">Features</a></li>
-                    <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="{% url 'landing' %}#roadmap" style="font-size: 0.9rem;">Roadmap</a></li>
-                    <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="{% url 'landing' %}#contact" style="font-size: 0.9rem;">Contact</a></li>
-                    
-                    <!-- Launch App Pink Pill Button -->
-                    <li class="nav-item ms-3">
-                        <a class="btn px-4 py-2" href="{% url 'login' %}" style="background: #fd3c65; color: #fff; font-weight: 700; border-radius: 30px; border: none; font-size: 0.9rem; transition: background 0.3s;" onmouseover="this.style.background='#e02c53'" onmouseout="this.style.background='#fd3c65'">
-                            Launch App
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <!-- Component 1: Custom Horizontal Bar Dock -->
+    <header class="marketing-nav-bar">
+        <a class="navbar-brand-custom" href="{% url 'landing' %}">
+            avis ai
+        </a>
+        
+        <ul class="nav-horizontal-menu">
+            <!-- Features Link & Dropdown Window -->
+            <li class="nav-horizontal-item">
+                <a class="nav-horizontal-link" href="{% url 'landing' %}#features">Features <i class="fa-solid fa-angle-down ms-1" style="font-size: 0.75rem;"></i></a>
+                <div class="nav-dropdown-window">
+                    <div class="dropdown-title">Core Subsystems & Features</div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <a href="{% url 'landing' %}#features" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-boxes-stacked me-1 text-primary"></i>AI in Inventory</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Centralized relational database tracking stock levels.</span>
+                            </a>
+                            <a href="{% url 'landing' %}#features" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-industry me-1 text-primary"></i>AI in Manufacturing</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Asynchronous linear regression calculations.</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'landing' %}#features" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-shield-halved me-1 text-success"></i>Audit Blockchain</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Tamper-proof ledger seals with SHA-256 blocks.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Solutions Link & Dropdown Window -->
+            <li class="nav-horizontal-item">
+                <a class="nav-horizontal-link" href="{% url 'landing' %}#solutions">Solutions <i class="fa-solid fa-angle-down ms-1" style="font-size: 0.75rem;"></i></a>
+                <div class="nav-dropdown-window">
+                    <div class="dropdown-title">Enterprise Solutions</div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <a href="{% url 'landing' %}#solutions" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-route me-1 text-warning"></i>Transit Logistics</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">OpenWeatherMap telemetry route delay warning triggers.</span>
+                            </a>
+                            <a href="{% url 'landing' %}#solutions" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-globe me-1 text-primary"></i>Omnichannel Channels</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Seamless sync with Shopify, Amazon, WooCommerce.</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'landing' %}#solutions" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-clock me-1 text-success"></i>Smart Automation</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Automatic replenishment drafts to minimize stockouts.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Resources Link & Dropdown Window -->
+            <li class="nav-horizontal-item">
+                <a class="nav-horizontal-link" href="{% url 'landing' %}#resources">Resources <i class="fa-solid fa-angle-down ms-1" style="font-size: 0.75rem;"></i></a>
+                <div class="nav-dropdown-window">
+                    <div class="dropdown-title">Learning & Documentation</div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <a href="{% url 'landing' %}#resources" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-graduation-cap me-1 text-primary"></i>Katana Academy</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Onboarding guides and walkthrough documentation.</span>
+                            </a>
+                            <a href="{% url 'landing' %}#resources" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-book me-1 text-primary"></i>Knowledge Base</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Developer API reference guides and partner resources.</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'landing' %}#webinar" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-video me-1 text-danger"></i>Video Library</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Webinar recordings detailing collaborative systems.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Pricing Link & Dropdown Window -->
+            <li class="nav-horizontal-item">
+                <a class="nav-horizontal-link" href="{% url 'landing' %}#simulator">Pricing <i class="fa-solid fa-angle-down ms-1" style="font-size: 0.75rem;"></i></a>
+                <div class="nav-dropdown-window">
+                    <div class="dropdown-title">Operations Tier Pricing Plans</div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <a href="{% url 'register' %}" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-seedling me-1 text-success"></i>Free Sandbox Tier ($0)</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Full access to live simulation consoles & 2 catalog SKUs.</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'register' %}" class="dropdown-item-link">
+                                <strong class="d-block small text-dark"><i class="fa-solid fa-bolt me-1 text-warning"></i>Pro Enterprise ($199/mo)</strong>
+                                <span class="text-secondary" style="font-size: 0.76rem;">Scikit-Learn auto-restock predictions, storm delays, block audits.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        
+        <div class="nav-horizontal-actions">
+            <a href="#" class="text-dark fs-5 text-decoration-none" title="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+            
+            {% if user.is_authenticated %}
+                {% if user.is_manager %}
+                    <a href="{% url 'manager_dashboard' %}" class="btn-neo-outline">Console</a>
+                {% else %}
+                    <a href="{% url 'vendor_dashboard' %}" class="btn-neo-outline">Console</a>
+                {% endif %}
+                <a href="{% url 'logout' %}" class="btn-neo-outline">Log out</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="text-dark fw-bold text-decoration-none pe-1">Log in</a>
+                <a href="{% url 'register' %}" class="btn-neo-lime">Get started</a>
+            {% endif %}
         </div>
-    </nav>
+    </header>
 
     <!-- Message Alerts container for Public Guest views -->
     <div class="container mt-4">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% else %}info{% endif %} alert-dismissible fade show border-0 mb-3 text-light" role="alert" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px);">
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% else %}info{% endif %} alert-dismissible fade show border-0 mb-3" role="alert" style="background-color: #ffffff; border: var(--border-main) !important; box-shadow: 3px 3px 0px var(--border-color);">
                     <div class="d-flex align-items-center">
-                        <i class="fa-solid fa-circle-info me-2 fs-5 text-info"></i>
-                        <div>{{ message }}</div>
+                        <i class="fa-solid fa-circle-info me-2 fs-5 text-primary"></i>
+                        <div class="text-dark">{{ message }}</div>
                     </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
         {% endif %}
@@ -128,11 +491,78 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="text-center py-5" style="background: #080d1a; border-top: 1px solid rgba(255,255,255,0.04); color: #94a3b8;">
+    <!-- Component 9: Global Structural Horizontal Footer Row Layout -->
+    <footer class="marketing-footer">
         <div class="container">
-            <p class="mb-1 text-light">© 2026 Avis AI - Intelligent Enterprise Decision-Support System Powered by Katana AI</p>
-            <p class="text-muted small mb-0">Engineered with Python, Django, scikit-learn, hashlib and Bootstrap 5</p>
+            <!-- Product Category Row -->
+            <div class="footer-category-row">
+                <span class="footer-row-heading">Product</span>
+                <div class="footer-row-links">
+                    <a href="#" class="footer-row-link">Pricing</a>
+                    <a href="#" class="footer-row-link">Inventory management</a>
+                    <a href="#" class="footer-row-link">Production management</a>
+                    <a href="#" class="footer-row-link">Built-in purchasing</a>
+                    <a href="#" class="footer-row-link">Financial visibility</a>
+                </div>
+            </div>
+
+            <!-- Industries Category Row -->
+            <div class="footer-category-row">
+                <span class="footer-row-heading">Industries</span>
+                <div class="footer-row-links">
+                    <a href="#" class="footer-row-link">Apparel & Footwear</a>
+                    <a href="#" class="footer-row-link">Coffee roasting</a>
+                    <a href="#" class="footer-row-link">Food & Beverage</a>
+                    <a href="#" class="footer-row-link">Furniture</a>
+                    <a href="#" class="footer-row-link">Jewelry</a>
+                    <a href="#" class="footer-row-link">Pharmaceutical</a>
+                </div>
+            </div>
+
+            <!-- Solutions Category Row -->
+            <div class="footer-category-row">
+                <span class="footer-row-heading">Solutions</span>
+                <div class="footer-row-links">
+                    <a href="#" class="footer-row-link">Traceability & compliance</a>
+                    <a href="#" class="footer-row-link">Full manufacturing control</a>
+                    <a href="#" class="footer-row-link">Omnichannel sales</a>
+                    <a href="#" class="footer-row-link">Smart inventory</a>
+                </div>
+            </div>
+
+            <!-- Integrations Category Row -->
+            <div class="footer-category-row">
+                <span class="footer-row-heading">Integrations</span>
+                <div class="footer-row-links">
+                    <a href="#" class="footer-row-link">Shopify</a>
+                    <a href="#" class="footer-row-link">BigCommerce</a>
+                    <a href="#" class="footer-row-link">WooCommerce</a>
+                    <a href="#" class="footer-row-link">QuickBooks Online</a>
+                    <a href="#" class="footer-row-link">Xero</a>
+                </div>
+            </div>
+
+            <!-- Support Category Row -->
+            <div class="footer-category-row">
+                <span class="footer-row-heading">Support</span>
+                <div class="footer-row-links">
+                    <a href="#" class="footer-row-link">Katana academy</a>
+                    <a href="#" class="footer-row-link">Getting started</a>
+                    <a href="#" class="footer-row-link">Knowledge base</a>
+                    <a href="#" class="footer-row-link">Video library</a>
+                    <a href="#" class="footer-row-link">Partner directory</a>
+                    <a href="#" class="footer-row-link">Contact us</a>
+                </div>
+            </div>
+            
+            <div class="pt-4 text-center mt-3">
+                <div class="footer-bottom-logo">avis ai</div>
+                <div class="d-flex flex-wrap justify-content-center gap-4 text-secondary small">
+                    <a href="#" class="text-secondary text-decoration-none">Terms of Service</a>
+                    <a href="#" class="text-secondary text-decoration-none">Privacy Policy</a>
+                    <a href="#" class="text-secondary text-decoration-none">Responsible Disclosure</a>
+                </div>
+            </div>
         </div>
     </footer>
 

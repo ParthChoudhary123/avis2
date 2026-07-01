@@ -1,12 +1,12 @@
 {% extends 'inventory/base_dashboard.html' %}
 
-{% block title %}Product Catalog - Avis AI{% endblock %}
+{% block title %}Product Catalog - AVIS AI{% endblock %}
 
 {% block content %}
 <div class="row mb-4 align-items-center">
     <div class="col-md-8">
-        <h1 class="fw-bold"><i class="fa-solid fa-boxes-stacked text-info me-2"></i>Product Catalog</h1>
-        <p class="text-muted">Real-Time Stock Quantities & AI Demand Projections</p>
+        <h1 class="fw-bold text-dark"><i class="fa-solid fa-boxes-stacked text-primary me-2"></i>Product Catalog</h1>
+        <p class="text-secondary small mb-0">Real-Time Stock Quantities & AI Demand Projections</p>
     </div>
     <div class="col-md-4 text-md-end">
         <a href="{% url 'product_create' %}" class="btn btn-glow" id="btn-create-product">
@@ -15,34 +15,38 @@
     </div>
 </div>
 
-<div class="card glass-card p-4">
+<div class="card glass-card p-0 overflow-hidden">
+    <div class="px-4 py-3 border-bottom d-flex align-items-center justify-content-between bg-light">
+        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-table text-primary me-2"></i>Inventory Spreadsheet Grid</h5>
+        <span class="badge bg-secondary text-white font-monospace px-2 py-1">ITEMS LIST</span>
+    </div>
     <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+        <table class="table table-hover align-middle mb-0">
             <thead>
                 <tr class="text-muted small uppercase">
-                    <th class="border-secondary">SKU</th>
-                    <th class="border-secondary">Product Details</th>
-                    <th class="border-secondary text-end">Price</th>
-                    <th class="border-secondary text-end">Current Stock</th>
-                    <th class="border-secondary text-end">Safety Stock (ROP)</th>
-                    <th class="border-secondary text-center" style="width: 140px;">Sales Trend (6mo)</th>
-                    <th class="border-secondary text-end">AI Forecast (Next Mo)</th>
-                    <th class="border-secondary text-center">Actions</th>
+                    <th>SKU</th>
+                    <th>Product Details</th>
+                    <th class="text-end">Price</th>
+                    <th class="text-end">Current Stock</th>
+                    <th class="text-end">Safety Stock (ROP)</th>
+                    <th class="text-center" style="width: 140px;">Sales Trend (6mo)</th>
+                    <th class="text-end">AI Forecast (Next Mo)</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% if products %}
                     {% for item in products %}
                         <tr id="product-row-{{ item.product.id }}">
-                            <td class="fw-bold text-info border-secondary">{{ item.product.sku }}</td>
-                            <td class="border-secondary">
-                                <span class="text-light fw-semibold fs-6">{{ item.product.name }}</span>
+                            <td class="fw-bold text-primary">{{ item.product.sku }}</td>
+                            <td>
+                                <span class="text-dark fw-semibold fs-6">{{ item.product.name }}</span>
                                 {% if item.product.description %}
-                                    <div class="small text-muted text-truncate" style="max-width: 300px;">{{ item.product.description }}</div>
+                                    <div class="small text-secondary text-truncate" style="max-width: 300px;">{{ item.product.description }}</div>
                                 {% endif %}
                             </td>
-                            <td class="text-light text-end border-secondary">${{ item.product.price }}</td>
-                            <td class="text-end border-secondary">
+                            <td class="text-dark text-end fw-semibold">${{ item.product.price }}</td>
+                            <td class="text-end">
                                 <span class="fw-bold {% if item.forecast.needs_reorder %}text-danger{% else %}text-success{% endif %}">
                                     {{ item.product.stock.current_quantity }}
                                 </span>
@@ -50,36 +54,36 @@
                                     <i class="fa-solid fa-circle-exclamation text-danger ms-1" title="Stock falls below AI threshold!"></i>
                                 {% endif %}
                             </td>
-                            <td class="text-light text-end border-secondary text-muted">
+                            <td class="text-end text-secondary">
                                 {{ item.product.stock.min_threshold }} 
-                                <span class="small text-info d-block" style="font-size: 0.75rem;">AI target: {{ item.forecast.reorder_point }}</span>
+                                <span class="small text-primary d-block" style="font-size: 0.75rem;">AI target: {{ item.forecast.reorder_point }}</span>
                             </td>
-                            <td class="text-center border-secondary">
+                            <td class="text-center">
                                 <svg width="120" height="30" style="overflow: visible;">
-                                    <path d="{{ item.sparkline }}" fill="none" stroke="url(#sparklineGrad-{{ item.product.id }})" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 2px 4px rgba(0, 255, 204, 0.35));" />
+                                    <path d="{{ item.sparkline }}" fill="none" stroke="url(#sparklineGrad-{{ item.product.id }})" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.2));" />
                                     <defs>
                                         <linearGradient id="sparklineGrad-{{ item.product.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stop-color="#3b82f6" />
-                                            <stop offset="100%" stop-color="#00ffcc" />
+                                            <stop offset="0%" stop-color="#2563eb" />
+                                            <stop offset="100%" stop-color="#00d2c4" />
                                         </linearGradient>
                                     </defs>
                                 </svg>
                             </td>
-                            <td class="text-end border-secondary">
-                                <span class="badge badge-ai py-2 px-3">
+                            <td class="text-end">
+                                <span class="badge badge-accepted py-2 px-3">
                                     <i class="fa-solid fa-brain me-1" style="font-size: 0.8rem;"></i>{{ item.forecast.projected_sales }}
                                 </span>
                             </td>
-                            <td class="text-center border-secondary">
+                            <td class="text-center">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="{% url 'stock_update' item.product.pk %}" class="btn btn-outline-info" title="Adjust Stock levels">
+                                    <a href="{% url 'stock_update' item.product.pk %}" class="btn btn-outline-secondary btn-sm" title="Adjust Stock levels">
                                         <i class="fa-solid fa-square-poll-vertical"></i> Stock
                                     </a>
-                                    <a href="{% url 'product_edit' item.product.pk %}" class="btn btn-outline-warning" title="Edit details">
-                                        <i class="fa-solid fa-edit"></i>
+                                    <a href="{% url 'product_edit' item.product.pk %}" class="btn btn-outline-secondary btn-sm" title="Edit details">
+                                        <i class="fa-solid fa-edit text-warning"></i>
                                     </a>
-                                    <a href="{% url 'product_delete' item.product.pk %}" class="btn btn-outline-danger" title="Delete product">
-                                        <i class="fa-solid fa-trash-can"></i>
+                                    <a href="{% url 'product_delete' item.product.pk %}" class="btn btn-outline-secondary btn-sm" title="Delete product">
+                                        <i class="fa-solid fa-trash-can text-danger"></i>
                                     </a>
                                 </div>
                             </td>
@@ -87,7 +91,7 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="7" class="text-center text-muted py-5 border-secondary">No products in catalog yet. Click Create New Product above.</td>
+                        <td colspan="8" class="text-center text-muted py-5">No products in catalog yet. Click Create New Product above.</td>
                     </tr>
                 {% endif %}
             </tbody>

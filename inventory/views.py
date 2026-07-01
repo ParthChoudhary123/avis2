@@ -12,7 +12,7 @@ from .models import User, Product, Stock, Vendor, Order, AuditBlock, SalesLog
 from .forms import RegisterForm, ProductForm, StockForm, VendorForm, OrderForm
 from .decorators import manager_required, vendor_required
 from .weather import get_weather_warnings
-from .blockchain import add_order_to_ledger, verify_chain_integrity
+from .blockchain import add_order_to_ledger, verify_chain_integrity, OrderBlock
 from .predictor import get_product_forecast
 
 # --- AUTHENTICATION VIEWS ---
@@ -55,11 +55,51 @@ def dashboard_redirect(request):
 
 @manager_required
 def manager_dashboard(request):
-    # Optimize ORM queries to select related fields instantly and avoid N+1 query problem
     products = Product.objects.all().select_related('stock')
     orders = Order.objects.all().select_related('product', 'vendor').order_by('-created_at')
     vendors = Vendor.objects.all()
     
+    # Active orders (not delivered)
+    active_orders = Order.objects.filter(status__in=['Pending', 'Accepted', 'Shipped']).select_related('vendor', 'product')
+    
+    # Check for weather anomalies on active orders
+    active_cities = set(active_orders.values_list('vendor__city', flat=True))
+    city_weather_cache = {}
+    for city in active_cities:
+        if city:
+            city_weather_cache[city] = get_weather_warnings(city)
+            
+    logistics_anomalies_count = 0
+    for order in active_orders:
+        weather_info = city_weather_cache.get(order.vendor.city, {'has_warning': False})
+        if weather_info['has_warning']:
+            logistics_anomalies_count += 1
+            
+    # Calculate forecasting data and check critical low items
+    critical_low_count = 0
+    datagrid_items = []
+    
+    for product in products:
+        forecast = get_product_forecast(product)
+        # Find latest order for this product
+        latest_order = Order.objects.filter(product=product).select_related('vendor').order_by('-created_at').first()
+        
+        # Check stock quantity
+        qty = product.stock.current_quantity
+        rop = forecast['reorder_point']
+        triggered = qty < rop
+        if triggered:
+            critical_low_count += 1
+            
+        datagrid_items.append({
+            'product': product,
+            'qty': qty,
+            'rop': rop,
+            'triggered': triggered,
+            'latest_order': latest_order,
+            'forecast': forecast
+        })
+
     # Cryptographic ledger integrity check
     ledger_valid, ledger_errors = verify_chain_integrity()
     recent_blocks = AuditBlock.objects.order_by('-index')[:5]
@@ -68,9 +108,13 @@ def manager_dashboard(request):
         'products_count': products.count(),
         'orders_count': orders.count(),
         'vendors_count': vendors.count(),
+        'pending_requests_count': active_orders.count(),
+        'critical_low_count': critical_low_count,
+        'logistics_anomalies_count': logistics_anomalies_count,
         'ledger_valid': ledger_valid,
         'ledger_errors': ledger_errors,
         'recent_blocks': recent_blocks,
+        'datagrid_items': datagrid_items,
         'orders': orders[:8]
     }
     return render(request, 'inventory/manager_dashboard.html', context)
@@ -261,7 +305,7 @@ def vendor_order_status_update(request, pk):
     order = get_object_or_404(Order, pk=pk, vendor=request.user.vendor_profile)
     if request.method == 'POST':
         new_status = request.POST.get('status')
-        if new_status in ['Pending', 'Shipped', 'Delivered']:
+        if new_status in ['Pending', 'Accepted', 'Shipped', 'Delivered']:
             with transaction.atomic():
                 order.status = new_status
                 order.save()
@@ -302,19 +346,17 @@ def blockchain_view(request):
     blocks = list(AuditBlock.objects.order_by('index'))
     is_valid, errors = verify_chain_integrity()
     
-    # Annotate block validity for custom node styling
+    # Annotate block validity for custom node styling using OrderBlock class
     previous_hash = "0" * 64
     for block in blocks:
-        ts = int(block.timestamp.timestamp())
-        block_string = json.dumps({
-            "index": block.index,
-            "timestamp": ts,
-            "order_data": block.order_data,
-            "previous_hash": block.previous_hash
-        }, sort_keys=True)
-        calculated_hash = hashlib.sha256(block_string.encode('utf-8')).hexdigest()
+        ob = OrderBlock(
+            index=block.index,
+            previous_hash=block.previous_hash,
+            order_payload=block.order_data,
+            timestamp=block.timestamp
+        )
         
-        block.is_valid = (block.hash == calculated_hash) and (block.previous_hash == previous_hash)
+        block.is_valid = (block.hash == ob.hash) and (block.previous_hash == previous_hash)
         previous_hash = block.hash
         
     return render(request, 'inventory/blockchain_view.html', {
