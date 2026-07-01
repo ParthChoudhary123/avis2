@@ -569,25 +569,81 @@
         transform: translate(-2px, -2px);
         box-shadow: 6px 6px 0px var(--border-color);
     }
+
+    /* 2-Column Split Layout system */
+    .split-grid-container {
+        display: grid;
+        grid-template-columns: 45% 55%;
+        align-items: center;
+        min-height: 80vh;
+        padding: 80px 0;
+    }
+
+    @media (max-width: 991px) {
+        .split-grid-container {
+            grid-template-columns: 1fr;
+            min-height: auto;
+            padding: 60px 0;
+        }
+    }
+
+    .split-left-col {
+        max-width: 540px;
+        padding-left: 8%;
+        text-align: left;
+    }
+
+    @media (max-width: 991px) {
+        .split-left-col {
+            max-width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+            text-align: center;
+            margin: 0 auto 40px;
+        }
+    }
+
+    .split-right-col {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Section Typography */
+    .split-headline {
+        font-family: var(--font-headings);
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1.2;
+        color: #1e1b4b;
+        margin-bottom: 24px;
+    }
+
+    .split-body {
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.6;
+        color: rgba(30, 27, 75, 0.8);
+        margin-bottom: 32px;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<main>
-    <!-- 1. Hero Section (Lavender Backdrop, Reference Image 1) -->
+<main>    <!-- 1. Hero Section (Lavender Backdrop, Reference Image 1) -->
     <section class="hero-container" id="home">
         <div class="container">
-            <div class="row align-items-center g-5">
+            <div class="split-grid-container">
                 <!-- Left Layout Grid -->
-                <div class="col-lg-6 text-start text-dark ps-lg-5 py-4">
-                    <h1 class="hero-headline" style="color: #1e1b4b !important;">Welcome to the next era of manufacturing</h1>
-                    <p class="hero-body-text" style="color: #1e1b4b !important; font-size: 1.15rem; max-width: 520px; line-height: 1.6;">
+                <div class="split-left-col">
+                    <h1 class="split-headline">Welcome to the next era of manufacturing</h1>
+                    <p class="split-body">
                         Artificial intelligence isn't just the next tech trend — it's reshaping how we work, from precise demand forecasting to real-time inventory tracking at an unprecedented scale. Here's everything you need to know to enhance your capabilities and your business's performance with AI.
                     </p>
                 </div>
 
                 <!-- Right Layout Grid: Isometric Factory Illustration -->
-                <div class="col-lg-6 text-center">
+                <div class="split-right-col text-center">
                     <svg viewBox="0 0 500 350" style="max-width: 440px; width: 100%; height: auto; display: block; margin: 0 auto;" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <!-- Floor shadow grid -->
                         <path d="M50 200 L250 80 L450 200 L250 320 Z" fill="#EADCFB" stroke="#111827" stroke-width="1.5"/>
@@ -617,7 +673,7 @@
                             <rect x="10" y="10" width="65" height="85" fill="#f3f4f6" stroke="#111827" stroke-width="2" />
                             <path d="M10 10 L42.5 -10 L75 10 Z" fill="#e5e7eb" stroke="#111827" stroke-width="2" />
                             <!-- Dome green status light -->
-                            <path d="M35 -10 A 8 8 0 0 1 50 -10 Z" fill="#DFFF00" stroke="#111827" stroke-width="1.5" />
+                            <path d="M35 -10 A 8 8 0 0 1 50 -10 Z" fill="#D4FF00" stroke="#111827" stroke-width="1.5" />
                             <!-- Yellow numeric display showing 124598 -->
                             <rect x="20" y="25" width="45" height="15" fill="#faedd0" stroke="#111827" stroke-width="1.5" />
                             <text x="24" y="36" font-family="monospace" font-size="8" fill="#111827" font-weight="bold">124598</text>
@@ -655,8 +711,8 @@
                             <rect x="20" y="20" width="60" height="50" rx="12" fill="#ffffff" stroke="#111827" stroke-width="2" />
                             <!-- Blinking glowing green eyes -->
                             <g class="anim-eyes">
-                                <circle cx="38" cy="42" r="6" fill="#DFFF00" stroke="#111827" stroke-width="1.5" />
-                                <circle cx="62" cy="42" r="6" fill="#DFFF00" stroke="#111827" stroke-width="1.5" />
+                                <circle cx="38" cy="42" r="6" fill="#D4FF00" stroke="#111827" stroke-width="1.5" />
+                                <circle cx="62" cy="42" r="6" fill="#D4FF00" stroke="#111827" stroke-width="1.5" />
                             </g>
                             <!-- Antennas -->
                             <line x1="50" y1="20" x2="50" y2="8" stroke="#111827" stroke-width="2" />
@@ -722,117 +778,135 @@
         </div>
     </section>
 
-    <!-- Section 2: Product Feature split 2-column layout -->
+    <!-- 2. Three-Card Feature Grid Section -->
     <section class="landing-section bg-white-section" id="features">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <!-- Left Column: Title & Subtext -->
-                <div class="col-lg-5 text-start text-dark">
-                    <h2 class="section-title-neo">What to expect from AI in the future and beyond</h2>
-                    <p class="hero-body-text text-secondary mb-4">
-                        AI is revolutionizing manufacturing and inventory management. Learn how businesses and software partners intend to integrate AI into their workflows to champion growth and improve operational efficiency.
-                    </p>
-                </div>
-                <!-- Right Column: Vertical list of the 3 features with small SVGs -->
-                <div class="col-lg-7 text-start">
-                    <!-- Card 1: AI in Inventory (Peach/Orange background) -->
-                    <div class="d-flex gap-4 mb-4 p-3 border rounded align-items-center" style="background-color: #ffedd5; border-color: var(--border-color) !important; box-shadow: 3px 3px 0px var(--border-color);">
-                        <div style="flex-shrink: 0; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #ffffff; border: var(--border-main); border-radius: 8px;">
-                            <svg viewBox="0 0 100 80" width="60" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="container text-center">
+            <h2 class="section-title-neo">What to expect from AI in the future and beyond</h2>
+            <p class="section-subtitle-neo mx-auto" style="max-width: 800px;">
+                AI is revolutionizing manufacturing and inventory management. Learn how businesses and software partners intend to integrate AI into their workflows to champion growth and improve operational efficiency.
+            </p>
+            
+            <div class="row g-4 text-start mt-4">
+                <!-- Card 1: AI in Inventory (Light Orange background) -->
+                <div class="col-md-4">
+                    <div class="expectation-card" style="background-color: #fff7ed; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px; height: 100%;">
+                        <div class="card-ill-box mb-4">
+                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="35" y="15" width="45" height="50" fill="#ffffff" stroke="#111827" stroke-width="2" />
                                 <rect x="10" y="35" width="35" height="20" fill="#d2e5d1" stroke="#111827" stroke-width="2" />
                                 <circle cx="20" cy="55" r="5" fill="#111827" />
                                 <circle cx="35" cy="55" r="5" fill="#111827" />
                             </svg>
                         </div>
-                        <div>
-                            <h4 class="fw-bold text-dark mb-1 fs-5">AI in inventory</h4>
-                            <p class="text-secondary small mb-2">
-                                How to transform inventory tracking with machine learning, dynamic safety stocks, and live route environmental radar.
-                            </p>
-                            <a href="{% url 'product_list' %}" class="hero-anchor-link" style="font-size: 0.88rem;">Learn more →</a>
-                        </div>
+                        <h4 class="fw-bold text-dark mb-2">AI in inventory</h4>
+                        <p class="text-secondary small mb-4">
+                            Transform inventory tracking with machine learning, dynamic safety stocks, and live route environmental radar telemetry.
+                        </p>
+                        <a href="{% url 'product_list' %}" class="hero-anchor-link">Learn more →</a>
                     </div>
+                </div>
 
-                    <!-- Card 2: AI in Manufacturing (Green background) -->
-                    <div class="d-flex gap-4 mb-4 p-3 border rounded align-items-center" style="background-color: #dcfce7; border-color: var(--border-color) !important; box-shadow: 3px 3px 0px var(--border-color);">
-                        <div style="flex-shrink: 0; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #ffffff; border: var(--border-main); border-radius: 8px;">
-                            <svg viewBox="0 0 100 80" width="60" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Card 2: AI in Manufacturing (Light Green background) -->
+                <div class="col-md-4">
+                    <div class="expectation-card" style="background-color: #f0fdf4; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px; height: 100%;">
+                        <div class="card-ill-box mb-4">
+                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10 50 L90 50" stroke="#111827" stroke-width="5" stroke-linecap="round" />
                                 <path d="M10 50 L90 50" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 5" />
                                 <rect x="30" y="15" width="35" height="30" fill="#ffffff" stroke="#111827" stroke-width="2" />
                                 <line x1="38" y1="25" x2="58" y2="25" stroke="#111827" stroke-width="2" />
                             </svg>
                         </div>
-                        <div>
-                            <h4 class="fw-bold text-dark mb-1 fs-5">AI in manufacturing</h4>
-                            <p class="text-secondary small mb-2">
-                                Al-driven automation enables regression forecasting algorithms to automatically identify sales velocity.
-                            </p>
-                            <a href="{% url 'manager_dashboard' %}" class="hero-anchor-link" style="font-size: 0.88rem;">Learn more →</a>
-                        </div>
+                        <h4 class="fw-bold text-dark mb-2">AI in manufacturing</h4>
+                        <p class="text-secondary small mb-4">
+                            AI-driven automation enables regression forecasting algorithms to automatically identify sales velocity variables.
+                        </p>
+                        <a href="{% url 'manager_dashboard' %}" class="hero-anchor-link">Learn more →</a>
                     </div>
+                </div>
 
-                    <!-- Card 3: Avis and AI (Blue background) -->
-                    <div class="d-flex gap-4 p-3 border rounded align-items-center" style="background-color: #dbeafe; border-color: var(--border-color) !important; box-shadow: 3px 3px 0px var(--border-color);">
-                        <div style="flex-shrink: 0; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #ffffff; border: var(--border-main); border-radius: 8px;">
-                            <svg viewBox="0 0 100 80" width="60" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Card 3: Avis and AI (Light Blue background) -->
+                <div class="col-md-4">
+                    <div class="expectation-card" style="background-color: #f0f9ff; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px; height: 100%;">
+                        <div class="card-ill-box mb-4">
+                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="30" y="15" width="40" height="35" rx="5" fill="#ffffff" stroke="#111827" stroke-width="2" />
                                 <circle cx="42" cy="28" r="4" fill="#D4FF00" stroke="#111827" stroke-width="1" />
                                 <circle cx="58" cy="28" r="4" fill="#D4FF00" stroke="#111827" stroke-width="1" />
                                 <rect x="35" y="50" width="30" height="20" rx="3" fill="#ffffff" stroke="#111827" stroke-width="2" />
                             </svg>
                         </div>
-                        <div>
-                            <h4 class="fw-bold text-dark mb-1 fs-5">Avis and AI</h4>
-                            <p class="text-secondary small mb-2">
-                                Avis aims to connect processes, secure purchase agreements with tamper-proof cryptographic block seals, and eliminate spreadsheet delays.
-                            </p>
-                            <a href="{% url 'blockchain_view' %}" class="hero-anchor-link" style="font-size: 0.88rem;">Learn more →</a>
-                        </div>
+                        <h4 class="fw-bold text-dark mb-2">Avis and AI</h4>
+                        <p class="text-secondary small mb-4">
+                            Avis connects processes, secures purchase agreements with tamper-proof cryptographic block seals, and eliminates spreadsheet delays.
+                        </p>
+                        <a href="{% url 'blockchain_view' %}" class="hero-anchor-link">Learn more →</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 3: Video & Inline Benefits Layout -->
+    <!-- 3. Webinar Player & Inline Benefits Split -->
     <section class="landing-section bg-cream-section" id="benefits">
         <div class="container">
             <div class="row align-items-center g-5">
                 <!-- Left Column: Video player container -->
                 <div class="col-lg-6">
-                    <div class="video-thumbnail-container">
-                        <!-- Play icon overlay -->
-                        <div class="video-overlay-play"></div>
-                        <!-- Cartoon robot layer graphic -->
-                        <svg viewBox="0 0 160 120" width="120" height="90" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.25; position: absolute; top: 30px;">
-                            <rect x="40" y="30" width="80" height="60" rx="8" fill="#ffffff" stroke="#ffffff" stroke-width="2" />
-                            <circle cx="65" cy="55" r="8" fill="#D4FF00" />
-                            <circle cx="95" cy="55" r="8" fill="#D4FF00" />
-                        </svg>
-                        <a href="#" class="btn-watch-transparent" onclick="alert('Playing Webinar Recording: Incorporating AI into retail workflows.'); return false;">Watch the recording</a>
+                    <div class="video-thumbnail-container" style="background-color: #1e1b4b; border: var(--border-main); border-radius: 16px; position: relative; height: 320px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; box-shadow: 6px 6px 0px var(--border-color);">
+                        <!-- Badge overlay -->
+                        <span class="badge bg-danger text-uppercase tracking-wider align-self-start py-2 px-3" style="font-size: 0.75rem; font-weight: 700; border: var(--border-main);">Webinar recording</span>
+                        
+                        <!-- Webinar Title & Virtual meeting screenshot grid mockup -->
+                        <div class="w-100 text-center" style="margin-top: 10px;">
+                            <h4 class="text-white fw-bold mb-3" style="font-size: 1.35rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">The Future of Inventory Management and AI</h4>
+                            <div class="d-flex justify-content-center gap-3">
+                                <!-- User A webcam -->
+                                <div style="width: 70px; height: 50px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-user text-white opacity-50"></i>
+                                </div>
+                                <!-- User B webcam -->
+                                <div style="width: 70px; height: 50px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-user text-white opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Play Button Overlay -->
+                        <div class="video-overlay-play" style="top: 50%; left: 50%; transform: translate(-50%, -50%); position: absolute;"></div>
+                        
+                        <div class="d-flex justify-content-between align-items-end w-100" style="z-index: 5;">
+                            <!-- Cartoon robot asset peaking over the bottom line -->
+                            <svg viewBox="0 0 100 80" width="70" height="50" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: -20px; opacity: 0.95;">
+                                <rect x="20" y="20" width="60" height="60" rx="10" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                <circle cx="38" cy="42" r="5" fill="#D4FF00" stroke="#111827" stroke-width="1.2" />
+                                <circle cx="62" cy="42" r="5" fill="#D4FF00" stroke="#111827" stroke-width="1.2" />
+                                <line x1="50" y1="20" x2="50" y2="5" stroke="#111827" stroke-width="2" />
+                            </svg>
+                            
+                            <a href="#" class="btn-watch-transparent" onclick="alert('Playing Webinar Recording: Incorporating AI into retail workflows.'); return false;">Watch the recording</a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Right Column: Typography benefits section -->
                 <div class="col-lg-6 text-start text-dark">
-                    <h2 class="section-title-neo">The benefits of using AI in your inventory management</h2>
-                    <ul class="pink-checkmark-list mt-4">
-                        <li>
-                            <span><strong>Improved accuracy:</strong> Minimize human error in count records and stock assessments.</span>
+                    <h2 class="section-title-neo" style="font-size: 2.2rem;">The benefits of using AI in your inventory management</h2>
+                    <ul class="list-unstyled mt-4 d-flex flex-column gap-3">
+                        <li class="mb-3">
+                            <span style="font-size: 1.05rem;"><strong>Improved accuracy</strong> — AI processes extensive data to minimize human error in count records and stock assessments.</span>
+                        </li>
+                        <li class="mb-3">
+                            <span style="font-size: 1.05rem;"><strong>Real-time analysis</strong> — AI monitors inventory, sales levels, and consumption velocities instantly to adjust safety levels.</span>
+                        </li>
+                        <li class="mb-3">
+                            <span style="font-size: 1.05rem;"><strong>Automation</strong> — Reordering and other routine tasks are automated with PO drafts generated at reorder thresholds.</span>
+                        </li>
+                        <li class="mb-3">
+                            <span style="font-size: 1.05rem;"><strong>Cost reduction</strong> — With optimized stock levels, prevent slow-moving lockups and costly inventory stockouts.</span>
                         </li>
                         <li>
-                            <span><strong>Real-time analysis:</strong> Instantly adjust safety stock levels based on live consumption rates.</span>
-                        </li>
-                        <li>
-                            <span><strong>Automation:</strong> Generate instant PO drafts when stock levels fall below critical thresholds.</span>
-                        </li>
-                        <li>
-                            <span><strong>Cost reduction:</strong> Prevent capital lockup in slow-moving items and avoid stockouts.</span>
-                        </li>
-                        <li>
-                            <span><strong>Customer satisfaction:</strong> Guarantee delivery deadlines with highly predictable shipping schedules.</span>
+                            <span style="font-size: 1.05rem;"><strong>Customer satisfaction</strong> — With better stock management, guarantee delivery deadlines and predictable shipping timelines.</span>
                         </li>
                     </ul>
                 </div>
@@ -840,71 +914,90 @@
         </div>
     </section>
 
-    <!-- Section 4: Resource/Blog Grid & Interactive Media in 2-column layout -->
+    <!-- 5. Resource Carousel & Spotlight Section -->
     <section class="landing-section bg-white-section" id="resources">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <!-- Left Column: Title + Expert Interview Segment -->
-                <div class="col-lg-6 text-start text-dark">
-                    <h2 class="section-title-neo">Learn more about AI and its practical application in business</h2>
-                    <p class="hero-body-text text-secondary mb-4">Explore practical case studies, logistics tutorials, and industry advice.</p>
-                    
-                    <!-- Expert Interview Segment inside left column -->
-                    <div class="expert-interview-box" style="margin-top: 20px;">
-                        <div class="expert-avatar">
-                            <svg viewBox="0 0 100 100" width="80" height="80">
+        <div class="container text-center">
+            <h2 class="section-title-neo">Learn more about AI and its practical application in business</h2>
+            
+            <!-- Top Grid: 4 horizontal layout cards inside scrolling wrapper -->
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <div class="text-start">
+                    <p class="text-secondary small mb-0">Explore practical case studies, logistics tutorials, and industry advice.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="carousel-nav-btn" onclick="document.getElementById('resourceTrack').scrollLeft -= 280">&lt;</button>
+                    <button class="carousel-nav-btn" onclick="document.getElementById('resourceTrack').scrollLeft += 280">&gt;</button>
+                </div>
+            </div>
+
+            <div class="pipeline-track" id="resourceTrack" style="scroll-behavior: smooth;">
+                <!-- Blog Post 1 -->
+                <div class="pipeline-step" style="width: 270px; flex-shrink: 0; background: #ffffff; border: var(--border-main); border-radius: 12px; padding: 20px; box-shadow: 4px 4px 0px var(--border-color); text-align: left;">
+                    <div style="height: 60px; display: flex; align-items: center; justify-content: center; background: #ffe4e6; border: var(--border-main); border-radius: 6px; margin-bottom: 15px;">
+                        <i class="fa-solid fa-chart-line fs-4 text-danger"></i>
+                    </div>
+                    <span class="badge bg-secondary text-white text-uppercase mb-2" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                    <h6 class="fw-bold text-dark mb-2">AI for inventory management explained</h6>
+                    <p class="text-secondary small mb-3">Discover the shifts in retail transit routes, predictive machine learning demand, and environmental telemetry.</p>
+                    <a href="#" class="hero-anchor-link" style="font-size: 0.88rem;">Read more →</a>
+                </div>
+                
+                <!-- Blog Post 2 -->
+                <div class="pipeline-step" style="width: 270px; flex-shrink: 0; background: #ffffff; border: var(--border-main); border-radius: 12px; padding: 20px; box-shadow: 4px 4px 0px var(--border-color); text-align: left;">
+                    <div style="height: 60px; display: flex; align-items: center; justify-content: center; background: #ffedd5; border: var(--border-main); border-radius: 6px; margin-bottom: 15px;">
+                        <i class="fa-solid fa-route fs-4 text-warning"></i>
+                    </div>
+                    <span class="badge bg-secondary text-white text-uppercase mb-2" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                    <h6 class="fw-bold text-dark mb-2">A guide to transition from manual spreadsheets</h6>
+                    <p class="text-secondary small mb-3">A complete step-by-step roadmap detailing the import processes, automated SKU creation, and system seeding.</p>
+                    <a href="#" class="hero-anchor-link" style="font-size: 0.88rem;">Read more →</a>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div class="pipeline-step" style="width: 270px; flex-shrink: 0; background: #ffffff; border: var(--border-main); border-radius: 12px; padding: 20px; box-shadow: 4px 4px 0px var(--border-color); text-align: left;">
+                    <div style="height: 60px; display: flex; align-items: center; justify-content: center; background: #f0fdf4; border: var(--border-main); border-radius: 6px; margin-bottom: 15px;">
+                        <i class="fa-solid fa-calculator fs-4 text-success"></i>
+                    </div>
+                    <span class="badge bg-secondary text-white text-uppercase mb-2" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                    <h6 class="fw-bold text-dark mb-2">Using time-series regression for forecasting</h6>
+                    <p class="text-secondary small mb-3">Learn about linear regression formulas, consumption variables, and dynamic reorder threshold caps.</p>
+                    <a href="#" class="hero-anchor-link" style="font-size: 0.88rem;">Read more →</a>
+                </div>
+
+                <!-- Blog Post 4 -->
+                <div class="pipeline-step" style="width: 270px; flex-shrink: 0; background: #ffffff; border: var(--border-main); border-radius: 12px; padding: 20px; box-shadow: 4px 4px 0px var(--border-color); text-align: left;">
+                    <div style="height: 60px; display: flex; align-items: center; justify-content: center; background: #f0f9ff; border: var(--border-main); border-radius: 6px; margin-bottom: 15px;">
+                        <i class="fa-solid fa-circle-nodes fs-4 text-primary"></i>
+                    </div>
+                    <span class="badge bg-secondary text-white text-uppercase mb-2" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                    <h6 class="fw-bold text-dark mb-2">Connecting APIs and automated stock sync</h6>
+                    <p class="text-secondary small mb-3">Integrate Shopify, WooCommerce, and QuickBooks directly utilizing Avis webhooks and APIs.</p>
+                    <a href="#" class="hero-anchor-link" style="font-size: 0.88rem;">Read more →</a>
+                </div>
+            </div>
+
+            <!-- Bottom Spotlight Banner: Split layout on light lavender box -->
+            <div class="expert-interview-box" style="background-color: #EADCFB !important; margin-top: 50px;">
+                <div class="row align-items-center g-4 w-100 m-0">
+                    <div class="col-md-3 text-center d-flex justify-content-center">
+                        <div class="expert-avatar" style="width: 140px; height: 140px; border-radius: 50%; border: var(--border-main); background: #ffffff; overflow: hidden;">
+                            <svg viewBox="0 0 100 100" width="100%" height="100%">
                                 <circle cx="50" cy="40" r="22" fill="#1e1b4b" />
                                 <path d="M20 90 C20 70, 80 70, 80 90 Z" fill="#1e1b4b" />
                             </svg>
                         </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-2">Want to learn how to incorporate AI into your business?</h5>
-                            <p class="text-secondary small mb-3">Listen to our latest logistics podcast episode detailing collaborative partner systems, integrations, and predictive restock engines.</p>
-                            <a href="#" class="btn-neo-outline px-4" onclick="alert('Launching Podcast episode: Integrating AI in Enterprise Logistics.'); return false;">Check out the episode</a>
-                        </div>
                     </div>
-                </div>
-                <!-- Right Column: Vertical list of the 3 blog posts -->
-                <div class="col-lg-6 text-start">
-                    <!-- Blog Post 1 -->
-                    <div class="blog-card-neo mb-3 p-3 d-flex gap-3 align-items-center">
-                        <div style="flex-shrink: 0;">
-                            <span class="badge bg-secondary text-white text-uppercase" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-1 fs-6">How AI is changing the retail logistics landscape</h5>
-                            <p class="text-secondary small mb-2">Discover the shifts in retail transit routes, predictive machine learning demand, and environmental telemetry.</p>
-                            <a href="#" class="hero-anchor-link" style="font-size: 0.85rem;">Read more →</a>
-                        </div>
-                    </div>
-                    <!-- Blog Post 2 -->
-                    <div class="blog-card-neo mb-3 p-3 d-flex gap-3 align-items-center">
-                        <div style="flex-shrink: 0;">
-                            <span class="badge bg-secondary text-white text-uppercase" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-1 fs-6">A guide to transition from manual spreadsheets to smart clouds</h5>
-                            <p class="text-secondary small mb-2">A complete step-by-step roadmap detailing the import processes, automated SKU creation, and system seeding.</p>
-                            <a href="#" class="hero-anchor-link" style="font-size: 0.85rem;">Read more →</a>
-                        </div>
-                    </div>
-                    <!-- Blog Post 3 -->
-                    <div class="blog-card-neo p-3 d-flex gap-3 align-items-center">
-                        <div style="flex-shrink: 0;">
-                            <span class="badge bg-secondary text-white text-uppercase" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold text-dark mb-1 fs-6">Using time-series regression for demand forecasting</h5>
-                            <p class="text-secondary small mb-2">Learn about linear regression formulas, consumption variables, and dynamic reorder threshold caps.</p>
-                            <a href="#" class="hero-anchor-link" style="font-size: 0.85rem;">Read more →</a>
-                        </div>
+                    <div class="col-md-9 text-start text-dark">
+                        <h4 class="fw-bold text-dark mb-2" style="font-size: 1.5rem;">Want to learn how to incorporate AI into your business?</h4>
+                        <p class="text-secondary small mb-3">Listen to our latest logistics podcast episode featuring tech leaders and warehouse managers as they walk through real-world deployment details and API connections.</p>
+                        <a href="#" class="btn-dark-pill px-4" onclick="alert('Launching Podcast episode: Integrating AI in Enterprise Logistics.'); return false;">Check out the episode</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 5: Value Proposition & Integration Preview -->
+    <!-- 6. Core Product Value Proposition Section -->
     <section class="landing-section bg-cream-section" id="value-proposition">
         <div class="container">
             <div class="row align-items-center g-5 mb-5">
@@ -914,12 +1007,27 @@
                     <p class="hero-body-text mb-4 text-secondary">
                         Transform your operations with enterprise decision-support tools engineered for collaborative logistics:
                     </p>
-                    <ul class="pink-checkmark-list">
-                        <li>Automated multi-channel stock sync</li>
-                        <li>Multi-location inventory control</li>
-                        <li>Built-in material requirement planning (MRP)</li>
-                        <li>Shopify, WooCommerce, and QuickBooks integrations</li>
-                        <li>Cryptographic ledger block security signatures</li>
+                    <ul class="list-unstyled">
+                        <li class="mb-3 d-flex align-items-center gap-3">
+                            <span style="color: #ec4899; font-weight: 900; font-size: 1.25rem;"><i class="fa-solid fa-circle-check"></i></span>
+                            <span class="fw-bold text-dark fs-5">Automated multi-channel stock sync</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center gap-3">
+                            <span style="color: #ec4899; font-weight: 900; font-size: 1.25rem;"><i class="fa-solid fa-circle-check"></i></span>
+                            <span class="fw-bold text-dark fs-5">Multi-location inventory control</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center gap-3">
+                            <span style="color: #ec4899; font-weight: 900; font-size: 1.25rem;"><i class="fa-solid fa-circle-check"></i></span>
+                            <span class="fw-bold text-dark fs-5">Built-in material requirement planning (MRP)</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center gap-3">
+                            <span style="color: #ec4899; font-weight: 900; font-size: 1.25rem;"><i class="fa-solid fa-circle-check"></i></span>
+                            <span class="fw-bold text-dark fs-5">Shopify, WooCommerce, and QuickBooks integrations</span>
+                        </li>
+                        <li class="d-flex align-items-center gap-3">
+                            <span style="color: #ec4899; font-weight: 900; font-size: 1.25rem;"><i class="fa-solid fa-circle-check"></i></span>
+                            <span class="fw-bold text-dark fs-5">Cryptographic ledger block security signatures</span>
+                        </li>
                     </ul>
                 </div>
 
@@ -1037,7 +1145,7 @@
         </div>
     </section>
 
-    <!-- Section 6: Let's Get Started Banner & Validation Badges (Reference Image 5) -->
+    <!-- Section 7: Let's Get Started Banner & Validation Badges (Reference Image 5) -->
     <section class="landing-section" style="background-color: #111827; border-bottom: var(--border-main); color: #ffffff; padding: 60px 0;">
         <div class="container d-flex flex-wrap align-items-center justify-content-between gap-4">
             <div class="text-start">
@@ -1054,3 +1162,4 @@
     </section>
 </main>
 {% endblock %}
+
