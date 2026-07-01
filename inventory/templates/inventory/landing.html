@@ -722,69 +722,74 @@
         </div>
     </section>
 
-    <!-- Section 2: Three-Card Product Feature Grid -->
+    <!-- Section 2: Product Feature split 2-column layout -->
     <section class="landing-section bg-white-section" id="features">
-        <div class="container text-center">
-            <h2 class="section-title-neo">What to expect from AI in the future and beyond</h2>
-            <p class="section-subtitle-neo mx-auto" style="max-width: 800px;">
-                AI is revolutionizing manufacturing and inventory management. Learn how businesses and software partners intend to integrate AI into their workflows to champion growth and improve operational efficiency.
-            </p>
-            
-            <div class="row g-4 text-start">
-                <!-- Card 1: AI in Inventory (Peach/Orange background) -->
-                <div class="col-md-4">
-                    <div class="expectation-card" style="background-color: #ffedd5; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px;">
-                        <div class="card-ill-box">
-                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Column: Title & Subtext -->
+                <div class="col-lg-5 text-start text-dark">
+                    <h2 class="section-title-neo">What to expect from AI in the future and beyond</h2>
+                    <p class="hero-body-text text-secondary mb-4">
+                        AI is revolutionizing manufacturing and inventory management. Learn how businesses and software partners intend to integrate AI into their workflows to champion growth and improve operational efficiency.
+                    </p>
+                </div>
+                <!-- Right Column: Vertical list of the 3 features with small SVGs -->
+                <div class="col-lg-7 text-start">
+                    <!-- Card 1: AI in Inventory (Peach/Orange background) -->
+                    <div class="d-flex gap-4 mb-4 p-3 border rounded align-items-center" style="background-color: #ffedd5; border-color: var(--border-color) !important; box-shadow: 3px 3px 0px var(--border-color);">
+                        <div style="flex-shrink: 0; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #ffffff; border: var(--border-main); border-radius: 8px;">
+                            <svg viewBox="0 0 100 80" width="60" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="35" y="15" width="45" height="50" fill="#ffffff" stroke="#111827" stroke-width="2" />
                                 <rect x="10" y="35" width="35" height="20" fill="#d2e5d1" stroke="#111827" stroke-width="2" />
                                 <circle cx="20" cy="55" r="5" fill="#111827" />
                                 <circle cx="35" cy="55" r="5" fill="#111827" />
                             </svg>
                         </div>
-                        <h4 class="fw-bold text-dark mb-2">AI in inventory</h4>
-                        <p class="text-secondary small mb-4">
-                            How to transform inventory tracking with machine learning, dynamic safety stocks, and live route environmental radar.
-                        </p>
-                        <a href="{% url 'product_list' %}" class="hero-anchor-link">Learn more →</a>
+                        <div>
+                            <h4 class="fw-bold text-dark mb-1 fs-5">AI in inventory</h4>
+                            <p class="text-secondary small mb-2">
+                                How to transform inventory tracking with machine learning, dynamic safety stocks, and live route environmental radar.
+                            </p>
+                            <a href="{% url 'product_list' %}" class="hero-anchor-link" style="font-size: 0.88rem;">Learn more →</a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Card 2: AI in Manufacturing (Green background) -->
-                <div class="col-md-4">
-                    <div class="expectation-card" style="background-color: #dcfce7; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px;">
-                        <div class="card-ill-box">
-                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Card 2: AI in Manufacturing (Green background) -->
+                    <div class="d-flex gap-4 mb-4 p-3 border rounded align-items-center" style="background-color: #dcfce7; border-color: var(--border-color) !important; box-shadow: 3px 3px 0px var(--border-color);">
+                        <div style="flex-shrink: 0; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #ffffff; border: var(--border-main); border-radius: 8px;">
+                            <svg viewBox="0 0 100 80" width="60" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10 50 L90 50" stroke="#111827" stroke-width="5" stroke-linecap="round" />
                                 <path d="M10 50 L90 50" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 5" />
                                 <rect x="30" y="15" width="35" height="30" fill="#ffffff" stroke="#111827" stroke-width="2" />
                                 <line x1="38" y1="25" x2="58" y2="25" stroke="#111827" stroke-width="2" />
                             </svg>
                         </div>
-                        <h4 class="fw-bold text-dark mb-2">AI in manufacturing</h4>
-                        <p class="text-secondary small mb-4">
-                            Al-driven automation enables regression forecasting algorithms to automatically identify sales velocity.
-                        </p>
-                        <a href="{% url 'manager_dashboard' %}" class="hero-anchor-link">Learn more →</a>
+                        <div>
+                            <h4 class="fw-bold text-dark mb-1 fs-5">AI in manufacturing</h4>
+                            <p class="text-secondary small mb-2">
+                                Al-driven automation enables regression forecasting algorithms to automatically identify sales velocity.
+                            </p>
+                            <a href="{% url 'manager_dashboard' %}" class="hero-anchor-link" style="font-size: 0.88rem;">Learn more →</a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Card 3: Avis and AI (Blue background) -->
-                <div class="col-md-4">
-                    <div class="expectation-card" style="background-color: #dbeafe; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px;">
-                        <div class="card-ill-box">
-                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Card 3: Avis and AI (Blue background) -->
+                    <div class="d-flex gap-4 p-3 border rounded align-items-center" style="background-color: #dbeafe; border-color: var(--border-color) !important; box-shadow: 3px 3px 0px var(--border-color);">
+                        <div style="flex-shrink: 0; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #ffffff; border: var(--border-main); border-radius: 8px;">
+                            <svg viewBox="0 0 100 80" width="60" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="30" y="15" width="40" height="35" rx="5" fill="#ffffff" stroke="#111827" stroke-width="2" />
                                 <circle cx="42" cy="28" r="4" fill="#D4FF00" stroke="#111827" stroke-width="1" />
                                 <circle cx="58" cy="28" r="4" fill="#D4FF00" stroke="#111827" stroke-width="1" />
                                 <rect x="35" y="50" width="30" height="20" rx="3" fill="#ffffff" stroke="#111827" stroke-width="2" />
                             </svg>
                         </div>
-                        <h4 class="fw-bold text-dark mb-2">Avis and AI</h4>
-                        <p class="text-secondary small mb-4">
-                            Avis aims to connect processes, secure purchase agreements with tamper-proof cryptographic block seals, and eliminate spreadsheet delays.
-                        </p>
-                        <a href="{% url 'blockchain_view' %}" class="hero-anchor-link">Learn more →</a>
+                        <div>
+                            <h4 class="fw-bold text-dark mb-1 fs-5">Avis and AI</h4>
+                            <p class="text-secondary small mb-2">
+                                Avis aims to connect processes, secure purchase agreements with tamper-proof cryptographic block seals, and eliminate spreadsheet delays.
+                            </p>
+                            <a href="{% url 'blockchain_view' %}" class="hero-anchor-link" style="font-size: 0.88rem;">Learn more →</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -835,54 +840,65 @@
         </div>
     </section>
 
-    <!-- Section 4: Resource/Blog Grid & Interactive Media -->
+    <!-- Section 4: Resource/Blog Grid & Interactive Media in 2-column layout -->
     <section class="landing-section bg-white-section" id="resources">
-        <div class="container text-center">
-            <h2 class="section-title-neo">Learn more about AI and its practical application in business</h2>
-            <p class="section-subtitle-neo">Explore practical case studies, logistics tutorials, and industry advice.</p>
-            
-            <div class="row g-4 text-start">
-                <!-- Blog Post 1 -->
-                <div class="col-md-4">
-                    <div class="blog-card-neo">
-                        <span class="badge bg-secondary text-white text-uppercase mb-3" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
-                        <h5 class="fw-bold text-dark mb-3">How AI is changing the retail logistics landscape</h5>
-                        <p class="text-secondary small mb-4">Discover the shifts in retail transit routes, predictive machine learning demand, and environmental telemetry.</p>
-                        <a href="#" class="hero-anchor-link">Read more →</a>
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Column: Title + Expert Interview Segment -->
+                <div class="col-lg-6 text-start text-dark">
+                    <h2 class="section-title-neo">Learn more about AI and its practical application in business</h2>
+                    <p class="hero-body-text text-secondary mb-4">Explore practical case studies, logistics tutorials, and industry advice.</p>
+                    
+                    <!-- Expert Interview Segment inside left column -->
+                    <div class="expert-interview-box" style="margin-top: 20px;">
+                        <div class="expert-avatar">
+                            <svg viewBox="0 0 100 100" width="80" height="80">
+                                <circle cx="50" cy="40" r="22" fill="#1e1b4b" />
+                                <path d="M20 90 C20 70, 80 70, 80 90 Z" fill="#1e1b4b" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-2">Want to learn how to incorporate AI into your business?</h5>
+                            <p class="text-secondary small mb-3">Listen to our latest logistics podcast episode detailing collaborative partner systems, integrations, and predictive restock engines.</p>
+                            <a href="#" class="btn-neo-outline px-4" onclick="alert('Launching Podcast episode: Integrating AI in Enterprise Logistics.'); return false;">Check out the episode</a>
+                        </div>
                     </div>
                 </div>
-                <!-- Blog Post 2 -->
-                <div class="col-md-4">
-                    <div class="blog-card-neo">
-                        <span class="badge bg-secondary text-white text-uppercase mb-3" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
-                        <h5 class="fw-bold text-dark mb-3">A guide to transition from manual spreadsheets to smart clouds</h5>
-                        <p class="text-secondary small mb-4">A complete step-by-step roadmap detailing the import processes, automated SKU creation, and system seeding.</p>
-                        <a href="#" class="hero-anchor-link">Read more →</a>
+                <!-- Right Column: Vertical list of the 3 blog posts -->
+                <div class="col-lg-6 text-start">
+                    <!-- Blog Post 1 -->
+                    <div class="blog-card-neo mb-3 p-3 d-flex gap-3 align-items-center">
+                        <div style="flex-shrink: 0;">
+                            <span class="badge bg-secondary text-white text-uppercase" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-1 fs-6">How AI is changing the retail logistics landscape</h5>
+                            <p class="text-secondary small mb-2">Discover the shifts in retail transit routes, predictive machine learning demand, and environmental telemetry.</p>
+                            <a href="#" class="hero-anchor-link" style="font-size: 0.85rem;">Read more →</a>
+                        </div>
                     </div>
-                </div>
-                <!-- Blog Post 3 -->
-                <div class="col-md-4">
-                    <div class="blog-card-neo">
-                        <span class="badge bg-secondary text-white text-uppercase mb-3" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
-                        <h5 class="fw-bold text-dark mb-3">Using time-series regression for demand forecasting</h5>
-                        <p class="text-secondary small mb-4">Learn about linear regression formulas, consumption variables, and dynamic reorder threshold caps.</p>
-                        <a href="#" class="hero-anchor-link">Read more →</a>
+                    <!-- Blog Post 2 -->
+                    <div class="blog-card-neo mb-3 p-3 d-flex gap-3 align-items-center">
+                        <div style="flex-shrink: 0;">
+                            <span class="badge bg-secondary text-white text-uppercase" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-1 fs-6">A guide to transition from manual spreadsheets to smart clouds</h5>
+                            <p class="text-secondary small mb-2">A complete step-by-step roadmap detailing the import processes, automated SKU creation, and system seeding.</p>
+                            <a href="#" class="hero-anchor-link" style="font-size: 0.85rem;">Read more →</a>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Expert Interview Segment -->
-            <div class="expert-interview-box">
-                <div class="expert-avatar">
-                    <svg viewBox="0 0 100 100" width="80" height="80">
-                        <circle cx="50" cy="40" r="22" fill="#1e1b4b" />
-                        <path d="M20 90 C20 70, 80 70, 80 90 Z" fill="#1e1b4b" />
-                    </svg>
-                </div>
-                <div>
-                    <h5 class="fw-bold text-dark mb-2">Want to learn how to incorporate AI into your business?</h5>
-                    <p class="text-secondary small mb-3">Listen to our latest logistics podcast episode detailing collaborative partner systems, integrations, and predictive restock engines.</p>
-                    <a href="#" class="btn-neo-outline px-4" onclick="alert('Launching Podcast episode: Integrating AI in Enterprise Logistics.'); return false;">Check out the episode</a>
+                    <!-- Blog Post 3 -->
+                    <div class="blog-card-neo p-3 d-flex gap-3 align-items-center">
+                        <div style="flex-shrink: 0;">
+                            <span class="badge bg-secondary text-white text-uppercase" style="font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-1 fs-6">Using time-series regression for demand forecasting</h5>
+                            <p class="text-secondary small mb-2">Learn about linear regression formulas, consumption variables, and dynamic reorder threshold caps.</p>
+                            <a href="#" class="hero-anchor-link" style="font-size: 0.85rem;">Read more →</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
