@@ -415,6 +415,160 @@
         transform: translate(-1px, -1px);
         box-shadow: 3px 3px 0px var(--border-color);
     }
+
+    /* Video Player styles */
+    .video-thumbnail-container {
+        position: relative;
+        border: var(--border-main);
+        border-radius: 16px;
+        background-color: #111827;
+        height: 300px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 6px 6px 0px var(--border-color);
+    }
+    
+    .video-overlay-play {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        border: var(--border-main);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 3px 3px 0px var(--border-color);
+        transition: transform 0.15s;
+        z-index: 10;
+    }
+    
+    .video-overlay-play::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 18px solid var(--text-dark);
+        margin-left: 5px;
+    }
+    
+    .video-overlay-play:hover {
+        transform: scale(1.1);
+    }
+    
+    .btn-watch-transparent {
+        position: absolute;
+        bottom: 20px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(5px);
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        border-radius: 50px;
+        padding: 8px 24px;
+        font-weight: 700;
+        font-size: 0.88rem;
+        transition: all 0.15s;
+        text-decoration: none;
+        z-index: 10;
+    }
+    
+    .btn-watch-transparent:hover {
+        background: #ffffff;
+        color: #111827;
+    }
+
+    /* expert quote styles */
+    .expert-interview-box {
+        border: var(--border-main);
+        border-radius: 16px;
+        background-color: #ffffff;
+        padding: 30px;
+        box-shadow: 4px 4px 0px var(--border-color);
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        margin-top: 40px;
+        text-align: left;
+    }
+    
+    .expert-avatar {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: var(--border-main);
+        background-color: var(--bg-lavender);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    /* Integration logos */
+    .partner-logos-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px dashed #cbd5e1;
+    }
+    
+    .partner-logo-item {
+        font-family: var(--font-headings);
+        font-weight: 800;
+        font-size: 1.25rem;
+        color: #475569;
+        opacity: 0.7;
+    }
+
+    /* bullet checkmarks style */
+    .pink-checkmark-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .pink-checkmark-list li {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .pink-checkmark-list li::before {
+        content: "✓";
+        color: #ec4899;
+        font-weight: 900;
+        font-size: 1.2rem;
+    }
+
+    /* Blog Card styles */
+    .blog-card-neo {
+        background-color: #ffffff;
+        border: var(--border-main);
+        border-radius: 12px;
+        padding: 24px;
+        height: 100%;
+        box-shadow: 4px 4px 0px var(--border-color);
+        transition: all 0.15s;
+    }
+    
+    .blog-card-neo:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0px var(--border-color);
+    }
 </style>
 {% endblock %}
 
@@ -568,171 +722,219 @@
         </div>
     </section>
 
-    <!-- 2. Retail Logistics Challenge Section (Warm Cream Backdrop) -->
-    <section class="landing-section bg-cream-section" id="about">
+    <!-- Section 2: Three-Card Product Feature Grid -->
+    <section class="landing-section bg-white-section" id="features">
         <div class="container text-center">
-            <h2 class="section-title-neo">The Challenge in Retail Logistics</h2>
+            <h2 class="section-title-neo">What to expect from AI in the future and beyond</h2>
             <p class="section-subtitle-neo mx-auto" style="max-width: 800px;">
-                Small to medium retail businesses face significant operational hurdles that directly impact profitability. Traditional inventory tracking methods fall short in key areas:
+                AI is revolutionizing manufacturing and inventory management. Learn how businesses and software partners intend to integrate AI into their workflows to champion growth and improve operational efficiency.
             </p>
             
-            <div class="row g-4 mt-2 text-start">
-                <!-- Challenge A -->
+            <div class="row g-4 text-start">
+                <!-- Card 1: AI in Inventory (Peach/Orange background) -->
                 <div class="col-md-4">
-                    <div class="p-4 bg-white border border-2 rounded h-100" style="border-color: var(--border-color) !important; box-shadow: 4px 4px 0px var(--border-color);">
-                        <strong class="text-dark d-block mb-2 fs-5"><i class="fa-solid fa-circle-minus text-danger me-2"></i>Financial Losses</strong>
-                        <p class="text-secondary small mb-0">Frequent stockouts result in lost sales, while overstocking ties up valuable capital in excess goods.</p>
+                    <div class="expectation-card" style="background-color: #ffedd5; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px;">
+                        <div class="card-ill-box">
+                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="35" y="15" width="45" height="50" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                <rect x="10" y="35" width="35" height="20" fill="#d2e5d1" stroke="#111827" stroke-width="2" />
+                                <circle cx="20" cy="55" r="5" fill="#111827" />
+                                <circle cx="35" cy="55" r="5" fill="#111827" />
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">AI in inventory</h4>
+                        <p class="text-secondary small mb-4">
+                            How to transform inventory tracking with machine learning, dynamic safety stocks, and live route environmental radar.
+                        </p>
+                        <a href="{% url 'product_list' %}" class="hero-anchor-link">Learn more →</a>
                     </div>
                 </div>
-                <!-- Challenge B -->
+
+                <!-- Card 2: AI in Manufacturing (Green background) -->
                 <div class="col-md-4">
-                    <div class="p-4 bg-white border border-2 rounded h-100" style="border-color: var(--border-color) !important; box-shadow: 4px 4px 0px var(--border-color);">
-                        <strong class="text-dark d-block mb-2 fs-5"><i class="fa-solid fa-sheet-plastic text-warning me-2"></i>Outdated Tracking</strong>
-                        <p class="text-secondary small mb-0">Traditional management heavily relies on manual ledger entries or basic spreadsheets that fail to scale.</p>
+                    <div class="expectation-card" style="background-color: #dcfce7; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px;">
+                        <div class="card-ill-box">
+                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 50 L90 50" stroke="#111827" stroke-width="5" stroke-linecap="round" />
+                                <path d="M10 50 L90 50" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 5" />
+                                <rect x="30" y="15" width="35" height="30" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                <line x1="38" y1="25" x2="58" y2="25" stroke="#111827" stroke-width="2" />
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">AI in manufacturing</h4>
+                        <p class="text-secondary small mb-4">
+                            Al-driven automation enables regression forecasting algorithms to automatically identify sales velocity.
+                        </p>
+                        <a href="{% url 'manager_dashboard' %}" class="hero-anchor-link">Learn more →</a>
                     </div>
                 </div>
-                <!-- Challenge C -->
+
+                <!-- Card 3: Avis and AI (Blue background) -->
                 <div class="col-md-4">
-                    <div class="p-4 bg-white border border-2 rounded h-100" style="border-color: var(--border-color) !important; box-shadow: 4px 4px 0px var(--border-color);">
-                        <strong class="text-dark d-block mb-2 fs-5"><i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>Inefficient Vendor Relations</strong>
-                        <p class="text-secondary small mb-0">Managing manual purchase orders with multiple suppliers is slow and prone to data entry errors.</p>
+                    <div class="expectation-card" style="background-color: #dbeafe; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 30px;">
+                        <div class="card-ill-box">
+                            <svg viewBox="0 0 100 80" width="80" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="30" y="15" width="40" height="35" rx="5" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                <circle cx="42" cy="28" r="4" fill="#D4FF00" stroke="#111827" stroke-width="1" />
+                                <circle cx="58" cy="28" r="4" fill="#D4FF00" stroke="#111827" stroke-width="1" />
+                                <rect x="35" y="50" width="30" height="20" rx="3" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">Avis and AI</h4>
+                        <p class="text-secondary small mb-4">
+                            Avis aims to connect processes, secure purchase agreements with tamper-proof cryptographic block seals, and eliminate spreadsheet delays.
+                        </p>
+                        <a href="{% url 'blockchain_view' %}" class="hero-anchor-link">Learn more →</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 3. Alternating Two-Column Layout (Zig-Zag / Z-Pattern rows) -->
-    
-    <!-- Row 2: Image on Left | Text on Right (Sage Green backdrop) -->
-    <section class="spotlight-section" id="spotlight">
+    <!-- Section 3: Video & Inline Benefits Layout -->
+    <section class="landing-section bg-cream-section" id="benefits">
         <div class="container">
             <div class="row align-items-center g-5">
-                <!-- Left Graphic Column -->
+                <!-- Left Column: Video player container -->
+                <div class="col-lg-6">
+                    <div class="video-thumbnail-container">
+                        <!-- Play icon overlay -->
+                        <div class="video-overlay-play"></div>
+                        <!-- Cartoon robot layer graphic -->
+                        <svg viewBox="0 0 160 120" width="120" height="90" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.25; position: absolute; top: 30px;">
+                            <rect x="40" y="30" width="80" height="60" rx="8" fill="#ffffff" stroke="#ffffff" stroke-width="2" />
+                            <circle cx="65" cy="55" r="8" fill="#D4FF00" />
+                            <circle cx="95" cy="55" r="8" fill="#D4FF00" />
+                        </svg>
+                        <a href="#" class="btn-watch-transparent" onclick="alert('Playing Webinar Recording: Incorporating AI into retail workflows.'); return false;">Watch the recording</a>
+                    </div>
+                </div>
+
+                <!-- Right Column: Typography benefits section -->
+                <div class="col-lg-6 text-start text-dark">
+                    <h2 class="section-title-neo">The benefits of using AI in your inventory management</h2>
+                    <ul class="pink-checkmark-list mt-4">
+                        <li>
+                            <span><strong>Improved accuracy:</strong> Minimize human error in count records and stock assessments.</span>
+                        </li>
+                        <li>
+                            <span><strong>Real-time analysis:</strong> Instantly adjust safety stock levels based on live consumption rates.</span>
+                        </li>
+                        <li>
+                            <span><strong>Automation:</strong> Generate instant PO drafts when stock levels fall below critical thresholds.</span>
+                        </li>
+                        <li>
+                            <span><strong>Cost reduction:</strong> Prevent capital lockup in slow-moving items and avoid stockouts.</span>
+                        </li>
+                        <li>
+                            <span><strong>Customer satisfaction:</strong> Guarantee delivery deadlines with highly predictable shipping schedules.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Resource/Blog Grid & Interactive Media -->
+    <section class="landing-section bg-white-section" id="resources">
+        <div class="container text-center">
+            <h2 class="section-title-neo">Learn more about AI and its practical application in business</h2>
+            <p class="section-subtitle-neo">Explore practical case studies, logistics tutorials, and industry advice.</p>
+            
+            <div class="row g-4 text-start">
+                <!-- Blog Post 1 -->
+                <div class="col-md-4">
+                    <div class="blog-card-neo">
+                        <span class="badge bg-secondary text-white text-uppercase mb-3" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                        <h5 class="fw-bold text-dark mb-3">How AI is changing the retail logistics landscape</h5>
+                        <p class="text-secondary small mb-4">Discover the shifts in retail transit routes, predictive machine learning demand, and environmental telemetry.</p>
+                        <a href="#" class="hero-anchor-link">Read more →</a>
+                    </div>
+                </div>
+                <!-- Blog Post 2 -->
+                <div class="col-md-4">
+                    <div class="blog-card-neo">
+                        <span class="badge bg-secondary text-white text-uppercase mb-3" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                        <h5 class="fw-bold text-dark mb-3">A guide to transition from manual spreadsheets to smart clouds</h5>
+                        <p class="text-secondary small mb-4">A complete step-by-step roadmap detailing the import processes, automated SKU creation, and system seeding.</p>
+                        <a href="#" class="hero-anchor-link">Read more →</a>
+                    </div>
+                </div>
+                <!-- Blog Post 3 -->
+                <div class="col-md-4">
+                    <div class="blog-card-neo">
+                        <span class="badge bg-secondary text-white text-uppercase mb-3" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;">Blog post</span>
+                        <h5 class="fw-bold text-dark mb-3">Using time-series regression for demand forecasting</h5>
+                        <p class="text-secondary small mb-4">Learn about linear regression formulas, consumption variables, and dynamic reorder threshold caps.</p>
+                        <a href="#" class="hero-anchor-link">Read more →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert Interview Segment -->
+            <div class="expert-interview-box">
+                <div class="expert-avatar">
+                    <svg viewBox="0 0 100 100" width="80" height="80">
+                        <circle cx="50" cy="40" r="22" fill="#1e1b4b" />
+                        <path d="M20 90 C20 70, 80 70, 80 90 Z" fill="#1e1b4b" />
+                    </svg>
+                </div>
+                <div>
+                    <h5 class="fw-bold text-dark mb-2">Want to learn how to incorporate AI into your business?</h5>
+                    <p class="text-secondary small mb-3">Listen to our latest logistics podcast episode detailing collaborative partner systems, integrations, and predictive restock engines.</p>
+                    <a href="#" class="btn-neo-outline px-4" onclick="alert('Launching Podcast episode: Integrating AI in Enterprise Logistics.'); return false;">Check out the episode</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Value Proposition & Integration Preview -->
+    <section class="landing-section bg-cream-section" id="value-proposition">
+        <div class="container">
+            <div class="row align-items-center g-5 mb-5">
+                <!-- Left Details: checkmarks list -->
+                <div class="col-lg-6 text-start text-dark">
+                    <h2 class="section-title-neo">Unlocking your full potential with Avis Cloud Inventory</h2>
+                    <p class="hero-body-text mb-4 text-secondary">
+                        Transform your operations with enterprise decision-support tools engineered for collaborative logistics:
+                    </p>
+                    <ul class="pink-checkmark-list">
+                        <li>Automated multi-channel stock sync</li>
+                        <li>Multi-location inventory control</li>
+                        <li>Built-in material requirement planning (MRP)</li>
+                        <li>Shopify, WooCommerce, and QuickBooks integrations</li>
+                        <li>Cryptographic ledger block security signatures</li>
+                    </ul>
+                </div>
+
+                <!-- Right Column: Cartoon robot interacting with color grid SVG -->
                 <div class="col-lg-6 text-center">
                     <svg viewBox="0 0 200 150" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Warehouse Door -->
-                        <rect x="110" y="20" width="60" height="90" fill="#ffffff" stroke="#111827" stroke-width="2" />
-                        <line x1="110" y1="40" x2="170" y2="40" stroke="#111827" stroke-width="1.5" />
-                        <line x1="110" y1="65" x2="170" y2="65" stroke="#111827" stroke-width="1.5" />
-                        <!-- Delivery Truck -->
-                        <g transform="translate(15, 55)">
-                            <rect x="0" y="10" width="65" height="36" fill="#d2e5d1" stroke="#111827" stroke-width="2" />
-                            <rect x="52" y="18" width="22" height="28" fill="#111827" stroke="#111827" stroke-width="2" />
-                            <circle cx="16" cy="50" r="8" fill="#111827" />
-                            <circle cx="50" cy="50" r="8" fill="#111827" />
-                        </g>
-                        <!-- Cardboard Boxes -->
-                        <g transform="translate(115, 80)">
-                            <rect x="0" y="10" width="20" height="20" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
-                            <rect x="22" y="10" width="20" height="20" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
-                            <rect x="11" y="-8" width="20" height="20" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
-                        </g>
-                    </svg>
-                </div>
-
-                <!-- Right Details Column -->
-                <div class="col-lg-6 text-start text-dark">
-                    <span class="capsule-badge-olive">AI in inventory</span>
-                    <h2 class="section-title-neo">Redefining inventory management with AI</h2>
-                    <p class="hero-body-text mb-3">
-                        AI supports you in adapting and improving your approach to inventory management, helping you manage stock with precision and efficiency.
-                    </p>
-                    <p class="hero-body-text text-secondary small">
-                        Al-driven inventory solutions automate complex tasks such as demand forecasting, supply chain optimization, and real-time inventory tracking, allowing businesses to maintain optimal stock levels and meet customer demand seamlessly.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Row 3: Text on Left | Image on Right (White background) -->
-    <section class="landing-section bg-white-section" id="predictive-engine">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <!-- Left Details Column -->
-                <div class="col-lg-6 text-start text-dark">
-                    <span class="capsule-badge-olive" style="background-color: #4b5563 !important;">AI in manufacturing</span>
-                    <h2 class="section-title-neo">Predictive Restocking & Sales Velocity</h2>
-                    <p class="hero-body-text mb-3">
-                        Avis runs advanced machine learning models dynamically. By applying mathematical regression forecasting over historical sales velocities, our AI engine automatically generates ROP targets.
-                    </p>
-                    <p class="hero-body-text text-secondary small">
-                        No more manually updating reorder points or relying on static guess-work. Avis calculates and recommends safety stock values tailored specifically to your historical velocity metrics.
-                    </p>
-                </div>
-
-                <!-- Right Graphic Column -->
-                <div class="col-lg-6 text-center">
-                    <svg viewBox="0 0 160 120" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Conveyor belt -->
-                        <path d="M20 75 L140 75" stroke="#111827" stroke-width="6" stroke-linecap="round" />
-                        <path d="M20 75 L140 75" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 8" />
-                        <!-- QR Label machine -->
-                        <g transform="translate(55, 15)">
-                            <rect x="0" y="0" width="50" height="45" fill="#faedd0" stroke="#111827" stroke-width="2" />
-                            <rect x="10" y="10" width="30" height="10" fill="#111827" />
-                            <!-- Barcode output -->
-                            <path d="M12 45 L12 60 L38 60 L38 45 Z" fill="#ffffff" stroke="#111827" stroke-width="1.5" />
-                            <line x1="16" y1="52" x2="34" y2="52" stroke="#111827" stroke-width="2" />
-                        </g>
-                        <!-- Moving box -->
-                        <g transform="translate(100, 60)">
-                            <rect x="0" y="0" width="20" height="15" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                        <!-- Colorful Grid Screen representing dashboard -->
+                        <rect x="60" y="20" width="120" height="90" rx="6" fill="#111827" stroke="#111827" stroke-width="2" />
+                        <rect x="70" y="30" width="22" height="18" fill="#EC4899" />
+                        <rect x="98" y="30" width="22" height="18" fill="#D4FF00" />
+                        <rect x="126" y="30" width="22" height="18" fill="#2E6B12" />
+                        <rect x="154" y="30" width="16" height="18" fill="#3B82F6" />
+                        
+                        <rect x="70" y="54" width="22" height="18" fill="#3B82F6" />
+                        <rect x="98" y="54" width="22" height="18" fill="#EC4899" />
+                        <rect x="126" y="54" width="22" height="18" fill="#D4FF00" />
+                        <rect x="154" y="54" width="16" height="18" fill="#2E6B12" />
+                        
+                        <!-- Cartoon Robot arms interacting -->
+                        <g class="floating-robot">
+                            <rect x="10" y="45" width="40" height="35" rx="5" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                            <circle cx="22" cy="58" r="4" fill="#D4FF00" stroke="#111827" stroke-width="1" />
+                            <circle cx="38" cy="58" r="4" fill="#D4FF00" stroke="#111827" stroke-width="1" />
+                            <!-- Arm extending to grid screen -->
+                            <line x1="45" y1="65" x2="70" y2="55" stroke="#111827" stroke-width="3" stroke-linecap="round" />
                         </g>
                     </svg>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Row 4: Image on Left | Text on Right (Warm Cream background) -->
-    <section class="landing-section bg-cream-section" id="cryptography-seals">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <!-- Left Graphic Column -->
-                <div class="col-lg-6 text-center">
-                    <svg viewBox="0 0 160 120" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Monitor screen -->
-                        <rect x="75" y="25" width="65" height="45" rx="4" fill="#ffffff" stroke="#111827" stroke-width="2" />
-                        <rect x="79" y="29" width="57" height="37" fill="#111827" />
-                        <line x1="107" y1="70" x2="107" y2="85" stroke="#111827" stroke-width="3" />
-                        <line x1="90" y1="85" x2="124" y2="85" stroke="#111827" stroke-width="2" />
-                        <!-- Cute little robot -->
-                        <g transform="translate(15, 30)">
-                            <rect x="0" y="0" width="40" height="35" rx="6" fill="#f8d7da" stroke="#111827" stroke-width="2" />
-                            <circle cx="12" cy="15" r="4" fill="#DFFF00" stroke="#111827" stroke-width="1.2" />
-                            <circle cx="28" cy="15" r="4" fill="#DFFF00" stroke="#111827" stroke-width="1.2" />
-                            <rect x="5" y="40" width="30" height="25" rx="5" fill="#ffffff" stroke="#111827" stroke-width="2" />
-                        </g>
-                    </svg>
-                </div>
-
-                <!-- Right Details Column -->
-                <div class="col-lg-6 text-start text-dark">
-                    <span class="capsule-badge-olive" style="background-color: #111827 !important;">Avis & Cryptography</span>
-                    <h2 class="section-title-neo">Tamper-Proof Block Ledger Seals</h2>
-                    <p class="hero-body-text mb-3">
-                        Every single purchase order and delivery event is validated and sealed in a localized, cryptographic block ledger utilizing SHA-256 signatures.
-                    </p>
-                    <p class="hero-body-text text-secondary small">
-                        Enjoy total data integrity and guarantee transparency across all vendor communication, completely eliminating spreadsheet tampering or unilateral data modification disputes.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Get Visibility Showcase Section (Electric Lime, Reference Image 4) -->
-    <section class="visibility-section" id="visibility">
-        <div class="container">
-            <h2 class="section-title-neo">Get visibility over your sales and stock</h2>
-            <p class="section-subtitle-neo mx-auto mb-4" style="max-width: 800px; color: #111827; font-weight: 600;">
-                Wave goodbye to uncertainty with Avis Cloud Inventory — AI-powered for total inventory control
-            </p>
-            <a href="{% url 'register' %}" class="btn-dark-pill">Get Started</a>
-
-            <!-- Dashboard Mockup Interface -->
+            <!-- Dashboard Preview and Partners -->
             <div class="dashboard-mockup-wrapper text-start">
                 <div class="dashboard-mockup-header">
                     <div class="dashboard-mockup-logo">avis ai</div>
@@ -806,55 +1008,31 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <!-- Integration Partner Logos -->
+                <div class="partner-logos-row pb-4">
+                    <span class="partner-logo-item"><i class="fa-brands fa-shopify me-2"></i>Shopify</span>
+                    <span class="partner-logo-item"><i class="fa-brands fa-wordpress me-2"></i>WooCommerce</span>
+                    <span class="partner-logo-item"><i class="fa-brands fa-salesforce me-2"></i>BigCommerce</span>
+                    <span class="partner-logo-item"><i class="fa-solid fa-file-invoice-dollar me-2"></i>QuickBooks</span>
+                    <span class="partner-logo-item"><i class="fa-solid fa-calculator me-2"></i>Xero</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. Horizontal pipeline flow inside features section -->
-    <section class="landing-section bg-white-section" id="pipeline">
-        <div class="container text-center">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-                <div class="text-start">
-                    <h3 class="fw-bold text-dark mb-1">Automated Restocking Pipeline Flow</h3>
-                    <p class="text-secondary small mb-0">Follow the real-time AI replenishment logistics workflow step-by-step horizontally.</p>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="carousel-nav-btn" onclick="document.getElementById('pipelineTrack').scrollLeft -= 280">&lt;</button>
-                    <button class="carousel-nav-btn" onclick="document.getElementById('pipelineTrack').scrollLeft += 280">&gt;</button>
+    <!-- Section 6: Let's Get Started Banner & Validation Badges (Reference Image 5) -->
+    <section class="landing-section" style="background-color: #111827; border-bottom: var(--border-main); color: #ffffff; padding: 60px 0;">
+        <div class="container d-flex flex-wrap align-items-center justify-content-between gap-4">
+            <div class="text-start">
+                <h3 class="fw-bold text-white mb-2" style="font-size: 2.2rem; letter-spacing: -1px;">Let's get started</h3>
+                <div class="d-flex align-items-center gap-3 mt-3">
+                    <span class="badge bg-secondary p-2 small"><i class="fa-solid fa-shield me-2"></i>AICPA SOC</span>
+                    <span class="badge bg-secondary p-2 small"><i class="fa-solid fa-star me-2"></i>GetApp User Reviews</span>
                 </div>
             </div>
-            
-            <div class="pipeline-track" id="pipelineTrack">
-                <div class="pipeline-step">
-                    <span class="pipeline-num">01</span>
-                    <h5 class="fw-bold text-dark mb-2">PostgreSQL Data Pull</h5>
-                    <p class="text-secondary small mb-0">Background Python scripts extract historical sales logs directly from the database.</p>
-                </div>
-                <div class="pipeline-step">
-                    <span class="pipeline-num">02</span>
-                    <h5 class="fw-bold text-dark mb-2">Regression Forecasting</h5>
-                    <p class="text-secondary small mb-0">Pandas and Scikit-Learn linear regression models calculate monthly sales velocity.</p>
-                </div>
-                <div class="pipeline-step">
-                    <span class="pipeline-num">03</span>
-                    <h5 class="fw-bold text-dark mb-2">Smart ROP Calculation</h5>
-                    <p class="text-secondary small mb-0">The reorder target threshold adjusts dynamically (predicted volume + 20% safety margin buffer).</p>
-                </div>
-                <div class="pipeline-step">
-                    <span class="pipeline-num">04</span>
-                    <h5 class="fw-bold text-dark mb-2">Auto-PO Placement</h5>
-                    <p class="text-secondary small mb-0">If active stock falls beneath target levels, a replenishment order draft is generated.</p>
-                </div>
-                <div class="pipeline-step">
-                    <span class="pipeline-num">05</span>
-                    <h5 class="fw-bold text-dark mb-2">Ledger Cryptography</h5>
-                    <p class="text-secondary small mb-0">The order details are sealed in the block ledger utilizing mathematical SHA-256 links.</p>
-                </div>
-                <div class="pipeline-step">
-                    <span class="pipeline-num">06</span>
-                    <h5 class="fw-bold text-dark mb-2">Supplier Portal Update</h5>
-                    <p class="text-secondary small mb-0">The order draft populates the supplier panel for shipping actions, weather warnings, and deliveries.</p>
-                </div>
+            <div>
+                <a href="{% url 'register' %}" class="btn-neo-lime py-3 px-5 fs-6 text-uppercase fw-bold text-dark">Get started free</a>
             </div>
         </div>
     </section>
