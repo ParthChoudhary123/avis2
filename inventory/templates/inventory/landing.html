@@ -5,43 +5,44 @@
 
 {% block extra_css %}
 <style>
-    /* Neo-Brutalist Layout Rules */
+    /* Katana-Inspired Premium Design System CSS */
+    
+    /* Hero section lavender backdrop */
     .hero-container {
-        background-color: var(--bg-lavender) !important;
+        background-color: #D7C7F7 !important;
         border-bottom: var(--border-main);
-        padding: 90px 0 80px;
+        padding: 95px 0 85px;
     }
 
     .hero-headline {
         font-family: var(--font-headings);
-        font-weight: 900;
-        font-size: 3.8rem;
-        line-height: 1.05;
+        font-weight: 800;
+        font-size: 3.6rem;
+        line-height: 1.1;
         letter-spacing: -2px;
-        color: var(--text-dark);
+        color: #111827;
         margin-bottom: 24px;
     }
 
     .hero-body-text {
-        font-size: 1.15rem;
-        color: var(--text-dark);
+        font-size: 1.1rem;
+        color: #1f2937;
         line-height: 1.6;
         margin-bottom: 30px;
     }
 
     .hero-anchor-link {
         font-weight: 800;
-        color: var(--text-dark);
+        color: #111827;
         text-decoration: none;
         font-size: 1.05rem;
         transition: color 0.15s;
     }
 
     .hero-anchor-link:hover {
-        color: var(--accent-blue);
+        color: #2563eb;
     }
 
-    /* Symmetrical Vector Factory SVG */
     .factory-svg {
         max-width: 100%;
         height: auto;
@@ -52,9 +53,9 @@
         box-shadow: 6px 6px 0px var(--border-color);
     }
 
-    /* Section Wrapper spacing */
+    /* Section Spacing */
     .landing-section {
-        padding: 90px 0;
+        padding: 95px 0;
         border-bottom: var(--border-main);
     }
 
@@ -67,62 +68,201 @@
     }
 
     .section-title-neo {
-        font-size: 2.6rem;
-        font-weight: 900;
-        letter-spacing: -1px;
-        color: var(--text-dark);
+        font-family: var(--font-headings);
+        font-size: 2.8rem;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        color: #111827;
         margin-bottom: 16px;
+        line-height: 1.2;
     }
 
     .section-subtitle-neo {
         color: #4b5563;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         margin-bottom: 50px;
     }
 
-    /* Features Overview Cluster */
-    .feature-neo-card {
-        background-color: #ffffff;
+    /* AI Expectation Cards (Flat solid pastels from Reference Image 2) */
+    .expectation-card {
         border: var(--border-main);
-        border-radius: 16px;
-        padding: 30px;
-        height: 100%;
-        box-shadow: 5px 5px 0px var(--border-color);
-        transition: all 0.15s;
-        text-align: left;
-    }
-
-    .feature-neo-card:hover {
-        transform: translate(-3px, -3px);
-        box-shadow: 8px 8px 0px var(--border-color);
-    }
-
-    .feature-ill-box {
-        height: 140px;
-        border: var(--border-main);
-        background-color: var(--bg-cream);
         border-radius: 12px;
-        margin-bottom: 24px;
+        padding: 35px 28px;
+        height: 100%;
+        text-align: left;
+        box-shadow: 4px 4px 0px var(--border-color);
+        transition: transform 0.15s ease;
+    }
+
+    .expectation-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .bg-mint-pastel { background-color: #d8edd8 !important; }
+    .bg-yellow-pastel { background-color: #faedd0 !important; }
+    .bg-pink-pastel { background-color: #fadbd8 !important; }
+
+    .card-ill-box {
+        height: 120px;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
+        margin-bottom: 24px;
     }
 
-    .feature-link-more {
-        font-weight: 800;
-        color: var(--text-dark);
+    /* Spotlight Section (Reference Image 3) */
+    .spotlight-section {
+        background-color: #e5eae4 !important;
+        border-bottom: var(--border-main);
+        padding: 95px 0;
+    }
+
+    .capsule-badge-olive {
+        background-color: #1e351f !important;
+        color: #ffffff !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        letter-spacing: 1px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    /* Get Visibility lime yellow Section (Reference Image 4) */
+    .visibility-section {
+        background-color: #E1F533 !important;
+        border-bottom: var(--border-main);
+        padding: 95px 0;
+        text-align: center;
+    }
+
+    .btn-dark-pill {
+        background-color: #111827 !important;
+        color: #ffffff !important;
+        border: none;
+        border-radius: 50px;
+        padding: 14px 36px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        transition: background-color 0.12s ease;
         text-decoration: none;
-        font-size: 0.95rem;
-        margin-top: 15px;
         display: inline-block;
     }
 
-    .feature-link-more:hover {
-        text-decoration: underline;
+    .btn-dark-pill:hover {
+        background-color: #000000 !important;
     }
 
-    /* Horizontal Pipeline restock flow */
+    /* Dashboard Interface Mockup (Reference Image 4) */
+    .dashboard-mockup-wrapper {
+        background: #ffffff;
+        border: var(--border-main);
+        border-radius: 12px;
+        box-shadow: 6px 6px 0px var(--border-color);
+        overflow: hidden;
+        margin-top: 50px;
+    }
+
+    .dashboard-mockup-header {
+        background-color: #111827;
+        color: #ffffff;
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .dashboard-mockup-logo {
+        font-family: var(--font-headings);
+        font-weight: 900;
+        font-size: 1.25rem;
+        letter-spacing: -1px;
+    }
+
+    .dashboard-mockup-nav {
+        display: flex;
+        gap: 15px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .dashboard-mockup-nav li {
+        opacity: 0.7;
+        cursor: pointer;
+    }
+
+    .dashboard-mockup-nav li.active {
+        opacity: 1;
+        border-bottom: 2px solid #ffffff;
+    }
+
+    .dashboard-sub-nav {
+        background-color: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 8px 20px;
+        display: flex;
+        gap: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .dashboard-sub-nav span.active {
+        color: #2563eb;
+        border-bottom: 2px solid #2563eb;
+    }
+
+    .dashboard-mockup-body {
+        padding: 20px;
+        overflow-x: auto;
+    }
+
+    /* Custom datagrid table for dashboard mockup */
+    .mockup-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.8rem;
+    }
+
+    .mockup-table th {
+        background-color: #f1f5f9;
+        color: #475569;
+        font-weight: 700;
+        padding: 10px 14px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .mockup-table td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+    }
+
+    /* Status Pills */
+    .status-pill-green {
+        background-color: #d1e7dd;
+        color: #0f5132;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 0.72rem;
+    }
+
+    .status-pill-yellow {
+        background-color: #fff3cd;
+        color: #664d03;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 0.72rem;
+    }
+
+    /* Horizontal Pipeline layout */
     .pipeline-track {
         display: flex;
         flex-wrap: nowrap;
@@ -165,135 +305,6 @@
         margin-bottom: 20px;
     }
 
-    /* Core Inventory Datagrid Matrix */
-    .matrix-table {
-        border: var(--border-main);
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    .matrix-table th {
-        background-color: var(--text-dark) !important;
-        color: #ffffff !important;
-        font-weight: 800;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        padding: 14px 16px;
-        border-bottom: var(--border-main);
-    }
-
-    .matrix-table td {
-        font-size: 0.88rem;
-        padding: 14px 16px;
-        border-bottom: var(--border-main);
-        background-color: #ffffff;
-    }
-
-    .matrix-table tr:nth-child(even) td {
-        background-color: var(--bg-cream);
-    }
-
-    /* Simulator Panel adjustments */
-    .sim-card-neo {
-        border: var(--border-main);
-        border-radius: 16px;
-        background-color: #ffffff;
-        box-shadow: 6px 6px 0px var(--border-color);
-    }
-
-    /* Grayscale Trust Badges Section */
-    .trust-section {
-        background-color: #ffffff;
-        border-top: var(--border-main);
-        border-bottom: var(--border-main);
-        padding: 30px 0;
-    }
-
-    .trust-logo {
-        filter: grayscale(100%);
-        opacity: 0.55;
-        font-size: 1.6rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: #4b5563;
-        transition: all 0.2s;
-    }
-
-    .trust-logo:hover {
-        filter: grayscale(0%);
-        opacity: 0.9;
-        color: #000000;
-    }
-
-    /* Call To Action Box (Neo-Brutalist) */
-    .cta-card-neo {
-        background-color: var(--bg-lavender);
-        border: var(--border-main);
-        border-radius: 24px;
-        padding: 60px 40px;
-        box-shadow: 8px 8px 0px var(--border-color);
-        text-align: center;
-        max-width: 900px;
-        margin: 0 auto;
-    }
-
-    .media-video-hub {
-        border: var(--border-main);
-        border-radius: 20px;
-        background-color: var(--bg-lavender);
-        height: 280px;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 6px 6px 0px var(--border-color);
-    }
-
-    .play-triangle-btn {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background-color: #ffffff;
-        border: var(--border-main);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 10;
-        box-shadow: 3px 3px 0px var(--border-color);
-        transition: transform 0.15s;
-    }
-
-    .play-triangle-btn::before {
-        content: "";
-        width: 0;
-        height: 0;
-        border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
-        border-left: 18px solid var(--text-dark);
-        margin-left: 5px;
-    }
-
-    .play-triangle-btn:hover {
-        transform: scale(1.1);
-    }
-
-    .webinar-capsule {
-        background-color: var(--brand-lime);
-        border: var(--border-main);
-        color: var(--text-dark);
-        font-weight: 800;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-        padding: 6px 14px;
-        border-radius: 20px;
-        display: inline-block;
-        margin-bottom: 20px;
-    }
-
     .carousel-nav-btn {
         width: 44px;
         height: 44px;
@@ -315,96 +326,73 @@
         transform: translate(-1px, -1px);
         box-shadow: 3px 3px 0px var(--border-color);
     }
-
-    .blog-track {
-        display: flex;
-        gap: 24px;
-        overflow-x: auto;
-        padding-bottom: 20px;
-        scroll-behavior: smooth;
-    }
-
-    .blog-card {
-        min-width: 280px;
-        max-width: 320px;
-        background: #ffffff;
-        border: var(--border-main);
-        border-radius: 16px;
-        box-shadow: 4px 4px 0px var(--border-color);
-        flex-shrink: 0;
-        text-align: left;
-        overflow: hidden;
-    }
 </style>
 {% endblock %}
 
-{% block content %}
 <main>
-    <!-- 1. Hero / Header Section is integrated via base.html -->
+    <!-- 1. Hero Section (Lavender Backdrop, Reference Image 1) -->
     <section class="hero-container" id="home">
         <div class="container">
             <div class="row align-items-center g-5">
                 <!-- Left Layout Grid -->
                 <div class="col-lg-6 text-start text-dark">
-                    <span class="pre-headline">AI-ASSISTED SMART INVENTORY</span>
                     <h1 class="hero-headline">Welcome to the next era of manufacturing</h1>
                     <p class="hero-body-text">
-                        AVIS bridges the gap between traditional retail operations and modern automated logistics by combining standard web technologies with artificial intelligence models and cryptographic blockchain-inspired security layers.
+                        Artificial intelligence isn't just the next tech trend — it's reshaping how we work, from precise demand forecasting to real-time inventory tracking at an unprecedented scale. Here's everything you need to know to enhance your capabilities and your business's performance with AI.
                     </p>
                     <div class="d-flex flex-wrap align-items-center gap-4">
-                        <a href="{% url 'register' %}" class="btn-neo-lime py-3 px-4 fs-6">Get started</a>
-                        <a href="#about" class="hero-anchor-link">Learn about the project... →</a>
+                        <a href="{% url 'register' %}" class="btn-submit-gradient py-3 px-5 fs-6 text-uppercase tracking-wider">Get started</a>
+                        <a href="#about" class="hero-anchor-link">Learn more... →</a>
                     </div>
                 </div>
 
-                <!-- Right Layout Grid: Flat vector isometric factory artwork -->
+                <!-- Right Layout Grid: Isometric Factory Illustration -->
                 <div class="col-lg-6 text-center">
-                    <div class="factory-svg">
-                        <svg viewBox="0 0 500 350" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Background Floor -->
-                            <path d="M0 175 L250 50 L500 175 L250 300 Z" fill="#FAF9F6" stroke="#1A1A24" stroke-width="2" />
-                            
-                            <!-- Factory Conveyor belt -->
-                            <path d="M80 180 L250 250 L420 180" stroke="#1A1A24" stroke-width="8" stroke-linecap="round" />
-                            <path d="M80 180 L250 250 L420 180" stroke="#DFFF00" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 15" />
-                            
-                            <!-- Package stock boxes moving -->
-                            <g transform="translate(140, 180)">
-                                <path d="M0 10 L15 2 L30 10 L15 18 Z" fill="#D2C4FB" stroke="#1A1A24" stroke-width="2" />
-                                <path d="M0 10 L0 25 L15 33 L15 18 Z" fill="#bcaef7" stroke="#1A1A24" stroke-width="2" />
-                                <path d="M15 18 L15 33 L30 25 L30 10 Z" fill="#b09ff7" stroke="#1A1A24" stroke-width="2" />
-                            </g>
-                            <g transform="translate(260, 200)">
-                                <path d="M0 10 L15 2 L30 10 L15 18 Z" fill="#FAF9F6" stroke="#1A1A24" stroke-width="2" />
-                                <path d="M0 10 L0 25 L15 33 L15 18 Z" fill="#e5e3db" stroke="#1A1A24" stroke-width="2" />
-                                <path d="M15 18 L15 33 L30 25 L30 10 Z" fill="#d2d0c6" stroke="#1A1A24" stroke-width="2" />
-                            </g>
+                    <svg viewBox="0 0 500 350" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Iso Floor Grid -->
+                        <path d="M50 200 L250 80 L450 200 L250 320 Z" fill="#EADCFB" stroke="#111827" stroke-width="1.5"/>
+                        <!-- Conveyor belt -->
+                        <path d="M120 220 L280 280 L400 220" stroke="#111827" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M120 220 L280 280 L400 220" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 10"/>
+                        
+                        <!-- Cute white robot hovering (Reference Image 1) -->
+                        <g transform="translate(210, 60)">
+                            <!-- Head -->
+                            <rect x="20" y="20" width="60" height="50" rx="10" fill="#ffffff" stroke="#111827" stroke-width="2"/>
+                            <!-- Glowing green eyes -->
+                            <circle cx="38" cy="42" r="6" fill="#DFFF00" stroke="#111827" stroke-width="1.5"/>
+                            <circle cx="62" cy="42" r="6" fill="#DFFF00" stroke="#111827" stroke-width="1.5"/>
+                            <!-- Body -->
+                            <rect x="25" y="75" width="50" height="40" rx="8" fill="#ffffff" stroke="#111827" stroke-width="2"/>
+                            <!-- Hover flame -->
+                            <path d="M40 115 L45 128 L55 128 L60 115 Z" fill="#FFA500"/>
+                        </g>
 
-                            <!-- Robotic Processing Arm -->
-                            <g transform="translate(210, 80)">
-                                <line x1="20" y1="20" x2="20" y2="70" stroke="#1A1A24" stroke-width="6" />
-                                <line x1="20" y1="70" x2="50" y2="90" stroke="#1A1A24" stroke-width="4" />
-                                <rect x="10" y="10" width="20" height="20" rx="3" fill="#DFFF00" stroke="#1A1A24" stroke-width="2" />
-                                <circle cx="50" cy="90" r="6" fill="#CC0000" stroke="#1A1A24" stroke-width="2" />
-                            </g>
+                        <!-- Conveyor barcode scanner label printer -->
+                        <g transform="translate(130, 130)">
+                            <rect x="10" y="10" width="40" height="50" fill="#faedd0" stroke="#111827" stroke-width="2"/>
+                            <!-- QR output label -->
+                            <path d="M20 60 L20 80 L40 80 L40 60 Z" fill="#ffffff" stroke="#111827" stroke-width="1.5"/>
+                            <rect x="24" y="66" width="12" height="10" fill="#111827"/>
+                        </g>
 
-                            <!-- Transport Delivery Truck -->
-                            <g transform="translate(360, 110)">
-                                <rect x="0" y="10" width="60" height="30" rx="5" fill="#D2C4FB" stroke="#1A1A24" stroke-width="2" />
-                                <rect x="40" y="15" width="25" height="25" rx="3" fill="#1A1A24" stroke="#1A1A24" stroke-width="2" />
-                                <circle cx="15" cy="40" r="8" fill="#DFFF00" stroke="#1A1A24" stroke-width="2" />
-                                <circle cx="45" cy="40" r="8" fill="#DFFF00" stroke="#1A1A24" stroke-width="2" />
-                            </g>
-                        </svg>
-                    </div>
+                        <!-- Small Delivery Truck & Cardboard boxes -->
+                        <g transform="translate(320, 160)">
+                            <rect x="25" y="30" width="45" height="28" fill="#d2e5d1" stroke="#111827" stroke-width="1.5"/>
+                            <rect x="65" y="36" width="16" height="22" fill="#111827"/>
+                            <circle cx="36" cy="58" r="6" fill="#111827"/>
+                            <circle cx="60" cy="58" r="6" fill="#111827"/>
+                            <!-- Boxes stacked -->
+                            <rect x="2" y="24" width="15" height="15" fill="#dfc07b" stroke="#111827" stroke-width="1.5"/>
+                            <rect x="-12" y="34" width="15" height="15" fill="#dfc07b" stroke="#111827" stroke-width="1.5"/>
+                        </g>
+                    </svg>
                 </div>
             </div>
         </div>
     </section>
 
-
-
-    <!-- 3. About the Project (AVIS AI Docs Information) -->
+    <!-- 2. Retail Logistics Challenge Section (Warm Cream Backdrop) -->
     <section class="landing-section bg-cream-section" id="about">
         <div class="container text-center">
             <h2 class="section-title-neo">The Challenge in Retail Logistics</h2>
@@ -438,186 +426,292 @@
         </div>
     </section>
 
-    <!-- 4. Features Section (Three-Column Matrix + restock timeline) -->
+    <!-- 3. AI Expectation Grid Section (Reference Image 2) -->
     <section class="landing-section bg-white-section" id="features">
         <div class="container text-center">
-            <h2 class="section-title-neo">Avis Core Objectives</h2>
-            <p class="section-subtitle-neo">Explore the key operational targets driving AVIS AI platforms.</p>
+            <h2 class="section-title-neo">What to expect from AI in the future and beyond</h2>
+            <p class="section-subtitle-neo mx-auto" style="max-width: 800px;">
+                AI is revolutionizing manufacturing and inventory management. Learn how businesses and software partners intend to integrate AI into their workflows to champion growth and improve operational efficiency.
+            </p>
             
-            <div class="row g-4 mb-5 text-start">
-                <!-- Card A: Centralized Stock Management -->
+            <div class="row g-4 text-start">
+                <!-- Card 1: AI in Inventory (Mint Green, Reference Image 2) -->
                 <div class="col-md-4">
-                    <div class="feature-neo-card">
-                        <div class="feature-ill-box">
-                            <svg viewBox="0 0 100 80" width="90" height="70">
-                                <path d="M10 50 L90 50 M10 60 L90 60 M20 50 L20 70 M50 50 L50 70 M80 50 L80 70" stroke="#1A1A24" stroke-width="3" stroke-linecap="round" />
-                                <rect x="25" y="15" width="20" height="35" fill="#D2C4FB" stroke="#1A1A24" stroke-width="2" />
-                                <rect x="50" y="25" width="22" height="25" fill="#DFFF00" stroke="#1A1A24" stroke-width="2" />
+                    <div class="expectation-card bg-mint-pastel">
+                        <div class="card-ill-box">
+                            <svg viewBox="0 0 160 120" width="120" height="90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Warehouse Door -->
+                                <rect x="80" y="20" width="50" height="70" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                <line x1="80" y1="35" x2="130" y2="35" stroke="#111827" stroke-width="1.5" />
+                                <line x1="80" y1="55" x2="130" y2="55" stroke="#111827" stroke-width="1.5" />
+                                <!-- Delivery Truck -->
+                                <g transform="translate(15, 45)">
+                                    <rect x="0" y="10" width="50" height="28" fill="#d2e5d1" stroke="#111827" stroke-width="2" />
+                                    <rect x="40" y="18" width="18" height="20" fill="#111827" stroke="#111827" stroke-width="2" />
+                                    <circle cx="12" cy="40" r="6" fill="#111827" />
+                                    <circle cx="38" cy="40" r="6" fill="#111827" />
+                                </g>
+                                <!-- Cardboard Boxes -->
+                                <g transform="translate(85, 60)">
+                                    <rect x="0" y="10" width="16" height="16" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                                    <rect x="18" y="10" width="16" height="16" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                                    <rect x="9" y="-6" width="16" height="16" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                                </g>
                             </svg>
                         </div>
-                        <h4 class="fw-bold text-dark">Centralized Stock Management</h4>
-                        <p class="text-secondary small">Maintain a solid primary database of real-time stock levels. Shift from static minimum stock limits to dynamic, math-driven safety targets.</p>
+                        <h4 class="fw-bold text-dark mb-2">AI in inventory</h4>
+                        <p class="text-secondary small mb-4">
+                            How to transform inventory tracking with machine learning models, dynamic safety stocks, and live route environmental delays.
+                        </p>
                         {% if user.is_authenticated %}
-                            {% if user.is_manager %}
-                                <a href="{% url 'product_list' %}" class="feature-link-more">Learn more →</a>
-                            {% else %}
-                                <a href="{% url 'vendor_dashboard' %}" class="feature-link-more">Learn more →</a>
-                            {% endif %}
+                            <a href="{% url 'product_list' %}" class="hero-anchor-link">Learn more →</a>
                         {% else %}
-                            <a href="{% url 'login' %}" class="feature-link-more">Learn more →</a>
+                            <a href="{% url 'login' %}" class="hero-anchor-link">Learn more →</a>
                         {% endif %}
                     </div>
                 </div>
 
-                <!-- Card B: Predictive Restock Engine -->
+                <!-- Card 2: AI in Manufacturing (Pale Yellow, Reference Image 2) -->
                 <div class="col-md-4">
-                    <div class="feature-neo-card">
-                        <div class="feature-ill-box">
-                            <svg viewBox="0 0 100 80" width="90" height="70">
-                                <rect x="15" y="45" width="70" height="15" rx="4" fill="#FAF9F6" stroke="#1A1A24" stroke-width="2" />
-                                <line x1="50" y1="10" x2="50" y2="45" stroke="#1A1A24" stroke-width="3" />
-                                <circle cx="50" cy="20" r="10" fill="#D2C4FB" stroke="#1A1A24" stroke-width="2" />
-                                <circle cx="50" cy="45" r="5" fill="#DFFF00" stroke="#1A1A24" stroke-width="2" />
+                    <div class="expectation-card bg-yellow-pastel">
+                        <div class="card-ill-box">
+                            <svg viewBox="0 0 160 120" width="120" height="90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Conveyor belt -->
+                                <path d="M20 75 L140 75" stroke="#111827" stroke-width="6" stroke-linecap="round" />
+                                <path d="M20 75 L140 75" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 8" />
+                                <!-- QR Label machine -->
+                                <g transform="translate(55, 15)">
+                                    <rect x="0" y="0" width="50" height="45" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                    <rect x="10" y="10" width="30" height="10" fill="#111827" />
+                                    <!-- Barcode output -->
+                                    <path d="M12 45 L12 60 L38 60 L38 45 Z" fill="#ffffff" stroke="#111827" stroke-width="1.5" />
+                                    <line x1="16" y1="52" x2="34" y2="52" stroke="#111827" stroke-width="2" />
+                                </g>
+                                <!-- Moving box -->
+                                <g transform="translate(100, 60)">
+                                    <rect x="0" y="0" width="20" height="15" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                                </g>
                             </svg>
                         </div>
-                        <h4 class="fw-bold text-dark">Predictive Restock Engine</h4>
-                        <p class="text-secondary small">Run time-series regression algorithms in the background to automatically identify consumption velocities and set target restocking volumes.</p>
+                        <h4 class="fw-bold text-dark mb-2">AI in manufacturing</h4>
+                        <p class="text-secondary small mb-4">
+                            Al-driven automation enables regression forecasting algorithms to automatically identify historical consumption velocities.
+                        </p>
                         {% if user.is_authenticated %}
-                            {% if user.is_manager %}
-                                <a href="{% url 'manager_dashboard' %}" class="feature-link-more">Learn more →</a>
-                            {% else %}
-                                <a href="{% url 'vendor_dashboard' %}" class="feature-link-more">Learn more →</a>
-                            {% endif %}
+                            <a href="{% url 'manager_dashboard' %}" class="hero-anchor-link">Learn more →</a>
                         {% else %}
-                            <a href="{% url 'login' %}" class="feature-link-more">Learn more →</a>
+                            <a href="{% url 'login' %}" class="hero-anchor-link">Learn more →</a>
                         {% endif %}
                     </div>
                 </div>
 
-                <!-- Card C: Secure Vendor Transactions -->
+                <!-- Card 3: Avis and AI (Pale Pink, Reference Image 2) -->
                 <div class="col-md-4">
-                    <div class="feature-neo-card">
-                        <div class="feature-ill-box">
-                            <svg viewBox="0 0 100 80" width="90" height="70">
-                                <rect x="20" y="15" width="60" height="40" rx="6" fill="#ffffff" stroke="#1A1A24" stroke-width="2" />
-                                <path d="M30 45 L50 25 L70 35" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <circle cx="70" cy="35" r="4" fill="#DFFF00" stroke="#1A1A24" stroke-width="2" />
-                                <rect x="42" y="55" width="16" height="12" fill="#1A1A24" />
+                    <div class="expectation-card bg-pink-pastel">
+                        <div class="card-ill-box">
+                            <svg viewBox="0 0 160 120" width="120" height="90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Monitor screen -->
+                                <rect x="75" y="25" width="65" height="45" rx="4" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                <rect x="79" y="29" width="57" height="37" fill="#111827" />
+                                <line x1="107" y1="70" x2="107" y2="85" stroke="#111827" stroke-width="3" />
+                                <line x1="90" y1="85" x2="124" y2="85" stroke="#111827" stroke-width="2" />
+                                <!-- Cute little robot -->
+                                <g transform="translate(15, 30)">
+                                    <rect x="0" y="0" width="40" height="35" rx="6" fill="#f8d7da" stroke="#111827" stroke-width="2" />
+                                    <circle cx="12" cy="15" r="4" fill="#DFFF00" stroke="#111827" stroke-width="1.2" />
+                                    <circle cx="28" cy="15" r="4" fill="#DFFF00" stroke="#111827" stroke-width="1.2" />
+                                    <rect x="5" y="40" width="30" height="25" rx="5" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                </g>
                             </svg>
                         </div>
-                        <h4 class="fw-bold text-dark">Secure Vendor Transactions</h4>
-                        <p class="text-secondary small">Review interactive performance dashboards built to coordinate internal retail sales, localized supplier city delay alerts, and cryptographic blocks.</p>
+                        <h4 class="fw-bold text-dark mb-2">Avis and AI</h4>
+                        <p class="text-secondary small mb-4">
+                            Avis aims to connect processes, secure purchase agreements with tamper-proof cryptographic block seals, and eliminate spreadsheet delays.
+                        </p>
                         {% if user.is_authenticated %}
-                            {% if user.is_manager %}
-                                <a href="{% url 'blockchain_view' %}" class="feature-link-more">Learn more →</a>
-                            {% else %}
-                                <a href="{% url 'vendor_dashboard' %}" class="feature-link-more">Learn more →</a>
-                            {% endif %}
+                            <a href="{% url 'blockchain_view' %}" class="hero-anchor-link">Learn more →</a>
                         {% else %}
-                            <a href="{% url 'login' %}" class="feature-link-more">Learn more →</a>
+                            <a href="{% url 'login' %}" class="hero-anchor-link">Learn more →</a>
                         {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <!-- Horizontal pipeline layout inside features section -->
-            <div class="pt-5 border-top" style="border-top-color: #e5e7eb !important;">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <div class="text-start">
-                        <h3 class="fw-bold text-dark mb-1">Automated Restocking Pipeline Flow</h3>
-                        <p class="text-secondary small mb-0">Follow the real-time AI replenishment logistics workflow step-by-step horizontally.</p>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button class="carousel-nav-btn" onclick="document.getElementById('pipelineTrack').scrollLeft -= 280">&lt;</button>
-                        <button class="carousel-nav-btn" onclick="document.getElementById('pipelineTrack').scrollLeft += 280">&gt;</button>
-                    </div>
-                </div>
-                
-                <div class="pipeline-track" id="pipelineTrack">
-                    <div class="pipeline-step">
-                        <span class="pipeline-num">01</span>
-                        <h5 class="fw-bold text-dark mb-2">PostgreSQL Data Pull</h5>
-                        <p class="text-secondary small mb-0">Background Python scripts extract historical sales logs directly from the database.</p>
-                    </div>
-                    <div class="pipeline-step">
-                        <span class="pipeline-num">02</span>
-                        <h5 class="fw-bold text-dark mb-2">Regression Forecasting</h5>
-                        <p class="text-secondary small mb-0">Pandas and Scikit-Learn linear regression models calculate monthly sales velocity.</p>
-                    </div>
-                    <div class="pipeline-step">
-                        <span class="pipeline-num">03</span>
-                        <h5 class="fw-bold text-dark mb-2">Smart ROP Calculation</h5>
-                        <p class="text-secondary small mb-0">The reorder target threshold adjusts dynamically (predicted volume + 20% safety margin buffer).</p>
-                    </div>
-                    <div class="pipeline-step">
-                        <span class="pipeline-num">04</span>
-                        <h5 class="fw-bold text-dark mb-2">Auto-PO Placement</h5>
-                        <p class="text-secondary small mb-0">If active stock falls beneath target levels, a replenishment order draft is generated.</p>
-                    </div>
-                    <div class="pipeline-step">
-                        <span class="pipeline-num">05</span>
-                        <h5 class="fw-bold text-dark mb-2">Ledger Cryptography</h5>
-                        <p class="text-secondary small mb-0">The order details are sealed in the block ledger utilizing mathematical SHA-256 links.</p>
-                    </div>
-                    <div class="pipeline-step">
-                        <span class="pipeline-num">06</span>
-                        <h5 class="fw-bold text-dark mb-2">Supplier Portal Update</h5>
-                        <p class="text-secondary small mb-0">The order draft populates the supplier panel for shipping actions, weather warnings, and deliveries.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. Future Vision of the Project (Roadmap & Scaling) -->
-    <section class="landing-section bg-cream-section" id="vision">
-        <div class="container text-start">
-            <h2 class="section-title-neo text-center">Future Vision of AVIS</h2>
-            <p class="section-subtitle-neo text-center">A roadmap toward fully decentralized, predictive retail supply chains.</p>
-            
-            <div class="row g-4 mt-2">
-                <!-- Vision item 1 -->
-                <div class="col-md-6">
-                    <div class="p-4 bg-white border border-2 rounded h-100" style="border-color: var(--border-color) !important; box-shadow: 4px 4px 0px var(--border-color);">
-                        <strong class="text-dark d-block mb-2"><i class="fa-solid fa-microchip text-primary me-2"></i>Advanced Seasonal Neural Demand</strong>
-                        <p class="text-secondary small mb-0">Upgrading basic linear equations to LSTM neural network engines that ingest local marketing calendars, holiday events, and regional product trends.</p>
-                    </div>
+    <!-- 4. Detailed Spotlight Section (Sage Green Backdrop, Reference Image 3) -->
+    <section class="spotlight-section" id="spotlight">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Details Column -->
+                <div class="col-lg-6 text-start text-dark">
+                    <span class="capsule-badge-olive">AI in inventory</span>
+                    <h2 class="section-title-neo">Redefining inventory management with AI</h2>
+                    <p class="hero-body-text mb-3">
+                        AI supports you in adapting and improving your approach to inventory management, helping you manage stock with precision and efficiency.
+                    </p>
+                    <p class="hero-body-text text-secondary small">
+                        Al-driven inventory solutions automate complex tasks such as demand forecasting, supply chain optimization, and real-time inventory tracking, allowing businesses to maintain optimal stock levels and meet customer demand seamlessly.
+                    </p>
                 </div>
-                <!-- Vision item 2 -->
-                <div class="col-md-6">
-                    <div class="p-4 bg-white border border-2 rounded h-100" style="border-color: var(--border-color) !important; box-shadow: 4px 4px 0px var(--border-color);">
-                        <strong class="text-dark d-block mb-2"><i class="fa-solid fa-globe text-primary me-2"></i>Decentralized Ledger Scaling</strong>
-                        <p class="text-secondary small mb-0">Migrating our lightweight local block ledger to a multi-node vendor consensus network to fully guarantee transparency and prevent unilateral database tampering.</p>
-                    </div>
-                </div>
-                <!-- Vision item 3 -->
-                <div class="col-md-6">
-                    <div class="p-4 bg-white border border-2 rounded h-100" style="border-color: var(--border-color) !important; box-shadow: 4px 4px 0px var(--border-color);">
-                        <strong class="text-dark d-block mb-2"><i class="fa-solid fa-credit-card text-primary me-2"></i>Automated Payment Settlement</strong>
-                        <p class="text-secondary small mb-0">Integrating smart contracts that trigger merchant payouts automatically upon verified blockchain ledger delivery receipt seals.</p>
-                    </div>
-                </div>
-                <!-- Vision item 4 -->
-                <div class="col-md-6">
-                    <div class="p-4 bg-white border border-2 rounded h-100" style="border-color: var(--border-color) !important; box-shadow: 4px 4px 0px var(--border-color);">
-                        <strong class="text-dark d-block mb-2"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>Dynamic Logistics Telemetry</strong>
-                        <p class="text-secondary small mb-0">Partnering with IoT transit fleet sensors to track live route parameters in real time and automatically trigger dynamic delivery alerts.</p>
-                    </div>
+
+                <!-- Right Graphic Column -->
+                <div class="col-lg-6 text-center">
+                    <svg viewBox="0 0 200 150" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Warehouse Door -->
+                        <rect x="110" y="20" width="60" height="90" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                        <line x1="110" y1="40" x2="170" y2="40" stroke="#111827" stroke-width="1.5" />
+                        <line x1="110" y1="65" x2="170" y2="65" stroke="#111827" stroke-width="1.5" />
+                        <!-- Delivery Truck -->
+                        <g transform="translate(15, 55)">
+                            <rect x="0" y="10" width="65" height="36" fill="#d2e5d1" stroke="#111827" stroke-width="2" />
+                            <rect x="52" y="18" width="22" height="28" fill="#111827" stroke="#111827" stroke-width="2" />
+                            <circle cx="16" cy="50" r="8" fill="#111827" />
+                            <circle cx="50" cy="50" r="8" fill="#111827" />
+                        </g>
+                        <!-- Cardboard Boxes -->
+                        <g transform="translate(115, 80)">
+                            <rect x="0" y="10" width="20" height="20" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                            <rect x="22" y="10" width="20" height="20" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                            <rect x="11" y="-8" width="20" height="20" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                        </g>
+                    </svg>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. Call-to-Action (CTA Section) -->
-    <section class="landing-section bg-white-section" id="cta">
+    <!-- 5. Get Visibility Showcase Section (Electric Lime, Reference Image 4) -->
+    <section class="visibility-section" id="visibility">
+        <div class="container">
+            <h2 class="section-title-neo">Get visibility over your sales and stock</h2>
+            <p class="section-subtitle-neo mx-auto mb-4" style="max-width: 800px; color: #111827; font-weight: 600;">
+                Wave goodbye to uncertainty with Avis Cloud Inventory — AI-powered for total inventory control
+            </p>
+            <a href="{% url 'register' %}" class="btn-dark-pill">Get Started</a>
+
+            <!-- Dashboard Mockup Interface -->
+            <div class="dashboard-mockup-wrapper text-start">
+                <div class="dashboard-mockup-header">
+                    <div class="dashboard-mockup-logo">avis ai</div>
+                    <ul class="dashboard-mockup-nav">
+                        <li class="active">Sell</li>
+                        <li>Make</li>
+                        <li>Buy</li>
+                        <li>Stock</li>
+                        <li>Items</li>
+                        <li>Plan</li>
+                        <li>Insights</li>
+                    </ul>
+                </div>
+                <div class="dashboard-sub-nav">
+                    <span>Quotes</span>
+                    <span class="active">Sales orders</span>
+                </div>
+                <div class="dashboard-mockup-body">
+                    <table class="mockup-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Created on</th>
+                                <th>Order #</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Delivery deadline</th>
+                                <th>Sales items</th>
+                                <th>Ingredients</th>
+                                <th>Production</th>
+                                <th>Delivery</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>2026-08-01</td>
+                                <td class="text-primary fw-bold">SO-4</td>
+                                <td>B2B Customer</td>
+                                <td>4656.00</td>
+                                <td>2026-08-10</td>
+                                <td><span class="status-pill-green">In stock</span></td>
+                                <td><span class="status-pill-green">Processed</span></td>
+                                <td><span class="status-pill-green">Done</span></td>
+                                <td><span class="status-pill-yellow">Partially Packed</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>2026-08-01</td>
+                                <td class="text-primary fw-bold">#95</td>
+                                <td>Shopify Customer</td>
+                                <td>881.32</td>
+                                <td>2026-08-02</td>
+                                <td><span class="status-pill-green">Picked</span></td>
+                                <td><span class="status-pill-green">Processed</span></td>
+                                <td><span class="status-pill-green">Done</span></td>
+                                <td><span class="status-pill-green">Packed</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>2026-08-01</td>
+                                <td class="text-primary fw-bold">55</td>
+                                <td>HubSpot Customer</td>
+                                <td>1652.80</td>
+                                <td>2026-08-12</td>
+                                <td><span class="status-pill-green">In stock</span></td>
+                                <td>Not applicable</td>
+                                <td>Not applicable</td>
+                                <td><span class="status-pill-yellow">Not shipped</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Horizontal pipeline flow inside features section -->
+    <section class="landing-section bg-white-section" id="pipeline">
         <div class="container text-center">
-            <div class="cta-card-neo">
-                <h2 class="fw-black text-dark mb-3" style="font-size: 2.2rem; font-weight: 900; letter-spacing: -1px;">Ready to optimize your retail supply chain?</h2>
-                <p class="text-dark mb-4 max-width-600 mx-auto">
-                    Launch the AVIS AI sandbox environment to test Scikit-Learn forecasts, OpenWeatherMap alerts, and SHA-256 block ledger seals instantly.
-                </p>
-                <div class="d-flex justify-content-center">
-                    <a href="{% url 'register' %}" class="btn-neo-lime py-3 px-5 fs-6">Start Free Trial</a>
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <div class="text-start">
+                    <h3 class="fw-bold text-dark mb-1">Automated Restocking Pipeline Flow</h3>
+                    <p class="text-secondary small mb-0">Follow the real-time AI replenishment logistics workflow step-by-step horizontally.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="carousel-nav-btn" onclick="document.getElementById('pipelineTrack').scrollLeft -= 280">&lt;</button>
+                    <button class="carousel-nav-btn" onclick="document.getElementById('pipelineTrack').scrollLeft += 280">&gt;</button>
+                </div>
+            </div>
+            
+            <div class="pipeline-track" id="pipelineTrack">
+                <div class="pipeline-step">
+                    <span class="pipeline-num">01</span>
+                    <h5 class="fw-bold text-dark mb-2">PostgreSQL Data Pull</h5>
+                    <p class="text-secondary small mb-0">Background Python scripts extract historical sales logs directly from the database.</p>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">02</span>
+                    <h5 class="fw-bold text-dark mb-2">Regression Forecasting</h5>
+                    <p class="text-secondary small mb-0">Pandas and Scikit-Learn linear regression models calculate monthly sales velocity.</p>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">03</span>
+                    <h5 class="fw-bold text-dark mb-2">Smart ROP Calculation</h5>
+                    <p class="text-secondary small mb-0">The reorder target threshold adjusts dynamically (predicted volume + 20% safety margin buffer).</p>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">04</span>
+                    <h5 class="fw-bold text-dark mb-2">Auto-PO Placement</h5>
+                    <p class="text-secondary small mb-0">If active stock falls beneath target levels, a replenishment order draft is generated.</p>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">05</span>
+                    <h5 class="fw-bold text-dark mb-2">Ledger Cryptography</h5>
+                    <p class="text-secondary small mb-0">The order details are sealed in the block ledger utilizing mathematical SHA-256 links.</p>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">06</span>
+                    <h5 class="fw-bold text-dark mb-2">Supplier Portal Update</h5>
+                    <p class="text-secondary small mb-0">The order draft populates the supplier panel for shipping actions, weather warnings, and deliveries.</p>
                 </div>
             </div>
         </div>

@@ -7,8 +7,8 @@
     <meta name="description" content="Avis AI: An Intelligent Enterprise Decision-Support System featuring predictive logistics, machine learning forecasts, and tamper-proof cryptographic ledgers.">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts: Inter (Body), Plus Jakarta Sans (Headings), JetBrains Mono (Code) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Outfit (Body & Headings), JetBrains Mono (Code) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
@@ -28,8 +28,8 @@
             --border-width: 2px;
             --border-color: #1A1A24;
             --border-main: 2px solid var(--border-color);
-            --font-sans: 'Inter', sans-serif;
-            --font-headings: 'Plus Jakarta Sans', sans-serif;
+            --font-sans: 'Outfit', sans-serif;
+            --font-headings: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
 
@@ -257,58 +257,41 @@
             padding: 4px 10px;
         }
 
-        /* Footer styling - Deep Charcoal & Symmetrical Horizontal rows */
+        /* Footer styling - Deep Charcoal & Symmetrical Column Grid */
         .marketing-footer {
-            background-color: #1A1A24 !important;
+            background-color: #111827 !important;
             border-top: var(--border-main);
             color: #9ca3af;
-            padding: 70px 0 40px;
-        }
-
-        .footer-category-row {
-            display: flex;
-            align-items: flex-start;
-            padding: 16px 0;
-            border-bottom: 1px solid #2e2e3a;
-        }
-
-        .footer-row-heading {
-            font-family: var(--font-headings);
-            font-size: 0.85rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #ffffff;
-            min-width: 160px;
-            padding-top: 2px;
+            padding: 80px 0 40px;
             text-align: left;
         }
 
-        .footer-row-links {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 12px 20px;
+        .footer-column-heading {
+            font-family: var(--font-headings);
+            font-size: 1rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 20px;
         }
 
-        .footer-row-link {
+        .footer-column-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-column-link {
             color: #9ca3af;
             text-decoration: none;
             font-size: 0.9rem;
             transition: color 0.12s ease;
-            display: inline-flex;
-            align-items: center;
         }
 
-        .footer-row-link:hover {
-            color: var(--brand-lime);
-        }
-
-        .footer-row-link:not(:last-child)::after {
-            content: "•";
-            color: #4b5563;
-            margin-left: 20px;
-            pointer-events: none;
+        .footer-column-link:hover {
+            color: var(--brand-lime) !important;
         }
 
         .footer-bottom-logo {
@@ -331,14 +314,6 @@
             .marketing-nav-bar {
                 border-radius: 16px;
                 padding: 10px 16px;
-            }
-            .footer-category-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .footer-row-heading {
-                min-width: auto;
             }
         }
     </style>
@@ -491,71 +466,126 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Component 9: Global Structural Horizontal Footer Row Layout -->
+    <!-- Component 9: Global Structural Vertical Footer Grid Layout -->
     <footer class="marketing-footer">
         <div class="container">
-            <!-- Product Category Row -->
-            <div class="footer-category-row">
-                <span class="footer-row-heading">Product</span>
-                <div class="footer-row-links">
-                    <a href="#" class="footer-row-link">Pricing</a>
-                    <a href="#" class="footer-row-link">Inventory management</a>
-                    <a href="#" class="footer-row-link">Production management</a>
-                    <a href="#" class="footer-row-link">Built-in purchasing</a>
-                    <a href="#" class="footer-row-link">Financial visibility</a>
+            <!-- Row 1: 5 Columns -->
+            <div class="row g-4 mb-5">
+                <!-- Column 1: Product -->
+                <div class="col-md-2 col-6">
+                    <h5 class="footer-column-heading">Product</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">Pricing</a></li>
+                        <li><a href="#" class="footer-column-link">Inventory management</a></li>
+                        <li><a href="#" class="footer-column-link">Production management</a></li>
+                        <li><a href="#" class="footer-column-link">Built-in purchasing</a></li>
+                        <li><a href="#" class="footer-column-link">Financial visibility</a></li>
+                        <li><a href="#" class="footer-column-link">Sales order management</a></li>
+                        <li><a href="#" class="footer-column-link">Warehouse management</a></li>
+                        <li><a href="#" class="footer-column-link">Planning and Forecasting</a></li>
+                        <li><a href="#" class="footer-column-link">Product updates</a></li>
+                        <li><a href="#" class="footer-column-link">See all features</a></li>
+                    </ul>
+                </div>
+                <!-- Column 2: Industries -->
+                <div class="col-md-2 col-6">
+                    <h5 class="footer-column-heading">Industries</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">Apparel and footwear</a></li>
+                        <li><a href="#" class="footer-column-link">Coffee roasting</a></li>
+                        <li><a href="#" class="footer-column-link">Food and beverage</a></li>
+                        <li><a href="#" class="footer-column-link">Furniture</a></li>
+                        <li><a href="#" class="footer-column-link">Electronics</a></li>
+                        <li><a href="#" class="footer-column-link">Jewelry</a></li>
+                        <li><a href="#" class="footer-column-link">Pharmaceutical</a></li>
+                        <li><a href="#" class="footer-column-link">See all industries</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3: Solutions -->
+                <div class="col-md-3 col-6">
+                    <h5 class="footer-column-heading">Solutions</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">Traceability and compliance</a></li>
+                        <li><a href="#" class="footer-column-link">Full manufacturing control</a></li>
+                        <li><a href="#" class="footer-column-link">Omnichannel sales and operations</a></li>
+                        <li><a href="#" class="footer-column-link">Smart inventory</a></li>
+                        <li><a href="#" class="footer-column-link">Integrations & API-first workflows</a></li>
+                        <li><a href="#" class="footer-column-link">Tariff management</a></li>
+                        <li><a href="#" class="footer-column-link">Contract manufacturing and outsourced workflows</a></li>
+                        <li><a href="#" class="footer-column-link">From spreadsheets to Avis</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4: Integrations -->
+                <div class="col-md-2 col-6">
+                    <h5 class="footer-column-heading">Integrations</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">Shopify</a></li>
+                        <li><a href="#" class="footer-column-link">BigCommerce</a></li>
+                        <li><a href="#" class="footer-column-link">WooCommerce</a></li>
+                        <li><a href="#" class="footer-column-link">QuickBooks Online</a></li>
+                        <li><a href="#" class="footer-column-link">Xero</a></li>
+                        <li><a href="#" class="footer-column-link">See all integrations</a></li>
+                    </ul>
+                </div>
+                <!-- Column 5: Support -->
+                <div class="col-md-3 col-6">
+                    <h5 class="footer-column-heading">Support</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">Avis academy</a></li>
+                        <li><a href="#" class="footer-column-link">Getting started</a></li>
+                        <li><a href="#" class="footer-column-link">Knowledge base</a></li>
+                        <li><a href="#" class="footer-column-link">Video library</a></li>
+                        <li><a href="#" class="footer-column-link">Onboarding services</a></li>
+                        <li><a href="#" class="footer-column-link">Partner directory</a></li>
+                        <li><a href="#" class="footer-column-link">Contact us</a></li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Industries Category Row -->
-            <div class="footer-category-row">
-                <span class="footer-row-heading">Industries</span>
-                <div class="footer-row-links">
-                    <a href="#" class="footer-row-link">Apparel & Footwear</a>
-                    <a href="#" class="footer-row-link">Coffee roasting</a>
-                    <a href="#" class="footer-row-link">Food & Beverage</a>
-                    <a href="#" class="footer-row-link">Furniture</a>
-                    <a href="#" class="footer-row-link">Jewelry</a>
-                    <a href="#" class="footer-row-link">Pharmaceutical</a>
+            <!-- Row 2: 4 Columns -->
+            <div class="row g-4 pt-5 border-top border-secondary">
+                <!-- Column 1: Company -->
+                <div class="col-md-3 col-6">
+                    <h5 class="footer-column-heading">Company</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">About us</a></li>
+                        <li><a href="#" class="footer-column-link">Data security and protection</a></li>
+                        <li><a href="#" class="footer-column-link">Company news</a></li>
+                        <li><a href="#" class="footer-column-link">Newsroom</a></li>
+                        <li><a href="#" class="footer-column-link">Contact us</a></li>
+                        <li><a href="#" class="footer-column-link">Careers</a></li>
+                    </ul>
                 </div>
-            </div>
-
-            <!-- Solutions Category Row -->
-            <div class="footer-category-row">
-                <span class="footer-row-heading">Solutions</span>
-                <div class="footer-row-links">
-                    <a href="#" class="footer-row-link">Traceability & compliance</a>
-                    <a href="#" class="footer-row-link">Full manufacturing control</a>
-                    <a href="#" class="footer-row-link">Omnichannel sales</a>
-                    <a href="#" class="footer-row-link">Smart inventory</a>
+                <!-- Column 2: Resources -->
+                <div class="col-md-3 col-6">
+                    <h5 class="footer-column-heading">Resources</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">Case studies</a></li>
+                        <li><a href="#" class="footer-column-link">Business tips</a></li>
+                        <li><a href="#" class="footer-column-link">Inventory management guide</a></li>
+                        <li><a href="#" class="footer-column-link">Blog</a></li>
+                    </ul>
                 </div>
-            </div>
-
-            <!-- Integrations Category Row -->
-            <div class="footer-category-row">
-                <span class="footer-row-heading">Integrations</span>
-                <div class="footer-row-links">
-                    <a href="#" class="footer-row-link">Shopify</a>
-                    <a href="#" class="footer-row-link">BigCommerce</a>
-                    <a href="#" class="footer-row-link">WooCommerce</a>
-                    <a href="#" class="footer-row-link">QuickBooks Online</a>
-                    <a href="#" class="footer-row-link">Xero</a>
+                <!-- Column 3: Developers -->
+                <div class="col-md-3 col-6">
+                    <h5 class="footer-column-heading">Developers</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">Developer portal</a></li>
+                        <li><a href="#" class="footer-column-link">API documentation</a></li>
+                    </ul>
                 </div>
-            </div>
-
-            <!-- Support Category Row -->
-            <div class="footer-category-row">
-                <span class="footer-row-heading">Support</span>
-                <div class="footer-row-links">
-                    <a href="#" class="footer-row-link">Katana academy</a>
-                    <a href="#" class="footer-row-link">Getting started</a>
-                    <a href="#" class="footer-row-link">Knowledge base</a>
-                    <a href="#" class="footer-row-link">Video library</a>
-                    <a href="#" class="footer-row-link">Partner directory</a>
-                    <a href="#" class="footer-row-link">Contact us</a>
+                <!-- Column 4: Partners -->
+                <div class="col-md-3 col-6">
+                    <h5 class="footer-column-heading">Partners</h5>
+                    <ul class="footer-column-links">
+                        <li><a href="#" class="footer-column-link">Partner with us</a></li>
+                        <li><a href="#" class="footer-column-link">Technology Partner program</a></li>
+                        <li><a href="#" class="footer-column-link">Partner directory</a></li>
+                    </ul>
                 </div>
             </div>
             
-            <div class="pt-4 text-center mt-3">
+            <div class="pt-5 text-center mt-4">
                 <div class="footer-bottom-logo">avis ai</div>
                 <div class="d-flex flex-wrap justify-content-center gap-4 text-secondary small">
                     <a href="#" class="text-secondary text-decoration-none">Terms of Service</a>
