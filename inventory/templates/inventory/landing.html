@@ -626,6 +626,44 @@
         color: rgba(30, 27, 75, 0.8);
         margin-bottom: 32px;
     }
+
+    /* 3-Column Feature Grid component using CSS Grid */
+    .feature-grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: stretch;
+    }
+
+    @media (max-width: 991px) {
+        .feature-grid-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .feature-grid-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .feature-grid-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 24px;
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .feature-grid-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
 </style>
 {% endblock %}
 
@@ -779,117 +817,109 @@
     </section>
 
     <!-- 2. Three-Card Feature Grid Section -->
-    <section class="landing-section bg-white-section" id="features">
+    <section class="landing-section bg-white-section" id="features" style="background-color: #FFFFFF !important;">
         <div class="container text-center">
-            <h2 class="section-title-neo">What to expect from AI in the future and beyond</h2>
-            <p class="section-subtitle-neo mx-auto" style="max-width: 800px;">
-                AI is revolutionizing manufacturing and inventory management. Learn how businesses and software partners intend to integrate AI into their workflows to champion growth and improve operational efficiency.
-            </p>
+            <!-- Header Block Configurations -->
+            <div style="text-align: center; margin: 0 auto 64px auto; max-width: 700px;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; line-height: 1.3; color: #1e1b4b; margin-bottom: 16px;">Guidance For Every Revenue Activity</h2>
+                <p style="font-size: 1.1rem; color: rgba(30, 27, 75, 0.7); line-height: 1.5;">
+                    Close more revenue and lower CRM burden with predictive forecasting and conversation insights.
+                </p>
+            </div>
             
-            <div class="row g-4 text-start mt-4">
-                <!-- Card 1: AI in Inventory (Light Orange background top frame) -->
-                <div class="col-md-4">
-                    <div class="expectation-card" style="background-color: #ffffff; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 24px; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <!-- Top Graphic Accent Frame -->
-                            <div style="background-color: #FFF3E0; border-radius: 8px; height: 160px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: var(--border-main);">
-                                <svg viewBox="0 0 160 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- Left rack vertical columns -->
-                                    <line x1="40" y1="20" x2="40" y2="100" stroke="#1e1b4b" stroke-width="2.5" stroke-linecap="round" />
-                                    <line x1="60" y1="30" x2="60" y2="110" stroke="#1e1b4b" stroke-width="2.5" stroke-linecap="round" />
-                                    <!-- Shelf horizontal bars -->
-                                    <line x1="40" y1="50" x2="120" y2="50" stroke="#1e1b4b" stroke-width="2.5" stroke-linecap="round" />
-                                    <line x1="40" y1="80" x2="120" y2="80" stroke="#1e1b4b" stroke-width="2.5" stroke-linecap="round" />
-                                    <!-- Right rack vertical columns -->
-                                    <line x1="100" y1="20" x2="100" y2="100" stroke="#1e1b4b" stroke-width="2.5" stroke-linecap="round" />
-                                    <line x1="120" y1="30" x2="120" y2="110" stroke="#1e1b4b" stroke-width="2.5" stroke-linecap="round" />
-                                    <!-- Isometric boxes sitting on shelves -->
-                                    <!-- Box 1 (Top shelf) -->
-                                    <g transform="translate(48, 25)">
-                                        <polygon points="10,10 25,2 40,10 25,18" fill="#dfc07b" stroke="#1e1b4b" stroke-width="1.5" />
-                                        <polygon points="10,10 25,18 25,30 10,22" fill="#c6a359" stroke="#1e1b4b" stroke-width="1.5" />
-                                        <polygon points="25,18 40,10 40,22 25,30" fill="#ae8b40" stroke="#1e1b4b" stroke-width="1.5" />
-                                    </g>
-                                    <!-- Box 2 (Bottom shelf) -->
-                                    <g transform="translate(68, 55)">
-                                        <polygon points="10,10 25,2 40,10 25,18" fill="#dfc07b" stroke="#1e1b4b" stroke-width="1.5" />
-                                        <polygon points="10,10 25,18 25,30 10,22" fill="#c6a359" stroke="#1e1b4b" stroke-width="1.5" />
-                                        <polygon points="25,18 40,10 40,22 25,30" fill="#ae8b40" stroke="#1e1b4b" stroke-width="1.5" />
-                                    </g>
-                                </svg>
-                            </div>
-                            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e1b4b; margin-bottom: 12px;">AI in inventory</h3>
-                            <p style="font-size: 1rem; line-height: 1.6; color: rgba(30, 27, 75, 0.8); margin-bottom: 24px;">
-                                Deploy AI-driven solutions to enhance accuracy, identify trends, prevent stock discrepancies, and significantly reduce errors in stock assessments.
-                            </p>
+            <!-- Grid Architecture & Responsiveness -->
+            <div class="feature-grid-container text-start">
+                <!-- Card 1: Conversation Intelligence (Left Column) -->
+                <div class="feature-grid-card">
+                    <div>
+                        <!-- Top Visual Container -->
+                        <div style="background-color: #FFF3E0; border-radius: 8px; height: 160px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: var(--border-main);">
+                            <svg viewBox="0 0 160 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Virtual meeting screen mockup -->
+                                <!-- Left Webcam card -->
+                                <g transform="translate(20, 30)">
+                                    <rect x="0" y="0" width="55" height="40" rx="4" fill="#ffffff" stroke="#1e1b4b" stroke-width="1.5" />
+                                    <rect x="5" y="5" width="45" height="20" fill="#e5e7eb" />
+                                    <circle cx="27" cy="15" r="4" fill="#1e1b4b" />
+                                    <path d="M12 25 L42 25" stroke="#1e1b4b" stroke-width="1.5" />
+                                    <!-- Audio wave lines on bottom of card -->
+                                    <line x1="8" y1="32" x2="8" y2="35" stroke="#D4FF00" stroke-width="1.5" stroke-linecap="round" />
+                                    <line x1="12" y1="30" x2="12" y2="37" stroke="#D4FF00" stroke-width="1.5" stroke-linecap="round" />
+                                    <line x1="16" y1="32" x2="16" y2="35" stroke="#D4FF00" stroke-width="1.5" stroke-linecap="round" />
+                                </g>
+                                <!-- Right Webcam card overlay -->
+                                <g transform="translate(75, 45)">
+                                    <rect x="0" y="0" width="65" height="45" rx="4" fill="#ffffff" stroke="#1e1b4b" stroke-width="2" />
+                                    <rect x="5" y="5" width="55" height="25" fill="#1e1b4b" />
+                                    <!-- Robot mascot peaking in right feed -->
+                                    <circle cx="32" cy="18" r="6" fill="#ffffff" />
+                                    <circle cx="29" cy="18" r="1.5" fill="#D4FF00" />
+                                    <circle cx="35" cy="18" r="1.5" fill="#D4FF00" />
+                                    <!-- Sentiment indicator green dot -->
+                                    <circle cx="54" cy="38" r="3" fill="#2E6B12" />
+                                </g>
+                            </svg>
                         </div>
-                        <a href="{% url 'product_list' %}" style="font-size: 0.95rem; font-weight: 600; color: #1e1b4b; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Learn more →</a>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e1b4b; margin-bottom: 12px;">Conversation Intelligence</h3>
+                        <p style="font-size: 1rem; line-height: 1.6; color: rgba(30, 27, 75, 0.8); margin-bottom: 24px;">
+                            Uncover what reps do on calls, how buyers respond, and how each interaction impacts deal win probability.
+                        </p>
                     </div>
+                    <a href="{% url 'product_list' %}" style="font-size: 0.95rem; font-weight: 600; color: #1e1b4b; text-decoration: none;">Clone your top sellers →</a>
                 </div>
 
-                <!-- Card 2: AI in Manufacturing (Light Green background top frame) -->
-                <div class="col-md-4">
-                    <div class="expectation-card" style="background-color: #ffffff; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 24px; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <!-- Top Graphic Accent Frame -->
-                            <div style="background-color: #E8F5E9; border-radius: 8px; height: 160px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: var(--border-main);">
-                                <svg viewBox="0 0 160 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- Conveyor belt base -->
-                                    <path d="M20 75 L140 75" stroke="#1e1b4b" stroke-width="8" stroke-linecap="round" />
-                                    <path d="M20 75 L140 75" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 8" />
-                                    <!-- Roller wheels -->
-                                    <circle cx="30" cy="75" r="5" fill="#1e1b4b" />
-                                    <circle cx="70" cy="75" r="5" fill="#1e1b4b" />
-                                    <circle cx="110" cy="75" r="5" fill="#1e1b4b" />
-                                    <!-- Sorting arm sensor dome -->
-                                    <g transform="translate(60, 20)">
-                                        <rect x="10" y="10" width="30" height="25" fill="#ffffff" stroke="#1e1b4b" stroke-width="2" />
-                                        <circle cx="25" cy="22" r="4" fill="#D4FF00" stroke="#1e1b4b" stroke-width="1" />
-                                        <path d="M25 35 L25 50" stroke="#1e1b4b" stroke-width="2" stroke-dasharray="2 2" />
-                                    </g>
-                                    <!-- Isometric Box on conveyor -->
-                                    <g transform="translate(90, 48)">
-                                        <polygon points="5,5 15,1 25,5 15,9" fill="#dfc07b" stroke="#1e1b4b" stroke-width="1.5" />
-                                        <polygon points="5,5 15,9 15,17 5,13" fill="#c6a359" stroke="#1e1b4b" stroke-width="1.5" />
-                                        <polygon points="15,9 25,5 25,13 15,17" fill="#ae8b40" stroke="#1e1b4b" stroke-width="1.5" />
-                                    </g>
-                                </svg>
-                            </div>
-                            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e1b4b; margin-bottom: 12px;">AI in manufacturing</h3>
-                            <p style="font-size: 1rem; line-height: 1.6; color: rgba(30, 27, 75, 0.8); margin-bottom: 24px;">
-                                Streamline automated order entry, inventory management, material requirement planning, and real-time quality control throughout the factory.
-                            </p>
+                <!-- Card 2: Revenue Forecasting (Middle Column) -->
+                <div class="feature-grid-card">
+                    <div>
+                        <!-- Top Visual Container -->
+                        <div style="background-color: #E8F5E9; border-radius: 8px; height: 160px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: var(--border-main);">
+                            <svg viewBox="0 0 160 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Isometric background grid lines -->
+                                <path d="M20 90 L80 40 L140 90 Z" fill="none" stroke="#e2e8f0" stroke-width="1" />
+                                <path d="M20 90 L80 50 M40 80 L100 40 M60 70 L120 40" stroke="#e2e8f0" stroke-width="1" />
+                                <!-- Graph line axis -->
+                                <line x1="30" y1="90" x2="130" y2="90" stroke="#1e1b4b" stroke-width="2" stroke-linecap="round" />
+                                <line x1="30" y1="90" x2="30" y2="30" stroke="#1e1b4b" stroke-width="2" stroke-linecap="round" />
+                                <!-- Green trending pacing line chart -->
+                                <path d="M30 85 L60 70 L90 50 L120 35" fill="none" stroke="#2E6B12" stroke-width="3" stroke-linecap="round" />
+                                <!-- Dotted forecast projection line -->
+                                <path d="M120 35 L140 25" fill="none" stroke="#2E6B12" stroke-width="2" stroke-dasharray="3 3" stroke-linecap="round" />
+                                <!-- Glow point -->
+                                <circle cx="120" cy="35" r="4" fill="#D4FF00" stroke="#2E6B12" stroke-width="1.5" />
+                            </svg>
                         </div>
-                        <a href="{% url 'manager_dashboard' %}" style="font-size: 0.95rem; font-weight: 600; color: #1e1b4b; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Learn more →</a>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e1b4b; margin-bottom: 12px;">Revenue Forecasting</h3>
+                        <p style="font-size: 1rem; line-height: 1.6; color: rgba(30, 27, 75, 0.8); margin-bottom: 24px;">
+                            Commit with clarity. Get the flexibility to execute advanced predictive forecasting models at your preferred cadence.
+                        </p>
                     </div>
+                    <a href="{% url 'manager_dashboard' %}" style="font-size: 0.95rem; font-weight: 600; color: #1e1b4b; text-decoration: none;">Be nearly 100% accurate →</a>
                 </div>
 
-                <!-- Card 3: Avis and AI (Light Blue background top frame) -->
-                <div class="col-md-4">
-                    <div class="expectation-card" style="background-color: #ffffff; border: var(--border-main); border-radius: 12px; box-shadow: 4px 4px 0px var(--border-color); padding: 24px; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <!-- Top Graphic Accent Frame -->
-                            <div style="background-color: #E3F2FD; border-radius: 8px; height: 160px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: var(--border-main);">
-                                <svg viewBox="0 0 160 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- Stand -->
-                                    <rect x="75" y="80" width="10" height="20" fill="#ffffff" stroke="#1e1b4b" stroke-width="2" />
-                                    <ellipse cx="80" cy="100" rx="20" ry="4" fill="#ffffff" stroke="#1e1b4b" stroke-width="2" />
-                                    <!-- Monitor screen -->
-                                    <rect x="35" y="25" width="90" height="60" rx="6" fill="#ffffff" stroke="#1e1b4b" stroke-width="2.5" />
-                                    <rect x="40" y="30" width="80" height="50" fill="#1e1b4b" />
-                                    <!-- Charts lines -->
-                                    <path d="M45 70 L55 55 L65 60 L75 45 L85 50 L95 38 L105 44 L115 35" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round" />
-                                    <!-- Grid lines under chart -->
-                                    <line x1="45" y1="75" x2="115" y2="75" stroke="#ffffff" stroke-width="1" stroke-dasharray="2 3" opacity="0.3" />
-                                </svg>
-                            </div>
-                            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e1b4b; margin-bottom: 12px;">Avis and AI</h3>
-                            <p style="font-size: 1rem; line-height: 1.6; color: rgba(30, 27, 75, 0.8); margin-bottom: 24px;">
-                                Experience how Avis connects processes to build smarter human capabilities, secure ledger updates, and automate multi-channel warehouse stock.
-                            </p>
+                <!-- Card 3: Deal Acceleration (Right Column) -->
+                <div class="feature-grid-card">
+                    <div>
+                        <!-- Top Visual Container -->
+                        <div style="background-color: #E3F2FD; border-radius: 8px; height: 160px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: var(--border-main);">
+                            <svg viewBox="0 0 160 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Top Funnel segment -->
+                                <path d="M40 30 L120 30 L100 50 L60 50 Z" fill="#E3F2FD" stroke="#1e1b4b" stroke-width="2" />
+                                <text x="70" y="42" font-size="8" font-weight="bold" fill="#1e1b4b" font-family="sans-serif">LEADS</text>
+                                <!-- Middle Funnel segment -->
+                                <path d="M60 55 L100 55 L90 75 L70 75 Z" fill="#64B5F6" stroke="#1e1b4b" stroke-width="2" />
+                                <!-- Bottom Funnel segment -->
+                                <path d="M70 80 L90 80 L85 100 L75 100 Z" fill="#1E88E5" stroke="#1e1b4b" stroke-width="2" />
+                                <!-- Acceleration arrow pointing through -->
+                                <path d="M25 25 L45 45" stroke="#D4FF00" stroke-width="3" stroke-linecap="round" />
+                                <polygon points="45,45 45,38 38,45" fill="#D4FF00" stroke="#1e1b4b" stroke-width="1" />
+                            </svg>
                         </div>
-                        <a href="{% url 'blockchain_view' %}" style="font-size: 0.95rem; font-weight: 600; color: #1e1b4b; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Learn more →</a>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e1b4b; margin-bottom: 12px;">Deal Acceleration</h3>
+                        <p style="font-size: 1rem; line-height: 1.6; color: rgba(30, 27, 75, 0.8); margin-bottom: 24px;">
+                            Guide reps to take the right next step for deal progression, CRM hygiene, and automated forecasting accuracy.
+                        </p>
                     </div>
+                    <a href="{% url 'blockchain_view' %}" style="font-size: 0.95rem; font-weight: 600; color: #1e1b4b; text-decoration: none;">Know your next best action →</a>
                 </div>
             </div>
         </div>
