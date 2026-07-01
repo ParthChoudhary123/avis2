@@ -68,15 +68,68 @@
     }
 
     @keyframes floatRobot {
-        0% { transform: translateY(0px); }
+        0%, 100% { transform: translateY(0px); }
         50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
     }
 
     .floating-robot {
-        animation: floatRobot 4s ease-in-out infinite;
+        animation: floatRobot 4.5s ease-in-out infinite;
         transform-box: fill-box;
         transform-origin: center;
+    }
+
+    @keyframes rotateArm {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(-25deg); }
+    }
+
+    .anim-arm {
+        animation: rotateArm 3s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: bottom left;
+    }
+
+    @keyframes printLabel {
+        0%, 100% { transform: translateY(-6px); opacity: 0.2; }
+        50% { transform: translateY(6px); opacity: 1; }
+    }
+
+    .anim-label {
+        animation: printLabel 4s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: top center;
+    }
+
+    @keyframes blinkEyes {
+        0%, 90%, 100% { transform: scaleY(1); }
+        95% { transform: scaleY(0.1); }
+    }
+
+    .anim-eyes {
+        animation: blinkEyes 4s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: center;
+    }
+
+    @keyframes movePackages {
+        0% { transform: translate(0px, 0px); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translate(80px, 40px); opacity: 0; }
+    }
+
+    .anim-package-1 {
+        animation: movePackages 6s linear infinite;
+    }
+
+    .anim-package-2 {
+        animation: movePackages 6s linear infinite;
+        animation-delay: 2s;
+    }
+
+    .anim-package-3 {
+        animation: movePackages 6s linear infinite;
+        animation-delay: 4s;
     }
 
     .factory-svg {
@@ -386,42 +439,132 @@
                 <!-- Right Layout Grid: Isometric Factory Illustration -->
                 <div class="col-lg-6 text-center">
                     <svg viewBox="0 0 500 350" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Iso Floor Grid -->
+                        <!-- Floor shadow grid -->
                         <path d="M50 200 L250 80 L450 200 L250 320 Z" fill="#EADCFB" stroke="#111827" stroke-width="1.5"/>
-                        <!-- Conveyor belt -->
-                        <path d="M120 220 L280 280 L400 220" stroke="#111827" stroke-width="8" stroke-linecap="round"/>
-                        <path d="M120 220 L280 280 L400 220" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 10"/>
-                        
-                        <!-- Cute white robot hovering (Reference Image 1) -->
-                        <g transform="translate(210, 60)" class="floating-robot">
-                            <!-- Head -->
-                            <rect x="20" y="20" width="60" height="50" rx="10" fill="#ffffff" stroke="#111827" stroke-width="2"/>
-                            <!-- Glowing green eyes -->
-                            <circle cx="38" cy="42" r="6" fill="#DFFF00" stroke="#111827" stroke-width="1.5"/>
-                            <circle cx="62" cy="42" r="6" fill="#DFFF00" stroke="#111827" stroke-width="1.5"/>
-                            <!-- Body -->
-                            <rect x="25" y="75" width="50" height="40" rx="8" fill="#ffffff" stroke="#111827" stroke-width="2"/>
-                            <!-- Hover flame -->
-                            <path d="M40 115 L45 128 L55 128 L60 115 Z" fill="#FFA500"/>
+
+                        <!-- Loop Conveyor Belt Track -->
+                        <path d="M120 220 C 120 180, 380 180, 380 220 C 380 260, 120 260, 120 220" stroke="#111827" stroke-width="12" fill="none"/>
+                        <path d="M120 220 C 120 180, 380 180, 380 220 C 380 260, 120 260, 120 220" stroke="#ffffff" stroke-width="4" stroke-dasharray="6 8" fill="none"/>
+
+                        <!-- Conveyor Roller wheels -->
+                        <circle cx="120" cy="220" r="6" fill="#111827" />
+                        <circle cx="380" cy="220" r="6" fill="#111827" />
+
+                        <!-- Animated packages moving on loop -->
+                        <g class="anim-package-1">
+                            <rect x="150" y="195" width="12" height="12" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                        </g>
+                        <g class="anim-package-2">
+                            <rect x="150" y="195" width="12" height="12" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
+                        </g>
+                        <g class="anim-package-3">
+                            <rect x="150" y="195" width="12" height="12" fill="#dfc07b" stroke="#111827" stroke-width="1.5" />
                         </g>
 
-                        <!-- Conveyor barcode scanner label printer -->
-                        <g transform="translate(130, 130)">
-                            <rect x="10" y="10" width="40" height="50" fill="#faedd0" stroke="#111827" stroke-width="2"/>
-                            <!-- QR output label -->
-                            <path d="M20 60 L20 80 L40 80 L40 60 Z" fill="#ffffff" stroke="#111827" stroke-width="1.5"/>
-                            <rect x="24" y="66" width="12" height="10" fill="#111827"/>
+                        <!-- Left Machine block with display screen & paper printer (Reference Image 1) -->
+                        <g transform="translate(100, 130)">
+                            <!-- Processor cabinet box -->
+                            <rect x="10" y="10" width="65" height="85" fill="#f3f4f6" stroke="#111827" stroke-width="2" />
+                            <path d="M10 10 L42.5 -10 L75 10 Z" fill="#e5e7eb" stroke="#111827" stroke-width="2" />
+                            <!-- Dome green status light -->
+                            <path d="M35 -10 A 8 8 0 0 1 50 -10 Z" fill="#DFFF00" stroke="#111827" stroke-width="1.5" />
+                            <!-- Yellow numeric display showing 124598 -->
+                            <rect x="20" y="25" width="45" height="15" fill="#faedd0" stroke="#111827" stroke-width="1.5" />
+                            <text x="24" y="36" font-family="monospace" font-size="8" fill="#111827" font-weight="bold">124598</text>
+                            
+                            <!-- Label slot -->
+                            <rect x="25" y="50" width="35" height="4" fill="#111827" />
+                            <!-- Animated printed label sliding down -->
+                            <g class="anim-label">
+                                <path d="M28 54 L28 78 L57 78 L57 54 Z" fill="#ffffff" stroke="#111827" stroke-width="1.5" />
+                                <!-- QR code grid details -->
+                                <rect x="32" y="58" width="8" height="8" fill="#111827" />
+                                <rect x="44" y="58" width="8" height="8" fill="#111827" />
+                                <rect x="32" y="70" width="8" height="4" fill="#111827" />
+                                <rect x="48" y="70" width="4" height="4" fill="#111827" />
+                            </g>
                         </g>
 
-                        <!-- Small Delivery Truck & Cardboard boxes -->
-                        <g transform="translate(320, 160)">
-                            <rect x="25" y="30" width="45" height="28" fill="#d2e5d1" stroke="#111827" stroke-width="1.5"/>
-                            <rect x="65" y="36" width="16" height="22" fill="#111827"/>
-                            <circle cx="36" cy="58" r="6" fill="#111827"/>
-                            <circle cx="60" cy="58" r="6" fill="#111827"/>
-                            <!-- Boxes stacked -->
-                            <rect x="2" y="24" width="15" height="15" fill="#dfc07b" stroke="#111827" stroke-width="1.5"/>
-                            <rect x="-12" y="34" width="15" height="15" fill="#dfc07b" stroke="#111827" stroke-width="1.5"/>
+                        <!-- Robotic Arm next to conveyor (Reference Image 1) -->
+                        <g transform="translate(250, 190)">
+                            <!-- Base stand -->
+                            <ellipse cx="25" cy="50" rx="20" ry="10" fill="#e5e7eb" stroke="#111827" stroke-width="2" />
+                            <!-- Animated rotating Arm segment -->
+                            <g class="anim-arm">
+                                <line x1="25" y1="50" x2="35" y2="15" stroke="#111827" stroke-width="6" stroke-linecap="round" />
+                                <line x1="35" y1="15" x2="60" y2="25" stroke="#111827" stroke-width="4" stroke-linecap="round" />
+                                <circle cx="35" cy="15" r="4" fill="#CC0000" />
+                                <!-- Drilling head touching conveyor -->
+                                <circle cx="60" cy="25" r="3" fill="#111827" />
+                            </g>
+                        </g>
+
+                        <!-- Cute white robot hovering next to monitor (Reference Image 1) -->
+                        <g transform="translate(260, 45)" class="floating-robot">
+                            <!-- Round head -->
+                            <rect x="20" y="20" width="60" height="50" rx="12" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                            <!-- Blinking glowing green eyes -->
+                            <g class="anim-eyes">
+                                <circle cx="38" cy="42" r="6" fill="#DFFF00" stroke="#111827" stroke-width="1.5" />
+                                <circle cx="62" cy="42" r="6" fill="#DFFF00" stroke="#111827" stroke-width="1.5" />
+                            </g>
+                            <!-- Antennas -->
+                            <line x1="50" y1="20" x2="50" y2="8" stroke="#111827" stroke-width="2" />
+                            <circle cx="50" cy="6" r="3" fill="#ffffff" stroke="#111827" stroke-width="1.5" />
+                            
+                            <!-- Robot Body -->
+                            <rect x="25" y="76" width="50" height="42" rx="8" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                            <!-- Booster Flame flame -->
+                            <path d="M42 118 L46 132 L54 132 L58 118 Z" fill="#FFA500" />
+                        </g>
+
+                        <!-- Cashier / Inventory screen monitor stand (Reference Image 1) -->
+                        <g transform="translate(350, 90)">
+                            <!-- Screen Stand -->
+                            <rect x="25" y="45" width="8" height="30" fill="#e5e7eb" stroke="#111827" stroke-width="2" />
+                            <ellipse cx="29" cy="75" rx="15" ry="5" fill="#f3f4f6" stroke="#111827" stroke-width="1.5" />
+                            <!-- Screen Monitor -->
+                            <g transform="rotate(-10, 29, 30)">
+                                <rect x="-10" y="5" width="75" height="50" rx="6" fill="#ffffff" stroke="#111827" stroke-width="2" />
+                                <rect x="-6" y="9" width="67" height="42" fill="#111827" />
+                                <!-- Inventory colorful cell grid representation -->
+                                <rect x="-2" y="13" width="10" height="8" fill="#2E6B12" />
+                                <rect x="10" y="13" width="10" height="8" fill="#CC0000" />
+                                <rect x="22" y="13" width="10" height="8" fill="#8C6B00" />
+                                <rect x="34" y="13" width="10" height="8" fill="#2E6B12" />
+                                <rect x="46" y="13" width="10" height="8" fill="#2E6B12" />
+                                
+                                <rect x="-2" y="24" width="10" height="8" fill="#8C6B00" />
+                                <rect x="10" y="24" width="10" height="8" fill="#2E6B12" />
+                                <rect x="22" y="24" width="10" height="8" fill="#CC0000" />
+                                <rect x="34" y="24" width="10" height="8" fill="#2E6B12" />
+                                <rect x="46" y="24" width="10" height="8" fill="#8C6B00" />
+                                
+                                <rect x="-2" y="35" width="10" height="8" fill="#2E6B12" />
+                                <rect x="10" y="35" width="10" height="8" fill="#2E6B12" />
+                                <rect x="22" y="35" width="10" height="8" fill="#8C6B00" />
+                                <rect x="34" y="35" width="10" height="8" fill="#CC0000" />
+                                <rect x="46" y="35" width="10" height="8" fill="#2E6B12" />
+                            </g>
+                        </g>
+
+                        <!-- Delivery Truck & stacked boxes at bottom right (Reference Image 1) -->
+                        <g transform="translate(340, 195)">
+                            <!-- Mint Green Truck -->
+                            <rect x="25" y="30" width="55" height="32" fill="#d2e5d1" stroke="#111827" stroke-width="2"/>
+                            <!-- Cabin -->
+                            <rect x="68" y="36" width="22" height="26" fill="#111827"/>
+                            <!-- Wheels -->
+                            <circle cx="38" cy="62" r="8" fill="#111827"/>
+                            <circle cx="68" cy="62" r="8" fill="#111827"/>
+                            
+                            <!-- Cardboard Boxes stacked -->
+                            <!-- Box 1 -->
+                            <rect x="-15" y="25" width="16" height="16" fill="#dfc07b" stroke="#111827" stroke-width="1.5"/>
+                            <!-- Box 2 -->
+                            <rect x="-33" y="35" width="16" height="16" fill="#dfc07b" stroke="#111827" stroke-width="1.5"/>
+                            <!-- Box 3 -->
+                            <rect x="-15" y="42" width="16" height="16" fill="#dfc07b" stroke="#111827" stroke-width="1.5"/>
                         </g>
                     </svg>
                 </div>
