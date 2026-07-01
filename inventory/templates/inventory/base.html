@@ -259,19 +259,22 @@
 
         /* Footer styling - Deep Charcoal & Symmetrical Column Grid */
         .marketing-footer {
-            background-color: #111827 !important;
+            background-color: #1A1A1A !important;
             border-top: var(--border-main);
-            color: #9ca3af;
-            padding: 80px 0 40px;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 80px 5% 40px 5%;
             text-align: left;
+            position: relative;
+            overflow: hidden;
         }
 
         .footer-column-heading {
             font-family: var(--font-headings);
             font-size: 1rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 20px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+            margin-top: 0;
         }
 
         .footer-column-links {
@@ -280,31 +283,39 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .footer-column-link {
-            color: #9ca3af;
+            color: rgba(255, 255, 255, 0.7) !important;
             text-decoration: none;
             font-size: 0.9rem;
             transition: color 0.12s ease;
         }
 
         .footer-column-link:hover {
-            color: var(--brand-lime) !important;
+            color: #FFFFFF !important;
         }
 
         .footer-bottom-logo {
             font-family: var(--font-headings);
-            font-size: 5.5rem;
+            font-size: 8rem;
             font-weight: 900;
-            color: #2e2e3a;
+            color: #ffffff;
             text-transform: lowercase;
             letter-spacing: -3px;
             line-height: 1;
-            margin-top: 30px;
-            margin-bottom: 20px;
+            margin: 0;
             user-select: none;
+            opacity: 0.03;
+            pointer-events: none;
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            text-align: center;
+            z-index: 1;
         }
 
         /* Strict Footer layout grids */
@@ -499,10 +510,10 @@
 
     <!-- Component 9: Global Structural Vertical Footer Grid Layout -->
     <footer class="marketing-footer">
-        <div class="container">
-            <!-- Row 1: 5 Columns -->
+        <div class="container" style="position: relative; z-index: 2;">
+            <!-- Top Area: 5-Column Sitemap Grid -->
             <div class="footer-grid-row-5">
-                <!-- Column 1: Product -->
+                <!-- Column 1: Product links -->
                 <div class="col">
                     <h5 class="footer-column-heading">Product</h5>
                     <ul class="footer-column-links">
@@ -518,10 +529,11 @@
                         <li><a href="#" class="footer-column-link">See all features</a></li>
                     </ul>
                 </div>
-                <!-- Column 2: Industries -->
+                
+                <!-- Column 2: Industries and Solutions links -->
                 <div class="col">
                     <h5 class="footer-column-heading">Industries</h5>
-                    <ul class="footer-column-links">
+                    <ul class="footer-column-links mb-4">
                         <li><a href="#" class="footer-column-link">Apparel and footwear</a></li>
                         <li><a href="#" class="footer-column-link">Coffee roasting</a></li>
                         <li><a href="#" class="footer-column-link">Food and beverage</a></li>
@@ -531,9 +543,7 @@
                         <li><a href="#" class="footer-column-link">Pharmaceutical</a></li>
                         <li><a href="#" class="footer-column-link">See all industries</a></li>
                     </ul>
-                </div>
-                <!-- Column 3: Solutions -->
-                <div class="col">
+                    
                     <h5 class="footer-column-heading">Solutions</h5>
                     <ul class="footer-column-links">
                         <li><a href="#" class="footer-column-link">Traceability and compliance</a></li>
@@ -546,10 +556,11 @@
                         <li><a href="#" class="footer-column-link">From spreadsheets to Avis</a></li>
                     </ul>
                 </div>
-                <!-- Column 4: Integrations -->
+
+                <!-- Column 3: Integrations and Support links -->
                 <div class="col">
                     <h5 class="footer-column-heading">Integrations</h5>
-                    <ul class="footer-column-links">
+                    <ul class="footer-column-links mb-4">
                         <li><a href="#" class="footer-column-link">Shopify</a></li>
                         <li><a href="#" class="footer-column-link">BigCommerce</a></li>
                         <li><a href="#" class="footer-column-link">WooCommerce</a></li>
@@ -557,9 +568,7 @@
                         <li><a href="#" class="footer-column-link">Xero</a></li>
                         <li><a href="#" class="footer-column-link">See all integrations</a></li>
                     </ul>
-                </div>
-                <!-- Column 5: Support -->
-                <div class="col">
+
                     <h5 class="footer-column-heading">Support</h5>
                     <ul class="footer-column-links">
                         <li><a href="#" class="footer-column-link">Avis academy</a></li>
@@ -571,14 +580,11 @@
                         <li><a href="#" class="footer-column-link">Contact us</a></li>
                     </ul>
                 </div>
-            </div>
 
-            <!-- Row 2: 3 Columns -->
-            <div class="footer-grid-row-3 border-top border-secondary pt-5">
-                <!-- Column 1: Company -->
+                <!-- Column 4: Company and Resources links -->
                 <div class="col">
                     <h5 class="footer-column-heading">Company</h5>
-                    <ul class="footer-column-links">
+                    <ul class="footer-column-links mb-4">
                         <li><a href="#" class="footer-column-link">About us</a></li>
                         <li><a href="#" class="footer-column-link">Data security and protection</a></li>
                         <li><a href="#" class="footer-column-link">Company news</a></li>
@@ -586,9 +592,7 @@
                         <li><a href="#" class="footer-column-link">Contact us</a></li>
                         <li><a href="#" class="footer-column-link">Careers</a></li>
                     </ul>
-                </div>
-                <!-- Column 2: Resources -->
-                <div class="col">
+
                     <h5 class="footer-column-heading">Resources</h5>
                     <ul class="footer-column-links">
                         <li><a href="#" class="footer-column-link">Case studies</a></li>
@@ -597,13 +601,15 @@
                         <li><a href="#" class="footer-column-link">Blog</a></li>
                     </ul>
                 </div>
-                <!-- Column 3: Developers & Partners -->
+
+                <!-- Column 5: Developers and Partners links -->
                 <div class="col">
                     <h5 class="footer-column-heading">Developers</h5>
                     <ul class="footer-column-links mb-4">
                         <li><a href="#" class="footer-column-link">Developer portal</a></li>
                         <li><a href="#" class="footer-column-link">API documentation</a></li>
                     </ul>
+
                     <h5 class="footer-column-heading">Partners</h5>
                     <ul class="footer-column-links">
                         <li><a href="#" class="footer-column-link">Partner with us</a></li>
@@ -612,13 +618,30 @@
                     </ul>
                 </div>
             </div>
-            
-            <div class="pt-5 text-center mt-4">
-                <div class="footer-bottom-logo">avis ai</div>
-                <div class="d-flex flex-wrap justify-content-center gap-4 text-secondary small">
-                    <a href="#" class="text-secondary text-decoration-none">Terms of Service</a>
-                    <a href="#" class="text-secondary text-decoration-none">Privacy Policy</a>
-                    <a href="#" class="text-secondary text-decoration-none">Responsible Disclosure</a>
+
+            <!-- Middle Zone: Interactive CTA & Compliance Banner -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center py-4 border-top border-bottom" style="border-color: rgba(255, 255, 255, 0.1) !important; position: relative; z-index: 2; gap: 20px;">
+                <!-- Left Flex Group (CTA) -->
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                    <span style="font-size: 1.5rem; font-weight: 700; color: #FFFFFF;">Let's get started</span>
+                    <a href="{% url 'register' %}" class="btn" style="background-color: #D4FF00; color: #1A1A1A; font-weight: 600; padding: 12px 24px; border-radius: 6px; text-decoration: none;">Get started free</a>
+                </div>
+                <!-- Right Flex Group (Compliance) -->
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge bg-secondary p-2 text-uppercase text-white small" style="opacity: 0.5; background-color: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2);"><i class="fa-solid fa-shield me-1"></i> AICPA SOC</span>
+                    <span class="badge bg-secondary p-2 text-uppercase text-white small" style="opacity: 0.5; background-color: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.2);"><i class="fa-solid fa-star me-1"></i> GetApp User Reviews</span>
+                </div>
+            </div>
+
+            <!-- Watermark Background Layer -->
+            <div class="footer-bottom-logo">avis ai</div>
+
+            <!-- Bottom Zone: Copyright & Metadata Row -->
+            <div style="margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); position: relative; z-index: 2;">
+                <div>&copy; 2026 Avis AI. All rights reserved.</div>
+                <div class="d-flex gap-4">
+                    <a href="#" style="color: rgba(255, 255, 255, 0.4); text-decoration: none;">Terms of Service</a>
+                    <a href="#" style="color: rgba(255, 255, 255, 0.4); text-decoration: none;">Privacy Policy</a>
                 </div>
             </div>
         </div>
