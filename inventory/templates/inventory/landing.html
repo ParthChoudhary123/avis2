@@ -1,17 +1,70 @@
 {% extends 'inventory/base.html' %}
+{% load static %}
 
-{% block title %}Avis AI - Intelligent Enterprise Decision-Support System{% endblock %}
+{% block title %}Avis AI - Next-Gen Operations Control Center{% endblock %}
 
 {% block extra_css %}
+<!-- Load futuristic Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-    /* Premium Landing Page CSS */
-    .landing-wrapper {
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
+    /* Obsidian Tactical Cyber-Theme Override */
+    body {
+        background-color: #050811 !important;
+        background-image: 
+            radial-gradient(rgba(0, 255, 204, 0.05) 1.5px, transparent 0),
+            radial-gradient(rgba(139, 92, 246, 0.04) 1.5px, transparent 0);
+        background-size: 32px 32px;
+        background-position: 0 0, 16px 16px;
+        color: #f3f4f6 !important;
+        font-family: 'Space Grotesk', sans-serif !important;
     }
 
-    /* Ambient Glowing Mesh Lights */
+    /* Glass Navigation Adjustments */
+    .glass-nav {
+        background: rgba(8, 13, 28, 0.75) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-bottom: 1px solid rgba(0, 255, 204, 0.08) !important;
+    }
+
+    #nav-brand-logo {
+        color: #00ffcc !important;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 10px rgba(0, 255, 204, 0.35);
+    }
+
+    #navbarNav .nav-link {
+        color: #94a3b8 !important;
+        font-weight: 500;
+    }
+
+    #navbarNav .nav-link:hover, #navbarNav .nav-link.active {
+        color: #00ffcc !important;
+        text-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+    }
+
+    /* Glowing neon buttons */
+    .btn-get-started {
+        background: linear-gradient(135deg, #00ffcc 0%, #3b82f6 100%);
+        color: #050811 !important;
+        font-weight: 700;
+        border-radius: 12px;
+        border: none;
+        padding: 12px 28px;
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        letter-spacing: 0.5px;
+    }
+
+    .btn-get-started:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
+        background: linear-gradient(135deg, #00ffcc 0%, #8b5cf6 100%);
+        color: #050811 !important;
+    }
+
+    /* Glowing Ambient background lights */
     .glowing-orb {
         position: absolute;
         border-radius: 50%;
@@ -19,189 +72,103 @@
         pointer-events: none;
         z-index: 0;
         opacity: 0.45;
-        animation: rotate-orbs 20s infinite alternate ease-in-out;
+        animation: pulse-light 12s infinite alternate ease-in-out;
     }
 
     .orb-cyan {
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, rgba(0, 255, 204, 0.25) 0%, rgba(0,0,0,0) 70%);
-        top: -5%;
-        left: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 255, 204, 0.18) 0%, rgba(0,0,0,0) 70%);
+        top: -10%;
+        left: -5%;
     }
 
     .orb-purple {
-        width: 650px;
-        height: 650px;
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(0,0,0,0) 70%);
-        top: 40%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+        top: 35%;
         right: -10%;
-        animation-delay: -10s;
+        animation-delay: -6s;
     }
 
-    @keyframes rotate-orbs {
-        0% { transform: translate(0, 0) rotate(0deg); }
-        100% { transform: translate(60px, -60px) rotate(180deg); }
+    @keyframes pulse-light {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(30px, -30px) scale(1.1); }
     }
 
-    /* Hero Banner Section */
-    .hero-section {
-        padding: 90px 0 60px;
+    /* Terminal Simulator Screen */
+    .terminal-console {
+        background: #080d1b;
+        border: 1px solid rgba(0, 255, 204, 0.15);
+        border-radius: 16px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 204, 0.05);
+        padding: 24px;
+        font-family: monospace;
+        color: #a7f3d0;
         position: relative;
-        z-index: 2;
-    }
-
-    .hero-title {
-        font-size: 3.5rem;
-        font-weight: 800;
-        line-height: 1.15;
-        letter-spacing: -0.5px;
-        background: linear-gradient(135deg, #ffffff 30%, #e2e8f0 70%, #00ffcc 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 24px;
-    }
-
-    .hero-title span {
-        background: linear-gradient(135deg, #00ffcc 0%, #3b82f6 50%, #8b5cf6 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 2px 15px rgba(0, 255, 204, 0.25));
-    }
-
-    .hero-subtitle {
-        font-size: 1.25rem;
-        color: var(--text-muted);
-        line-height: 1.6;
-        margin-bottom: 40px;
-        max-width: 700px;
-    }
-
-    /* Visual Stack Badges */
-    .tech-badge {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 30px;
-        padding: 8px 18px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        color: #f3f4f6;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s;
-    }
-
-    .tech-badge:hover {
-        background: rgba(0, 255, 204, 0.05);
-        border-color: #00ffcc;
-        box-shadow: 0 0 12px rgba(0, 255, 204, 0.25);
-        transform: translateY(-2px);
-    }
-
-    /* Mockup Dashboard Display */
-    .mockup-dashboard {
-        position: relative;
-        border-radius: 20px;
-        background: rgba(10, 17, 31, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65), 
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        padding: 25px;
         overflow: hidden;
     }
 
-    .mockup-dot {
-        width: 12px;
-        height: 12px;
+    .terminal-header {
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         display: inline-block;
-        margin-right: 6px;
     }
 
-    /* Sections Divider */
-    .section-spacing {
-        padding: 80px 0;
-        position: relative;
-        z-index: 2;
+    .cursor-blink {
+        animation: blink 1.2s infinite;
+        color: #00ffcc;
+        font-weight: bold;
     }
 
-    .section-title {
-        font-size: 2.25rem;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 50px;
-        background: linear-gradient(135deg, #fff 50%, #9ca3af 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+    @keyframes blink {
+        50% { opacity: 0; }
     }
 
-    /* Future roadmap timeline cards */
-    .timeline-node {
-        position: relative;
-        border-left: 2px solid rgba(0, 255, 204, 0.2);
-        padding-left: 30px;
-        margin-left: 15px;
-        padding-bottom: 40px;
-    }
-
-    .timeline-node:last-child {
-        border-left: none;
-        padding-bottom: 0;
-    }
-
-    .timeline-dot {
-        position: absolute;
-        left: -8px;
-        top: 5px;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: #00ffcc;
-        box-shadow: 0 0 10px #00ffcc;
-    }
-
-    /* CTA Card System */
-    .cta-card {
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
-        border: 1px solid rgba(0, 255, 204, 0.15) !important;
-        box-shadow: 0 20px 50px rgba(0, 255, 204, 0.05);
-    }
-
-    /* SIKKA Photo-inspired Tech Stack Cards */
+    /* Tech Stack Grid Modules */
     .tech-card {
-        background: rgba(15, 23, 42, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        background: rgba(8, 13, 28, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         position: relative;
-        overflow: hidden;
-        z-index: 1;
+        z-index: 2;
     }
 
     .tech-card::before {
         content: "";
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
-        border-radius: 18px;
+        border-radius: 16px;
         padding: 1.5px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 100%);
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
         pointer-events: none;
-        transition: background 0.4s ease;
+        transition: background 0.3s;
     }
 
     .tech-card:hover {
-        transform: translateY(-5px) scale(1.02);
+        transform: translateY(-4px);
+        background: rgba(12, 19, 40, 0.8);
     }
 
     .tech-card-icon {
-        font-size: 2.5rem;
-        transition: transform 0.4s ease;
+        font-size: 2.3rem;
+        transition: transform 0.4s;
     }
 
     .tech-card:hover .tech-card-icon,
@@ -209,157 +176,159 @@
         transform: scale(1.15) rotate(5deg);
     }
 
-    /* Vibrant, eye-catching technology colors & borders matching photo */
-    .card-python:hover::before {
-        background: linear-gradient(135deg, #ffd43b 0%, #3572a5 100%);
-    }
-    .card-python:hover {
-        box-shadow: 0 15px 35px rgba(255, 212, 59, 0.22);
-    }
-    .text-python {
-        color: #ffd43b;
-        text-shadow: 0 0 15px rgba(255, 212, 59, 0.4);
+    /* Glow highlights for each hardware card */
+    .card-python:hover::before { background: linear-gradient(135deg, #ffd43b 0%, #3572a5 100%); }
+    .card-python:hover { box-shadow: 0 0 20px rgba(255, 212, 59, 0.18); }
+    .text-python { color: #ffd43b; }
+
+    .card-django:hover::before { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+    .card-django:hover { box-shadow: 0 0 20px rgba(16, 185, 129, 0.18); }
+    .text-django { color: #10b981; }
+
+    .card-postgres:hover::before { background: linear-gradient(135deg, #00d2ff 0%, #00ffff 100%); }
+    .card-postgres:hover { box-shadow: 0 0 20px rgba(0, 210, 255, 0.18); }
+    .text-postgres { color: #00d2ff; }
+
+    .card-blockchain:hover::before { background: linear-gradient(135deg, #ffb300 0%, #ff9800 100%); }
+    .card-blockchain:hover { box-shadow: 0 0 20px rgba(255, 179, 0, 0.2); }
+    .text-blockchain { color: #ffb300; }
+
+    .card-bootstrap:hover::before { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+    .card-bootstrap:hover { box-shadow: 0 0 20px rgba(139, 92, 246, 0.18); }
+    .text-bootstrap { color: #c084fc; }
+
+    .card-github:hover::before { background: linear-gradient(135deg, #ffffff 0%, #6b7280 100%); }
+    .card-github:hover { box-shadow: 0 0 20px rgba(255, 255, 255, 0.15); }
+    .text-github { color: #f3f4f6; }
+
+    .card-rest:hover::before { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+    .card-rest:hover { box-shadow: 0 0 20px rgba(59, 130, 246, 0.18); }
+    .text-rest { color: #3b82f6; }
+
+    /* Interactive Holographic Block Timeline */
+    .timeline-block-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        position: relative;
     }
 
-    .card-django:hover::before {
-        background: linear-gradient(135deg, #00ff88 0%, #10b981 100%);
-    }
-    .card-django:hover {
-        box-shadow: 0 15px 35px rgba(16, 185, 129, 0.22);
-    }
-    .text-django {
-        color: #10b981;
-        text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    .timeline-block {
+        background: rgba(8, 13, 28, 0.55);
+        border: 1px solid rgba(0, 255, 204, 0.08);
+        border-radius: 14px;
+        padding: 24px;
+        transition: all 0.3s;
+        position: relative;
     }
 
-    .card-postgres:hover::before {
-        background: linear-gradient(135deg, #00d2ff 0%, #336791 100%);
-    }
-    .card-postgres:hover {
-        box-shadow: 0 15px 35px rgba(0, 210, 255, 0.22);
-    }
-    .text-postgres {
-        color: #00d2ff;
-        text-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+    .timeline-block:hover {
+        border-color: #00ffcc;
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.12);
+        transform: scale(1.01);
     }
 
-    .card-blockchain:hover::before {
-        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
-    }
-    .card-blockchain:hover {
-        box-shadow: 0 15px 35px rgba(255, 179, 0, 0.25);
-    }
-    .text-blockchain {
-        color: #ffb300;
-        text-shadow: 0 0 15px rgba(255, 179, 0, 0.45);
-    }
-
-    .card-bootstrap:hover::before {
-        background: linear-gradient(135deg, #c084fc 0%, #7952b3 100%);
-    }
-    .card-bootstrap:hover {
-        box-shadow: 0 15px 35px rgba(192, 132, 252, 0.22);
-    }
-    .text-bootstrap {
-        color: #c084fc;
-        text-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
+    .block-tag {
+        font-family: monospace;
+        color: #00ffcc;
+        font-size: 0.85rem;
+        background: rgba(0, 255, 204, 0.06);
+        border: 1px solid rgba(0, 255, 204, 0.15);
+        padding: 3px 8px;
+        border-radius: 6px;
     }
 
-    .card-github:hover::before {
-        background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
-    }
-    .card-github:hover {
-        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.15);
-    }
-    .text-github {
-        color: #f3f4f6;
-        text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    /* Section Headers */
+    .section-spacing {
+        padding: 100px 0;
+        position: relative;
+        z-index: 2;
     }
 
-    .card-rest:hover::before {
-        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        background: linear-gradient(135deg, #ffffff 40%, #00ffcc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 50px;
+        text-align: center;
     }
-    .card-rest:hover {
-        box-shadow: 0 15px 35px rgba(59, 130, 246, 0.22);
+
+    /* Glass Info Cards */
+    .glass-feature-card {
+        background: rgba(8, 13, 28, 0.5);
+        border: 1px solid rgba(255,255,255,0.04);
+        border-radius: 16px;
+        padding: 30px;
+        transition: all 0.3s;
     }
-    .text-rest {
-        color: #3b82f6;
-        text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+
+    .glass-feature-card:hover {
+        border-color: rgba(0, 255, 204, 0.15);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        transform: translateY(-3px);
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="landing-wrapper">
-    <!-- Background glowing visual mesh lights -->
+    <!-- Glowing orbs in the background -->
     <div class="glowing-orb orb-cyan"></div>
     <div class="glowing-orb orb-purple"></div>
 
-    <!-- 1. Hero Banner Section -->
-    <section class="hero-section text-center text-lg-start">
+    <!-- 1. Hero Banner Section (Obsidian Terminal & Header) -->
+    <section class="hero-section text-center text-lg-start" id="home">
         <div class="container">
             <div class="row align-items-center g-5">
+                <!-- Left Title Content -->
                 <div class="col-lg-6">
-                    <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center justify-content-lg-start">
-                        <span class="tech-badge"><i class="fa-brands fa-python text-info"></i>Python</span>
-                        <span class="tech-badge"><i class="fa-brands fa-square-js text-warning"></i>Django</span>
-                        <span class="tech-badge"><i class="fa-solid fa-database text-primary"></i>PostgreSQL</span>
-                        <span class="tech-badge"><i class="fa-solid fa-network-wired text-purple"></i>Katana AI</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Intelligent Enterprise Logistics, <span>Sliced to Perfection.</span>
+                    <h1 class="fw-bold mb-3" style="font-size: 3.8rem; line-height: 1.1; letter-spacing: -1.5px; color: #ffffff;">
+                        Intelligent Logistics <br><span style="background: linear-gradient(135deg, #00ffcc 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 15px rgba(0, 255, 204, 0.15);">Sealed & Audited.</span>
                     </h1>
-                    <p class="hero-subtitle">
-                        Powered by the Katana AI predictive engine, logistics weather API trackers, and immutable cryptographic block auditing ledgers. Avis AI eliminates decision-making latency.
+                    <p class="text-muted mb-4 fs-5" style="line-height: 1.6; max-width: 580px;">
+                        Avis AI integrates machine learning demand forecasting, dynamic weather logistics radar, and sequential block chain auditing ledgers to maximize warehouse output and eliminate pipeline latency.
                     </p>
                     <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'dashboard' %}" class="btn btn-glow py-3 px-4">
-                                <i class="fa-solid fa-circle-play me-2"></i>Launch Control Panel
+                            <a href="{% url 'dashboard' %}" class="btn btn-get-started py-3 px-4">
+                                <i class="fa-solid fa-terminal me-2"></i>Launch Control Panel
                             </a>
                         {% else %}
-                            <a href="{% url 'register' %}" class="btn btn-glow py-3 px-4" id="btn-register-cta">
-                                <i class="fa-solid fa-user-plus me-2"></i>Create Account
+                            <a href="{% url 'register' %}" class="btn btn-get-started py-3 px-4">
+                                Get Started <i class="fa-solid fa-arrow-right ms-1"></i>
                             </a>
-                            <a href="{% url 'login' %}" class="btn btn-outline-glow py-3 px-4" id="btn-login-cta">
+                            <a href="{% url 'login' %}" class="btn btn-outline-glow py-3 px-4">
                                 <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Sign In
                             </a>
                         {% endif %}
                     </div>
                 </div>
-                <!-- Introductory mockups showing visual card dashboard elements -->
+
+                <!-- Right Dynamic Diagnostic Console Simulator -->
                 <div class="col-lg-6">
-                    <div class="mockup-dashboard">
-                        <div class="border-bottom border-secondary pb-2 mb-3 d-flex align-items-center">
-                            <span class="mockup-dot bg-danger"></span>
-                            <span class="mockup-dot bg-warning"></span>
-                            <span class="mockup-dot bg-success"></span>
-                            <span class="text-muted small ms-2" style="font-family: monospace;">avis_ai_dashboard.py</span>
+                    <div class="terminal-console">
+                        <div class="terminal-header">
+                            <span class="dot bg-danger"></span>
+                            <span class="dot bg-warning"></span>
+                            <span class="dot bg-success"></span>
+                            <span class="text-muted small ms-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">katana_ai_node.sh</span>
                         </div>
-                        <div class="row g-3">
-                            <div class="col-6">
-                                <div class="p-3 rounded border border-secondary" style="background: rgba(0, 255, 204, 0.02);">
-                                    <div class="small text-muted"><i class="fa-solid fa-brain me-1 text-purple"></i>Katana AI Forecast</div>
-                                    <h4 class="fw-bold text-light mb-0 mt-1">450 units</h4>
-                                    <div class="small text-success mt-1"><i class="fa-solid fa-arrow-trend-up"></i> +12.4% demand</div>
-                                </div>
+                        <div class="terminal-body" style="font-size: 0.85rem; line-height: 1.6;">
+                            <div class="text-secondary">[System Startup Initiated...]</div>
+                            <div>&gt; Loading dynamic modules... <span class="text-success">[DONE]</span></div>
+                            <div>&gt; Binding scikit-learn models... <span class="text-success">[LOADED]</span></div>
+                            <div>&gt; Initializing OpenWeatherMap radar... <span class="text-success">[ONLINE]</span></div>
+                            <div class="text-warning">&gt; Warning detected: Weather Alert found in city Seattle [HEAVY RAIN]</div>
+                            <div>&gt; Syncing sequential ledger links...</div>
+                            <div class="p-2 rounded my-2 text-info" style="background: rgba(0, 255, 204, 0.05); border: 1px solid rgba(0, 255, 204, 0.1); font-family: monospace;">
+                                Block #01 | Index: 1 <br>
+                                State: SECURED <br>
+                                Hash: a2b988a03a311fd12fae29cb234...
                             </div>
-                            <div class="col-6">
-                                <div class="p-3 rounded border border-secondary" style="background: rgba(239, 68, 68, 0.02);">
-                                    <div class="small text-muted"><i class="fa-solid fa-cloud-bolt me-1 text-danger"></i>Weather delays</div>
-                                    <h4 class="fw-bold text-danger mb-0 mt-1">1 warning</h4>
-                                    <div class="small text-muted mt-1">Heavy Rain: Seattle</div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="p-3 rounded border border-secondary" style="background: rgba(16, 185, 129, 0.02);">
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <div class="small text-muted"><i class="fa-solid fa-shield-halved me-1 text-success"></i>Cryptographic Verification</div>
-                                        <span class="badge bg-success-subtle text-success small">SECURED</span>
-                                    </div>
-                                    <code class="text-success small font-monospace d-block text-truncate" style="font-size: 0.7rem;">Block 01 Hash: a2b988a03a311fd12fae29cb234a...</code>
-                                </div>
-                            </div>
+                            <div>&gt; System check clean. Listening on port 8000. <span class="cursor-blink">_</span></div>
                         </div>
                     </div>
                 </div>
@@ -368,23 +337,23 @@
     </section>
 
     <!-- 2. About the Project Section -->
-    <section class="section-spacing" id="about" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+    <section class="section-spacing" id="about" style="border-top: 1px solid rgba(255,255,255,0.03); background: rgba(8, 13, 28, 0.3);">
         <div class="container">
-            <h2 class="section-title">About Avis AI</h2>
+            <h2 class="section-title">Project Mission</h2>
             <div class="row justify-content-center">
                 <div class="col-lg-9 text-center">
-                    <p class="text-light leading-relaxed" style="font-size: 1.15rem; line-height: 1.8;">
-                        Avis AI is designed to tackle the common corporate challenges of data fragmentation and high latency in operational workflows. Often, retail managers must manually coordinate stock balances across disconnected supply systems, monitor external logistical disruption points, and perform audits. 
+                    <p class="leading-relaxed fs-5 text-light" style="line-height: 1.8;">
+                        Avis AI acts as a cohesive decision-support architecture, built specifically to eliminate high latency in retail inventory operations and secure transit audits. 
                     </p>
-                    <p class="text-muted mt-3" style="font-size: 1.05rem; line-height: 1.8;">
-                        By binding the python-based Django architecture with the Katana AI cognitive engine, Avis AI streamlines retail operations. It combines live forecasting models, logistics delay warnings, and a block-linked cryptographic auditing system, enabling managers and vendors to cooperate seamlessly inside a unified dashboard.
+                    <p class="text-muted mt-3" style="line-height: 1.8;">
+                        By integrating machine learning algorithms (Katana AI) directly with real-time logistical constraints (weather trackers) and sequential cryptography (SHA-256 blocks), Avis AI bridges the gap between complex analytical systems and daily supply operations.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Technology Stack Integration Grid (SIKKA Photo Layout & Order) -->
+    <!-- 3. SIKKA Technology stack Grid (Photo Layout & Accents) -->
     <section class="section-spacing">
         <div class="container">
             <h2 class="section-title">Integrated Technology Ecosystem</h2>
@@ -455,51 +424,51 @@
         </div>
     </section>
 
-    <!-- 3. How It Works Section -->
-    <section class="section-spacing" id="how-it-works" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+    <!-- 4. How It Works Section -->
+    <section class="section-spacing" id="how-it-works" style="background: rgba(8, 13, 28, 0.35); border-top: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03);">
         <div class="container">
-            <h2 class="section-title">How It Works</h2>
+            <h2 class="section-title">Operational Workflow</h2>
             <div class="row g-4 text-center justify-content-center">
                 <div class="col-md-3">
                     <div class="p-3">
-                        <div class="fs-1 text-info mb-2"><i class="fa-solid fa-cart-shopping"></i></div>
-                        <h5 class="fw-bold text-light">1. Request Order</h5>
-                        <p class="text-muted small">Store Manager creates a purchase order and sets expected quantities.</p>
+                        <div class="fs-1 text-info mb-3"><i class="fa-solid fa-square-plus"></i></div>
+                        <h5 class="fw-bold text-light">1. Order Placement</h5>
+                        <p class="text-muted small">Store Manager submits a purchase request with specific quantity targets.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="p-3">
-                        <div class="fs-1 text-danger mb-2"><i class="fa-solid fa-cloud-sun-rain"></i></div>
-                        <h5 class="fw-bold text-light">2. Check Radar</h5>
-                        <p class="text-muted small">Logistics Radar scans supplier's city weather to flag delay warning alerts.</p>
+                        <div class="fs-1 text-danger mb-3"><i class="fa-solid fa-satellite-dish"></i></div>
+                        <h5 class="fw-bold text-light">2. Logistics Shield</h5>
+                        <p class="text-muted small">The API radar monitors weather parameters to flag delivery alerts.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="p-3">
-                        <div class="fs-1 text-success mb-2"><i class="fa-solid fa-truck-ramp-box"></i></div>
-                        <h5 class="fw-bold text-light">3. Vendor Delivers</h5>
-                        <p class="text-muted small">Supplier logs fulfillment progress and marks order status as Delivered.</p>
+                        <div class="fs-1 text-success mb-3"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                        <h5 class="fw-bold text-light">3. Vendor Fulfillment</h5>
+                        <p class="text-muted small">Supplier logs intake details and submits confirmation blocks on completion.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="p-3">
-                        <div class="fs-1 text-purple mb-2"><i class="fa-solid fa-link"></i></div>
-                        <h5 class="fw-bold text-light">4. Audit Sealed</h5>
-                        <p class="text-muted small">The system cryptographically seals order records into the SHA-256 ledger.</p>
+                        <div class="fs-1 text-purple mb-3"><i class="fa-solid fa-signature"></i></div>
+                        <h5 class="fw-bold text-light">4. Ledger Sealing</h5>
+                        <p class="text-muted small">Orders are sequentially block-hashed to create an immutable audit record.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 4. Features Section -->
+    <!-- 5. Features Section -->
     <section class="section-spacing" id="features">
         <div class="container">
             <h2 class="section-title">Core Subsystem Features</h2>
             <div class="row g-4">
                 <!-- Katana AI Forecasting -->
                 <div class="col-lg-4">
-                    <div class="card glass-card p-4 h-100">
+                    <div class="glass-feature-card h-100">
                         <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); display: flex; align-items: center; justify-content: center;">
                             <i class="fa-solid fa-brain text-purple fs-4"></i>
                         </div>
@@ -512,7 +481,7 @@
 
                 <!-- Weather Logistics Radar -->
                 <div class="col-lg-4">
-                    <div class="card glass-card p-4 h-100">
+                    <div class="glass-feature-card h-100">
                         <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); display: flex; align-items: center; justify-content: center;">
                             <i class="fa-solid fa-cloud-bolt text-info fs-4"></i>
                         </div>
@@ -525,7 +494,7 @@
 
                 <!-- Cryptographic Ledger -->
                 <div class="col-lg-4">
-                    <div class="card glass-card p-4 h-100">
+                    <div class="glass-feature-card h-100">
                         <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(0, 255, 204, 0.1); border-color: rgba(0, 255, 204, 0.3); display: flex; align-items: center; justify-content: center;">
                             <i class="fa-solid fa-shield-halved text-success fs-4"></i>
                         </div>
@@ -539,42 +508,50 @@
         </div>
     </section>
 
-    <!-- 5. Future Vision of the Project Section -->
-    <section class="section-spacing" id="vision" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+    <!-- 6. Future Vision (Timeline Blocks) -->
+    <section class="section-spacing" id="vision" style="background: rgba(8, 13, 28, 0.35); border-top: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03);">
         <div class="container">
-            <h2 class="section-title">Future Vision & Roadmap</h2>
+            <h2 class="section-title">Cryptographic Future Roadmap</h2>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <!-- Timeline node 1 -->
-                    <div class="timeline-node">
-                        <div class="timeline-dot"></div>
-                        <h5 class="fw-bold text-info">Q3 2026: Multi-Agent Conversational Insights</h5>
-                        <p class="text-muted small mb-0">
-                            Integration of the Katana AI chat interface, allowing managers to query natural language logs ("How are widgets selling?") and receive real-time business insights.
-                        </p>
-                    </div>
-                    <!-- Timeline node 2 -->
-                    <div class="timeline-node">
-                        <div class="timeline-dot"></div>
-                        <h5 class="fw-bold text-info">Q4 2026: IoT RFID Hardware Syncing</h5>
-                        <p class="text-muted small mb-0">
-                            Connecting physical RFID sensor hardware pipelines directly to the database. Real-time physical warehouse intakes will automatically update Django stock levels.
-                        </p>
-                    </div>
-                    <!-- Timeline node 3 -->
-                    <div class="timeline-node">
-                        <div class="timeline-dot"></div>
-                        <h5 class="fw-bold text-info">Q1 2027: Automated Supplier Smart Payments</h5>
-                        <p class="text-muted small mb-0">
-                            Triggering payment routing channels (e.g. Stripe or smart contracts) immediately when a block is successfully written to the audit chain, streamlining vendor settle periods.
-                        </p>
+                    <div class="timeline-block-container">
+                        <!-- Timeline Block 1 -->
+                        <div class="timeline-block">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="fw-bold text-light mb-0">Conversational Business Intelligence</h5>
+                                <span class="block-tag">Block Q3-26</span>
+                            </div>
+                            <p class="text-muted small mb-0">
+                                Integration of the Katana AI chat interface, allowing managers to query natural language logs ("How are widgets selling?") and receive real-time business insights.
+                            </p>
+                        </div>
+                        <!-- Timeline Block 2 -->
+                        <div class="timeline-block">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="fw-bold text-light mb-0">IoT RFID Hardware Integration</h5>
+                                <span class="block-tag">Block Q4-26</span>
+                            </div>
+                            <p class="text-muted small mb-0">
+                                Connecting physical RFID sensor hardware pipelines directly to the database. Real-time physical warehouse intakes will automatically update Django stock levels.
+                            </p>
+                        </div>
+                        <!-- Timeline Block 3 -->
+                        <div class="timeline-block">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="fw-bold text-light mb-0">Automated Smart Contract Settlements</h5>
+                                <span class="block-tag">Block Q1-27</span>
+                            </div>
+                            <p class="text-muted small mb-0">
+                                Triggering payment routing channels (e.g. Stripe or smart contracts) immediately when a block is successfully written to the audit chain, streamlining vendor settle periods.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. Contact Section -->
+    <!-- 7. Contact Section -->
     <section class="section-spacing" id="contact">
         <div class="container">
             <h2 class="section-title">Get in Touch</h2>
@@ -604,8 +581,8 @@
         </div>
     </section>
 
-    <!-- 7. Call-to-Action (CTA) Section -->
-    <section class="section-spacing text-center" style="background: rgba(255,255,255,0.015); border-top: 1px solid var(--card-border);">
+    <!-- 8. Call-to-Action (CTA) Section -->
+    <section class="section-spacing text-center" style="background: rgba(8, 13, 28, 0.35); border-top: 1px solid rgba(255,255,255,0.03);">
         <div class="container">
             <div class="col-lg-8 mx-auto">
                 <div class="card glass-card cta-card p-5">
@@ -616,11 +593,11 @@
                     <div class="d-flex justify-content-center gap-3">
                         {% if user.is_authenticated %}
                             <a href="{% url 'dashboard' %}" class="btn btn-get-started px-4 py-3">
-                                Launch Avis AI Panel
+                                Launch Control Panel
                             </a>
                         {% else %}
                             <a href="{% url 'register' %}" class="btn btn-get-started px-4 py-3">
-                                Register Portal Account
+                                Register Account
                             </a>
                             <a href="{% url 'login' %}" class="btn btn-outline-glow px-4 py-3">
                                 Access Sign In
