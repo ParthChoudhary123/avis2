@@ -307,6 +307,37 @@
             user-select: none;
         }
 
+        /* Strict Footer layout grids */
+        .footer-grid-row-5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .footer-grid-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 991px) {
+            .footer-grid-row-5 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-grid-row-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid-row-5 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid-row-3 {
+                grid-template-columns: 1fr;
+            }
+        }
         @media (max-width: 991px) {
             .nav-horizontal-menu {
                 display: none !important;
@@ -470,7 +501,7 @@
     <footer class="marketing-footer">
         <div class="container">
             <!-- Row 1: 5 Columns -->
-            <div class="row g-4 mb-5 row-cols-lg-5 row-cols-md-3 row-cols-2">
+            <div class="footer-grid-row-5">
                 <!-- Column 1: Product -->
                 <div class="col">
                     <h5 class="footer-column-heading">Product</h5>
@@ -543,7 +574,7 @@
             </div>
 
             <!-- Row 2: 3 Columns -->
-            <div class="row g-4 pt-5 border-top border-secondary row-cols-md-3 row-cols-1">
+            <div class="footer-grid-row-3 border-top border-secondary pt-5">
                 <!-- Column 1: Company -->
                 <div class="col">
                     <h5 class="footer-column-heading">Company</h5>
