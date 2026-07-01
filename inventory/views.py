@@ -395,9 +395,32 @@ def api_reorder_alerts(request):
         forecast = get_product_forecast(product)
         if forecast['needs_reorder']:
             smart_alerts.append({
+                'product_id': product.id,
                 'product_name': product.name,
                 'current_qty': product.stock.current_quantity,
                 'projected_sales': forecast['projected_sales'],
                 'reorder_point': forecast['reorder_point']
             })
     return JsonResponse({'alerts': smart_alerts})
+
+
+@manager_required
+def manager_quick_order(request, pk):
+    # Auto-generate a purchase order using AI recommended reorder points
+    product = get_object_or_404(Product, pk=pk)
+    forecast = get_product_forecast(product)
+    vendor = Vendor.objects.first()
+    
+    if not vendor:
+        messages.error(request, "No suppliers/vendors found in database to fulfill order.")
+        return redirect('manager_dashboard')
+        
+    with transaction.atomic():
+        order = Order.objects.create(
+            product=product,
+            vendor=vendor,
+            quantity=forecast['reorder_point'],
+            status='Pending'
+        )
+    messages.success(request, f"Smart Reorder PO-{order.id} for {product.name} (Qty: {order.quantity}) successfully placed with vendor {vendor.name}.")
+    return redirect('manager_dashboard')

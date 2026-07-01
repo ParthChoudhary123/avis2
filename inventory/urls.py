@@ -36,4 +36,5 @@ urlpatterns = [
     # Asynchronous Data API Routes
     path('api/weather-alerts/', views.api_weather_alerts, name='api_weather_alerts'),
     path('api/reorder-alerts/', views.api_reorder_alerts, name='api_reorder_alerts'),
+    path('manager/products/<int:pk>/quick-order/', views.manager_quick_order, name='manager_quick_order'),
 ]

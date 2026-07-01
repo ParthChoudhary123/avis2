@@ -4,132 +4,32 @@
 
 {% block extra_css %}
 <style>
-    /* Full Page Positioning with Mesh Background */
+    /* Distraction-free, clean solid background styling */
+    body {
+        background-color: #0b1120 !important; /* Matches dashboard backdrop for smooth transition */
+        color: #f3f4f6 !important;
+    }
+
     .login-wrapper {
-        position: relative;
         min-height: 80vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
         padding: 40px 0;
     }
 
-    /* Floating Colorful Ambient Lights */
-    .glowing-orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.55;
-        animation: pulse-orbs 10s infinite alternate ease-in-out;
-    }
-
-    .orb-cyan {
-        width: 450px;
-        height: 450px;
-        background: radial-gradient(circle, rgba(0, 255, 204, 0.3) 0%, rgba(0, 255, 204, 0) 70%);
-        top: -10%;
-        left: 15%;
-    }
-
-    .orb-purple {
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0) 70%);
-        bottom: -10%;
-        right: 15%;
-        animation-delay: -5s;
-    }
-
-    @keyframes pulse-orbs {
-        0% { transform: translate(0, 0) scale(1); }
-        100% { transform: translate(40px, -40px) scale(1.15); }
-    }
-
-    /* Premium Split Card Container */
-    .split-card {
-        position: relative;
-        z-index: 1;
-        background: rgba(10, 17, 31, 0.65);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
+    /* Minimalist centered login card from specifications */
+    .login-card {
+        background: #0f172a;
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 28px;
-        overflow: hidden;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        transition: border-color 0.5s;
+        border-radius: 20px;
+        padding: 48px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+        max-width: 480px;
+        width: 100%;
     }
 
-    .split-card:hover {
-        border-color: rgba(0, 255, 204, 0.2);
-    }
-
-    /* Left panel: Info & brand */
-    .brand-side {
-        background: linear-gradient(145deg, rgba(15, 23, 42, 0.75) 0%, rgba(8, 12, 24, 0.9) 100%);
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
-        padding: 55px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        position: relative;
-    }
-
-    .brand-logo-glow {
-        font-size: 3rem;
-        font-weight: 800;
-        letter-spacing: 2px;
-        background: linear-gradient(135deg, #00ffcc 0%, #3b82f6 50%, #8b5cf6 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 25px;
-        display: inline-block;
-        filter: drop-shadow(0 2px 10px rgba(0, 255, 204, 0.15));
-    }
-
-    .feature-item {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 24px;
-        gap: 18px;
-    }
-
-    .feature-icon-wrapper {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #00ffcc;
-        font-size: 1.2rem;
-        flex-shrink: 0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-        transition: all 0.3s;
-    }
-    
-    .feature-item:hover .feature-icon-wrapper {
-        color: #fff;
-        background: rgba(0, 255, 204, 0.1);
-        border-color: #00ffcc;
-        box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
-        transform: translateY(-2px);
-    }
-
-    /* Right panel: Login form */
-    .form-side {
-        padding: 55px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    /* Floating input groups */
+    /* Clean inputs with icons */
     .input-group-custom {
         position: relative;
         margin-bottom: 24px;
@@ -140,172 +40,115 @@
         left: 16px;
         top: 50%;
         transform: translateY(-50%);
-        color: #6b7280;
-        z-index: 10;
+        color: #94a3b8;
         font-size: 1.1rem;
-        transition: all 0.3s;
+        transition: color 0.3s;
     }
 
     .input-group-custom input {
         width: 100%;
-        background: rgba(255, 255, 255, 0.02) !important;
+        background-color: rgba(255, 255, 255, 0.02) !important;
         border: 1px solid rgba(255, 255, 255, 0.08);
         color: #f3f4f6 !important;
-        border-radius: 14px;
-        padding: 15px 15px 15px 48px !important;
-        font-size: 1rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .input-group-custom input:focus {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border-color: #00ffcc;
-        box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-    }
-
-    .input-group-custom input:focus ~ .input-icon {
-        color: #00ffcc;
-        transform: translateY(-50%) scale(1.1);
-    }
-
-    /* Premium Gradient Action Button */
-    .btn-submit-gradient {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #00ffcc 100%);
-        background-size: 200% auto;
-        color: #080d1a !important;
-        border: none;
-        border-radius: 14px;
-        padding: 15px 30px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        transition: all 0.4s ease;
-        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
-    }
-
-    .btn-submit-gradient:hover {
-        background-position: right center;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
-    }
-
-    .hover-underline {
-        color: #00ffcc;
-        text-decoration: none;
-        font-weight: 600;
+        border-radius: 10px;
+        padding: 14px 14px 14px 46px !important;
+        font-size: 0.95rem;
         transition: all 0.3s;
     }
 
-    .hover-underline:hover {
-        color: #3b82f6;
-        text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    .input-group-custom input:focus {
+        border-color: #fd3c65;
+        box-shadow: 0 0 10px rgba(253, 60, 101, 0.2);
+        background-color: rgba(255, 255, 255, 0.04) !important;
+    }
+
+    .input-group-custom input:focus ~ .input-icon {
+        color: #fd3c65;
+    }
+
+    /* High-visibility primary action button */
+    .btn-submit-pink {
+        background-color: #fd3c65 !important;
+        color: #ffffff !important;
+        border: none;
+        border-radius: 10px;
+        padding: 14px 30px;
+        font-weight: 700;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(253, 60, 101, 0.25);
+    }
+
+    .btn-submit-pink:hover {
+        background-color: #e02c53 !important;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(253, 60, 101, 0.4);
+    }
+
+    .register-link {
+        color: #00d2c4;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .register-link:hover {
+        color: #00b0a4;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="login-wrapper">
-    <!-- Background Ambient Lights -->
-    <div class="glowing-orb orb-cyan"></div>
-    <div class="glowing-orb orb-purple"></div>
+    <!-- Centered Card Form Layout -->
+    <div class="login-card">
+        <div class="text-center mb-4 pb-2">
+            <i class="fa-solid fa-layer-group fs-2 mb-3" style="color: #fd3c65;"></i>
+            <h2 class="fw-bold text-white mb-1">Avis AI</h2>
+            <p class="text-muted small">Please sign in to access the control panel</p>
+        </div>
 
-    <div class="col-xl-10 col-lg-11">
-        <div class="row split-card g-0 align-items-stretch">
-            <!-- Left Panel (Brand / Features) -->
-            <div class="col-lg-6 brand-side d-none d-lg-flex">
-                <div class="w-100">
-                    <span class="brand-logo-glow"><i class="fa-solid fa-layer-group me-2"></i>AVIS</span>
-                    <h3 class="fw-bold text-white mb-3">AI-Assisted Operations & Cryptographic Control</h3>
-                    <p class="text-muted mb-5" style="font-size: 1.05rem; line-height: 1.6;">
-                        A streamlined smart vendor and automated inventory management environment custom-tailored for small-to-medium retail operations.
-                    </p>
-
-                    <div class="feature-item">
-                        <div class="feature-icon-wrapper" style="box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);">
-                            <i class="fa-solid fa-brain" style="color: #8b5cf6;"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold text-light mb-1">AI-Powered Demand Projections</h6>
-                            <p class="text-muted small mb-0">Asynchronous machine learning models forecast sales and calculate optimal reorder thresholds dynamically.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon-wrapper" style="box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
-                            <i class="fa-solid fa-cloud-bolt" style="color: #3b82f6;"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold text-light mb-1">Weather Logistics Delays Radar</h6>
-                            <p class="text-muted small mb-0">Analyzes real-time precipitation, snow, and storms to warn managers of incoming shipment delay risks.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item mb-0">
-                        <div class="feature-icon-wrapper" style="box-shadow: 0 4px 12px rgba(0, 255, 204, 0.3);">
-                            <i class="fa-solid fa-shield-halved" style="color: #00ffcc;"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold text-light mb-1">Tamper-Proof Audit Ledgers</h6>
-                            <p class="text-muted small mb-0">Secures transactions using an immutable SHA-256 block-linked hash chain, blocking unauthorized database updates.</p>
-                        </div>
-                    </div>
+        <form method="post" id="login-form">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger py-2 mb-4 small border-0 text-light" role="alert" style="background: rgba(239, 68, 68, 0.1);">
+                    {% for error in form.non_field_errors %}
+                        <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>{{ error }}
+                    {% endfor %}
                 </div>
+            {% endif %}
+
+            <!-- Username / Email Input -->
+            <label for="id_username" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Username / Email</label>
+            <div class="input-group-custom">
+                <input type="text" name="username" autofocus required class="form-control" placeholder="Enter your username" id="id_username">
+                <i class="fa-solid fa-circle-user input-icon"></i>
+                {% if form.username.errors %}
+                    <div class="text-danger small mt-1">{% for error in form.username.errors %}{{ error }}{% endfor %}</div>
+                {% endif %}
             </div>
 
-            <!-- Right Panel (Login Form) -->
-            <div class="col-lg-6 col-md-12 form-side">
-                <div>
-                    <h2 class="fw-bold text-white mb-2">Welcome Back</h2>
-                    <p class="text-muted mb-4" style="font-size: 0.95rem;">Please log in to access the control center panel</p>
-
-                    <form method="post" id="login-form">
-                        {% csrf_token %}
-                        
-                        {% if form.non_field_errors %}
-                            <div class="alert alert-danger py-2 mb-4 small glass-card border-danger-subtle text-light" role="alert" style="background: rgba(239, 68, 68, 0.08);">
-                                {% for error in form.non_field_errors %}
-                                    <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>{{ error }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-
-                        <label for="id_username" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Username</label>
-                        <div class="input-group-custom">
-                            <input type="text" name="username" autofocus required class="form-control" placeholder="Enter your username" id="id_username">
-                            <i class="fa-solid fa-user-shield input-icon"></i>
-                            {% if form.username.errors %}
-                                <div class="text-danger small mt-1">{% for error in form.username.errors %}{{ error }}{% endfor %}</div>
-                            {% endif %}
-                        </div>
-
-                        <label for="id_password" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Password</label>
-                        <div class="input-group-custom">
-                            <input type="password" name="password" required class="form-control" placeholder="Enter your password" id="id_password">
-                            <i class="fa-solid fa-key input-icon"></i>
-                            {% if form.password.errors %}
-                                <div class="text-danger small mt-1">{% for error in form.password.errors %}{{ error }}{% endfor %}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rememberMe" style="background-color: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);">
-                                <label class="form-check-label small text-muted" for="rememberMe">Remember me</label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-submit-gradient w-100 py-3 text-uppercase tracking-wide fw-bold" id="login-submit-btn">
-                            <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Sign In to Portal
-                        </button>
-                    </form>
-
-                    <div class="text-center mt-5 pt-3 border-top border-secondary" style="border-top-color: rgba(255,255,255,0.08) !important;">
-                        <p class="text-muted mb-0 small">
-                            Don't have an operating account? 
-                            <a href="{% url 'register' %}" class="hover-underline ms-1">Register Portal Account</a>
-                        </p>
-                    </div>
-                </div>
+            <!-- Password Input -->
+            <label for="id_password" class="form-label small text-uppercase tracking-wider fw-bold text-muted mb-2">Password</label>
+            <div class="input-group-custom">
+                <input type="password" name="password" required class="form-control" placeholder="Enter your password" id="id_password">
+                <i class="fa-solid fa-key input-icon"></i>
+                {% if form.password.errors %}
+                    <div class="text-danger small mt-1">{% for error in form.password.errors %}{{ error }}{% endfor %}</div>
+                {% endif %}
             </div>
+
+            <!-- Action button -->
+            <button type="submit" class="btn btn-submit-pink w-100 py-3 text-uppercase tracking-wide fw-bold mb-4" id="login-submit-btn">
+                <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Sign In
+            </button>
+        </form>
+
+        <div class="text-center mt-3 pt-3 border-top border-secondary" style="border-top-color: rgba(255,255,255,0.06) !important;">
+            <p class="text-muted mb-0 small">
+                Don't have an operating account? 
+                <a href="{% url 'register' %}" class="register-link ms-1">Register Account</a>
+            </p>
         </div>
     </div>
 </div>

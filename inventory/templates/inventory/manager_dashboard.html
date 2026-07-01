@@ -192,11 +192,14 @@
                                 <h6 class="fw-bold text-light mb-1">${alert.product_name}</h6>
                                 <span class="text-muted small">Current Qty: <strong class="text-danger">${alert.current_qty}</strong></span>
                                 <span class="mx-2 text-muted">|</span>
-                                <span class="text-muted small">AI ROP threshold: <strong>${alert.reorder_point}</strong></span>
+                                <span class="text-muted small">AI ROP threshold: <strong class="text-success">${alert.reorder_point}</strong></span>
                             </div>
-                            <div class="text-end">
-                                <span class="badge bg-danger text-uppercase px-2 py-1 mb-1" style="font-size: 0.75rem;">Reorder Required</span>
+                            <div class="text-end d-flex flex-column align-items-end gap-1">
+                                <span class="badge bg-danger text-uppercase px-2 py-1" style="font-size: 0.75rem;">Reorder Required</span>
                                 <div class="text-muted small" style="font-size: 0.75rem;">Projected Sales: <strong>${alert.projected_sales}</strong> / mo</div>
+                                <a href="/manager/products/${alert.product_id}/quick-order/" class="btn btn-sm btn-success px-3 rounded-pill fw-bold mt-1" style="font-size: 0.78rem; box-shadow: 0 0 10px rgba(25,135,84,0.35);">
+                                    <i class="fa-solid fa-circle-check me-1"></i>Accept
+                                </a>
                             </div>
                         </div>
                     `;

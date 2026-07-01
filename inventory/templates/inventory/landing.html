@@ -1,29 +1,25 @@
 {% extends 'inventory/base.html' %}
 {% load static %}
 
-{% block title %}Avis AI - Next Era of Inventory Operations{% endblock %}
+{% block title %}Avis AI - Operations Control Center{% endblock %}
 
 {% block extra_css %}
 <!-- Load clean modern font -->
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-    /* Clean modern typography styling */
+    /* Clean modern white-background SaaS styling */
     body {
         font-family: 'Outfit', sans-serif !important;
         background-color: #ffffff !important;
         color: #1f2937 !important;
     }
 
-    /* Transparent Navigation Bar Style */
+    /* High-contrast dark header overrides */
     .glass-nav {
-        background: transparent !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        border-bottom: none !important;
-        position: absolute;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
+        background-color: #080d1a !important;
+        backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        position: relative;
     }
 
     #navbarNav .nav-link {
@@ -35,72 +31,80 @@
         color: #fd3c65 !important;
     }
 
-    /* Hero Section with dark image overlay */
+    /* Minimalist White Hero Section */
     .hero-section {
-        position: relative;
-        background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("{% static 'inventory/images/palm_leaves.jpg' %}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: #ffffff;
-        padding: 220px 0 160px;
+        background-color: #ffffff;
+        color: #0f172a;
+        padding: 120px 0 100px;
         text-align: center;
     }
 
     .hero-title {
-        font-size: 5rem;
-        font-weight: 300;
-        color: #ffffff;
+        font-size: 4rem;
+        font-weight: 700;
+        color: #0f172a;
         margin-bottom: 20px;
-        letter-spacing: -1px;
+        letter-spacing: -1.5px;
     }
 
     .hero-subtitle {
-        font-size: 1.35rem;
-        font-weight: 300;
-        color: rgba(255, 255, 255, 0.85);
+        font-size: 1.25rem;
+        color: #4b5563;
         max-width: 800px;
-        margin: 0 auto 40px;
+        margin: 0 auto 45px;
         line-height: 1.6;
+        font-weight: 300;
     }
 
     /* Pill-shaped buttons with matching pink and teal colors */
     .btn-pill-pink {
         background-color: #fd3c65 !important;
         color: #ffffff !important;
-        font-weight: 500;
+        font-weight: 600;
         border-radius: 50px !important;
-        padding: 14px 34px !important;
+        padding: 14px 36px !important;
         border: none !important;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(253, 60, 101, 0.35);
-        font-size: 1rem;
+        box-shadow: 0 4px 15px rgba(253, 60, 101, 0.25);
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
     }
 
     .btn-pill-pink:hover {
         background-color: #e02c53 !important;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(253, 60, 101, 0.5);
+        box-shadow: 0 6px 20px rgba(253, 60, 101, 0.4);
         color: #ffffff !important;
     }
 
     .btn-pill-teal {
         background-color: #00d2c4 !important;
         color: #ffffff !important;
-        font-weight: 500;
+        font-weight: 600;
         border-radius: 50px !important;
-        padding: 14px 34px !important;
+        padding: 14px 36px !important;
         border: none !important;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 210, 196, 0.35);
-        font-size: 1rem;
+        box-shadow: 0 4px 15px rgba(0, 210, 196, 0.25);
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
     }
 
     .btn-pill-teal:hover {
         background-color: #00b0a4 !important;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 210, 196, 0.5);
+        box-shadow: 0 6px 20px rgba(0, 210, 196, 0.4);
         color: #ffffff !important;
+    }
+
+    .hero-mockup-frame {
+        max-width: 850px;
+        margin: 60px auto 0;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        padding: 12px;
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.08);
     }
 
     /* Standard Section Spacing */
@@ -116,13 +120,29 @@
 
     .section-title {
         font-size: 2.2rem;
-        font-weight: 500;
+        font-weight: 700;
         color: #0f172a;
         text-align: center;
-        margin-bottom: 50px;
+        margin-bottom: 60px;
+        letter-spacing: -0.5px;
     }
 
-    /* Circular icon badges from image */
+    /* Miri features card styling with Learn More link */
+    .feature-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        padding: 40px 30px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+        transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        border-color: #00d2c4;
+    }
+
     .feature-icon-badge {
         width: 65px;
         height: 65px;
@@ -133,31 +153,26 @@
         color: #ffffff;
         font-size: 1.4rem;
         margin-bottom: 25px;
-        transition: transform 0.3s ease;
-    }
-
-    .feature-icon-badge:hover {
-        transform: scale(1.1);
     }
 
     .badge-pink {
         background-color: #fd3c65;
-        box-shadow: 0 5px 15px rgba(253, 60, 101, 0.3);
+        box-shadow: 0 5px 15px rgba(253, 60, 101, 0.2);
     }
 
     .badge-teal {
         background-color: #00d2c4;
-        box-shadow: 0 5px 15px rgba(0, 210, 196, 0.3);
+        box-shadow: 0 5px 15px rgba(0, 210, 196, 0.2);
     }
 
     .badge-blue {
         background-color: #3f51b5;
-        box-shadow: 0 5px 15px rgba(63, 81, 181, 0.3);
+        box-shadow: 0 5px 15px rgba(63, 81, 181, 0.2);
     }
 
     .feature-title {
         font-size: 1.6rem;
-        font-weight: 500;
+        font-weight: 700;
         color: #0f172a;
         margin-bottom: 15px;
     }
@@ -166,23 +181,34 @@
         font-size: 0.95rem;
         color: #64748b;
         line-height: 1.7;
-        max-width: 320px;
-        margin: 0 auto;
+        margin-bottom: 20px;
     }
 
-    /* SIKKA grid elements styled cleanly for Miri */
+    .learn-more-link {
+        font-weight: 700;
+        color: #00d2c4;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+    }
+
+    .learn-more-link:hover {
+        color: #00b0a4;
+    }
+
+    /* SIKKA grid elements styled cleanly for Light Mode */
     .tech-card {
         background: #ffffff;
         border: 1px solid #e2e8f0;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
         transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         position: relative;
     }
 
     .tech-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
 
     .tech-card-icon {
@@ -198,6 +224,9 @@
     /* Tech icons coloring */
     .text-python { color: #ffd43b; }
     .card-python:hover { border-color: #ffd43b; }
+
+    .text-django { color: #10b981; }
+    .card-django:hover { border-color: #10b981; }
 
     .text-postgres { color: #00d2ff; }
     .card-postgres:hover { border-color: #00d2ff; }
@@ -233,7 +262,7 @@
 
 {% block content %}
 <main>
-    <!-- 1. Hero Section -->
+    <!-- 1. Centered Hero Section (Clean Minimalist White Background) -->
     <section class="hero-section" id="home">
         <div class="container">
             <h1 class="hero-title">Avis AI</h1>
@@ -246,49 +275,63 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' %}" class="btn btn-pill-pink">Launch Panel</a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-pill-pink">Launch Panel</a>
-                    <a href="{% url 'register' %}" class="btn btn-pill-teal">Register Account</a>
+                    <a href="{% url 'login' %}" class="btn btn-pill-pink">Sign In to Dashboard</a>
+                    <a href="{% url 'register' %}" class="btn btn-pill-teal">Get Started</a>
                 {% endif %}
+            </div>
+
+            <!-- Centered Device Mockup Frame -->
+            <div class="hero-mockup-frame">
+                <img src="{% static 'inventory/images/katana_hero.jpg' %}" alt="Katana AI Smart Inventory Assembly Line" class="img-fluid rounded" style="max-height: 400px; object-fit: contain;">
             </div>
         </div>
     </section>
 
-    <!-- 2. Features Section (Miri UI Specification) -->
+    <!-- 2. Features Section (Miri UI Specification & Learn More Links) -->
     <section class="section-spacing bg-white" id="features">
         <div class="container">
             <h2 class="section-title">Core Subsystem Features</h2>
-            <div class="row g-5 text-center justify-content-center">
+            <div class="row g-4 text-center justify-content-center">
                 <!-- Column 1: Katana AI Engine -->
                 <div class="col-md-4">
-                    <div class="feature-icon-badge badge-pink animate-hover-scale">
-                        <i class="fa-solid fa-brain"></i>
+                    <div class="feature-card h-100">
+                        <div class="feature-icon-badge badge-pink">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="feature-title">Katana AI Engine</h3>
+                        <p class="feature-desc">
+                            Asynchronously evaluates sales history on Pandas dataframes, predicting seasonal demand trends and automatically adjusting optimal safety stock margins.
+                        </p>
+                        <a href="#about" class="learn-more-link">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
                     </div>
-                    <h3 class="feature-title">Katana AI Engine</h3>
-                    <p class="feature-desc">
-                        Asynchronously evaluates sales history on Pandas dataframes, predicting seasonal demand trends and automatically adjusting optimal safety stock margins.
-                    </p>
                 </div>
 
                 <!-- Column 2: Logistics Radar -->
                 <div class="col-md-4">
-                    <div class="feature-icon-badge badge-teal animate-hover-scale">
-                        <i class="fa-solid fa-satellite-dish"></i>
+                    <div class="feature-card h-100">
+                        <div class="feature-icon-badge badge-teal">
+                            <i class="fa-solid fa-satellite-dish"></i>
+                        </div>
+                        <h3 class="feature-title">Logistics Radar</h3>
+                        <p class="feature-desc">
+                            Integrates with the OpenWeatherMap API to dynamically warn store managers of heavy rain, snow, or atmospheric delays in vendor supplier cities.
+                        </p>
+                        <a href="#about" class="learn-more-link">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
                     </div>
-                    <h3 class="feature-title">Logistics Radar</h3>
-                    <p class="feature-desc">
-                        Integrates with the OpenWeatherMap API to dynamically warn store managers of heavy rain, snow, or atmospheric delays in vendor supplier cities.
-                    </p>
                 </div>
 
                 <!-- Column 3: Secure Auditing -->
                 <div class="col-md-4">
-                    <div class="feature-icon-badge badge-blue animate-hover-scale">
-                        <i class="fa-solid fa-shield-halved"></i>
+                    <div class="feature-card h-100">
+                        <div class="feature-icon-badge badge-blue">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="feature-title">Secure Auditing</h3>
+                        <p class="feature-desc">
+                            Seals finalized transactions sequentially using SHA-256 block-linked hash chains, instantly flagging tamper discrepancies if database files are altered.
+                        </p>
+                        <a href="#about" class="learn-more-link">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
                     </div>
-                    <h3 class="feature-title">Secure Auditing</h3>
-                    <p class="feature-desc">
-                        Seals finalized transactions sequentially using SHA-256 block-linked hash chains, instantly flagging tamper discrepancies if database files are altered.
-                    </p>
                 </div>
             </div>
         </div>
