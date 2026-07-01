@@ -1,7 +1,7 @@
 {% extends 'inventory/base.html' %}
 {% load static %}
 
-{% block title %}Landing Page - Premium Bootstrap 4 Template{% endblock %}
+{% block title %}Avis AI - Next Era of Inventory Operations{% endblock %}
 
 {% block extra_css %}
 <!-- Load clean modern font -->
@@ -26,6 +26,15 @@
         z-index: 1000;
     }
 
+    #navbarNav .nav-link {
+        color: rgba(255, 255, 255, 0.75) !important;
+        transition: color 0.2s;
+    }
+
+    #navbarNav .nav-link:hover {
+        color: #fd3c65 !important;
+    }
+
     /* Hero Section with dark image overlay */
     .hero-section {
         position: relative;
@@ -47,12 +56,12 @@
     }
 
     .hero-subtitle {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
         font-weight: 300;
-        color: rgba(255, 255, 255, 0.8);
-        max-width: 750px;
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 800px;
         margin: 0 auto 40px;
-        line-height: 1.5;
+        line-height: 1.6;
     }
 
     /* Pill-shaped buttons with matching pink and teal colors */
@@ -72,6 +81,7 @@
         background-color: #e02c53 !important;
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(253, 60, 101, 0.5);
+        color: #ffffff !important;
     }
 
     .btn-pill-teal {
@@ -90,12 +100,26 @@
         background-color: #00b0a4 !important;
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(0, 210, 196, 0.5);
+        color: #ffffff !important;
     }
 
-    /* White Background Features Section */
-    .features-section {
-        background-color: #ffffff;
+    /* Standard Section Spacing */
+    .section-spacing {
         padding: 100px 0;
+    }
+
+    .bg-light-panel {
+        background-color: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        font-weight: 500;
+        color: #0f172a;
+        text-align: center;
+        margin-bottom: 50px;
     }
 
     /* Circular icon badges from image */
@@ -132,82 +156,290 @@
     }
 
     .feature-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 500;
-        color: #000000;
+        color: #0f172a;
         margin-bottom: 15px;
     }
 
     .feature-desc {
-        font-size: 1rem;
-        color: #6b7280;
+        font-size: 0.95rem;
+        color: #64748b;
         line-height: 1.7;
         max-width: 320px;
         margin: 0 auto;
     }
 
-    /* Layout grid spacing */
-    .features-grid {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 30px;
+    /* SIKKA grid elements styled cleanly for Miri */
+    .tech-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+    }
+
+    .tech-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .tech-card-icon {
+        font-size: 2.5rem;
+        transition: transform 0.3s;
+    }
+
+    .tech-card:hover .tech-card-icon,
+    .tech-card:hover .rounded-circle {
+        transform: scale(1.1);
+    }
+
+    /* Tech icons coloring */
+    .text-python { color: #ffd43b; }
+    .card-python:hover { border-color: #ffd43b; }
+
+    .text-postgres { color: #00d2ff; }
+    .card-postgres:hover { border-color: #00d2ff; }
+
+    .text-blockchain { color: #ffb300; }
+    .card-blockchain:hover { border-color: #ffb300; }
+
+    .text-bootstrap { color: #8b5cf6; }
+    .card-bootstrap:hover { border-color: #8b5cf6; }
+
+    .text-github { color: #0f172a; }
+    .card-github:hover { border-color: #0f172a; }
+
+    .text-rest { color: #3b82f6; }
+    .card-rest:hover { border-color: #3b82f6; }
+
+    /* Custom form styling */
+    .light-form-control {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #1f2937 !important;
+        padding: 12px 16px;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+
+    .light-form-control:focus {
+        border-color: #00d2c4 !important;
+        box-shadow: 0 0 0 3px rgba(0, 210, 196, 0.15) !important;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Semantic HTML Structure -->
 <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
+    <!-- 1. Hero Section -->
+    <section class="hero-section" id="home">
         <div class="container">
-            <h1 class="hero-title">Landing Page</h1>
-            <p class="hero-subtitle">A beautiful premium bootstrap 4 developed by bootstrapdash.</p>
+            <h1 class="hero-title">Avis AI</h1>
+            <p class="hero-subtitle">
+                Asynchronous demand forecasting, dynamic weather logistics radar, and sequential cryptographic auditing blockchain ledgers built for smart retail operations.
+            </p>
             
             <!-- Hero Call-to-Action Buttons Container -->
             <div class="d-flex justify-content-center gap-3">
-                <a href="{% url 'login' %}" class="btn btn-pill-pink">Watch Video</a>
-                <a href="{% url 'register' %}" class="btn btn-pill-teal">Purchase Now</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-pill-pink">Launch Panel</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-pill-pink">Launch Panel</a>
+                    <a href="{% url 'register' %}" class="btn btn-pill-teal">Register Account</a>
+                {% endif %}
             </div>
         </div>
     </section>
 
-    <!-- Features Section (White Background, Equal spaced Columns) -->
-    <section class="features-section">
+    <!-- 2. Features Section (Miri UI Specification) -->
+    <section class="section-spacing bg-white" id="features">
         <div class="container">
+            <h2 class="section-title">Core Subsystem Features</h2>
             <div class="row g-5 text-center justify-content-center">
-                <!-- Column 1: Prototyping -->
+                <!-- Column 1: Katana AI Engine -->
                 <div class="col-md-4">
-                    <div class="feature-icon-badge badge-pink">
-                        <i class="fa-regular fa-bell"></i>
+                    <div class="feature-icon-badge badge-pink animate-hover-scale">
+                        <i class="fa-solid fa-brain"></i>
                     </div>
-                    <h3 class="feature-title">Prototyping</h3>
+                    <h3 class="feature-title">Katana AI Engine</h3>
                     <p class="feature-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
+                        Asynchronously evaluates sales history on Pandas dataframes, predicting seasonal demand trends and automatically adjusting optimal safety stock margins.
                     </p>
                 </div>
 
-                <!-- Column 2: Branding -->
+                <!-- Column 2: Logistics Radar -->
                 <div class="col-md-4">
-                    <div class="feature-icon-badge badge-teal">
-                        <i class="fa-regular fa-heart"></i>
+                    <div class="feature-icon-badge badge-teal animate-hover-scale">
+                        <i class="fa-solid fa-satellite-dish"></i>
                     </div>
-                    <h3 class="feature-title">Branding</h3>
+                    <h3 class="feature-title">Logistics Radar</h3>
                     <p class="feature-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
+                        Integrates with the OpenWeatherMap API to dynamically warn store managers of heavy rain, snow, or atmospheric delays in vendor supplier cities.
                     </p>
                 </div>
 
-                <!-- Column 3: Development -->
+                <!-- Column 3: Secure Auditing -->
                 <div class="col-md-4">
-                    <div class="feature-icon-badge badge-blue">
-                        <i class="fa-regular fa-clone"></i>
+                    <div class="feature-icon-badge badge-blue animate-hover-scale">
+                        <i class="fa-solid fa-shield-halved"></i>
                     </div>
-                    <h3 class="feature-title">Development</h3>
+                    <h3 class="feature-title">Secure Auditing</h3>
                     <p class="feature-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
+                        Seals finalized transactions sequentially using SHA-256 block-linked hash chains, instantly flagging tamper discrepancies if database files are altered.
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. About Section -->
+    <section class="section-spacing bg-light-panel" id="about">
+        <div class="container">
+            <h2 class="section-title">Project Mission</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-9 text-center">
+                    <p class="leading-relaxed fs-5 text-secondary" style="line-height: 1.8;">
+                        Avis AI acts as a cohesive decision-support architecture, built specifically to eliminate data fragmentation in retail inventory operations and secure transaction audits. 
+                    </p>
+                    <p class="text-muted mt-3" style="line-height: 1.8; font-size: 0.95rem;">
+                        By integrating machine learning algorithms directly with real-time weather logistics and sequential SHA-256 cryptographic ledgers, Avis AI bridges the gap between complex analytical forecasting and daily supply operations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SIKKA Tech Grid (Clean Light Mode) -->
+    <section class="section-spacing bg-white">
+        <div class="container">
+            <h2 class="section-title">Integrated Technology Ecosystem</h2>
+            
+            <!-- Row 1: 5 Columns -->
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-4 justify-content-center">
+                <!-- 1. Python -->
+                <div class="col">
+                    <div class="tech-card card-python p-4 text-center h-100">
+                        <i class="fa-brands fa-python tech-card-icon text-python mb-3"></i>
+                        <h5 class="fw-bold mb-1">Python</h5>
+                        <div class="small text-muted">Core Backend</div>
+                    </div>
+                </div>
+                <!-- 2. Django -->
+                <div class="col">
+                    <div class="tech-card card-django p-4 text-center h-100 d-flex flex-column align-items-center justify-content-center">
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-circle fw-bold text-white" style="width: 48px; height: 48px; background: #10b981; font-size: 1.15rem; font-family: monospace; box-shadow: 0 0 15px rgba(16, 185, 129, 0.25); transition: transform 0.4s ease;">DJ</div>
+                        <h5 class="fw-bold mb-1">Django</h5>
+                        <div class="small text-muted">Web Framework</div>
+                    </div>
+                </div>
+                <!-- 3. PostgreSQL -->
+                <div class="col">
+                    <div class="tech-card card-postgres p-4 text-center h-100 d-flex flex-column align-items-center justify-content-center">
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-circle fw-bold text-white" style="width: 48px; height: 48px; background: #00d2ff; font-size: 1.15rem; font-family: monospace; box-shadow: 0 0 15px rgba(0, 210, 255, 0.25); transition: transform 0.4s ease;">PG</div>
+                        <h5 class="fw-bold mb-1">PostgreSQL</h5>
+                        <div class="small text-muted">Database</div>
+                    </div>
+                </div>
+                <!-- 4. Blockchain -->
+                <div class="col">
+                    <div class="tech-card card-blockchain p-4 text-center h-100">
+                        <i class="fa-solid fa-cubes-stacked tech-card-icon text-blockchain mb-3"></i>
+                        <h5 class="fw-bold mb-1">Blockchain</h5>
+                        <div class="small text-muted">Core Technology</div>
+                    </div>
+                </div>
+                <!-- 5. Bootstrap -->
+                <div class="col">
+                    <div class="tech-card card-bootstrap p-4 text-center h-100">
+                        <i class="fa-brands fa-bootstrap tech-card-icon text-bootstrap mb-3"></i>
+                        <h5 class="fw-bold mb-1">Bootstrap</h5>
+                        <div class="small text-muted">UI Framework</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Row 2: 2 Columns centered below -->
+            <div class="row g-4 justify-content-center mt-3">
+                <!-- 6. GitHub -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="tech-card card-github p-4 text-center">
+                        <i class="fa-brands fa-github tech-card-icon text-github mb-3"></i>
+                        <h5 class="fw-bold mb-1">GitHub</h5>
+                        <div class="small text-muted">Version Control</div>
+                    </div>
+                </div>
+                <!-- 7. REST API -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="tech-card card-rest p-4 text-center">
+                        <i class="fa-solid fa-plug tech-card-icon text-rest mb-3"></i>
+                        <h5 class="fw-bold mb-1">REST API</h5>
+                        <div class="small text-muted">API Architecture</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Roadmap Section -->
+    <section class="section-spacing bg-light-panel" id="roadmap">
+        <div class="container">
+            <h2 class="section-title">Future Development Roadmap</h2>
+            <div class="row g-4">
+                <!-- Q3 2026 -->
+                <div class="col-md-4">
+                    <div class="tech-card p-4 h-100 text-center">
+                        <span class="badge bg-secondary mb-3">Q3 2026</span>
+                        <h5 class="fw-bold mb-2">Conversational BI</h5>
+                        <p class="text-muted small mb-0">Integration of natural language queries to search system inventory levels and predict supplier trends.</p>
+                    </div>
+                </div>
+                <!-- Q4 2026 -->
+                <div class="col-md-4">
+                    <div class="tech-card p-4 h-100 text-center">
+                        <span class="badge bg-secondary mb-3">Q4 2026</span>
+                        <h5 class="fw-bold mb-2">IoT Sensor Integration</h5>
+                        <p class="text-muted small mb-0">Connecting physical warehouse RFID sensors directly to the system database for instant tracking.</p>
+                    </div>
+                </div>
+                <!-- Q1 2027 -->
+                <div class="col-md-4">
+                    <div class="tech-card p-4 h-100 text-center">
+                        <span class="badge bg-secondary mb-3">Q1 2027</span>
+                        <h5 class="fw-bold mb-2">Smart Settle Ledger</h5>
+                        <p class="text-muted small mb-0">Automating payment settlements to vendor accounts immediately when transit blocks clear audits.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Contact Section -->
+    <section class="section-spacing bg-white" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card p-4 shadow-sm border" style="border-radius: 16px;">
+                        <form method="POST" action="#" onsubmit="alert('Thank you for reaching out! Avis AI support team will contact you shortly.'); return false;">
+                            <div class="mb-3">
+                                <label class="form-label text-muted small uppercase fw-bold">Full Name</label>
+                                <input type="text" class="form-control light-form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted small uppercase fw-bold">Email Address</label>
+                                <input type="email" class="form-control light-form-control" placeholder="name@company.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted small uppercase fw-bold">Message</label>
+                                <textarea class="form-control light-form-control" rows="4" placeholder="How can we help optimize your operations?" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-pill-pink w-100 py-3 text-uppercase tracking-wider">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

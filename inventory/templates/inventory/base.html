@@ -235,7 +235,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark glass-nav sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'landing' %}{% endif %}" id="nav-brand-logo">
-                <i class="fa-regular fa-dot-circle me-2" style="color: #fd3c65;"></i>Miri UI
+                <i class="fa-solid fa-layer-group me-2" style="color: #fd3c65;"></i>Avis AI
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -287,19 +287,21 @@
                 {% else %}
                     <!-- Miri UI Navbar Links and Upgrade to Pro Button -->
                     <ul class="navbar-nav ms-auto align-items-center">
-                        <li class="nav-item"><a class="nav-link text-white-50 px-3 fw-semibold" href="#" style="font-size: 0.9rem;">Docs</a></li>
-                        <li class="nav-item"><a class="nav-link text-white-50 px-3 fw-semibold" href="#" style="font-size: 0.9rem;">UI Kits</a></li>
-                        <li class="nav-item"><a class="nav-link text-white-50 px-3 fw-semibold" href="#" style="font-size: 0.9rem;">Example Pages</a></li>
+                        <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="#" style="font-size: 0.9rem;">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="#about" style="font-size: 0.9rem;">About</a></li>
+                        <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="#features" style="font-size: 0.9rem;">Features</a></li>
+                        <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="#roadmap" style="font-size: 0.9rem;">Roadmap</a></li>
+                        <li class="nav-item"><a class="nav-link text-white-50 px-2 fw-semibold" href="#contact" style="font-size: 0.9rem;">Contact</a></li>
                         
                         <!-- Social Media Icon Links from Photo -->
                         <li class="nav-item px-2"><a class="nav-link text-white-50" href="#"><i class="fa-brands fa-facebook-f" style="font-size: 0.9rem;"></i></a></li>
                         <li class="nav-item px-2"><a class="nav-link text-white-50" href="#"><i class="fa-brands fa-twitter" style="font-size: 0.9rem;"></i></a></li>
                         <li class="nav-item px-2"><a class="nav-link text-white-50" href="#"><i class="fa-brands fa-instagram" style="font-size: 0.9rem;"></i></a></li>
                         
-                        <!-- Upgrade to Pro Pink Pill Button -->
+                        <!-- Launch App Pink Pill Button -->
                         <li class="nav-item ms-3">
                             <a class="btn px-4 py-2" href="{% url 'login' %}" style="background: #fd3c65; color: #fff; font-weight: 700; border-radius: 30px; border: none; font-size: 0.9rem; transition: background 0.3s;" onmouseover="this.style.background='#e02c53'" onmouseout="this.style.background='#fd3c65'">
-                                Upgrade to Pro
+                                Launch App
                             </a>
                         </li>
                     </ul>
