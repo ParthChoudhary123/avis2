@@ -52,32 +52,15 @@
                 <h4 class="fw-bold text-light mb-0">
                     <i class="fa-solid fa-brain text-purple me-2"></i>Smart Reorder Alerts
                 </h4>
-                <span class="badge badge-ai px-2 py-1">Katana AI Engine</span>
+                <span class="badge badge-ai px-2 py-1" style="background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3);">Katana AI Engine</span>
             </div>
             
-            {% if smart_alerts %}
-                <div class="overflow-auto" style="max-height: 280px;">
-                    {% for alert in smart_alerts %}
-                        <div class="p-3 mb-2 rounded border border-danger-subtle d-flex justify-content-between align-items-center" style="background: rgba(239, 68, 68, 0.05);">
-                            <div>
-                                <h6 class="fw-bold text-light mb-1">{{ alert.product.name }} ({{ alert.product.sku }})</h6>
-                                <span class="text-muted small">Current Qty: <strong class="text-danger">{{ alert.current_qty }}</strong></span>
-                                <span class="mx-2 text-muted">|</span>
-                                <span class="text-muted small">AI ROP threshold: <strong>{{ alert.reorder_point }}</strong></span>
-                            </div>
-                            <div class="text-end">
-                                <span class="badge bg-danger pulse-warning text-uppercase px-2 py-1 mb-1">Reorder Required</span>
-                                <div class="text-muted small">Projected Sales: <strong>{{ alert.projected_sales }}</strong> / mo</div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
+            <div id="smart-alerts-container">
                 <div class="text-center py-5 text-muted">
-                    <i class="fa-solid fa-circle-check text-success fs-2 mb-3"></i>
-                    <p class="mb-0">All stock items are well above AI-predicted reorder safety lines.</p>
+                    <i class="fa-solid fa-spinner fa-spin fs-2 mb-3 text-info"></i>
+                    <p class="mb-0">Loading dynamic AI forecasts...</p>
                 </div>
-            {% endif %}
+            </div>
         </div>
     </div>
 
@@ -88,30 +71,15 @@
                 <h4 class="fw-bold text-light mb-0">
                     <i class="fa-solid fa-cloud-bolt text-danger me-2"></i>Logistics Delay Engine
                 </h4>
-                <span class="badge badge-weather px-2 py-1">Weather API Radar</span>
+                <span class="badge badge-weather px-2 py-1" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3);">Weather API Radar</span>
             </div>
             
-            {% if weather_alerts %}
-                <div class="overflow-auto" style="max-height: 280px;">
-                    {% for alert in weather_alerts %}
-                        <div class="p-3 mb-2 rounded border border-warning-subtle d-flex align-items-start gap-3" style="background: rgba(245, 158, 11, 0.05);">
-                            <i class="fa-solid fa-cloud-showers-heavy text-warning fs-4 mt-1"></i>
-                            <div>
-                                <h6 class="fw-bold text-light mb-1">PO-{{ alert.order.id }} &middot; {{ alert.order.product.name }}</h6>
-                                <p class="text-muted small mb-1">
-                                    Supplier: <strong>{{ alert.order.vendor.name }}</strong> ({{ alert.city }}) &middot; Status: <span class="badge bg-info">{{ alert.order.status }}</span>
-                                </p>
-                                <span class="badge bg-warning text-dark font-monospace small"><i class="fa-solid fa-triangle-exclamation me-1"></i>{{ alert.condition }} Alert: {{ alert.description }}</span>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
+            <div id="weather-alerts-container">
                 <div class="text-center py-5 text-muted">
-                    <i class="fa-solid fa-cloud-sun text-success fs-2 mb-3"></i>
-                    <p class="mb-0">All supply chains clear. Current supplier weather checks forecast no delays.</p>
+                    <i class="fa-solid fa-spinner fa-spin fs-2 mb-3 text-info"></i>
+                    <p class="mb-0">Scanning active supplier weather radar...</p>
                 </div>
-            {% endif %}
+            </div>
         </div>
     </div>
 </div>
@@ -206,5 +174,96 @@
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Asynchronously fetch and display Smart AI alerts
+    fetch("{% url 'api_reorder_alerts' %}")
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('smart-alerts-container');
+            if (data.alerts && data.alerts.length > 0) {
+                let html = '<div class="overflow-auto" style="max-height: 280px;">';
+                data.alerts.forEach(alert => {
+                    html += `
+                        <div class="p-3 mb-2 rounded border border-danger-subtle d-flex justify-content-between align-items-center" style="background: rgba(239, 68, 68, 0.05);">
+                            <div>
+                                <h6 class="fw-bold text-light mb-1">${alert.product_name}</h6>
+                                <span class="text-muted small">Current Qty: <strong class="text-danger">${alert.current_qty}</strong></span>
+                                <span class="mx-2 text-muted">|</span>
+                                <span class="text-muted small">AI ROP threshold: <strong>${alert.reorder_point}</strong></span>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-danger text-uppercase px-2 py-1 mb-1" style="font-size: 0.75rem;">Reorder Required</span>
+                                <div class="text-muted small" style="font-size: 0.75rem;">Projected Sales: <strong>${alert.projected_sales}</strong> / mo</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = `
+                    <div class="text-center py-5 text-muted">
+                        <i class="fa-solid fa-circle-check text-success fs-2 mb-3"></i>
+                        <p class="mb-0">All stock items are well above AI-predicted reorder safety lines.</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('smart-alerts-container').innerHTML = `
+                <div class="text-center py-5 text-danger">
+                    <i class="fa-solid fa-circle-exclamation fs-2 mb-3"></i>
+                    <p class="mb-0">Failed to connect to the AI forecasting server.</p>
+                </div>
+            `;
+        });
+
+    // Asynchronously fetch and display Weather alerts
+    fetch("{% url 'api_weather_alerts' %}")
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('weather-alerts-container');
+            if (data.alerts && data.alerts.length > 0) {
+                let html = '<div class="overflow-auto" style="max-height: 280px;">';
+                data.alerts.forEach(alert => {
+                    html += `
+                        <div class="p-3 mb-2 rounded border border-warning-subtle d-flex align-items-start gap-3" style="background: rgba(245, 158, 11, 0.05);">
+                            <i class="fa-solid fa-cloud-showers-heavy text-warning fs-4 mt-1"></i>
+                            <div>
+                                <h6 class="fw-bold text-light mb-1">PO-${alert.order_id} &middot; ${alert.product_name}</h6>
+                                <p class="text-muted small mb-1">
+                                    Supplier: <strong>${alert.vendor_name}</strong> (${alert.city})
+                                </p>
+                                <span class="badge bg-warning text-dark font-monospace small" style="font-size: 0.75rem;">
+                                    <i class="fa-solid fa-triangle-exclamation me-1"></i>${alert.condition} Alert: ${alert.description}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = `
+                    <div class="text-center py-5 text-muted">
+                        <i class="fa-solid fa-cloud-sun text-success fs-2 mb-3"></i>
+                        <p class="mb-0">All supply chains clear. Current supplier weather checks forecast no delays.</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('weather-alerts-container').innerHTML = `
+                <div class="text-center py-5 text-danger">
+                    <i class="fa-solid fa-circle-exclamation fs-2 mb-3"></i>
+                    <p class="mb-0">Failed to connect to the Logistics weather API.</p>
+                </div>
+            `;
+        });
+</script>
 {% endblock %}

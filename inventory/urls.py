@@ -32,4 +32,8 @@ urlpatterns = [
     path('manager/blockchain/', views.blockchain_view, name='blockchain_view'),
     path('manager/blockchain/tamper/<int:pk>/', views.blockchain_tamper, name='blockchain_tamper'),
     path('manager/blockchain/restore/', views.blockchain_restore, name='blockchain_restore'),
+    
+    # Asynchronous Data API Routes
+    path('api/weather-alerts/', views.api_weather_alerts, name='api_weather_alerts'),
+    path('api/reorder-alerts/', views.api_reorder_alerts, name='api_reorder_alerts'),
 ]

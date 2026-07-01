@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import transaction
 from django.utils import timezone
 import json
+import hashlib
 
 from .models import User, Product, Stock, Vendor, Order, AuditBlock, SalesLog
 from .forms import RegisterForm, ProductForm, StockForm, VendorForm, OrderForm
@@ -53,46 +55,11 @@ def dashboard_redirect(request):
 
 @manager_required
 def manager_dashboard(request):
-    products = Product.objects.all()
-    orders = Order.objects.all().order_by('-created_at')
+    # Optimize ORM queries to select related fields instantly and avoid N+1 query problem
+    products = Product.objects.all().select_related('stock')
+    orders = Order.objects.all().select_related('product', 'vendor').order_by('-created_at')
     vendors = Vendor.objects.all()
     
-    # Run predictions and weather checks
-    smart_alerts = []
-    weather_alerts = []
-    
-    # 1. Check stock levels and run ML sales forecasting
-    for product in products:
-        forecast = get_product_forecast(product)
-        if forecast['needs_reorder']:
-            smart_alerts.append({
-                'product': product,
-                'current_qty': product.stock.current_quantity,
-                'projected_sales': forecast['projected_sales'],
-                'reorder_point': forecast['reorder_point']
-            })
-            
-    # 2. Check weather logistics warnings for each vendor
-    active_cities = set(vendors.values_list('city', flat=True))
-    city_weather_cache = {}
-    for city in active_cities:
-        if city:
-            city_weather_cache[city] = get_weather_warnings(city)
-            
-    # Run weather warnings for orders in transit (Pending or Shipped)
-    active_orders = orders.filter(status__in=['Pending', 'Shipped'])
-    for order in active_orders:
-        vendor_city = order.vendor.city
-        weather_info = city_weather_cache.get(vendor_city, {'has_warning': False})
-        if weather_info['has_warning']:
-            weather_alerts.append({
-                'order': order,
-                'city': vendor_city,
-                'condition': weather_info['condition'],
-                'description': weather_info['description'],
-                'source': weather_info['source']
-            })
-
     # Cryptographic ledger integrity check
     ledger_valid, ledger_errors = verify_chain_integrity()
     recent_blocks = AuditBlock.objects.order_by('-index')[:5]
@@ -101,8 +68,6 @@ def manager_dashboard(request):
         'products_count': products.count(),
         'orders_count': orders.count(),
         'vendors_count': vendors.count(),
-        'smart_alerts': smart_alerts,
-        'weather_alerts': weather_alerts,
         'ledger_valid': ledger_valid,
         'ledger_errors': ledger_errors,
         'recent_blocks': recent_blocks,
@@ -135,7 +100,8 @@ def get_sparkline_coords(product):
 
 @manager_required
 def product_list(request):
-    products = Product.objects.all()
+    # Optimize product query with select_related for stocks
+    products = Product.objects.all().select_related('stock')
     product_data = []
     for product in products:
         forecast = get_product_forecast(product)
@@ -390,3 +356,48 @@ def blockchain_restore(request):
             add_order_to_ledger(order)
     messages.success(request, "Ledger chain cleared and successfully rebuilt from current order database tables.")
     return redirect('blockchain_view')
+
+
+@manager_required
+def api_weather_alerts(request):
+    # Optimize ORM queries and fetch weather parameters asynchronously
+    vendors = Vendor.objects.all()
+    active_cities = set(vendors.values_list('city', flat=True))
+    city_weather_cache = {}
+    for city in active_cities:
+        if city:
+            city_weather_cache[city] = get_weather_warnings(city)
+            
+    orders = Order.objects.filter(status__in=['Pending', 'Shipped']).select_related('vendor', 'product')
+    weather_alerts = []
+    for order in orders:
+        vendor_city = order.vendor.city
+        weather_info = city_weather_cache.get(vendor_city, {'has_warning': False})
+        if weather_info['has_warning']:
+            weather_alerts.append({
+                'order_id': order.id,
+                'product_name': order.product.name,
+                'vendor_name': order.vendor.name,
+                'city': vendor_city,
+                'condition': weather_info['condition'],
+                'description': weather_info['description'],
+                'source': weather_info['source']
+            })
+    return JsonResponse({'alerts': weather_alerts})
+
+
+@manager_required
+def api_reorder_alerts(request):
+    # Asynchronously calculate forecasts without blocking UI
+    products = Product.objects.all().select_related('stock')
+    smart_alerts = []
+    for product in products:
+        forecast = get_product_forecast(product)
+        if forecast['needs_reorder']:
+            smart_alerts.append({
+                'product_name': product.name,
+                'current_qty': product.stock.current_quantity,
+                'projected_sales': forecast['projected_sales'],
+                'reorder_point': forecast['reorder_point']
+            })
+    return JsonResponse({'alerts': smart_alerts})
