@@ -1,609 +1,216 @@
 {% extends 'inventory/base.html' %}
 {% load static %}
 
-{% block title %}Avis AI - Next-Gen Operations Control Center{% endblock %}
+{% block title %}Landing Page - Premium Bootstrap 4 Template{% endblock %}
 
 {% block extra_css %}
-<!-- Load futuristic Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Load clean modern font -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-    /* Prussian Blue Starry Night Theme Overrides */
+    /* Clean modern typography styling */
     body {
-        background-color: #051622 !important;
-        background-image: url("{% static 'inventory/images/starry_bg.jpg' %}?v=3") !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-        background-attachment: fixed !important;
-        color: #e2e8f0 !important;
-        font-family: 'Space Grotesk', sans-serif !important;
+        font-family: 'Outfit', sans-serif !important;
+        background-color: #ffffff !important;
+        color: #1f2937 !important;
     }
 
-    /* Nav bar styling matching the Prussian Blue theme */
+    /* Transparent Navigation Bar Style */
     .glass-nav {
-        background: rgba(5, 22, 34, 0.8) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border-bottom: 1px solid rgba(27, 160, 152, 0.15) !important;
-    }
-
-    #nav-brand-logo {
-        color: #DEB992 !important;
-        text-shadow: 0 0 10px rgba(222, 185, 146, 0.3);
-    }
-
-    #navbarNav .nav-link {
-        color: #94a3b8 !important;
-    }
-
-    #navbarNav .nav-link:hover, #navbarNav .nav-link.active {
-        color: #1BA098 !important;
-        text-shadow: 0 0 8px rgba(27, 160, 152, 0.4);
-    }
-
-    /* Custom Teal and Gold buttons */
-    .btn-get-started {
-        background: #1BA098 !important;
-        color: #051622 !important;
-        font-weight: 700;
-        border-radius: 12px;
-        border: none;
-        padding: 12px 28px;
-        box-shadow: 0 4px 15px rgba(27, 160, 152, 0.4);
-        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-        letter-spacing: 0.5px;
-    }
-
-    .btn-get-started:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(27, 160, 152, 0.6);
-        background: #22c0b6 !important;
-        color: #051622 !important;
-    }
-
-    .btn-outline-glow {
-        color: #DEB992 !important;
-        border: 2px solid #DEB992 !important;
         background: transparent !important;
-        font-weight: 700;
-        border-radius: 12px;
-        padding: 11px 26px;
-        transition: all 0.3s;
-        font-size: 0.95rem;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border-bottom: none !important;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
     }
 
-    .btn-outline-glow:hover {
-        background: rgba(222, 185, 146, 0.1) !important;
-        box-shadow: 0 0 15px rgba(222, 185, 146, 0.35);
-        color: #DEB992 !important;
-    }
-
-    /* Gold typography highlights */
-    .text-gold {
-        color: #DEB992 !important;
-        text-shadow: 0 0 8px rgba(222, 185, 146, 0.25);
-    }
-
-    .text-teal {
-        color: #1BA098 !important;
-    }
-
-    /* Hero centered styling like Slumber & Miri UI */
+    /* Hero Section with dark image overlay */
     .hero-section {
-        padding: 100px 0 60px;
-        text-align: center;
         position: relative;
+        background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("{% static 'inventory/images/palm_leaves.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: #ffffff;
+        padding: 220px 0 160px;
+        text-align: center;
     }
 
     .hero-title {
-        font-size: 3.8rem;
-        font-weight: 700;
-        line-height: 1.15;
-        letter-spacing: -0.5px;
-        color: #DEB992;
-        margin-bottom: 25px;
+        font-size: 5rem;
+        font-weight: 300;
+        color: #ffffff;
+        margin-bottom: 20px;
+        letter-spacing: -1px;
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
-        color: #cbd5e1;
-        max-width: 800px;
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 750px;
         margin: 0 auto 40px;
-        line-height: 1.65;
+        line-height: 1.5;
     }
 
-    .hero-mockup-frame {
-        max-width: 850px;
-        margin: 50px auto 0;
-        background: rgba(5, 22, 34, 0.65);
-        border: 2px solid rgba(222, 185, 146, 0.2);
-        border-radius: 20px;
-        padding: 15px;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(27, 160, 152, 0.1);
-        overflow: hidden;
+    /* Pill-shaped buttons with matching pink and teal colors */
+    .btn-pill-pink {
+        background-color: #fd3c65 !important;
+        color: #ffffff !important;
+        font-weight: 500;
+        border-radius: 50px !important;
+        padding: 14px 34px !important;
+        border: none !important;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(253, 60, 101, 0.35);
+        font-size: 1rem;
     }
 
-    /* Custom scrollbars matching the theme */
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #051622;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #1BA098;
-        border-radius: 5px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #DEB992;
+    .btn-pill-pink:hover {
+        background-color: #e02c53 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(253, 60, 101, 0.5);
     }
 
-    /* Dynamic Hardware Grid highlights in Prussian Teal/Gold */
-    .tech-card {
-        background: rgba(5, 22, 34, 0.7);
-        border: 1px solid rgba(27, 160, 152, 0.15);
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        position: relative;
+    .btn-pill-teal {
+        background-color: #00d2c4 !important;
+        color: #ffffff !important;
+        font-weight: 500;
+        border-radius: 50px !important;
+        padding: 14px 34px !important;
+        border: none !important;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 210, 196, 0.35);
+        font-size: 1rem;
     }
 
-    .tech-card::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        border-radius: 16px;
-        padding: 1.5px;
-        background: linear-gradient(135deg, rgba(27, 160, 152, 0.15) 0%, rgba(222, 185, 146, 0.05) 100%);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        pointer-events: none;
-        transition: background 0.3s;
+    .btn-pill-teal:hover {
+        background-color: #00b0a4 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 210, 196, 0.5);
     }
 
-    .tech-card:hover {
-        background: rgba(8, 30, 46, 0.85);
-        border-color: #1BA098;
-        transform: translateY(-4px);
+    /* White Background Features Section */
+    .features-section {
+        background-color: #ffffff;
+        padding: 100px 0;
     }
 
-    .tech-card-icon {
-        font-size: 2.3rem;
-        transition: transform 0.4s;
+    /* Circular icon badges from image */
+    .feature-icon-badge {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 1.4rem;
+        margin-bottom: 25px;
+        transition: transform 0.3s ease;
     }
 
-    .tech-card:hover .tech-card-icon,
-    .tech-card:hover .rounded-circle {
-        transform: scale(1.15) rotate(5deg);
-        color: #DEB992 !important;
-        background-color: #DEB992 !important;
-        box-shadow: 0 0 15px rgba(222, 185, 146, 0.5) !important;
+    .feature-icon-badge:hover {
+        transform: scale(1.1);
     }
 
-    .text-python, .text-django, .text-postgres, .text-blockchain, .text-bootstrap, .text-github, .text-rest {
-        color: #1BA098;
-        text-shadow: 0 0 15px rgba(27, 160, 152, 0.45);
-        transition: color 0.3s;
+    .badge-pink {
+        background-color: #fd3c65;
+        box-shadow: 0 5px 15px rgba(253, 60, 101, 0.3);
     }
 
-    /* Horizontal Roadmap Blocks */
-    .roadmap-horizontal {
+    .badge-teal {
+        background-color: #00d2c4;
+        box-shadow: 0 5px 15px rgba(0, 210, 196, 0.3);
+    }
+
+    .badge-blue {
+        background-color: #3f51b5;
+        box-shadow: 0 5px 15px rgba(63, 81, 181, 0.3);
+    }
+
+    .feature-title {
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: #000000;
+        margin-bottom: 15px;
+    }
+
+    .feature-desc {
+        font-size: 1rem;
+        color: #6b7280;
+        line-height: 1.7;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    /* Layout grid spacing */
+    .features-grid {
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
-        align-items: stretch;
-        gap: 20px;
-        position: relative;
-    }
-
-    @media (max-width: 768px) {
-        .roadmap-horizontal {
-            flex-direction: column;
-        }
-    }
-
-    .roadmap-block {
-        flex: 1;
-        background: rgba(5, 22, 34, 0.7);
-        border: 1px solid rgba(222, 185, 146, 0.15);
-        border-radius: 16px;
-        padding: 28px;
-        transition: all 0.3s;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .roadmap-block:hover {
-        border-color: #1BA098;
-        box-shadow: 0 0 20px rgba(27, 160, 152, 0.2);
-        transform: translateY(-4px);
-    }
-
-    .block-tag {
-        color: #DEB992;
-        border: 1px solid rgba(222, 185, 146, 0.25);
-        background: rgba(222, 185, 146, 0.05);
-        font-family: monospace;
-        font-size: 0.85rem;
-        padding: 3px 8px;
-        border-radius: 6px;
-        display: inline-block;
-    }
-
-    /* Section Background Divider Panels */
-    .section-spacing {
-        padding: 90px 0;
-        position: relative;
-        z-index: 2;
-    }
-
-    .bg-panel-dark {
-        background: rgba(5, 22, 34, 0.4);
-        border-top: 1px solid rgba(27, 160, 152, 0.1);
-        border-bottom: 1px solid rgba(27, 160, 152, 0.1);
-    }
-
-    .section-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #DEB992;
-        text-align: center;
-        margin-bottom: 50px;
-        text-shadow: 0 0 8px rgba(222, 185, 146, 0.25);
-    }
-
-    /* Glass Info Cards */
-    .glass-feature-card {
-        background: rgba(5, 22, 34, 0.6);
-        border: 1px solid rgba(27, 160, 152, 0.15);
-        border-radius: 16px;
-        padding: 30px;
-        transition: all 0.3s;
-    }
-
-    .glass-feature-card:hover {
-        border-color: #1BA098;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-        transform: translateY(-3px);
-    }
-
-    /* Neobrutalist Contact Form Inputs */
-    .light-form-control {
-        background: rgba(5, 22, 34, 0.8) !important;
-        border: 1px solid rgba(222, 185, 146, 0.2) !important;
-        color: #e2e8f0 !important;
-        padding: 12px 16px;
-        border-radius: 8px;
-        transition: all 0.3s;
-    }
-
-    .light-form-control:focus {
-        border-color: #1BA098 !important;
-        box-shadow: 0 0 0 3px rgba(27, 160, 152, 0.25) !important;
-        background: rgba(5, 22, 34, 0.9) !important;
-    }
-
-    /* CTA Card System */
-    .cta-card {
-        background: linear-gradient(135deg, rgba(27, 160, 152, 0.1) 0%, rgba(222, 185, 146, 0.05) 100%);
-        border: 1px solid rgba(27, 160, 152, 0.2) !important;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        align-items: flex-start;
+        gap: 30px;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="landing-wrapper">
-
-    <!-- 1. Centered Hero Banner Section (Clean Starry Backdrop, Centered mockups) -->
-    <section class="hero-section" id="home">
+<!-- Semantic HTML Structure -->
+<main>
+    <!-- Hero Section -->
+    <section class="hero-section">
         <div class="container">
-            <h1 class="hero-title">
-                Welcome to the next era of inventory operations
-            </h1>
-            <p class="hero-subtitle">
-                Artificial intelligence isn't just the next tech trend — it's reshaping how we work, from precise demand forecasting to real-time inventory tracking at an unprecedented scale. Here's everything you need to know to enhance your capabilities and your business's performance with AI.
-            </p>
+            <h1 class="hero-title">Landing Page</h1>
+            <p class="hero-subtitle">A beautiful premium bootstrap 4 developed by bootstrapdash.</p>
             
-            <div class="d-flex justify-content-center gap-3 align-items-center">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'dashboard' %}" class="btn btn-get-started py-3 px-4">
-                        <i class="fa-solid fa-terminal me-2"></i>Launch Control Panel
-                    </a>
-                {% else %}
-                    <a href="{% url 'register' %}" class="btn btn-get-started py-3 px-4" id="btn-register-cta">
-                        Get Started
-                    </a>
-                    <a href="{% url 'login' %}" class="btn btn-outline-glow py-3 px-4" id="btn-login-cta">
-                        Log In <i class="fa-solid fa-arrow-right ms-1"></i>
-                    </a>
-                {% endif %}
-            </div>
-
-            <!-- Centered Device Mockup Frame (like the phone in Slumber) -->
-            <div class="hero-mockup-frame">
-                <img src="{% static 'inventory/images/katana_hero.jpg' %}" alt="Katana AI Logistics Assembly Line" class="img-fluid rounded" style="opacity: 0.9; max-height: 400px; object-fit: contain;">
+            <!-- Hero Call-to-Action Buttons Container -->
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'login' %}" class="btn btn-pill-pink">Watch Video</a>
+                <a href="{% url 'register' %}" class="btn btn-pill-teal">Purchase Now</a>
             </div>
         </div>
     </section>
 
-    <!-- 2. About the Project Section -->
-    <section class="section-spacing bg-panel-dark" id="about">
+    <!-- Features Section (White Background, Equal spaced Columns) -->
+    <section class="features-section">
         <div class="container">
-            <h2 class="section-title">Project Mission</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-9 text-center">
-                    <p class="leading-relaxed fs-5 text-light" style="line-height: 1.8;">
-                        Avis AI acts as a cohesive decision-support architecture, built specifically to eliminate high latency in retail inventory operations and secure transit audits. 
-                    </p>
-                    <p class="text-muted mt-3" style="line-height: 1.8;">
-                        By integrating machine learning algorithms (Katana AI) directly with real-time logistical constraints (weather trackers) and sequential cryptography (SHA-256 blocks), Avis AI bridges the gap between complex analytical systems and daily supply operations.
+            <div class="row g-5 text-center justify-content-center">
+                <!-- Column 1: Prototyping -->
+                <div class="col-md-4">
+                    <div class="feature-icon-badge badge-pink">
+                        <i class="fa-regular fa-bell"></i>
+                    </div>
+                    <h3 class="feature-title">Prototyping</h3>
+                    <p class="feature-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
                     </p>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- 3. SIKKA Technology stack Grid (Photo Layout & Accents) -->
-    <section class="section-spacing">
-        <div class="container">
-            <h2 class="section-title">Integrated Technology Ecosystem</h2>
-            
-            <!-- Row 1: 5 Columns -->
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-4 justify-content-center">
-                <!-- 1. Python -->
-                <div class="col">
-                    <div class="tech-card card-python p-4 text-center h-100">
-                        <i class="fa-brands fa-python tech-card-icon text-python mb-3"></i>
-                        <h5 class="fw-bold text-light mb-1">Python</h5>
-                        <div class="small text-muted">Core Backend</div>
+                <!-- Column 2: Branding -->
+                <div class="col-md-4">
+                    <div class="feature-icon-badge badge-teal">
+                        <i class="fa-regular fa-heart"></i>
                     </div>
-                </div>
-                <!-- 2. Django -->
-                <div class="col">
-                    <div class="tech-card card-django p-4 text-center h-100 d-flex flex-column align-items-center justify-content-center">
-                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-circle fw-bold text-white" style="width: 48px; height: 48px; background: #10b981; font-size: 1.15rem; font-family: monospace; box-shadow: 0 0 15px rgba(16, 185, 129, 0.45); transition: transform 0.4s ease;">DJ</div>
-                        <h5 class="fw-bold text-light mb-1">Django</h5>
-                        <div class="small text-muted">Web Framework</div>
-                    </div>
-                </div>
-                <!-- 3. PostgreSQL -->
-                <div class="col">
-                    <div class="tech-card card-postgres p-4 text-center h-100 d-flex flex-column align-items-center justify-content-center">
-                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-circle fw-bold text-white" style="width: 48px; height: 48px; background: #00d2ff; font-size: 1.15rem; font-family: monospace; box-shadow: 0 0 15px rgba(0, 210, 255, 0.45); transition: transform 0.4s ease;">PG</div>
-                        <h5 class="fw-bold text-light mb-1">PostgreSQL</h5>
-                        <div class="small text-muted">Database</div>
-                    </div>
-                </div>
-                <!-- 4. Blockchain -->
-                <div class="col">
-                    <div class="tech-card card-blockchain p-4 text-center h-100">
-                        <i class="fa-solid fa-cubes-stacked tech-card-icon text-blockchain mb-3"></i>
-                        <h5 class="fw-bold text-light mb-1">Blockchain</h5>
-                        <div class="small text-muted">Core Technology</div>
-                    </div>
-                </div>
-                <!-- 5. Bootstrap -->
-                <div class="col">
-                    <div class="tech-card card-bootstrap p-4 text-center h-100">
-                        <i class="fa-brands fa-bootstrap tech-card-icon text-bootstrap mb-3"></i>
-                        <h5 class="fw-bold text-light mb-1">Bootstrap</h5>
-                        <div class="small text-muted">UI Framework</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Row 2: 2 Columns centered below -->
-            <div class="row g-4 justify-content-center mt-3">
-                <!-- 6. GitHub -->
-                <div class="col-sm-6 col-md-3">
-                    <div class="tech-card card-github p-4 text-center">
-                        <i class="fa-brands fa-github tech-card-icon text-github mb-3"></i>
-                        <h5 class="fw-bold text-light mb-1">GitHub</h5>
-                        <div class="small text-muted">Version Control</div>
-                    </div>
-                </div>
-                <!-- 7. REST API -->
-                <div class="col-sm-6 col-md-3">
-                    <div class="tech-card card-rest p-4 text-center">
-                        <i class="fa-solid fa-plug tech-card-icon text-rest mb-3"></i>
-                        <h5 class="fw-bold text-light mb-1">REST API</h5>
-                        <div class="small text-muted">API Architecture</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. How It Works Section -->
-    <section class="section-spacing bg-panel-dark" id="how-it-works">
-        <div class="container">
-            <h2 class="section-title">Operational Workflow</h2>
-            <div class="row g-4 text-center justify-content-center">
-                <div class="col-md-3">
-                    <div class="p-3">
-                        <div class="fs-1 text-teal mb-3"><i class="fa-solid fa-square-plus"></i></div>
-                        <h5 class="fw-bold text-light">1. Order Placement</h5>
-                        <p class="text-muted small">Store Manager submits a purchase request with specific quantity targets.</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="p-3">
-                        <div class="fs-1 text-danger mb-3"><i class="fa-solid fa-satellite-dish"></i></div>
-                        <h5 class="fw-bold text-light">2. Logistics Shield</h5>
-                        <p class="text-muted small">The API radar monitors weather parameters to flag delivery alerts.</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="p-3">
-                        <div class="fs-1 text-success mb-3"><i class="fa-solid fa-truck-ramp-box"></i></div>
-                        <h5 class="fw-bold text-light">3. Vendor Fulfillment</h5>
-                        <p class="text-muted small">Supplier logs intake details and submits confirmation blocks on completion.</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="p-3">
-                        <div class="fs-1 text-gold mb-3"><i class="fa-solid fa-signature"></i></div>
-                        <h5 class="fw-bold text-light">4. Ledger Sealing</h5>
-                        <p class="text-muted small">Orders are sequentially block-hashed to create an immutable audit record.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Features Section -->
-    <section class="section-spacing" id="features">
-        <div class="container">
-            <h2 class="section-title">Core Subsystem Features</h2>
-            <div class="row g-4">
-                <!-- Katana AI Forecasting -->
-                <div class="col-lg-4">
-                    <div class="glass-feature-card h-100">
-                        <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(27, 160, 152, 0.15); display: flex; align-items: center; justify-content: center;">
-                            <i class="fa-solid fa-brain text-teal fs-4"></i>
-                        </div>
-                        <h4 class="fw-bold text-light mb-3">Katana AI Forecasting</h4>
-                        <p class="text-muted small mb-0">
-                            Uses scikit-learn Linear Regression models to evaluate sales history on Pandas dataframes, predicting seasonal demand trends and automatically adjusting optimal safety stock thresholds. Runs asynchronously in background threads.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Weather Logistics Radar -->
-                <div class="col-lg-4">
-                    <div class="glass-feature-card h-100">
-                        <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(239, 68, 68, 0.1); display: flex; align-items: center; justify-content: center;">
-                            <i class="fa-solid fa-cloud-bolt text-danger fs-4"></i>
-                        </div>
-                        <h4 class="fw-bold text-light mb-3">Logistics Delay Radar</h4>
-                        <p class="text-muted small mb-0">
-                            Connects to the OpenWeatherMap API to fetch current atmospheric states in supplier operating cities. Flags active orders automatically with heavy rain, snow, or storm warnings on the manager's panel.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Cryptographic Ledger -->
-                <div class="col-lg-4">
-                    <div class="glass-feature-card h-100">
-                        <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(222, 185, 146, 0.15); display: flex; align-items: center; justify-content: center;">
-                            <i class="fa-solid fa-shield-halved text-gold fs-4"></i>
-                        </div>
-                        <h4 class="fw-bold text-light mb-3">Cryptographic Audits</h4>
-                        <p class="text-muted small mb-0">
-                            Constructs a SHA-256 block-linked hash chain for every finalized transaction. If any details are altered directly in the database, the integrity validator flags a mismatched signature immediately.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Future Vision (Timeline Blocks in Horizontal Flow) -->
-    <section class="section-spacing bg-panel-dark" id="vision">
-        <div class="container">
-            <h2 class="section-title">Cryptographic Future Roadmap</h2>
-            <div class="roadmap-horizontal">
-                <!-- Timeline Block 1 -->
-                <div class="roadmap-block">
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="block-tag">Block Q3-26</span>
-                            <i class="fa-solid fa-terminal text-teal"></i>
-                        </div>
-                        <h5 class="fw-bold text-light mb-2">Conversational Intelligence</h5>
-                        <p class="text-muted small mb-0">
-                            Integration of the Katana AI chat interface, allowing managers to query natural language logs ("How are widgets selling?") and receive real-time business insights.
-                        </p>
-                    </div>
-                </div>
-                <!-- Timeline Block 2 -->
-                <div class="roadmap-block">
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="block-tag">Block Q4-26</span>
-                            <i class="fa-solid fa-wifi text-teal"></i>
-                        </div>
-                        <h5 class="fw-bold text-light mb-2">IoT RFID Hardware</h5>
-                        <p class="text-muted small mb-0">
-                            Connecting physical RFID sensor hardware pipelines directly to the database. Real-time physical warehouse intakes will automatically update Django stock levels.
-                        </p>
-                    </div>
-                </div>
-                <!-- Timeline Block 3 -->
-                <div class="roadmap-block">
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="block-tag">Block Q1-27</span>
-                            <i class="fa-solid fa-credit-card text-teal"></i>
-                        </div>
-                        <h5 class="fw-bold text-light mb-2">Smart Settlements</h5>
-                        <p class="text-muted small mb-0">
-                            Triggering payment routing channels (e.g. Stripe or smart contracts) immediately when a block is successfully written to the audit chain, streamlining vendor settle periods.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. Contact Section -->
-    <section class="section-spacing" id="contact">
-        <div class="container">
-            <h2 class="section-title">Get in Touch</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="card glass-card p-4" style="background: rgba(5, 22, 34, 0.7); border: 1px solid rgba(27, 160, 152, 0.15);">
-                        <form method="POST" action="#" onsubmit="alert('Thank you for reaching out! Avis AI support team will contact you shortly.'); return false;">
-                            <div class="mb-3">
-                                <label class="form-label text-muted small uppercase">Full Name</label>
-                                <input type="text" class="form-control light-form-control" placeholder="Your Name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label text-muted small uppercase">Email Address</label>
-                                <input type="email" class="form-control light-form-control" placeholder="name@company.com" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label text-muted small uppercase">Message</label>
-                                <textarea class="form-control light-form-control" rows="4" placeholder="How can we help optimize your operations?" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-get-started w-100 py-3 text-uppercase tracking-wider">
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. Call-to-Action (CTA) Section -->
-    <section class="section-spacing text-center bg-panel-dark">
-        <div class="container">
-            <div class="col-lg-8 mx-auto">
-                <div class="card glass-card cta-card p-5">
-                    <h2 class="fw-bold text-white mb-3">Empower Your Supply Chain Today</h2>
-                    <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto;">
-                        Reduce decision-making latency, protect transactional audit trails, and optimize your catalog safety margins with the Katana AI cognitive engine.
+                    <h3 class="feature-title">Branding</h3>
+                    <p class="feature-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
                     </p>
-                    <div class="d-flex justify-content-center gap-3">
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'dashboard' %}" class="btn btn-get-started px-4 py-3">
-                                Launch Control Panel
-                            </a>
-                        {% else %}
-                            <a href="{% url 'register' %}" class="btn btn-get-started px-4 py-3">
-                                Register Account
-                            </a>
-                            <a href="{% url 'login' %}" class="btn btn-outline-glow px-4 py-3">
-                                Access Sign In
-                            </a>
-                        {% endif %}
+                </div>
+
+                <!-- Column 3: Development -->
+                <div class="col-md-4">
+                    <div class="feature-icon-badge badge-blue">
+                        <i class="fa-regular fa-clone"></i>
                     </div>
+                    <h3 class="feature-title">Development</h3>
+                    <p class="feature-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
-</div>
+</main>
 {% endblock %}
