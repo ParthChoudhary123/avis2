@@ -40,17 +40,17 @@
             padding: 0;
         }
 
-        /* Top Header Navbar - Neo-Brutalist White */
+        /* Top Header Navbar - Dark Charcoal/Black */
         .katana-navbar {
-            background-color: #ffffff !important;
-            border-bottom: var(--border-main);
+            background-color: #111827 !important;
+            border-bottom: 1px solid #1F2937;
             padding: 0 24px !important;
             height: 70px;
         }
 
         .katana-brand {
-            font-weight: 900;
-            color: var(--text-dark) !important;
+            font-weight: 800;
+            color: #ffffff !important;
             font-size: 1.4rem;
             text-transform: lowercase;
             letter-spacing: -1px;
@@ -58,7 +58,7 @@
             align-items: center;
             height: 100%;
             text-decoration: none;
-            margin-right: 24px;
+            margin-right: 16px;
         }
 
         /* Top Navigation Tabs */
@@ -78,102 +78,118 @@
         }
 
         .katana-nav-link {
-            color: var(--text-dark) !important;
-            font-weight: 700;
-            font-size: 0.9rem;
-            padding: 22px 16px !important;
+            color: #9CA3AF !important;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 22px 14px !important;
             text-decoration: none;
-            transition: all 0.1s;
+            transition: all 0.15s;
             border-bottom: 4px solid transparent;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             cursor: pointer;
+            height: 100%;
         }
 
         .katana-nav-link:hover {
-            background-color: var(--bg-lavender);
+            color: #ffffff !important;
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .katana-nav-link.active {
-            border-bottom-color: var(--text-dark) !important;
-            background-color: var(--bg-lavender);
-            font-weight: 800;
+            border-bottom-color: #3B82F6 !important;
+            color: #ffffff !important;
+            font-weight: 700;
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
-        /* Sub-Navigation Bar */
+        /* Sub-Navigation Bar - Deep Navy */
         .sub-nav-bar {
-            background-color: #ffffff;
-            border-bottom: var(--border-main);
-            padding: 10px 24px;
+            background-color: #0F172A;
+            border-bottom: 1px solid #1E293B;
+            padding: 0 24px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
             overflow-x: auto;
+            height: 48px;
         }
 
         .sub-nav-link {
-            color: var(--text-dark);
+            color: #94A3B8;
             text-decoration: none;
             font-size: 0.85rem;
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 6px;
-            border: 1px solid transparent;
+            font-weight: 600;
+            padding: 12px 14px;
+            border-bottom: 2px solid transparent;
             transition: all 0.15s;
             cursor: pointer;
             white-space: nowrap;
+            display: inline-block;
         }
 
         .sub-nav-link:hover {
-            background-color: var(--bg-cream);
-            border-color: var(--border-color);
+            color: #ffffff;
         }
 
         .sub-nav-link.active {
-            background-color: var(--brand-lime);
-            color: var(--text-dark);
-            border-color: var(--border-color);
-            box-shadow: 2px 2px 0px var(--border-color);
+            color: #ffffff !important;
+            border-bottom-color: #ffffff !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
         }
 
         /* Global Header Utilities */
         .header-utilities {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         .utility-icon-btn {
-            background: #ffffff;
-            border: var(--border-main);
-            border-radius: 8px;
-            width: 38px;
-            height: 38px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-dark);
+            color: #9CA3AF;
             text-decoration: none;
-            box-shadow: 2px 2px 0px var(--border-color);
-            transition: all 0.1s;
+            transition: all 0.15s;
             cursor: pointer;
+            box-shadow: none !important;
         }
 
         .utility-icon-btn:hover {
-            transform: translate(-1px, -1px);
-            box-shadow: 3px 3px 0px var(--border-color);
-            background-color: var(--bg-lavender);
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
-        .utility-icon-btn:active {
-            transform: translate(1px, 1px);
-            box-shadow: 1px 1px 0px var(--border-color);
+        /* User Profile Badge */
+        .user-profile-badge {
+            background-color: #6B7280;
+            color: #ffffff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
         }
 
         /* User section */
         .navbar-user-section {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         .user-pill {
@@ -408,38 +424,60 @@
 <body>
 
     <!-- Top Navigation Header -->
-    <header class="navbar navbar-expand-lg katana-navbar navbar-light sticky-top">
+    <header class="navbar navbar-expand-lg katana-navbar navbar-dark sticky-top">
         <div class="container-fluid p-0 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center h-100">
                 <!-- Brand logo -->
                 <a class="katana-brand" href="{% url 'landing' %}">
-                    avis ai
+                    avis
                 </a>
+                
+                <!-- Plan Tag -->
+                <span class="badge rounded-pill bg-secondary text-white font-monospace border border-secondary px-2 me-2" style="font-size: 0.72rem; letter-spacing: 0.5px;">Free plan</span>
+                
+                <!-- Item counter -->
+                <span class="text-white opacity-75 small me-3 d-none d-md-flex align-items-center gap-1" style="font-size: 0.78rem;" title="Item Counter">
+                    0/30 Items in use <i class="fa-solid fa-circle-info" style="font-size: 0.72rem;"></i>
+                </span>
                 
                 <!-- Tab lists -->
                 <nav class="h-100 ms-2">
                     <ul class="katana-nav-tabs" id="primary-nav-tabs">
                         {% if user.is_manager %}
                             <li class="katana-nav-item">
-                                <a class="katana-nav-link active" onclick="switchPrimaryTab('home')">Home</a>
+                                <a class="katana-nav-link active" onclick="switchPrimaryTab('home')">
+                                    <i class="fa-solid fa-house"></i> Home
+                                </a>
                             </li>
                             <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('sell')">Sell</a>
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('sell')">
+                                    <i class="fa-solid fa-tag"></i> Sell
+                                </a>
                             </li>
                             <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('buy')">Buy</a>
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('buy')">
+                                    <i class="fa-solid fa-cart-shopping"></i> Buy
+                                </a>
                             </li>
                             <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('stock')">Stock</a>
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('stock')">
+                                    <i class="fa-solid fa-table-cells-large"></i> Stock
+                                </a>
                             </li>
                             <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('plan')">Plan</a>
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('plan')">
+                                    <i class="fa-solid fa-calendar-days"></i> Plan
+                                </a>
                             </li>
                             <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('insights')">Insights</a>
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('insights')">
+                                    <i class="fa-solid fa-chart-column"></i> Insights
+                                </a>
                             </li>
                             <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('items')">Items</a>
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('items')">
+                                    <i class="fa-solid fa-box"></i> Items
+                                </a>
                             </li>
                         {% else %}
                             <li class="katana-nav-item">
@@ -452,15 +490,26 @@
             
             <!-- Global Utilities & User Section -->
             <div class="header-utilities">
-                <!-- Global Search -->
-                <div class="input-group d-none d-md-flex" style="max-width: 200px;">
-                    <span class="input-group-text bg-white border-end-0 text-muted py-1" style="border-color: #1A1A24; border-width: 2px;"><i class="fa-solid fa-magnifying-glass fs-6"></i></span>
-                    <input type="text" class="form-control py-1 ps-0 border-start-0" placeholder="Search..." style="border-color: #1A1A24; border-width: 2px; font-size: 0.85rem; box-shadow: none !important;">
-                </div>
+                <!-- Book a demo link -->
+                <a href="#" class="text-white-50 text-decoration-none hover-white small me-2 d-none d-xl-inline" style="font-size: 0.8rem;" onclick="alert('Book a demo modal...'); return false;">Book a demo</a>
                 
-                <!-- Task Creator -->
-                <button class="utility-icon-btn" title="Create task/workflow" onclick="alert('Creating new task / workflow pipeline...');">
-                    <i class="fa-solid fa-plus"></i>
+                <!-- Upgrade to remove limits link -->
+                <a href="#" class="text-white-50 text-decoration-none hover-white small me-3 d-none d-lg-inline" style="font-size: 0.8rem;" onclick="switchPrimaryTab('billing'); return false;">Upgrade to remove item limits</a>
+                
+                <!-- + Create blue button -->
+                <button class="btn btn-primary px-3 py-1.5 text-white fw-bold d-flex align-items-center gap-1" style="background-color: #2563EB !important; border: none; border-radius: 6px; font-size: 0.8rem;" onclick="alert('Creating new entry...');">
+                    <i class="fa-solid fa-plus"></i> Create
+                </button>
+                
+                <!-- System Utility Icons -->
+                <!-- Search -->
+                <button class="utility-icon-btn" title="Search" onclick="alert('Search initiated...');">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                
+                <!-- Megaphone -->
+                <button class="utility-icon-btn" title="Announcements" onclick="alert('No announcements.');">
+                    <i class="fa-solid fa-bullhorn"></i>
                 </button>
                 
                 <!-- Help/Support -->
@@ -468,22 +517,15 @@
                     <i class="fa-regular fa-circle-question"></i>
                 </button>
 
-                <!-- Bell Notifications -->
-                <button class="utility-icon-btn position-relative" title="Notifications" onclick="alert('No new notifications.');">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" style="margin-top: 6px; margin-left: -6px;"></span>
-                </button>
-
                 <!-- Marketplace -->
                 <button class="utility-icon-btn" title="Marketplace / Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');">
                     <i class="fa-solid fa-puzzle-piece"></i>
                 </button>
 
-                <!-- User Dropdown -->
+                <!-- User Dropdown with PC initials badge -->
                 <div class="dropdown">
-                    <button class="user-pill dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-circle-user me-1 text-primary"></i>
-                        <strong>{{ user.username }}</strong>
+                    <button class="user-profile-badge dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        PC
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050;">
                         <li class="px-3 py-2 border-bottom mb-2">
