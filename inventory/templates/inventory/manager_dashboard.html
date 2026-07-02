@@ -4,9 +4,17 @@
 
 {% block extra_css %}
 <style>
-    /* Add extra spacing and clean visual overrides */
+    /* Styling for the SPA view visibility */
+    .dashboard-view-container {
+        display: none;
+    }
+    .dashboard-view-container.active-view {
+        display: block;
+    }
+
+    /* KPI styling */
     .kpi-card {
-        border-left: 4px solid var(--accent-blue) !important;
+        border-left: 4px solid #06b6d4 !important;
     }
     .kpi-card-danger {
         border-left: 4px solid #ef4444 !important;
@@ -14,275 +22,1345 @@
     .kpi-card-warning {
         border-left: 4px solid #f59e0b !important;
     }
-    .kpi-card-info {
-        border-left: 4px solid #06b6d4 !important;
-    }
     
     .btn-outline-glow.active {
         background-color: #111827 !important;
         color: #ffffff !important;
         border-color: #111827 !important;
     }
+
+    /* Custom styles for calculator result card */
+    .calculator-result-box {
+        background-color: #f0fdf4;
+        border: 2px solid #16a34a !important;
+        border-radius: 12px;
+        box-shadow: 4px 4px 0px #16a34a;
+    }
+
+    /* Modern onboarding checklist widget */
+    .onboarding-widget {
+        background: #ffffff;
+        border: var(--border-main);
+        border-radius: 12px;
+        box-shadow: 4px 4px 0px var(--border-color);
+    }
+    .onboarding-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #cbd5e1;
+    }
+    .onboarding-item:last-child {
+        border-bottom: none;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="row mb-4 align-items-center">
-    <div class="col-md-8">
-        <h1 class="fw-bold text-dark"><span class="text-primary">AVIS AI</span> Control Center</h1>
-        <p class="text-secondary small mb-0">Katana AI Predictive Operations & Cryptographic Ledger Audit</p>
-    </div>
-    <div class="col-md-4 text-md-end d-flex align-items-center justify-content-md-end gap-2">
-        <a href="{% url 'order_create' %}" class="btn btn-glow" id="btn-create-order-shortcut">
-            <i class="fa-solid fa-file-invoice-dollar me-2"></i>New Purchase Order
-        </a>
-        <a href="{% url 'product_create' %}" class="btn btn-outline-glow btn-sm" id="btn-create-product-shortcut">
-            <i class="fa-solid fa-plus me-1"></i>Add Product
-        </a>
-    </div>
-</div>
 
-<!-- 1. Top Metrics Ribbon (Four KPI Panels) -->
-<div class="row mb-4 g-3">
-    <!-- Active SKUs -->
-    <div class="col-md-3">
-        <div class="card glass-card kpi-card kpi-card-info p-4 text-start">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <h5 class="kpi-title">Total Active SKUs</h5>
-                    <h2 class="kpi-value mb-0" id="kpi-total-skus">{{ products_count }}</h2>
-                </div>
-                <i class="fa-solid fa-boxes-stacked text-info fs-3"></i>
-            </div>
-        </div>
-    </div>
-    <!-- Pending Requests -->
-    <div class="col-md-3">
-        <div class="card glass-card kpi-card p-4 text-start">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <h5 class="kpi-title">Pending Requests</h5>
-                    <h2 class="kpi-value mb-0" id="kpi-pending-requests">{{ pending_requests_count }}</h2>
-                </div>
-                <i class="fa-solid fa-clock-rotate-left text-primary fs-3"></i>
-            </div>
-        </div>
-    </div>
-    <!-- Critical Low Items -->
-    <div class="col-md-3">
-        <div class="card glass-card kpi-card {% if critical_low_count > 0 %}kpi-card-danger{% else %}kpi-card-info{% endif %} p-4 text-start">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <h5 class="kpi-title">Critical Low Items</h5>
-                    <h2 class="kpi-value {% if critical_low_count > 0 %}text-danger{% endif %} mb-0" id="kpi-low-items">{{ critical_low_count }}</h2>
-                </div>
-                <i class="fa-solid fa-triangle-exclamation {% if critical_low_count > 0 %}text-danger pulse-warning{% else %}text-muted{% endif %} fs-3"></i>
-            </div>
-        </div>
-    </div>
-    <!-- Flagged Logistics Anomalies -->
-    <div class="col-md-3">
-        <div class="card glass-card kpi-card {% if logistics_anomalies_count > 0 %}kpi-card-warning{% else %}kpi-card-info{% endif %} p-4 text-start">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <h5 class="kpi-title">Logistics Anomalies</h5>
-                    <h2 class="kpi-value {% if logistics_anomalies_count > 0 %}text-warning{% endif %} mb-0" id="kpi-logistics-anomalies">{{ logistics_anomalies_count }}</h2>
-                </div>
-                <i class="fa-solid fa-cloud-bolt {% if logistics_anomalies_count > 0 %}text-warning pulse-warning{% else %}text-muted{% endif %} fs-3"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 2. The Dynamic Alert Banner -->
-<div class="row mb-4">
+<!-- ONBOARDING PROGRESS CHECKLIST WIDGET (Always visible at the top of the dashboard content area) -->
+<div class="row mb-4" id="global-onboarding-section">
     <div class="col-12">
-        <div class="card glass-card p-4">
-            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-bell text-warning me-2"></i>Dynamic Operations Radar</h5>
-            <div id="dynamic-alerts-banner">
-                <!-- Asynchronously loaded warnings and suggestions -->
-                <div class="text-center py-3 text-muted">
-                    <i class="fa-solid fa-circle-notch fa-spin fs-4 mb-2 text-primary"></i>
-                    <p class="mb-0 small">Querying automated forecasting models and weather satellites...</p>
+        <div class="onboarding-widget p-3">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="fw-bold text-dark"><i class="fa-solid fa-graduation-cap text-primary me-2"></i>Getting Started Onboarding Checklist</span>
+                <span class="badge bg-success text-white" id="onboarding-progress-badge">66% Completed</span>
+            </div>
+            <div class="progress mb-3 border border-dark border-1" style="height: 10px; border-radius: 5px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center gap-2 p-2 bg-light border border-dark rounded">
+                        <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                        <span class="small fw-semibold">Add your products [1-2 mins]</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center gap-2 p-2 bg-light border border-dark rounded">
+                        <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                        <span class="small fw-semibold">Track your orders</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center gap-2 p-2 bg-white border border-warning rounded" id="onboarding-pending-item">
+                        <i class="fa-regular fa-circle text-warning fs-5"></i>
+                        <span class="small fw-semibold">Replenish Inventory</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 3. Consolidated Inventory & Order Management Datagrid -->
-<div class="row g-4 mb-4">
-    <div class="col-12">
-        <div class="card glass-card p-0 overflow-hidden">
-            <div class="px-4 py-3 border-bottom d-flex align-items-center justify-content-between bg-light">
-                <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-table-list text-primary me-2"></i>Master Operations Datagrid</h5>
-                <span class="badge bg-secondary text-white font-monospace px-2 py-1">GRID LOOKUP: ON</span>
-            </div>
-            
-            <!-- Professional Search & Filter Controls -->
-            <div class="p-3 border-bottom d-flex flex-wrap align-items-center justify-content-between gap-3 bg-white">
-                <div class="input-group" style="max-width: 320px;">
-                    <span class="input-group-text bg-light border-end-0 text-muted" style="border-color: #cbd5e1;"><i class="fa-solid fa-magnifying-glass fs-6"></i></span>
-                    <input type="text" id="masterGridSearch" class="form-control ps-1" placeholder="Search SKU or Product Name..." style="font-size: 0.88rem; border-color: #cbd5e1;">
-                </div>
-                <div class="d-flex align-items-center gap-2">
-                    <button class="btn btn-sm btn-outline-glow px-3 py-1.5 active" id="filter-btn-all" onclick="filterMasterGrid('all')">All Items</button>
-                    <button class="btn btn-sm btn-outline-glow px-3 py-1.5" id="filter-btn-low" onclick="filterMasterGrid('low')">Low Stock</button>
-                    <button class="btn btn-sm btn-outline-glow px-3 py-1.5" id="filter-btn-pending" onclick="filterMasterGrid('pending')">Pending Orders</button>
-                </div>
-            </div>
+<!-- ==================== TAB VIEW 1: HOME / DASHBOARD OVERVIEW ==================== -->
+<div class="dashboard-view-container active-view" id="view-dashboard-overview">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h1 class="fw-bold text-dark"><span class="text-primary">AVIS AI</span> Control Center</h1>
+            <p class="text-secondary small mb-0">Katana AI Predictive Operations & Cryptographic Ledger Audit</p>
+        </div>
+        <div class="col-md-4 text-md-end d-flex align-items-center justify-content-md-end gap-2">
+            <a href="{% url 'order_create' %}" class="btn btn-glow" id="btn-create-order-shortcut">
+                <i class="fa-solid fa-file-invoice-dollar me-2"></i>New Purchase Order
+            </a>
+            <a href="{% url 'product_create' %}" class="btn btn-outline-glow btn-sm" id="btn-create-product-shortcut">
+                <i class="fa-solid fa-plus me-1"></i>Add Product
+            </a>
+        </div>
+    </div>
 
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr class="text-muted small uppercase">
-                            <th>SKU / Product</th>
-                            <th>Stock Level</th>
-                            <th>Smart Reorder Point</th>
-                            <th>Active Supply Order</th>
-                            <th>Vendor</th>
-                            <th>Logistics Status</th>
-                            <th class="text-center">Audit Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if datagrid_items %}
-                            {% for item in datagrid_items %}
+    <!-- KPI Panels Ribbon -->
+    <div class="row mb-4 g-3">
+        <div class="col-md-3">
+            <div class="card glass-card kpi-card p-4 text-start">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="kpi-title">Total Active SKUs</h5>
+                        <h2 class="kpi-value mb-0" id="kpi-total-skus">{{ products_count }}</h2>
+                    </div>
+                    <i class="fa-solid fa-boxes-stacked text-info fs-3"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card glass-card kpi-card p-4 text-start">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="kpi-title">Pending Requests</h5>
+                        <h2 class="kpi-value mb-0" id="kpi-pending-requests">{{ pending_requests_count }}</h2>
+                    </div>
+                    <i class="fa-solid fa-clock-rotate-left text-primary fs-3"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card glass-card kpi-card {% if critical_low_count > 0 %}kpi-card-danger{% endif %} p-4 text-start">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="kpi-title">Critical Low Items</h5>
+                        <h2 class="kpi-value {% if critical_low_count > 0 %}text-danger{% endif %} mb-0" id="kpi-low-items">{{ critical_low_count }}</h2>
+                    </div>
+                    <i class="fa-solid fa-triangle-exclamation {% if critical_low_count > 0 %}text-danger pulse-warning{% else %}text-muted{% endif %} fs-3"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card glass-card kpi-card {% if logistics_anomalies_count > 0 %}kpi-card-warning{% endif %} p-4 text-start">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="kpi-title">Logistics Anomalies</h5>
+                        <h2 class="kpi-value {% if logistics_anomalies_count > 0 %}text-warning{% endif %} mb-0" id="kpi-logistics-anomalies">{{ logistics_anomalies_count }}</h2>
+                    </div>
+                    <i class="fa-solid fa-cloud-bolt {% if logistics_anomalies_count > 0 %}text-warning pulse-warning{% else %}text-muted{% endif %} fs-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Banner -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card glass-card p-4">
+                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-bell text-warning me-2"></i>Dynamic Operations Radar</h5>
+                <div id="dynamic-alerts-banner">
+                    <div class="text-center py-3 text-muted">
+                        <i class="fa-solid fa-circle-notch fa-spin fs-4 mb-2 text-primary"></i>
+                        <p class="mb-0 small">Querying automated forecasting models and weather satellites...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Master Datagrid -->
+    <div class="row g-4 mb-4">
+        <div class="col-12">
+            <div class="card glass-card p-0 overflow-hidden">
+                <div class="px-4 py-3 border-bottom d-flex align-items-center justify-content-between bg-light">
+                    <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-table-list text-primary me-2"></i>Master Operations Datagrid</h5>
+                    <span class="badge bg-secondary text-white font-monospace px-2 py-1">GRID LOOKUP: ON</span>
+                </div>
+                
+                <div class="p-3 border-bottom d-flex flex-wrap align-items-center justify-content-between gap-3 bg-white">
+                    <div class="input-group" style="max-width: 320px;">
+                        <span class="input-group-text bg-light border-end-0 text-muted" style="border-color: #cbd5e1;"><i class="fa-solid fa-magnifying-glass fs-6"></i></span>
+                        <input type="text" id="masterGridSearch" class="form-control ps-1" placeholder="Search SKU or Product Name..." style="font-size: 0.88rem; border-color: #cbd5e1;">
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <button class="btn btn-sm btn-outline-glow px-3 py-1.5 active" id="filter-btn-all" onclick="filterMasterGrid('all')">All Items</button>
+                        <button class="btn btn-sm btn-outline-glow px-3 py-1.5" id="filter-btn-low" onclick="filterMasterGrid('low')">Low Stock</button>
+                        <button class="btn btn-sm btn-outline-glow px-3 py-1.5" id="filter-btn-pending" onclick="filterMasterGrid('pending')">Pending Orders</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="text-muted small uppercase">
+                                <th>SKU / Product</th>
+                                <th>Stock Level</th>
+                                <th>Smart Reorder Point</th>
+                                <th>Active Supply Order</th>
+                                <th>Vendor</th>
+                                <th>Logistics Status</th>
+                                <th class="text-center">Audit Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if datagrid_items %}
+                                {% for item in datagrid_items %}
+                                    <tr>
+                                        <td>
+                                            <span class="fw-bold text-primary">{{ item.product.sku }}</span>
+                                            <div class="text-dark small fw-semibold">{{ item.product.name }}</div>
+                                        </td>
+                                        <td class="fw-bold text-dark">{{ item.qty }} units</td>
+                                        <td>
+                                            {% if item.triggered %}
+                                                <span class="text-danger fw-bold"><i class="fa-solid fa-circle-down me-1"></i>{{ item.rop }} units (Triggered)</span>
+                                            {% else %}
+                                                <span class="text-secondary">{{ item.rop }} units</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if item.latest_order %}
+                                                <span class="fw-bold text-dark">#SO-{{ item.latest_order.id }}</span>
+                                            {% else %}
+                                                <span class="text-muted">None</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-secondary">
+                                            {% if item.latest_order %}
+                                                {{ item.latest_order.vendor.name }}
+                                            {% else %}
+                                                None
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if item.latest_order %}
+                                                {% if item.latest_order.status == 'Pending' %}
+                                                    <span class="badge badge-pending px-3 py-1 rounded-pill">Pending</span>
+                                                {% elif item.latest_order.status == 'Accepted' %}
+                                                    <span class="badge badge-accepted px-3 py-1 rounded-pill">Accepted</span>
+                                                {% elif item.latest_order.status == 'Shipped' %}
+                                                    <span class="badge badge-shipped px-3 py-1 rounded-pill">Shipped</span>
+                                                {% else %}
+                                                    <span class="badge badge-delivered px-3 py-1 rounded-pill">Delivered</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            {% if item.latest_order %}
+                                                {% if not ledger_valid %}
+                                                    <span class="badge bg-danger text-white px-3 py-1 rounded-pill"><i class="fa-solid fa-circle-xmark me-1"></i>Corrupted ❌</span>
+                                                {% elif item.latest_order.status == 'Delivered' %}
+                                                    <span class="badge badge-delivered px-3 py-1 rounded-pill"><i class="fa-solid fa-lock me-1"></i>Immutable 🔒</span>
+                                                {% else %}
+                                                    <span class="badge badge-accepted px-3 py-1 rounded-pill"><i class="fa-solid fa-circle-check me-1"></i>Verified ✅</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
                                 <tr>
-                                    <!-- SKU / Product -->
-                                    <td>
-                                        <span class="fw-bold text-primary">{{ item.product.sku }}</span>
-                                        <div class="text-dark small fw-semibold">{{ item.product.name }}</div>
-                                    </td>
-                                    <!-- Stock Level -->
-                                    <td class="fw-bold text-dark">
-                                        {{ item.qty }} units
-                                    </td>
-                                    <!-- Smart Reorder Point -->
-                                    <td>
-                                        {% if item.triggered %}
-                                            <span class="text-danger fw-bold"><i class="fa-solid fa-circle-down me-1"></i>{{ item.rop }} units (Triggered)</span>
-                                        {% else %}
-                                            <span class="text-secondary">{{ item.rop }} units</span>
-                                        {% endif %}
-                                    </td>
-                                    <!-- Active Supply Order -->
-                                    <td>
-                                        {% if item.latest_order %}
-                                            <span class="fw-bold text-dark">#SO-{{ item.latest_order.id }}</span>
-                                        {% else %}
-                                            <span class="text-muted">None</span>
-                                        {% endif %}
-                                    </td>
-                                    <!-- Vendor -->
-                                    <td class="text-secondary">
-                                        {% if item.latest_order %}
-                                            {{ item.latest_order.vendor.name }}
-                                        {% else %}
-                                            None
-                                        {% endif %}
-                                    </td>
-                                    <!-- Logistics Status -->
-                                    <td>
-                                        {% if item.latest_order %}
-                                            {% if item.latest_order.status == 'Pending' %}
-                                                <span class="badge badge-pending px-3 py-1 rounded-pill">Pending</span>
-                                            {% elif item.latest_order.status == 'Accepted' %}
-                                                <span class="badge badge-accepted px-3 py-1 rounded-pill">Accepted</span>
-                                            {% elif item.latest_order.status == 'Shipped' %}
-                                                <span class="badge badge-shipped px-3 py-1 rounded-pill">Shipped</span>
-                                            {% else %}
-                                                <span class="badge badge-delivered px-3 py-1 rounded-pill">Delivered</span>
-                                            {% endif %}
-                                        {% else %}
-                                            <span class="text-muted">-</span>
-                                        {% endif %}
-                                    </td>
-                                    <!-- Audit Status -->
-                                    <td class="text-center">
-                                        {% if item.latest_order %}
-                                            {% if not ledger_valid %}
-                                                <span class="badge bg-danger text-white px-3 py-1 rounded-pill"><i class="fa-solid fa-circle-xmark me-1"></i>Corrupted ❌</span>
-                                            {% elif item.latest_order.status == 'Delivered' %}
-                                                <span class="badge badge-delivered px-3 py-1 rounded-pill"><i class="fa-solid fa-lock me-1"></i>Immutable 🔒</span>
-                                            {% else %}
-                                                <span class="badge badge-accepted px-3 py-1 rounded-pill"><i class="fa-solid fa-circle-check me-1"></i>Verified ✅</span>
-                                            {% endif %}
-                                        {% else %}
-                                            <span class="text-muted">-</span>
-                                        {% endif %}
-                                    </td>
+                                    <td colspan="7" class="text-center text-muted py-4">No products exist in your inventory database catalog.</td>
                                 </tr>
-                            {% endfor %}
-                        {% else %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ledger summary panel -->
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card glass-card p-4 h-100">
+                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-shield-halved text-success me-2"></i>Ledger Status</h5>
+                <div class="text-center p-3 mb-4 rounded d-flex flex-column align-items-center justify-content-center" style="background: #f8fafc; border: 1px solid var(--border-color);">
+                    {% if ledger_valid %}
+                        <i class="fa-solid fa-circle-check text-success fs-1 mb-2"></i>
+                        <h5 class="fw-bold text-success mb-1">Chain Secured</h5>
+                        <p class="text-secondary small mb-0">Cryptographic audit log is 100% integral and verified.</p>
+                    {% else %}
+                        <i class="fa-solid fa-triangle-exclamation text-danger fs-1 mb-2 pulse-warning"></i>
+                        <h5 class="fw-bold text-danger mb-1">Chain Mismatch!</h5>
+                        <p class="text-secondary small mb-0">Database values modified without authorization. Block edit detected.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card glass-card p-4 h-100">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-cubes text-primary me-2"></i>Latest Blocks</h5>
+                    <a href="{% url 'blockchain_view' %}" class="btn btn-outline-glow btn-sm">Full Ledger</a>
+                </div>
+                <div class="d-flex flex-column gap-2" id="block-list-summary">
+                    {% if recent_blocks %}
+                        {% for block in recent_blocks %}
+                            <div class="p-2 rounded d-flex align-items-center justify-content-between" style="background: #f1f5f9; border: 1px solid var(--border-color); font-size: 0.85rem;">
+                                <div>
+                                    <strong class="text-primary">Block #{{ block.index }}</strong>
+                                    <div class="text-secondary small" style="font-family: monospace; word-break: break-all;">Hash: {{ block.hash|slice:":12" }}...</div>
+                                </div>
+                                <span class="badge bg-secondary font-monospace">{{ block.timestamp|date:"H:i:s" }}</span>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4 text-secondary small">No audit ledger entries written yet. Finalize an order to write.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 2: HOME / GETTING STARTED CHECKLISTS ==================== -->
+<div class="dashboard-view-container" id="view-getting-started">
+    <div class="card glass-card p-4">
+        <h3 class="fw-bold text-dark mb-3"><i class="fa-solid fa-list-check text-primary me-2"></i>Avis Setup & Deployment Checklists</h3>
+        <p class="text-secondary mb-4">Complete these checkpoints to connect your shop database integration, seed pricing catalogs, and verify audit ledgers.</p>
+        
+        <div class="d-flex flex-column gap-3">
+            <div class="p-3 border border-dark rounded d-flex align-items-center justify-content-between bg-light">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-circle-check text-success fs-3"></i>
+                    <div>
+                        <h6 class="fw-bold text-dark mb-0">1. Add your products [1-2 mins]</h6>
+                        <span class="text-secondary small">Import items to form your stock ledger matrices.</span>
+                    </div>
+                </div>
+                <span class="badge bg-success border border-dark text-white px-3 py-1">Completed</span>
+            </div>
+
+            <div class="p-3 border border-dark rounded d-flex align-items-center justify-content-between bg-light">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-circle-check text-success fs-3"></i>
+                    <div>
+                        <h6 class="fw-bold text-dark mb-0">2. Track your orders</h6>
+                        <span class="text-secondary small">Hook up Shopify/WooCommerce webhook endpoints.</span>
+                    </div>
+                </div>
+                <span class="badge bg-success border border-dark text-white px-3 py-1">Completed</span>
+            </div>
+
+            <div class="p-3 border border-dark rounded d-flex align-items-center justify-content-between bg-white">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-circle-notch fa-spin text-warning fs-3"></i>
+                    <div>
+                        <h6 class="fw-bold text-dark mb-0">3. Replenish Inventory</h6>
+                        <span class="text-secondary small">Execute smart forecasting variables and place purchase orders.</span>
+                    </div>
+                </div>
+                <button class="btn btn-glow btn-sm px-3" onclick="alert('Routing to planning replenishment console...');">Start step</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 3: SELL / QUOTES ==================== -->
+<div class="dashboard-view-container" id="view-quotes">
+    <div class="card glass-card p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h4 class="fw-bold text-dark mb-0"><i class="fa-solid fa-file-invoice text-primary me-2"></i>Sales Quotations Registry</h4>
+            <button class="btn btn-glow btn-sm" onclick="alert('Quotes client wizard loaded.');"><i class="fa-solid fa-plus me-1"></i>+ Create Quote</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Quote Number</th>
+                        <th>Customer</th>
+                        <th>Date Created</th>
+                        <th>Expiry Date</th>
+                        <th>Total Value</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>QT-0045</strong></td>
+                        <td>Aero Industries Ltd.</td>
+                        <td>2026-06-28</td>
+                        <td>2026-07-28</td>
+                        <td>₹145,000.00</td>
+                        <td><span class="badge badge-accepted px-2 py-1 rounded-pill">Open</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>QT-0044</strong></td>
+                        <td>Dynamic Transit Co.</td>
+                        <td>2026-06-15</td>
+                        <td>2026-07-15</td>
+                        <td>₹89,200.00</td>
+                        <td><span class="badge badge-delivered px-2 py-1 rounded-pill">Accepted</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>QT-0043</strong></td>
+                        <td>Precision Fab Corporation</td>
+                        <td>2026-05-10</td>
+                        <td>2026-06-10</td>
+                        <td>₹320,000.00</td>
+                        <td><span class="badge bg-danger text-white px-2 py-1 rounded-pill border border-dark">Expired</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 4: SELL / SALES ORDERS ==================== -->
+<div class="dashboard-view-container" id="view-sales-orders">
+    <div class="card glass-card p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h4 class="fw-bold text-dark mb-0"><i class="fa-solid fa-cart-shopping text-primary me-2"></i>Sales Orders</h4>
+            <button class="btn btn-glow btn-sm" onclick="alert('Sales Order wizard loaded.');"><i class="fa-solid fa-plus me-1"></i>+ Create Sales Order</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Order #</th>
+                        <th>Customer</th>
+                        <th>Order Date</th>
+                        <th>Ship Date</th>
+                        <th>Total Value</th>
+                        <th>Fulfillment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SO-8891</strong></td>
+                        <td>Globex India Corp</td>
+                        <td>2026-07-01</td>
+                        <td>2026-07-15</td>
+                        <td>₹45,900.00</td>
+                        <td><span class="badge badge-pending px-2 py-1 rounded-pill">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>SO-8890</strong></td>
+                        <td>Vistara Engineering</td>
+                        <td>2026-06-25</td>
+                        <td>2026-07-09</td>
+                        <td>₹112,000.00</td>
+                        <td><span class="badge badge-shipped px-2 py-1 rounded-pill">Shipped</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>SO-8889</strong></td>
+                        <td>Avis Retail Store Delhi</td>
+                        <td>2026-06-18</td>
+                        <td>2026-07-02</td>
+                        <td>₹64,500.00</td>
+                        <td><span class="badge badge-delivered px-2 py-1 rounded-pill">Delivered</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 5: SELL / RETURNS ==================== -->
+<div class="dashboard-view-container" id="view-returns">
+    <div class="card glass-card p-4">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+            <div class="d-flex align-items-center gap-2">
+                <h4 class="fw-bold text-dark mb-0"><i class="fa-solid fa-rotate-left text-danger me-2"></i>Customer Returns Ledger</h4>
+                <!-- Global Filter -->
+                <select class="form-select py-1 px-3 border border-dark" id="returns-location-filter" style="width: auto; font-size: 0.85rem;" onchange="alert('Filtering returns by location: ' + this.value);">
+                    <option value="all">All locations</option>
+                    <option value="mumbai">Mumbai Warehouse</option>
+                    <option value="bangalore">Bangalore Depot</option>
+                    <option value="delhi">Delhi Hub</option>
+                </select>
+            </div>
+            <button class="btn btn-glow btn-sm" onclick="alert('Creating return instance...');"><i class="fa-solid fa-plus me-1"></i>+ Create Return</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Return order</th>
+                        <th>Sales order</th>
+                        <th>Created date</th>
+                        <th>Return date</th>
+                        <th>Return status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>RET-109</strong></td>
+                        <td>SO-8889</td>
+                        <td>2026-07-01</td>
+                        <td>2026-07-05</td>
+                        <td><span class="badge badge-pending px-2 py-1 rounded-pill">Pending Check</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>RET-108</strong></td>
+                        <td>SO-8880</td>
+                        <td>2026-06-20</td>
+                        <td>2026-06-24</td>
+                        <td><span class="badge badge-delivered px-2 py-1 rounded-pill">Approved & Credited</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 6: SELL / PRICE LISTS ==================== -->
+<div class="dashboard-view-container" id="view-price-lists">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-tags text-primary me-2"></i>Dynamic Regional Price Lists</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Product / Variant</th>
+                        <th>SKU Code</th>
+                        <th>Base Price</th>
+                        <th>Retail Price (INR)</th>
+                        <th>Wholesale Price (INR)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Industrial Valve X2</strong></td>
+                        <td>VAL-IND-X2</td>
+                        <td>₹12,000.00</td>
+                        <td>₹14,500.00</td>
+                        <td>₹10,800.00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Automated Sensor Unit</strong></td>
+                        <td>SEN-AUT-88</td>
+                        <td>₹4,500.00</td>
+                        <td>₹5,200.00</td>
+                        <td>₹4,050.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 7: SELL / CUSTOMERS ==================== -->
+<div class="dashboard-view-container" id="view-customers">
+    <div class="card glass-card p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h4 class="fw-bold text-dark mb-0"><i class="fa-solid fa-address-book text-success me-2"></i>Customers Database</h4>
+            <button class="btn btn-glow btn-sm" onclick="showNewCustomerModal()"><i class="fa-solid fa-plus me-1"></i>+ Customer</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="customers-grid-table">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Name</th>
+                        <th>E-mail address</th>
+                        <th>Currency</th>
+                        <th>Phone number</th>
+                        <th>Reference ID</th>
+                        <th>Category</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody id="customers-list-tbody">
+                    <tr>
+                        <td>Globex India Corp</td>
+                        <td>contact@globex.in</td>
+                        <td>INR (₹)</td>
+                        <td>+91 22 2589 1234</td>
+                        <td>REF-GIC-901</td>
+                        <td>Enterprise</td>
+                        <td>Requires priority dispatch.</td>
+                    </tr>
+                    <tr>
+                        <td>Vistara Engineering</td>
+                        <td>procurement@vistara.co</td>
+                        <td>INR (₹)</td>
+                        <td>+91 80 4782 8990</td>
+                        <td>REF-VIS-223</td>
+                        <td>Standard</td>
+                        <td>Direct invoice payments.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 8: BUY / PURCHASING ==================== -->
+<div class="dashboard-view-container" id="view-purchasing">
+    <div class="card glass-card p-4">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <h4 class="fw-bold text-dark mb-0"><i class="fa-solid fa-file-lines text-warning me-2"></i>Procurement Log</h4>
+                <!-- State Toggles -->
+                <div class="btn-group border border-2 border-dark rounded" style="overflow: hidden;">
+                    <button class="btn btn-sm btn-white active" id="purchasing-toggle-all" onclick="filterPurchasing('all')" style="border-right: 1px solid #000;">All</button>
+                    <button class="btn btn-sm btn-white" id="purchasing-toggle-draft" onclick="filterPurchasing('Draft')" style="border-right: 1px solid #000;">Draft</button>
+                    <button class="btn btn-sm btn-white" id="purchasing-toggle-open" onclick="filterPurchasing('Open')" style="border-right: 1px solid #000;">Open</button>
+                    <button class="btn btn-sm btn-white" id="purchasing-toggle-done" onclick="filterPurchasing('Done')">Done</button>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-glow btn-sm" onclick="addNewPurchaseOrder('Draft')"><i class="fa-solid fa-plus me-1"></i>+ Draft order</button>
+                <button class="btn btn-glow btn-sm" onclick="addNewPurchaseOrder('Open')"><i class="fa-solid fa-plus me-1"></i>+ Purchase order</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="purchasing-grid-table">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Created date</th>
+                        <th>Order #</th>
+                        <th>Supplier</th>
+                        <th>Total order value</th>
+                        <th>Expected arrival</th>
+                        <th>Delivery</th>
+                    </tr>
+                </thead>
+                <tbody id="purchasing-list-tbody">
+                    <tr data-status="Open">
+                        <td>2026-07-01</td>
+                        <td><strong>PO-501</strong></td>
+                        <td>Mumbai Steel Works</td>
+                        <td>₹185,000.00</td>
+                        <td>2026-07-15</td>
+                        <td><span class="badge badge-pending px-2 py-1 rounded-pill">Open</span></td>
+                    </tr>
+                    <tr data-status="Draft">
+                        <td>2026-06-30</td>
+                        <td><strong>PO-500</strong></td>
+                        <td>Delhi Circuits Inc.</td>
+                        <td>₹45,200.00</td>
+                        <td>2026-07-20</td>
+                        <td><span class="badge badge-accepted px-2 py-1 rounded-pill">Draft</span></td>
+                    </tr>
+                    <tr data-status="Done">
+                        <td>2026-06-15</td>
+                        <td><strong>PO-499</strong></td>
+                        <td>Bangalore Chemical Depot</td>
+                        <td>₹90,000.00</td>
+                        <td>2026-06-29</td>
+                        <td><span class="badge badge-delivered px-2 py-1 rounded-pill">Done</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 9: BUY / OUTSOURCING ==================== -->
+<div class="dashboard-view-container" id="view-outsourcing">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-handshake text-primary me-2"></i>Outsourced Contract Manufacturing</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Outsource order</th>
+                        <th>Contractor</th>
+                        <th>Start date</th>
+                        <th>Expected completion</th>
+                        <th>Status</th>
+                        <th>Total cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>OUT-881</strong></td>
+                        <td>Apex Assembly Line</td>
+                        <td>2026-06-25</td>
+                        <td>2026-07-10</td>
+                        <td><span class="badge badge-pending px-2 py-1 rounded-pill">Active</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 10: BUY / SUPPLIERS ==================== -->
+<div class="dashboard-view-container" id="view-suppliers">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-truck-ramp-box text-primary me-2"></i>Supplier Directory</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Supplier</th>
+                        <th>Contact Email</th>
+                        <th>Lead Time (Avg)</th>
+                        <th>Reliability Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mumbai Steel Works</td>
+                        <td>orders@mumbaisteel.com</td>
+                        <td>7 Days</td>
+                        <td><span class="text-success"><i class="fa-solid fa-star me-1"></i>98%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Delhi Circuits Inc.</td>
+                        <td>sales@delhicircuits.co.in</td>
+                        <td>12 Days</td>
+                        <td><span class="text-warning"><i class="fa-solid fa-star me-1"></i>89%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 11: STOCK / INVENTORY ==================== -->
+<div class="dashboard-view-container" id="view-inventory">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-warehouse text-primary me-2"></i>Stock Inventory Levels</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Product SKU</th>
+                        <th>Product Name</th>
+                        <th>Total In Stock</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in datagrid_items %}
+                        <tr>
+                            <td><strong class="text-primary">{{ item.product.sku }}</strong></td>
+                            <td>{{ item.product.name }}</td>
+                            <td><strong>{{ item.qty }} units</strong></td>
+                            <td>
+                                {% if item.qty > 20 %}
+                                    <span class="badge badge-delivered px-2 py-1 rounded-pill">Healthy</span>
+                                {% else %}
+                                    <span class="badge bg-danger text-white px-2 py-1 rounded-pill border border-dark">Restock Required</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 12: STOCK / ADJUSTMENTS ==================== -->
+<div class="dashboard-view-container" id="view-stock-adjustments">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-sliders text-primary me-2"></i>Stock Adjustment Records</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Adj #</th>
+                        <th>SKU</th>
+                        <th>Qty Variance</th>
+                        <th>Reason</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ADJ-901</strong></td>
+                        <td>VAL-IND-X2</td>
+                        <td>-2 units</td>
+                        <td>Damaged in transit</td>
+                        <td>2026-06-28</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 13: STOCK / TRANSFERS ==================== -->
+<div class="dashboard-view-container" id="view-stock-transfers">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-truck-arrow-right text-primary me-2"></i>Inter-Location Stock Transfers</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Transfer #</th>
+                        <th>From Location</th>
+                        <th>To Location</th>
+                        <th>Shipment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ST-402</strong></td>
+                        <td>Delhi Hub</td>
+                        <td>Mumbai Warehouse</td>
+                        <td><span class="badge badge-shipped px-2 py-1 rounded-pill">In Transit</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 14: STOCK / STOCKTAKES ==================== -->
+<div class="dashboard-view-container" id="view-stocktakes">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clipboard-check text-primary me-2"></i>Stocktakes (Periodic Cycle Counts)</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Count Schedule</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Auditor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Weekly cycle count Q2</td>
+                        <td>Mumbai Warehouse</td>
+                        <td><span class="badge badge-delivered px-2 py-1 rounded-pill">Done</span></td>
+                        <td>Rohan Sharma</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 15: PLAN / PLANNING ==================== -->
+<div class="dashboard-view-container" id="view-planning">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-calendar-days text-primary me-2"></i>Production Scheduling Timeline</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Work Order</th>
+                        <th>Recipe / Variant</th>
+                        <th>Target Qty</th>
+                        <th>Start Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>WO-7712</strong></td>
+                        <td>Industrial Valve Assembly</td>
+                        <td>100 units</td>
+                        <td>2026-07-03</td>
+                        <td><span class="badge badge-accepted px-2 py-1 rounded-pill">Scheduled</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 16: PLAN / REPLENISHMENT ==================== -->
+<div class="dashboard-view-container" id="view-replenishment">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-circle-down text-primary me-2"></i>Smart Replenishment Orders</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Product SKU</th>
+                        <th>Suggested Vendor</th>
+                        <th>Required Qty</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in datagrid_items %}
+                        {% if item.triggered %}
                             <tr>
-                                <td colspan="7" class="text-center text-muted py-4">No products exist in your inventory database catalog.</td>
+                                <td><strong class="text-danger">{{ item.product.sku }}</strong></td>
+                                <td>Mumbai Steel Works</td>
+                                <td>50 units</td>
+                                <td><span class="badge bg-danger text-white border border-dark rounded-pill px-2">High (ROP Crossed)</span></td>
                             </tr>
                         {% endif %}
-                    </tbody>
-                </table>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 17: INSIGHTS / SALES ==================== -->
+<div class="dashboard-view-container" id="view-insights-sales">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-chart-line text-primary me-2"></i>Sales Overview Analytics</h4>
+        
+        <!-- Nested inner sub tabs -->
+        <div class="d-flex align-items-center gap-2 mb-4 bg-light p-2 border border-dark rounded">
+            <button class="btn btn-sm btn-white active" id="insights-sales-tab-overview" onclick="switchInsightsSalesSub('overview')">Sales Overview</button>
+            <button class="btn btn-sm btn-white" id="insights-sales-tab-products" onclick="switchInsightsSalesSub('products')">Products</button>
+            <button class="btn btn-sm btn-white" id="insights-sales-tab-customers" onclick="switchInsightsSalesSub('customers')">Customers</button>
+            <button class="btn btn-sm btn-white" id="insights-sales-tab-orders" onclick="switchInsightsSalesSub('orders')">Orders</button>
+        </div>
+
+        <div id="insights-sales-subcontent">
+            <!-- Sales Overview Sub Tab -->
+            <div id="sales-sub-overview" class="insights-sales-sub-box">
+                <div class="border border-dark rounded p-4 text-center bg-light mb-3">
+                    <h5 class="fw-bold text-dark mb-2">Monthly Sales Revenue Pacing</h5>
+                    <div style="height: 180px; display: flex; align-items: flex-end; justify-content: space-around; padding: 10px;">
+                        <div class="bg-primary text-white p-2 text-center rounded border border-dark" style="height: 40px; width: 45px; font-size: 0.75rem;">Apr</div>
+                        <div class="bg-primary text-white p-2 text-center rounded border border-dark" style="height: 70px; width: 45px; font-size: 0.75rem;">May</div>
+                        <div class="bg-primary text-white p-2 text-center rounded border border-dark" style="height: 120px; width: 45px; font-size: 0.75rem;">Jun</div>
+                        <div class="bg-success text-white p-2 text-center rounded border border-dark" style="height: 160px; width: 45px; font-size: 0.75rem;">Jul</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Products Sub Tab -->
+            <div id="sales-sub-products" class="insights-sales-sub-box" style="display: none;">
+                <h5 class="fw-bold text-dark mb-3">Top-Selling Products Registry</h5>
+                <ol class="list-group border border-dark rounded">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Industrial Valve Assembly
+                        <span class="badge bg-primary text-white rounded-pill px-2">452 sold</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Automated Sensor Unit
+                        <span class="badge bg-primary text-white rounded-pill px-2">128 sold</span>
+                    </li>
+                </ol>
+            </div>
+            <!-- Customers Sub Tab -->
+            <div id="sales-sub-customers" class="insights-sales-sub-box" style="display: none;">
+                <h5 class="fw-bold text-dark mb-3">Customer Segments Distribution</h5>
+                <div class="p-3 border border-dark rounded bg-light text-center">
+                    <p class="mb-1"><strong>Enterprise Accounts:</strong> 64% of volume</p>
+                    <p class="mb-1"><strong>Retail Distributors:</strong> 26% of volume</p>
+                    <p class="mb-0"><strong>Direct Consumers:</strong> 10% of volume</p>
+                </div>
+            </div>
+            <!-- Orders Sub Tab -->
+            <div id="sales-sub-orders" class="insights-sales-sub-box" style="display: none;">
+                <h5 class="fw-bold text-dark mb-3">Daily Orders Telemetry Log</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Orders Processed</th>
+                                <th>Total Gross</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-07-02 (Today)</td>
+                                <td>14 Orders</td>
+                                <td>₹85,900.00</td>
+                            </tr>
+                            <tr>
+                                <td>2026-07-01</td>
+                                <td>18 Orders</td>
+                                <td>₹112,000.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Recent Ledger Blocks Summary -->
-<div class="row g-4">
-    <div class="col-md-6">
-        <div class="card glass-card p-4 h-100">
-            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-shield-halved text-success me-2"></i>Ledger Status</h5>
-            <div class="text-center p-3 mb-4 rounded d-flex flex-column align-items-center justify-content-center" style="background: #f8fafc; border: 1px solid var(--border-color);">
-                {% if ledger_valid %}
-                    <i class="fa-solid fa-circle-check text-success fs-1 mb-2"></i>
-                    <h5 class="fw-bold text-success mb-1">Chain Secured</h5>
-                    <p class="text-secondary small mb-0">Cryptographic audit log is 100% integral and verified.</p>
-                {% else %}
-                    <i class="fa-solid fa-triangle-exclamation text-danger fs-1 mb-2 pulse-warning"></i>
-                    <h5 class="fw-bold text-danger mb-1">Chain Mismatch!</h5>
-                    <p class="text-secondary small mb-0">Database values modified without authorization. Block edit detected.</p>
-                {% endif %}
+<!-- ==================== TAB VIEW 18: INSIGHTS / PURCHASING ==================== -->
+<div class="dashboard-view-container" id="view-insights-purchasing">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-truck-field text-primary me-2"></i>Supplier Overview Analytics</h4>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="border border-dark rounded p-3 bg-light text-start">
+                    <h6 class="fw-bold text-dark"><i class="fa-solid fa-truck text-primary me-2"></i>On-Time In-Full (OTIF) Delivery</h6>
+                    <h2 class="fw-bold text-success mb-1">94.8%</h2>
+                    <p class="text-secondary small mb-0">Weighted average across all registered steel & material vendors.</p>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card glass-card p-4 h-100">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-cubes text-primary me-2"></i>Latest Blocks</h5>
-                <a href="{% url 'blockchain_view' %}" class="btn btn-outline-glow btn-sm">Full Ledger</a>
-            </div>
-            <div class="d-flex flex-column gap-2" id="block-list-summary">
-                {% if recent_blocks %}
-                    {% for block in recent_blocks %}
-                        <div class="p-2 rounded d-flex align-items-center justify-content-between" style="background: #f1f5f9; border: 1px solid var(--border-color); font-size: 0.85rem;">
-                            <div>
-                                <strong class="text-primary">Block #{{ block.index }}</strong>
-                                <div class="text-secondary small" style="font-family: monospace; word-break: break-all;">Hash: {{ block.hash|slice:":12" }}...</div>
-                            </div>
-                            <span class="badge bg-secondary font-monospace">{{ block.timestamp|date:"H:i:s" }}</span>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="text-center py-4 text-secondary small">No audit ledger entries written yet. Finalize an order to write.</div>
-                {% endif %}
+            <div class="col-md-6">
+                <div class="border border-dark rounded p-3 bg-light text-start">
+                    <h6 class="fw-bold text-dark"><i class="fa-solid fa-clock text-primary me-2"></i>Average Lead Time Pacing</h6>
+                    <h2 class="fw-bold text-dark mb-1">9.5 Days</h2>
+                    <p class="text-secondary small mb-0">Lead time has improved from 12 days in the previous quarter.</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- ==================== TAB VIEW 19: ITEMS / ACTIVE ==================== -->
+<div class="dashboard-view-container" id="view-items-active">
+    <div class="card glass-card p-4">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <h4 class="fw-bold text-dark mb-0"><i class="fa-solid fa-boxes-stacked text-primary me-2"></i>Product Registry Matrix</h4>
+                <!-- Inner Filter Toggles -->
+                <div class="btn-group border border-2 border-dark rounded" style="overflow: hidden;">
+                    <button class="btn btn-sm btn-white active" id="items-filter-all" onclick="filterItemsType('all')" style="border-right: 1px solid #000;">All Items</button>
+                    <button class="btn btn-sm btn-white" id="items-filter-products" onclick="filterItemsType('Products')" style="border-right: 1px solid #000;">Products</button>
+                    <button class="btn btn-sm btn-white" id="items-filter-materials" onclick="filterItemsType('Materials')" style="border-right: 1px solid #000;">Materials</button>
+                    <button class="btn btn-sm btn-white" id="items-filter-services" onclick="filterItemsType('Services')">Services</button>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-glow btn-sm" onclick="alert('Connecting Shopify SSO API for product imports...');">Import from Shopify</button>
+                <button class="btn btn-outline-glow btn-sm" onclick="alert('Select XLSX or CSV spreadsheet payload...');">Upload from spreadsheet</button>
+                <a href="{% url 'product_create' %}" class="btn btn-glow btn-sm"><i class="fa-solid fa-plus me-1"></i>Create manually</a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="items-active-grid-table">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Name</th>
+                        <th>Variant SKU / Code</th>
+                        <th>Category</th>
+                        <th>Default sales price</th>
+                        <th>Cost</th>
+                        <th>Profit</th>
+                        <th>Margin</th>
+                        <th>Prod. time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if products %}
+                        {% for product in products %}
+                            <tr data-type="Products">
+                                <td><strong>{{ product.name }}</strong></td>
+                                <td><span class="text-primary font-monospace">{{ product.sku }}</span></td>
+                                <td>Finished Goods</td>
+                                <td>₹{{ product.price }}</td>
+                                <td>₹150.00</td>
+                                <td>₹{{ product.price }}</td>
+                                <td><span class="text-success font-monospace">35.0%</span></td>
+                                <td>1 Day</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr data-type="Products">
+                            <td>Industrial Valve Assembly</td>
+                            <td><span class="text-primary font-monospace">VAL-IND-X2</span></td>
+                            <td>Products</td>
+                            <td>₹14,500.00</td>
+                            <td>₹9,425.00</td>
+                            <td>₹5,075.00</td>
+                            <td><span class="text-success font-monospace">35.0%</span></td>
+                            <td>2 Days</td>
+                        </tr>
+                    {% endif %}
+                    <tr data-type="Materials">
+                        <td>Alloy Steel Block X1</td>
+                        <td><span class="text-primary font-monospace">MAT-STL-X1</span></td>
+                        <td>Materials</td>
+                        <td>₹1,800.00</td>
+                        <td>₹1,200.00</td>
+                        <td>₹600.00</td>
+                        <td><span class="text-success font-monospace">33.3%</span></td>
+                        <td>-</td>
+                    </tr>
+                    <tr data-type="Services">
+                        <td>Machine Calibration Calibration</td>
+                        <td><span class="text-primary font-monospace">SRV-CAL-99</span></td>
+                        <td>Services</td>
+                        <td>₹8,000.00</td>
+                        <td>₹5,000.00</td>
+                        <td>₹3,000.00</td>
+                        <td><span class="text-success font-monospace">37.5%</span></td>
+                        <td>1 Hour</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 20: ITEMS / ARCHIVE ==================== -->
+<div class="dashboard-view-container" id="view-items-archive">
+    <div class="card glass-card p-4">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-box-archive text-primary me-2"></i>Archive Items</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small uppercase">
+                        <th>Name</th>
+                        <th>SKU Code</th>
+                        <th>Archive Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-muted">Legacy Pump Model A</td>
+                        <td><span class="text-secondary font-monospace">VAL-PMP-LA</span></td>
+                        <td>2026-05-15</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 21: SETTINGS & PROFILE SETUP ==================== -->
+<div class="dashboard-view-container" id="view-settings-profile">
+    <div class="card glass-card p-4">
+        <h3 class="fw-bold text-dark mb-4"><i class="fa-solid fa-sliders text-primary me-2"></i>Avis Settings & Profile Setup</h3>
+        <form id="settings-setup-form" onsubmit="saveProfileSettings(event)">
+            <div class="row g-4">
+                <!-- User profile schema -->
+                <div class="col-md-6 text-start">
+                    <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">User Profile Entities</h5>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold uppercase">First Name</label>
+                        <input type="text" class="form-control" value="Parth" required id="settings-first-name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold uppercase">Last Name</label>
+                        <input type="text" class="form-control" value="Choudhary" required id="settings-last-name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold uppercase">Email Address</label>
+                        <input type="email" class="form-control" value="parth@choudhary.in" required id="settings-email">
+                    </div>
+                </div>
+
+                <!-- Company profile schema -->
+                <div class="col-md-6 text-start">
+                    <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">Company Entities</h5>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold uppercase">Display Name</label>
+                        <input type="text" class="form-control" value="Avis AI India" required id="settings-company-display">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold uppercase">Legal Name</label>
+                        <input type="text" class="form-control" value="Avis AI Solutions Private Limited" required id="settings-company-legal">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold uppercase">Business Address</label>
+                        <input type="text" class="form-control" value="12, BKC, Bandra East, Mumbai, MH, 400051" required id="settings-company-address">
+                    </div>
+                </div>
+
+                <!-- Localization standard values -->
+                <div class="col-12 text-start">
+                    <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">Localization & Operations Standards</h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold uppercase">Base Currency</label>
+                            <select class="form-select" id="settings-currency">
+                                <option value="INR" selected>INR (Base - ₹)</option>
+                                <option value="USD">USD ($)</option>
+                                <option value="EUR">EUR (€)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold uppercase">Default Delivery Time (Sales Orders)</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" value="14" required id="settings-delivery-time">
+                                <span class="input-group-text border border-dark">calendar days</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold uppercase">Default Lead Time (Purchase Orders)</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" value="14" required id="settings-lead-time">
+                                <span class="input-group-text border border-dark">calendar days</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4 text-start">
+                    <button type="submit" class="btn btn-glow px-4 py-2 text-uppercase">Save Settings & Standards</button>
+                    <div id="settings-save-success-alert" class="alert alert-success border border-success mt-3 py-2 px-3 align-items-center gap-2" style="display: none;">
+                        <i class="fa-solid fa-circle-check text-success"></i>
+                        <span>Settings updated successfully. Localization standards mapped to INR (₹).</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ==================== TAB VIEW 22: SUBSCRIPTION & BILLING TIERS ==================== -->
+<div class="dashboard-view-container" id="view-billing-tiers">
+    <div class="card glass-card p-4 text-start">
+        <h3 class="fw-bold text-dark mb-3"><i class="fa-solid fa-credit-card text-primary me-2"></i>Avis Subscription Plan Scale</h3>
+        <p class="text-secondary mb-4">Choose from the core service plan and toggle modular production add-ons to customize your deployment.</p>
+        
+        <div class="row g-4 mb-4">
+            <!-- Free Plan -->
+            <div class="col-md-6">
+                <div class="border border-dark border-2 rounded p-4 bg-light h-100">
+                    <span class="badge bg-secondary text-white text-uppercase font-monospace mb-2" style="font-size: 0.65rem;">Trial Tier</span>
+                    <h4 class="fw-bold text-dark mb-0">Free Plan</h4>
+                    <h2 class="fw-black text-dark my-3">$0 <span class="small text-secondary">/ month</span></h2>
+                    <ul class="list-unstyled d-flex flex-column gap-2 small text-secondary mb-0">
+                        <li><i class="fa-solid fa-check text-success me-2"></i>30 SKUs capacity for 15 days</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Unlimited active users</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Unlimited software integrations</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>1 inventory storage location</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Core Plan -->
+            <div class="col-md-6">
+                <div class="border border-dark border-2 rounded p-4 bg-white h-100" style="box-shadow: 4px 4px 0px var(--border-color);">
+                    <span class="badge bg-primary text-white text-uppercase font-monospace mb-2" style="font-size: 0.65rem;">Enterprise Core</span>
+                    <h4 class="fw-bold text-dark mb-0">Core Plan</h4>
+                    <h2 class="fw-black text-dark my-3">$299 <span class="small text-secondary">/ month base fee</span></h2>
+                    <ul class="list-unstyled d-flex flex-column gap-2 small text-dark mb-0">
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Unlimited catalog SKUs capacity</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Unlimited integrations & stores</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Multi-warehouse locations routing</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Cryptographic ledger block audit logs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- DYNAMIC VOLUMETRIC BILLING CALCULATOR FORM -->
+        <div class="border border-dark rounded p-4 bg-light">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-calculator text-primary me-2"></i>Dynamic Volumetric Cost Calculator</h5>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold uppercase">Core Base Plan Fee</label>
+                        <input type="text" class="form-control bg-white border border-dark text-dark fw-bold" value="$299 / month" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold uppercase">Simulated Monthly Sales Orders</label>
+                        <input type="number" class="form-control" id="calc-orders-count" value="1000" oninput="calculateTotalDue()">
+                        <span class="text-secondary small mt-1 d-block">Volumetric rate: $0.298 per sales order processed.</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold uppercase mb-2">Select Modular Add-ons</label>
+                    <div class="d-flex flex-column gap-2">
+                        <div class="form-check border border-dark rounded p-2 bg-white d-flex align-items-center gap-2">
+                            <input class="form-check-input ms-1" type="checkbox" id="addon-mfg" value="199" onchange="calculateTotalDue()">
+                            <label class="form-check-label small fw-bold text-dark" for="addon-mfg">Manufacturing Management (+$199/mo)</label>
+                        </div>
+                        <div class="form-check border border-dark rounded p-2 bg-white d-flex align-items-center gap-2">
+                            <input class="form-check-input ms-1" type="checkbox" id="addon-shop" value="199" onchange="calculateTotalDue()">
+                            <label class="form-check-label small fw-bold text-dark" for="addon-shop">Shop Floor App (+$199/mo)</label>
+                        </div>
+                        <div class="form-check border border-dark rounded p-2 bg-white d-flex align-items-center gap-2">
+                            <input class="form-check-input ms-1" type="checkbox" id="addon-trace" value="249" onchange="calculateTotalDue()">
+                            <label class="form-check-label small fw-bold text-dark" for="addon-trace">Full Traceability (+$249/mo)</label>
+                        </div>
+                        <div class="form-check border border-dark rounded p-2 bg-white d-flex align-items-center gap-2">
+                            <input class="form-check-input ms-1" type="checkbox" id="addon-whm" value="148" checked onchange="calculateTotalDue()">
+                            <label class="form-check-label small fw-bold text-dark" for="addon-whm">Warehouse Management (+$148/mo)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resulting UI State display -->
+                <div class="col-12 mt-3">
+                    <div class="calculator-result-box p-4 text-center">
+                        <h6 class="fw-bold text-success mb-1">TOTAL MONTHLY DUE ESTIMATE</h6>
+                        <h1 class="fw-black text-success mb-2" id="calc-total-due-value">$746 / month</h1>
+                        <p class="text-secondary small mb-0 font-monospace" id="calc-breakdown-text">Breakdown: $299 (Core) + $298 (Volumetric) + $148 (Add-ons)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== GLOBAL LOADER CONTAINER SPIN IN ==================== -->
+<div class="grid-loading-container" id="global-grid-loader">
+    <div class="text-center">
+        <div class="infinite-spinner mb-2"></div>
+        <div class="small fw-bold text-secondary text-uppercase tracking-wider">Syncing Ledger & Operations Data...</div>
+    </div>
+</div>
+
+
+<!-- CUSTOM CLIENT DIALOG MODALS -->
+<!-- 1. Customer Creation Modal -->
+<div class="modal fade" id="newCustomerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border border-2 border-dark" style="border-radius: 16px;">
+            <div class="modal-header border-bottom bg-light">
+                <h5 class="modal-title fw-bold text-dark">Add New Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="submitNewCustomer(event)">
+                <div class="modal-body text-start">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Name</label>
+                        <input type="text" class="form-control" required id="cust-input-name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Email address</label>
+                        <input type="email" class="form-control" required id="cust-input-email">
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Currency</label>
+                            <input type="text" class="form-control" value="INR (₹)" required id="cust-input-currency">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Phone number</label>
+                            <input type="text" class="form-control" required id="cust-input-phone">
+                        </div>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Reference ID</label>
+                            <input type="text" class="form-control" placeholder="REF-XXX-000" id="cust-input-ref">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Category</label>
+                            <input type="text" class="form-control" value="Standard" id="cust-input-category">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Comment</label>
+                        <textarea class="form-control" style="height: 70px;" id="cust-input-comment"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-top">
+                    <button type="button" class="btn btn-outline-glow btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-glow btn-sm px-3">Add Customer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // Javascript search and filter implementation for the Master Operations Datagrid
+    // ----------------------------------------------------
+    // SEARCH & FILTER FUNCTIONALITY FOR MASTER GRID
+    // ----------------------------------------------------
     document.getElementById('masterGridSearch').addEventListener('input', function(e) {
         const query = e.target.value.toLowerCase().trim();
-        const rows = document.querySelectorAll('tbody tr');
+        const rows = document.querySelectorAll('#view-dashboard-overview tbody tr');
         
         rows.forEach(row => {
             const cells = row.cells;
             if (cells.length < 2) return;
-            
             const sku = cells[0].innerText.toLowerCase();
-            
             if (sku.includes(query)) {
                 row.style.display = '';
             } else {
@@ -292,14 +1370,12 @@
     });
 
     function filterMasterGrid(filterType) {
-        // Toggle active states on filter buttons
-        document.querySelectorAll('.btn-outline-glow').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('#view-dashboard-overview .btn-outline-glow').forEach(btn => btn.classList.remove('active'));
         document.getElementById(`filter-btn-${filterType}`).classList.add('active');
         
-        const rows = document.querySelectorAll('tbody tr');
+        const rows = document.querySelectorAll('#view-dashboard-overview tbody tr');
         rows.forEach(row => {
-            if (row.cells.length < 7) return; // Ignore headers / empty states
-            
+            if (row.cells.length < 7) return;
             if (filterType === 'all') {
                 row.style.display = '';
             } else if (filterType === 'low') {
@@ -312,7 +1388,9 @@
         });
     }
 
-    // Asynchronously fetch weather and reorder alerts, and combine them into a single warning ribbon
+    // ----------------------------------------------------
+    // ASYNC TELEMETRY SIMULATOR FOR ALERT RADAR
+    // ----------------------------------------------------
     const weatherPromise = fetch("{% url 'api_weather_alerts' %}").then(res => res.json());
     const reorderPromise = fetch("{% url 'api_reorder_alerts' %}").then(res => res.json());
 
@@ -321,11 +1399,10 @@
             const container = document.getElementById('dynamic-alerts-banner');
             let alertsHtml = '';
 
-            // Handle weather anomalies (Logistics warnings)
             if (weatherData.alerts && weatherData.alerts.length > 0) {
                 weatherData.alerts.forEach(alert => {
                     alertsHtml += `
-                        <div class="alert alert-warning border-0 p-3 mb-2 rounded d-flex align-items-start gap-2" style="background: #fffbeb; color: #b45309; border: 1px solid #fef3c7 !important;">
+                        <div class="alert alert-warning border-0 p-3 mb-2 rounded d-flex align-items-start gap-2 text-start" style="background: #fffbeb; color: #b45309; border: 1px solid #fef3c7 !important;">
                             <span class="fs-5">⚠️</span>
                             <div>
                                 <strong>Logistics Warning:</strong> Heavy Storms (${alert.condition}) forecasted in [${alert.city}]. Potential 24-48hr delay on Order #SO-${alert.order_id}.
@@ -335,11 +1412,10 @@
                 });
             }
 
-            // Handle automatic reorders
             if (reorderData.alerts && reorderData.alerts.length > 0) {
                 reorderData.alerts.forEach(alert => {
                     alertsHtml += `
-                        <div class="alert alert-danger border-0 p-3 mb-2 rounded d-flex align-items-center justify-content-between" style="background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2 !important;">
+                        <div class="alert alert-danger border-0 p-3 mb-2 rounded d-flex align-items-center justify-content-between text-start" style="background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2 !important;">
                             <div class="d-flex align-items-center gap-2">
                                 <span class="fs-5">🤖</span>
                                 <div>
@@ -356,9 +1432,9 @@
 
             if (alertsHtml === '') {
                 container.innerHTML = `
-                    <div class="text-center py-3 text-success">
-                        <i class="fa-solid fa-circle-check fs-3 mb-2"></i>
-                        <p class="mb-0 small fw-semibold text-secondary">All systems nominal. No weather warning alerts or AI reorders detected.</p>
+                    <div class="text-center py-2 text-success">
+                        <i class="fa-solid fa-circle-check fs-4 mb-1"></i>
+                        <p class="mb-0 small fw-semibold text-secondary">All systems nominal. No weather warnings or automated AI reorder points flagged.</p>
                     </div>
                 `;
             } else {
@@ -368,10 +1444,200 @@
         .catch(err => {
             console.error(err);
             document.getElementById('dynamic-alerts-banner').innerHTML = `
-                <div class="alert alert-danger border-0 p-3 mb-0 rounded" style="background: #fef2f2; color: #991b1b;">
+                <div class="alert alert-danger border-0 p-3 mb-0 rounded text-start" style="background: #fef2f2; color: #991b1b;">
                     <i class="fa-solid fa-triangle-exclamation me-2"></i>Failed to fetch real-time operational telemetry.
                 </div>
             `;
         });
+
+    // ----------------------------------------------------
+    // SPA ROUTING CONTENT SWITCHER HANDLER
+    // ----------------------------------------------------
+    window.onDashboardSubTabActive = function(primaryTab, subTabId) {
+        // Toggle view containers
+        const containers = document.querySelectorAll('.dashboard-view-container');
+        const loader = document.getElementById('global-grid-loader');
+
+        // Hide all views instantly
+        containers.forEach(box => {
+            box.classList.remove('active-view');
+        });
+
+        // Trigger loading spinner transition state
+        loader.style.display = 'flex';
+
+        setTimeout(() => {
+            loader.style.display = 'none';
+            const activeBox = document.getElementById(`view-${subTabId}`);
+            if (activeBox) {
+                activeBox.classList.add('active-view');
+            } else {
+                // Default fallback if a sub-tab doesn't have a view container
+                document.getElementById('view-dashboard-overview').classList.add('active-view');
+            }
+        }, 350);
+    };
+
+    // ----------------------------------------------------
+    // BUY TIER: PURCHASING FILTER & MOCK CREATION
+    // ----------------------------------------------------
+    function filterPurchasing(status) {
+        // Toggle active buttons
+        document.querySelectorAll('#view-purchasing .btn-group button').forEach(btn => btn.classList.remove('active'));
+        if (status === 'all') document.getElementById('purchasing-toggle-all').classList.add('active');
+        else document.getElementById(`purchasing-toggle-${status.toLowerCase()}`).classList.add('active');
+
+        const rows = document.querySelectorAll('#purchasing-list-tbody tr');
+        rows.forEach(row => {
+            const rowStatus = row.getAttribute('data-status');
+            if (status === 'all' || rowStatus === status) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function addNewPurchaseOrder(status) {
+        const orderNum = Math.floor(Math.random() * 200) + 502;
+        const today = new Date().toISOString().split('T')[0];
+        const tbody = document.getElementById('purchasing-list-tbody');
+        const badgeClass = status === 'Draft' ? 'badge-accepted' : 'badge-pending';
+        
+        const tr = document.createElement('tr');
+        tr.setAttribute('data-status', status);
+        tr.innerHTML = `
+            <td>${today}</td>
+            <td><strong>PO-${orderNum}</strong></td>
+            <td>General Material Supplier</td>
+            <td>₹75,000.00</td>
+            <td>2026-07-16</td>
+            <td><span class="badge ${badgeClass} px-2 py-1 rounded-pill">${status}</span></td>
+        `;
+        tbody.prepend(tr);
+        alert(`New Purchase Order (Status: ${status}) PO-${orderNum} generated and verification ledger seeded.`);
+    }
+
+    // ----------------------------------------------------
+    // ITEMS TIER: SEARCH & TYPE FILTERING
+    // ----------------------------------------------------
+    function filterItemsType(type) {
+        document.querySelectorAll('#view-items-active .btn-group button').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`items-filter-${type.toLowerCase()}`).classList.add('active');
+
+        const rows = document.querySelectorAll('#items-active-grid-table tbody tr');
+        rows.forEach(row => {
+            const rowType = row.getAttribute('data-type');
+            if (type === 'all' || rowType === type) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    // ----------------------------------------------------
+    // CUSTOMER ENTRY CREATION HANDLERS
+    // ----------------------------------------------------
+    function showNewCustomerModal() {
+        const modal = new bootstrap.Modal(document.getElementById('newCustomerModal'));
+        modal.show();
+    }
+
+    function submitNewCustomer(e) {
+        e.preventDefault();
+        const name = document.getElementById('cust-input-name').value;
+        const email = document.getElementById('cust-input-email').value;
+        const currency = document.getElementById('cust-input-currency').value;
+        const phone = document.getElementById('cust-input-phone').value;
+        const ref = document.getElementById('cust-input-ref').value || 'REF-' + Math.floor(Math.random() * 800 + 100);
+        const category = document.getElementById('cust-input-category').value;
+        const comment = document.getElementById('cust-input-comment').value || '-';
+
+        const tbody = document.getElementById('customers-list-tbody');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${name}</td>
+            <td>${email}</td>
+            <td>${currency}</td>
+            <td>${phone}</td>
+            <td>${ref}</td>
+            <td>${category}</td>
+            <td>${comment}</td>
+        `;
+        tbody.prepend(tr);
+
+        // Hide Modal
+        const modalEl = document.getElementById('newCustomerModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        modal.hide();
+
+        // Clear Inputs
+        document.getElementById('cust-input-name').value = '';
+        document.getElementById('cust-input-email').value = '';
+        document.getElementById('cust-input-phone').value = '';
+        document.getElementById('cust-input-ref').value = '';
+        document.getElementById('cust-input-comment').value = '';
+
+        alert(`Customer ${name} added successfully.`);
+    }
+
+    // ----------------------------------------------------
+    // PROFILE SETTINGS FORM SAVE HANDLER
+    // ----------------------------------------------------
+    function saveProfileSettings(e) {
+        e.preventDefault();
+        const alertEl = document.getElementById('settings-save-success-alert');
+        alertEl.style.display = 'flex';
+        setTimeout(() => {
+            alertEl.style.display = 'none';
+        }, 5000);
+        alert('Settings saved. Standard Currency set to INR (₹) and Default Delivery time set to 14 days.');
+    }
+
+    // ----------------------------------------------------
+    // DYNAMIC BILLING VOLUMETRIC COST CALCULATOR LOGIC
+    // ----------------------------------------------------
+    function calculateTotalDue() {
+        const coreBase = 299;
+        const ordersCount = parseInt(document.getElementById('calc-orders-count').value) || 0;
+        
+        // Volumetric rate: $0.298 per order
+        const volumetricCharge = Math.round(ordersCount * 0.298);
+
+        // Add-ons sums
+        let addOnsSum = 0;
+        if (document.getElementById('addon-mfg').checked) addOnsSum += 199;
+        if (document.getElementById('addon-shop').checked) addOnsSum += 199;
+        if (document.getElementById('addon-trace').checked) addOnsSum += 249;
+        if (document.getElementById('addon-whm').checked) addOnsSum += 148;
+
+        const totalDue = coreBase + volumetricCharge + addOnsSum;
+
+        document.getElementById('calc-total-due-value').textContent = `$${totalDue} / month`;
+        document.getElementById('calc-breakdown-text').textContent = `Breakdown: $${coreBase} (Core) + $${volumetricCharge} (Volumetric) + $${addOnsSum} (Add-ons)`;
+    }
+
+    // ----------------------------------------------------
+    // INSIGHTS SALES SUB TAB SELECTOR
+    // ----------------------------------------------------
+    function switchInsightsSalesSub(subId) {
+        // Toggle active button tab
+        document.querySelectorAll('#view-insights-sales button').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`insights-sales-tab-${subId}`).classList.add('active');
+
+        // Toggle subcontents visibility
+        document.querySelectorAll('.insights-sales-sub-box').forEach(box => {
+            box.style.display = 'none';
+        });
+        document.getElementById(`sales-sub-${subId}`).style.display = 'block';
+    }
+
+    // Execute billing calculation on load
+    window.addEventListener('DOMContentLoaded', () => {
+        if (document.getElementById('calc-orders-count')) {
+            calculateTotalDue();
+        }
+    });
 </script>
 {% endblock %}
