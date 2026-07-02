@@ -8,7 +8,8 @@ from django.utils import timezone
 import json
 import hashlib
 
-from .models import User, Product, Stock, Vendor, Order, AuditBlock, SalesLog
+from django.views.decorators.csrf import csrf_exempt
+from .models import User, Product, Stock, Vendor, Order, AuditBlock, SalesLog, Company, Customer, SubscriptionSimulation
 from .forms import RegisterForm, ProductForm, StockForm, VendorForm, OrderForm
 from .decorators import manager_required, vendor_required
 from .weather import get_weather_warnings
@@ -466,3 +467,106 @@ def manager_quick_order(request, pk):
         )
     messages.success(request, f"Smart Reorder PO-{order.id} for {product.name} (Qty: {order.quantity}) successfully placed with vendor {vendor.name}.")
     return redirect('manager_dashboard')
+
+
+@csrf_exempt
+def api_company_settings(request, id):
+    if request.method != 'PUT':
+        return JsonResponse({'success': False, 'message': 'Only PUT method is allowed.'}, status=405)
+    try:
+        data = json.loads(request.body)
+        base_currency = data.get('base_currency')
+        show_currency_on_orders = data.get('show_currency_on_orders', False)
+        default_delivery_sales_days = int(data.get('default_delivery_sales_days', 14))
+        default_lead_purchase_days = int(data.get('default_lead_purchase_days', 14))
+
+        if not base_currency or default_delivery_sales_days < 0 or default_lead_purchase_days < 0:
+            return JsonResponse({'success': False, 'message': 'Invalid configuration parameters.'}, status=400)
+
+        # Retrieve manager user to assign ownership if database defaults don't exist
+        manager_user = User.objects.filter(role='manager').first()
+        if not manager_user:
+            manager_user = User.objects.create_user(username='temp_manager', password='password123', role='manager')
+
+        # Update Company model instance if exists, otherwise create
+        company, _ = Company.objects.get_or_create(
+            id=id,
+            defaults={
+                'owner': manager_user,
+                'display_name': 'Avis AI Corp',
+                'legal_name': 'Avis AI Corp Legal'
+            }
+        )
+        company.base_currency = base_currency
+        company.show_currency_on_orders = show_currency_on_orders
+        company.default_delivery_sales_days = default_delivery_sales_days
+        company.default_lead_purchase_days = default_lead_purchase_days
+        company.save()
+
+        return JsonResponse({
+            'success': True,
+            'message': 'General configurations saved successfully.',
+            'data': {
+                'companyId': id,
+                'base_currency': base_currency,
+                'default_delivery_sales_days': default_delivery_sales_days,
+                'default_lead_purchase_days': default_lead_purchase_days,
+                'show_currency_on_orders': show_currency_on_orders
+            }
+        })
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+
+@csrf_exempt
+def api_subscription_calculate(request):
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Only POST method is allowed.'}, status=405)
+    try:
+        data = json.loads(request.body)
+        estimated_monthly_sales = int(data.get('estimated_monthly_sales', 1000))
+        add_ons = data.get('add_ons', [])
+        locations = int(data.get('locations', 1))
+
+        CORE_PLAN_BASE = 299.00
+        ADDITIONAL_LOCATION_FEE = 48.00
+
+        ADD_ON_PRICING = {
+            'manufacturing_management': 199.00,
+            'shop_floor_app': 199.00,
+            'traceability': 249.00,
+            'warehouse_management': 148.00
+        }
+
+        # Location fee calculations
+        extra_locations = max(0, locations - 1)
+        locations_cost = extra_locations * ADDITIONAL_LOCATION_FEE
+
+        totalFixedCost = CORE_PLAN_BASE + locations_cost
+
+        # Map selected add-ons
+        for addon in add_ons:
+            if addon in ADD_ON_PRICING:
+                totalFixedCost += ADD_ON_PRICING[addon]
+
+        # Volumetric surcharge
+        volumetricSurcharge = 0.00
+        if estimated_monthly_sales > 100:
+            volumetricSurcharge = (estimated_monthly_sales - 100) * 0.3311
+
+        surcharge_rounded = round(volumetricSurcharge)
+        netInvoiceTotal = totalFixedCost + surcharge_rounded
+
+        return JsonResponse({
+            'success': True,
+            'breakdown': {
+                'base_core_plan': CORE_PLAN_BASE,
+                'location_surcharges': locations_cost,
+                'calculated_fixed_monthly_total': totalFixedCost,
+                'estimated_usage_variable_cost': surcharge_rounded,
+                'net_total_due_today': netInvoiceTotal
+            }
+        })
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+

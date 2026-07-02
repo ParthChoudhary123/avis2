@@ -83,3 +83,47 @@ class SalesLog(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.month.strftime('%Y-%m')}: {self.quantity_sold}"
+
+
+class Company(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='companies')
+    display_name = models.CharField(max_length=100)
+    legal_name = models.CharField(max_length=100)
+    street_address = models.TextField(blank=True, null=True)
+    base_currency = models.CharField(max_length=3, default='INR')
+    show_currency_on_orders = models.BooleanField(default=False)
+    default_delivery_sales_days = models.IntegerField(default=14)
+    default_lead_purchase_days = models.IntegerField(default=14)
+    current_plan_tier = models.CharField(max_length=20, default='Free')
+
+    def __str__(self):
+        return self.display_name
+
+
+class Customer(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='customers')
+    name = models.CharField(max_length=150)
+    email_address = models.EmailField(blank=True, null=True)
+    currency = models.CharField(max_length=3, default='INR')
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    reference_id = models.CharField(max_length=50, blank=True, null=True)
+    category = models.CharField(max_length=50, blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class SubscriptionSimulation(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='simulations')
+    estimated_monthly_sales = models.IntegerField(default=1000)
+    has_manufacturing_mgmt = models.BooleanField(default=False)
+    has_shop_floor_app = models.BooleanField(default=False)
+    has_traceability = models.BooleanField(default=False)
+    has_warehouse_mgmt = models.BooleanField(default=True)
+    calculated_total_due = models.DecimalField(max_digits=10, decimal_places=2, default=746.00)
+
+    def __str__(self):
+        return f"Sim {self.id}: {self.calculated_total_due}"
+

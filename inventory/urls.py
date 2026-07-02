@@ -37,4 +37,6 @@ urlpatterns = [
     path('api/weather-alerts/', views.api_weather_alerts, name='api_weather_alerts'),
     path('api/reorder-alerts/', views.api_reorder_alerts, name='api_reorder_alerts'),
     path('manager/products/<int:pk>/quick-order/', views.manager_quick_order, name='manager_quick_order'),
+    path('api/v1/company/<int:id>/settings', views.api_company_settings, name='api_company_settings'),
+    path('api/v1/subscription/calculate', views.api_subscription_calculate, name='api_subscription_calculate'),
 ]

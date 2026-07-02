@@ -1446,11 +1446,41 @@
     function saveProfileSettings(e) {
         e.preventDefault();
         const success = document.getElementById('settings-save-success');
-        success.style.display = 'flex';
-        setTimeout(() => {
-            success.style.display = 'none';
-        }, 4000);
-        alert('General settings configured successfully.');
+        
+        const base_currency = document.getElementById('settings-currency').value;
+        const show_currency_on_orders = document.getElementById('settings-show-fields').checked;
+        const default_delivery_sales_days = parseInt(document.getElementById('settings-delivery').value) || 14;
+        const default_lead_purchase_days = parseInt(document.getElementById('settings-lead').value) || 14;
+
+        fetch('/api/v1/company/1/settings', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                base_currency,
+                show_currency_on_orders,
+                default_delivery_sales_days,
+                default_lead_purchase_days
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.success) {
+                success.style.display = 'flex';
+                setTimeout(() => {
+                    success.style.display = 'none';
+                }, 4000);
+                alert('General settings configured successfully.');
+            } else {
+                alert('Error saving settings: ' + res.message);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Failed to save general configurations.');
+        });
     }
 
     // ----------------------------------------------------
@@ -1462,41 +1492,54 @@
     }
 
     function calculateInvoicedCost() {
-        const coreBase = 299;
-        
         // Locations
         const locations = parseInt(document.getElementById('calc-locations').value) || 1;
         const extraLocations = Math.max(0, locations - 1);
-        const locationsCost = extraLocations * 48;
 
         // Sales Orders count
         const ordersCount = parseInt(document.getElementById('calc-orders').value) || 0;
         document.getElementById('calc-orders-slider').value = ordersCount;
 
-        // Usage Cost: $0.125 per order
-        const usageCost = Math.round(ordersCount * 0.125);
+        // Collect checked add-ons
+        const add_ons = [];
+        if (document.getElementById('addon-calc-mfg').checked) add_ons.push('manufacturing_management');
+        if (document.getElementById('addon-calc-shop').checked) add_ons.push('shop_floor_app');
+        if (document.getElementById('addon-calc-trace').checked) add_ons.push('traceability');
+        if (document.getElementById('addon-calc-whm').checked) add_ons.push('warehouse_management');
 
-        // Addons Cost
-        let addonMfg = document.getElementById('addon-calc-mfg').checked ? 199 : 0;
-        let addonShop = document.getElementById('addon-calc-shop').checked ? 199 : 0;
-        let addonTrace = document.getElementById('addon-calc-trace').checked ? 249 : 0;
-        let addonWhm = document.getElementById('addon-calc-whm').checked ? 148 : 0;
+        // Fetch pricing from the backend API calculation engine
+        fetch('/api/v1/subscription/calculate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                estimated_monthly_sales: ordersCount,
+                add_ons: add_ons,
+                locations: locations
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.success) {
+                const breakdown = res.breakdown;
 
-        const totalAddons = addonMfg + addonShop + addonTrace + addonWhm;
-        const totalFixedCost = coreBase + locationsCost + totalAddons;
+                // Update Invoicing sticky panel elements
+                document.getElementById('invoice-item-locations').innerHTML = `<span>${extraLocations} x Additional Location:</span> <strong>$${breakdown.location_surcharges}/mo</strong>`;
+                
+                // Toggle active add-on rows in invoice preview
+                document.getElementById('invoice-item-addon-trace').style.setProperty('display', add_ons.includes('traceability') ? 'flex' : 'none', 'important');
+                document.getElementById('invoice-item-addon-whm').style.setProperty('display', add_ons.includes('warehouse_management') ? 'flex' : 'none', 'important');
+                document.getElementById('invoice-item-addon-mfg').style.setProperty('display', add_ons.includes('manufacturing_management') ? 'flex' : 'none', 'important');
+                document.getElementById('invoice-item-addon-shop').style.setProperty('display', add_ons.includes('shop_floor_app') ? 'flex' : 'none', 'important');
 
-        // Update Invoicing sticky panel elements
-        document.getElementById('invoice-item-locations').innerHTML = `<span>${extraLocations} x Additional Location:</span> <strong>$${locationsCost}/mo</strong>`;
-        
-        // Toggle active add-on rows in invoice preview
-        document.getElementById('invoice-item-addon-trace').style.setProperty('display', addonTrace ? 'flex' : 'none', 'important');
-        document.getElementById('invoice-item-addon-whm').style.setProperty('display', addonWhm ? 'flex' : 'none', 'important');
-        document.getElementById('invoice-item-addon-mfg').style.setProperty('display', addonMfg ? 'flex' : 'none', 'important');
-        document.getElementById('invoice-item-addon-shop').style.setProperty('display', addonShop ? 'flex' : 'none', 'important');
-
-        document.getElementById('invoice-total-fixed').textContent = `$${totalFixedCost}/mo`;
-        document.getElementById('invoice-total-due').textContent = `$${totalFixedCost}`;
-        document.getElementById('invoice-usage-total').textContent = `$${usageCost}/mo`;
+                document.getElementById('invoice-total-fixed').textContent = `$${breakdown.calculated_fixed_monthly_total}/mo`;
+                document.getElementById('invoice-total-due').textContent = `$${breakdown.calculated_fixed_monthly_total}`;
+                document.getElementById('invoice-usage-total').textContent = `$${breakdown.estimated_usage_variable_cost}/mo`;
+            }
+        })
+        .catch(err => console.error('Failed to calculate subscription costs:', err));
     }
 
     // Initialize metrics on DOM load
