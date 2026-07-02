@@ -527,17 +527,17 @@
                     <button class="user-profile-badge dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         PC
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050;">
-                        <li class="px-3 py-2 border-bottom mb-2">
-                            <div class="small text-secondary">Signed in as</div>
-                            <div class="fw-bold text-dark">{{ user.email|default:user.username }}</div>
-                            <div class="badge bg-light text-dark border border-dark mt-1" style="font-size: 0.75rem;">{{ user.get_role_display }}</div>
+                    <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050; min-width: 220px;">
+                        <li class="px-3 py-2 border-bottom mb-2 text-start">
+                            <div class="small text-secondary" style="font-size: 0.72rem; word-break: break-all;">singhigone@gmail.com</div>
+                            <div class="fw-bold text-dark" style="font-size: 0.9rem;">Parth Choudhary</div>
                         </li>
-                        {% if user.is_manager %}
-                            <li><a class="dropdown-item fw-bold text-dark" onclick="switchPrimaryTab('settings')"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
-                            <li><a class="dropdown-item fw-bold text-dark" onclick="switchPrimaryTab('billing')"><i class="fa-solid fa-credit-card me-2"></i> Billing</a></li>
-                            <li><hr class="dropdown-divider border-dark"></li>
-                        {% endif %}
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to user personal data inputs...');"><i class="fa-regular fa-circle-user me-2"></i> Account</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to business details panel...');"><i class="fa-solid fa-briefcase me-2"></i> Company</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('settings')"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to team access management...');"><i class="fa-solid fa-users me-2"></i> Team</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('billing')"><i class="fa-solid fa-credit-card me-2"></i> Subscription</a></li>
+                        <li><hr class="dropdown-divider border-dark"></li>
                         <li><a class="dropdown-item fw-bold text-danger" href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
                     </ul>
                 </div>

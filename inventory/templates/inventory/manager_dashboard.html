@@ -292,61 +292,65 @@
             </div>
         </div>
 
-        <!-- Onboarding Progress Container -->
-        <div class="card border border-light p-4 mb-4" style="background-color: #ffffff; border-radius: 12px;">
-            <div class="d-flex align-items-center justify-content-between mb-2">
-                <h5 class="fw-bold text-dark mb-0">Your first steps with Avis</h5>
-                <span class="onboarding-progress-badge-text">0% complete</span>
-            </div>
-            <div class="onboarding-progress-bar-bg mb-4">
-                <div class="onboarding-progress-bar-fill" id="home-onboarding-progress-bar"></div>
-            </div>
-
-            <!-- Vertical Action Cards Grid -->
-            <div class="d-flex flex-column gap-3">
-                <!-- Card 1 -->
-                <div class="onboarding-task-card text-start">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h6 class="fw-bold text-dark mb-0">Add your products <span class="onboarding-card-pill ms-2">1-2 mins</span></h6>
+        <div class="asymmetric-layout-grid">
+            <!-- Left Component Frame (8 Columns) -->
+            <div class="col-main-left text-start">
+                <!-- Onboarding Progress Container -->
+                <div class="card border border-light p-4 mb-4" style="background-color: #ffffff; border-radius: 12px;">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h5 class="fw-bold text-dark mb-0">Your first steps with Avis</h5>
+                        <span class="onboarding-progress-badge-text">0% complete</span>
                     </div>
+                    <div class="onboarding-progress-bar-bg mb-4">
+                        <div class="onboarding-progress-bar-fill" id="home-onboarding-progress-bar" style="width: 0%;"></div>
+                    </div>
+
+                    <!-- Action buttons -->
                     <div class="d-flex gap-2">
                         <button class="btn btn-stroke-grey btn-sm" onclick="alert('Connecting Shopify API import...');">Import from Shopify</button>
                         <button class="btn btn-stroke-grey btn-sm" onclick="alert('Select spreadsheet payload file...');">Upload from spreadsheet</button>
                         <a href="{% url 'product_create' %}" class="btn btn-solid-blue btn-sm">Create manually</a>
                     </div>
                 </div>
-                <!-- Card 2 -->
-                <div class="onboarding-task-card text-start">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h6 class="fw-bold text-dark mb-0">Track your orders <span class="onboarding-card-pill ms-2">1-2 mins</span></h6>
+
+                <!-- Banner Widget (Promotional) -->
+                <div class="tan-promo-widget text-start mt-0 mb-4">
+                    <div>
+                        <h5 class="fw-bold text-amber-900 mb-1" style="color: #78350F;">Get implemented, or your money back</h5>
+                        <p class="text-amber-800 small mb-0" style="color: #92400E;">Join our guided setup program to configure your logistics matrices correctly and achieve positive ROI.</p>
                     </div>
-                    <p class="text-secondary small mb-0">Connect your sales channels to pull, track, and sync order statuses automatically.</p>
+                    <a href="#" class="btn-brown-promo" onclick="alert('Guided setup walkthrough...'); return false;">Learn more</a>
                 </div>
-                <!-- Card 3 -->
-                <div class="onboarding-task-card text-start">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h6 class="fw-bold text-dark mb-0">Replenish Inventory <span class="onboarding-card-pill ms-2">1 min</span></h6>
+
+                <!-- Stock Risks Panel (Bottom) -->
+                <div class="card border border-light p-4" style="background-color: #ffffff; border-radius: 12px;">
+                    <h5 class="fw-bold text-dark mb-3 text-start">Stock risks</h5>
+                    <div class="empty-state-container">
+                        <i class="fa-regular fa-circle-check empty-state-icon text-success"></i>
+                        <p class="mb-0 fw-semibold">No stockout risks detected.</p>
                     </div>
-                    <p class="text-secondary small mb-0">Formulate minimum inventory safety thresholds and forecast procurement requirements.</p>
                 </div>
             </div>
-        </div>
 
-        <!-- Banner Widget (Promotional) -->
-        <div class="tan-promo-widget text-start">
-            <div>
-                <h5 class="fw-bold text-amber-900 mb-1" style="color: #78350F;">Get implemented, or your money back</h5>
-                <p class="text-amber-800 small mb-0" style="color: #92400E;">Join our guided setup program to configure your logistics matrices correctly and achieve positive ROI.</p>
-            </div>
-            <a href="#" class="btn-brown-promo" onclick="alert('Guided setup walkthrough...'); return false;">Learn more</a>
-        </div>
-
-        <!-- Stock Risks Panel (Bottom) -->
-        <div class="card border border-light p-4 mt-4" style="background-color: #ffffff; border-radius: 12px;">
-            <h5 class="fw-bold text-dark mb-3 text-start">Stock risks</h5>
-            <div class="empty-state-container">
-                <i class="fa-regular fa-circle-check empty-state-icon text-success"></i>
-                <p class="mb-0 fw-semibold">No stockout risks detected.</p>
+            <!-- Right Component Frame (4 Columns): Sidebar / Reference Info -->
+            <div class="col-helper-right text-start">
+                <div class="card border border-light p-4 h-100" style="background-color: #ffffff; border-radius: 12px;">
+                    <h5 class="fw-bold text-dark mb-3">Learn Avis Faster</h5>
+                    <ul class="list-unstyled d-flex flex-column gap-3 small text-secondary">
+                        <li class="border-bottom pb-2">
+                            <a href="#" class="text-decoration-none fw-semibold text-primary d-block mb-1" onclick="alert('Opening Shopify integration guide...'); return false;">Shopify integration</a>
+                            <span class="text-muted" style="font-size: 0.75rem;">Connect store channels and automate product flows.</span>
+                        </li>
+                        <li class="border-bottom pb-2">
+                            <a href="#" class="text-decoration-none fw-semibold text-primary d-block mb-1" onclick="alert('Opening workflow basics guide...'); return false;">Workflow basics</a>
+                            <span class="text-muted" style="font-size: 0.75rem;">Learn product catalogs, item statuses, and lead tracking.</span>
+                        </li>
+                        <li>
+                            <a href="#" class="text-decoration-none fw-semibold text-primary d-block mb-1" onclick="alert('Opening inventory control guide...'); return false;">Inventory control</a>
+                            <span class="text-muted" style="font-size: 0.75rem;">Reorder alerts, safety levels, and purchase expectations.</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
