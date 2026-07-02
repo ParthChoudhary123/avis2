@@ -45,7 +45,7 @@
             background-color: #111827 !important;
             border-bottom: 1px solid #1F2937;
             padding: 0 24px !important;
-            height: 70px;
+            height: 48px;
         }
 
         .katana-brand {
@@ -81,7 +81,7 @@
             color: #9CA3AF !important;
             font-weight: 600;
             font-size: 0.88rem;
-            padding: 22px 14px !important;
+            padding: 12px 14px !important;
             text-decoration: none;
             transition: all 0.15s;
             border-bottom: 4px solid transparent;
@@ -106,22 +106,22 @@
 
         /* Sub-Navigation Bar - Deep Navy */
         .sub-nav-bar {
-            background-color: #0F172A;
-            border-bottom: 1px solid #1E293B;
+            background-color: #1E293B; /* Slate Navy #1E293B */
+            border-bottom: 1px solid #334155;
             padding: 0 24px;
             display: flex;
             align-items: center;
             gap: 8px;
             overflow-x: auto;
-            height: 48px;
+            height: 40px;
         }
 
         .sub-nav-link {
-            color: #94A3B8;
+            color: #E2E8F0; /* Off-white #E2E8F0 */
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 600;
-            padding: 12px 14px;
+            padding: 8px 14px;
             border-bottom: 2px solid transparent;
             transition: all 0.15s;
             cursor: pointer;
@@ -566,7 +566,7 @@
     </div>
 
     <!-- Main Content Panel -->
-    <main class="flex-grow-1 p-4">
+    <main class="flex-grow-1 py-4 px-8" style="padding-left: 32px !important; padding-right: 32px !important;">
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>
