@@ -479,17 +479,17 @@
 
     <!-- Top Navigation Header -->
     <header class="katana-navbar">
-        <div class="d-flex align-items-center h-100 gap-3" style="flex-wrap: nowrap !important;">
+        <div class="d-flex align-items-center h-100 gap-2 gap-xl-3" style="flex-wrap: nowrap !important;">
             <!-- Brand logo -->
             <a class="katana-brand" href="{% url 'landing' %}">
                 avis
             </a>
             
-            <!-- Plan Tag -->
-            <span class="badge rounded-pill bg-secondary text-white font-monospace border border-secondary px-2" style="font-size: 0.72rem; letter-spacing: 0.5px;">Free plan</span>
+            <!-- Plan Tag (Only show on extra large screens) -->
+            <span class="badge rounded-pill bg-secondary text-white font-monospace border border-secondary px-2 d-none d-xl-inline-block" style="font-size: 0.72rem; letter-spacing: 0.5px; flex-shrink: 0;">Free plan</span>
             
-            <!-- Item counter -->
-            <span class="text-white opacity-75 small d-none d-md-flex align-items-center gap-1" style="font-size: 0.78rem;" title="Item Counter">
+            <!-- Item counter (Only show on extra-extra large screens) -->
+            <span class="text-white opacity-75 small d-none d-xxl-flex align-items-center gap-1" style="font-size: 0.78rem; flex-shrink: 0;" title="Item Counter">
                 0/30 Items in use <i class="fa-solid fa-circle-info" style="font-size: 0.72rem;"></i>
             </span>
             
@@ -547,10 +547,10 @@
             <a href="#" class="text-white-50 text-decoration-none hover-white small me-2 d-none d-xl-inline" style="font-size: 0.8rem;" onclick="alert('Book a demo modal...'); return false;">Book a demo</a>
             
             <!-- Upgrade to remove limits link -->
-            <a href="#" class="text-white-50 text-decoration-none hover-white small me-3 d-none d-lg-inline" style="font-size: 0.8rem;" onclick="switchPrimaryTab('billing'); return false;">Upgrade to remove item limits</a>
+            <a href="#" class="text-white-50 text-decoration-none hover-white small me-3 d-none d-xxl-inline" style="font-size: 0.8rem;" onclick="switchPrimaryTab('billing'); return false;">Upgrade to remove item limits</a>
             
             <!-- + Create blue button -->
-            <button class="btn btn-primary px-3 py-1.5 text-white fw-bold d-flex align-items-center gap-1" style="background-color: #2563EB !important; border: none; border-radius: 6px; font-size: 0.8rem;" onclick="alert('Creating new entry...');">
+            <button class="btn btn-primary px-3 py-1.5 text-white fw-bold d-flex align-items-center gap-1" style="background-color: #2563EB !important; border: none; border-radius: 6px; font-size: 0.8rem; flex-shrink: 0;" onclick="alert('Creating new entry...');">
                 <i class="fa-solid fa-plus"></i> Create
             </button>
             
@@ -560,8 +560,8 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
             
-            <!-- Megaphone -->
-            <button class="utility-icon-btn" title="Announcements" onclick="alert('No announcements.');">
+            <!-- Megaphone (Hide on smaller mobile screens) -->
+            <button class="utility-icon-btn d-none d-md-flex" title="Announcements" onclick="alert('No announcements.');">
                 <i class="fa-solid fa-bullhorn"></i>
             </button>
             
@@ -570,8 +570,8 @@
                 <i class="fa-regular fa-circle-question"></i>
             </button>
 
-            <!-- Marketplace -->
-            <button class="utility-icon-btn" title="Marketplace / Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');">
+            <!-- Marketplace (Hide on medium/smaller screens) -->
+            <button class="utility-icon-btn d-none d-lg-flex" title="Marketplace / Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');">
                 <i class="fa-solid fa-puzzle-piece"></i>
             </button>
 
