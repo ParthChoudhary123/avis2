@@ -519,6 +519,20 @@
             0% { border-color: var(--border-color); }
             100% { border-color: #ef4444; }
         }
+
+        /* Responsive Navigation Overlaps Fixes */
+        @media (max-width: 991.98px) {
+            .katana-nav-link span {
+                display: none !important;
+            }
+            .katana-nav-link {
+                padding: 0 12px !important;
+            }
+            .katana-brand {
+                font-size: 1.25rem !important;
+                margin-right: 12px !important;
+            }
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
@@ -552,13 +566,12 @@
             </div>
         </div>
     </div>
-
     <!-- Tier 2: Primary Navigation Header -->
     <header class="katana-navbar">
         <div class="d-flex align-items-center h-100" style="flex-wrap: nowrap !important;">
             <!-- Brand logo -->
             <a class="katana-brand" href="{% url 'landing' %}">
-                katana
+                avis ai
             </a>
             
             <!-- Tab lists -->
@@ -619,7 +632,7 @@
         <!-- Global Action & System Icons (Right Side) -->
         <div class="header-utilities h-100 d-flex align-items-center" style="flex-wrap: nowrap !important; gap: 16px;">
             <!-- Quick Create button -->
-            <button class="flex items-center space-x-1 bg-white text-gray-900 font-semibold px-3 py-1.5 rounded text-sm hover:bg-gray-100 transition-colors" style="background-color: #ffffff; color: #111827; font-weight: 600; padding: 6px 12px; border-radius: 4px; border: none; font-size: 14px; display: flex; align-items: center; gap: 4px;" onclick="alert('Creating new entry...');">
+            <button class="flex items-center space-x-1 bg-white text-gray-900 font-semibold px-3 py-1.5 rounded text-sm hover:bg-gray-100 transition-colors" style="background-color: #ffffff; color: #111827; font-weight: 600; padding: 6px 12px; border-radius: 4px; border: none; font-size: 14px; display: flex; align-items: center; gap: 4px; flex-shrink: 0;" onclick="alert('Creating new entry...');">
                 <svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke-width: 2; margin-right: 4px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 <span>Create</span>
             </button>
@@ -629,23 +642,23 @@
             
             <!-- System Utility Icons -->
             <div class="d-flex align-items-center" style="gap: 16px;">
-                <button class="utility-icon-btn" title="App Launcher" onclick="alert('Opening Grid Search Launcher...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
+                <button class="utility-icon-btn d-none d-xl-inline-flex" title="App Launcher" onclick="alert('Opening Grid Search Launcher...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
                 
-                <button class="utility-icon-btn" title="Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
+                <button class="utility-icon-btn d-none d-lg-inline-flex" title="Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
                 </button>
-
-                <button class="utility-icon-btn" title="Notifications" onclick="alert('No announcements.');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
+ 
+                <button class="utility-icon-btn d-none d-md-inline-flex" title="Notifications" onclick="alert('No announcements.');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                 </button>
                 
-                <button class="utility-icon-btn" title="Help Center" onclick="alert('Opening Help Center & Knowledge Base...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
+                <button class="utility-icon-btn d-none d-lg-inline-flex" title="Help Center" onclick="alert('Opening Help Center & Knowledge Base...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </button>
             </div>
-
+ 
             <!-- User Dropdown with PC initials badge -->
             <div class="dropdown">
                 <button class="user-profile-badge dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent; border: none; padding: 0;">
