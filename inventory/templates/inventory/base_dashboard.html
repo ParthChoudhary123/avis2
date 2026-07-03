@@ -40,12 +40,23 @@
             padding: 0;
         }
 
-        /* Top Header Navbar - Dark Charcoal/Black */
+        /* Top Header Navbar - Fixed Top */
         .katana-navbar {
             background-color: #111827 !important;
             border-bottom: 1px solid #1F2937;
-            padding: 0 24px !important;
-            height: 48px;
+            padding: 0 32px !important;
+            height: 48px !important;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1050;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            box-sizing: border-box;
         }
 
         .katana-brand {
@@ -104,16 +115,24 @@
             background-color: rgba(255, 255, 255, 0.08);
         }
 
-        /* Sub-Navigation Bar - Deep Navy */
+        /* Sub-Navigation Bar - Fixed Below Navbar */
         .sub-nav-bar {
+            position: fixed !important;
+            top: 48px;
+            left: 0;
+            width: 100%;
+            height: 40px !important;
             background-color: #1E293B; /* Slate Navy #1E293B */
             border-bottom: 1px solid #334155;
-            padding: 0 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 0 32px !important;
+            z-index: 1040;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+            gap: 24px !important; /* space-x-6 matches 24px gap */
+            box-sizing: border-box;
             overflow-x: auto;
-            height: 40px;
         }
 
         .sub-nav-link {
@@ -140,6 +159,23 @@
             box-shadow: none !important;
             border-radius: 0 !important;
         }
+
+        /* Explicit dropdown-menu hide & list-style overrides */
+        .dropdown-menu {
+            display: none !important;
+            position: absolute !important;
+            list-style: none !important;
+            background-color: #ffffff !important;
+            margin: 0 !important;
+            padding: 8px !important;
+        }
+        .dropdown-menu.show {
+            display: block !important;
+        }
+        .dropdown-menu li {
+            list-style: none !important;
+        }
+
 
         /* Global Header Utilities */
         .header-utilities {
@@ -424,123 +460,121 @@
 <body>
 
     <!-- Top Navigation Header -->
-    <header class="navbar navbar-expand-lg katana-navbar navbar-dark sticky-top">
-        <div class="container-fluid p-0 d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center h-100">
-                <!-- Brand logo -->
-                <a class="katana-brand" href="{% url 'landing' %}">
-                    avis
-                </a>
-                
-                <!-- Plan Tag -->
-                <span class="badge rounded-pill bg-secondary text-white font-monospace border border-secondary px-2 me-2" style="font-size: 0.72rem; letter-spacing: 0.5px;">Free plan</span>
-                
-                <!-- Item counter -->
-                <span class="text-white opacity-75 small me-3 d-none d-md-flex align-items-center gap-1" style="font-size: 0.78rem;" title="Item Counter">
-                    0/30 Items in use <i class="fa-solid fa-circle-info" style="font-size: 0.72rem;"></i>
-                </span>
-                
-                <!-- Tab lists -->
-                <nav class="h-100 ms-2">
-                    <ul class="katana-nav-tabs" id="primary-nav-tabs">
-                        {% if user.is_manager %}
-                            <li class="katana-nav-item">
-                                <a class="katana-nav-link active" onclick="switchPrimaryTab('home')">
-                                    <i class="fa-solid fa-house"></i> Home
-                                </a>
-                            </li>
-                            <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('sell')">
-                                    <i class="fa-solid fa-tag"></i> Sell
-                                </a>
-                            </li>
-                            <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('buy')">
-                                    <i class="fa-solid fa-cart-shopping"></i> Buy
-                                </a>
-                            </li>
-                            <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('stock')">
-                                    <i class="fa-solid fa-table-cells-large"></i> Stock
-                                </a>
-                            </li>
-                            <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('plan')">
-                                    <i class="fa-solid fa-calendar-days"></i> Plan
-                                </a>
-                            </li>
-                            <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('insights')">
-                                    <i class="fa-solid fa-chart-column"></i> Insights
-                                </a>
-                            </li>
-                            <li class="katana-nav-item">
-                                <a class="katana-nav-link" onclick="switchPrimaryTab('items')">
-                                    <i class="fa-solid fa-box"></i> Items
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="katana-nav-item">
-                                <a class="katana-nav-link active" onclick="switchPrimaryTab('fulfillment')">Fulfillment Ledger</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </div>
+    <header class="katana-navbar">
+        <div class="d-flex align-items-center h-100 gap-3" style="flex-wrap: nowrap !important;">
+            <!-- Brand logo -->
+            <a class="katana-brand" href="{% url 'landing' %}">
+                avis
+            </a>
             
-            <!-- Global Utilities & User Section -->
-            <div class="header-utilities">
-                <!-- Book a demo link -->
-                <a href="#" class="text-white-50 text-decoration-none hover-white small me-2 d-none d-xl-inline" style="font-size: 0.8rem;" onclick="alert('Book a demo modal...'); return false;">Book a demo</a>
-                
-                <!-- Upgrade to remove limits link -->
-                <a href="#" class="text-white-50 text-decoration-none hover-white small me-3 d-none d-lg-inline" style="font-size: 0.8rem;" onclick="switchPrimaryTab('billing'); return false;">Upgrade to remove item limits</a>
-                
-                <!-- + Create blue button -->
-                <button class="btn btn-primary px-3 py-1.5 text-white fw-bold d-flex align-items-center gap-1" style="background-color: #2563EB !important; border: none; border-radius: 6px; font-size: 0.8rem;" onclick="alert('Creating new entry...');">
-                    <i class="fa-solid fa-plus"></i> Create
-                </button>
-                
-                <!-- System Utility Icons -->
-                <!-- Search -->
-                <button class="utility-icon-btn" title="Search" onclick="alert('Search initiated...');">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-                
-                <!-- Megaphone -->
-                <button class="utility-icon-btn" title="Announcements" onclick="alert('No announcements.');">
-                    <i class="fa-solid fa-bullhorn"></i>
-                </button>
-                
-                <!-- Help/Support -->
-                <button class="utility-icon-btn" title="Help & Support" onclick="alert('Opening Help Center & Knowledge Base...');">
-                    <i class="fa-regular fa-circle-question"></i>
-                </button>
-
-                <!-- Marketplace -->
-                <button class="utility-icon-btn" title="Marketplace / Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');">
-                    <i class="fa-solid fa-puzzle-piece"></i>
-                </button>
-
-                <!-- User Dropdown with PC initials badge -->
-                <div class="dropdown">
-                    <button class="user-profile-badge dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        PC
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050; min-width: 220px;">
-                        <li class="px-3 py-2 border-bottom mb-2 text-start">
-                            <div class="small text-secondary" style="font-size: 0.72rem; word-break: break-all;">singhigone@gmail.com</div>
-                            <div class="fw-bold text-dark" style="font-size: 0.9rem;">Parth Choudhary</div>
+            <!-- Plan Tag -->
+            <span class="badge rounded-pill bg-secondary text-white font-monospace border border-secondary px-2" style="font-size: 0.72rem; letter-spacing: 0.5px;">Free plan</span>
+            
+            <!-- Item counter -->
+            <span class="text-white opacity-75 small d-none d-md-flex align-items-center gap-1" style="font-size: 0.78rem;" title="Item Counter">
+                0/30 Items in use <i class="fa-solid fa-circle-info" style="font-size: 0.72rem;"></i>
+            </span>
+            
+            <!-- Tab lists -->
+            <nav class="h-100 ms-2">
+                <ul class="katana-nav-tabs" id="primary-nav-tabs" style="flex-wrap: nowrap !important;">
+                    {% if user.is_manager %}
+                        <li class="katana-nav-item">
+                            <a class="katana-nav-link active" onclick="switchPrimaryTab('home')">
+                                <i class="fa-solid fa-house"></i> Home
+                            </a>
                         </li>
-                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to user personal data inputs...');"><i class="fa-regular fa-circle-user me-2"></i> Account</a></li>
-                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to business details panel...');"><i class="fa-solid fa-briefcase me-2"></i> Company</a></li>
-                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('settings')"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
-                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to team access management...');"><i class="fa-solid fa-users me-2"></i> Team</a></li>
-                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('billing')"><i class="fa-solid fa-credit-card me-2"></i> Subscription</a></li>
-                        <li><hr class="dropdown-divider border-dark"></li>
-                        <li><a class="dropdown-item fw-bold text-danger" href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
-                    </ul>
-                </div>
+                        <li class="katana-nav-item">
+                            <a class="katana-nav-link" onclick="switchPrimaryTab('sell')">
+                                <i class="fa-solid fa-tag"></i> Sell
+                            </a>
+                        </li>
+                        <li class="katana-nav-item">
+                            <a class="katana-nav-link" onclick="switchPrimaryTab('buy')">
+                                <i class="fa-solid fa-cart-shopping"></i> Buy
+                            </a>
+                        </li>
+                        <li class="katana-nav-item">
+                            <a class="katana-nav-link" onclick="switchPrimaryTab('stock')">
+                                <i class="fa-solid fa-table-cells-large"></i> Stock
+                            </a>
+                        </li>
+                        <li class="katana-nav-item">
+                            <a class="katana-nav-link" onclick="switchPrimaryTab('plan')">
+                                <i class="fa-solid fa-calendar-days"></i> Plan
+                            </a>
+                        </li>
+                        <li class="katana-nav-item">
+                            <a class="katana-nav-link" onclick="switchPrimaryTab('insights')">
+                                <i class="fa-solid fa-chart-column"></i> Insights
+                            </a>
+                        </li>
+                        <li class="katana-nav-item">
+                            <a class="katana-nav-link" onclick="switchPrimaryTab('items')">
+                                <i class="fa-solid fa-box"></i> Items
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="katana-nav-item">
+                            <a class="katana-nav-link active" onclick="switchPrimaryTab('fulfillment')">Fulfillment Ledger</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Global Utilities & User Section -->
+        <div class="header-utilities" style="flex-wrap: nowrap !important;">
+            <!-- Book a demo link -->
+            <a href="#" class="text-white-50 text-decoration-none hover-white small me-2 d-none d-xl-inline" style="font-size: 0.8rem;" onclick="alert('Book a demo modal...'); return false;">Book a demo</a>
+            
+            <!-- Upgrade to remove limits link -->
+            <a href="#" class="text-white-50 text-decoration-none hover-white small me-3 d-none d-lg-inline" style="font-size: 0.8rem;" onclick="switchPrimaryTab('billing'); return false;">Upgrade to remove item limits</a>
+            
+            <!-- + Create blue button -->
+            <button class="btn btn-primary px-3 py-1.5 text-white fw-bold d-flex align-items-center gap-1" style="background-color: #2563EB !important; border: none; border-radius: 6px; font-size: 0.8rem;" onclick="alert('Creating new entry...');">
+                <i class="fa-solid fa-plus"></i> Create
+            </button>
+            
+            <!-- System Utility Icons -->
+            <!-- Search -->
+            <button class="utility-icon-btn" title="Search" onclick="alert('Search initiated...');">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            
+            <!-- Megaphone -->
+            <button class="utility-icon-btn" title="Announcements" onclick="alert('No announcements.');">
+                <i class="fa-solid fa-bullhorn"></i>
+            </button>
+            
+            <!-- Help/Support -->
+            <button class="utility-icon-btn" title="Help & Support" onclick="alert('Opening Help Center & Knowledge Base...');">
+                <i class="fa-regular fa-circle-question"></i>
+            </button>
+
+            <!-- Marketplace -->
+            <button class="utility-icon-btn" title="Marketplace / Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');">
+                <i class="fa-solid fa-puzzle-piece"></i>
+            </button>
+
+            <!-- User Dropdown with PC initials badge -->
+            <div class="dropdown">
+                <button class="user-profile-badge dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    PC
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050; min-width: 220px;">
+                    <li class="px-3 py-2 border-bottom mb-2 text-start">
+                        <div class="small text-secondary" style="font-size: 0.72rem; word-break: break-all;">singhigone@gmail.com</div>
+                        <div class="fw-bold text-dark" style="font-size: 0.9rem;">Parth Choudhary</div>
+                    </li>
+                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to user personal data inputs...');"><i class="fa-regular fa-circle-user me-2"></i> Account</a></li>
+                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to business details panel...');"><i class="fa-solid fa-briefcase me-2"></i> Company</a></li>
+                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('settings')"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to team access management...');"><i class="fa-solid fa-users me-2"></i> Team</a></li>
+                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('billing')"><i class="fa-solid fa-credit-card me-2"></i> Subscription</a></li>
+                    <li><hr class="dropdown-divider border-dark"></li>
+                    <li><a class="dropdown-item fw-bold text-danger" href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
+                </ul>
             </div>
         </div>
     </header>
@@ -566,7 +600,7 @@
     </div>
 
     <!-- Main Content Panel -->
-    <main class="flex-grow-1 py-4 px-8" style="padding-left: 32px !important; padding-right: 32px !important;">
+    <main class="flex-grow-1 px-8" style="padding-top: 112px !important; padding-bottom: 24px !important; padding-left: 32px !important; padding-right: 32px !important;">
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>
