@@ -89,7 +89,7 @@
             display: flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
-            align-items: center !important;
+            align-items: stretch !important;
             justify-content: space-between !important;
             box-sizing: border-box;
             overflow: visible !important;
@@ -609,14 +609,14 @@
 
         <!-- Tier 2: Primary Navigation Header -->
         <header class="katana-navbar">
-            <div class="d-flex align-items-center h-100" style="flex-wrap: nowrap !important; flex-grow: 1;">
+            <div class="d-flex align-items-stretch h-100" style="flex-wrap: nowrap !important; flex-grow: 1;">
                 <!-- Brand logo -->
                 <a class="katana-brand" href="{% url 'landing' %}">
                     avis ai
                 </a>
                 
                 <!-- Hamburger Toggle Button for Mobile Navigation -->
-                <button class="mobile-nav-toggle btn text-white d-lg-none p-0 ms-auto me-3" type="button" onclick="toggleMobileNav()" style="background: transparent; border: none;">
+                <button class="mobile-nav-toggle btn text-white d-lg-none p-0 ms-auto me-3 align-self-center" type="button" onclick="toggleMobileNav()" style="background: transparent; border: none; display: inline-flex; align-items: center;">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
 
