@@ -58,7 +58,7 @@
             position: relative !important;
             width: 100% !important;
             height: 38px !important;
-            background-color: #f4f7f5 !important; /* Sage green / off-white */
+            background-color: #f1f5f3 !important; /* Mint-green / off-white */
             border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
             display: flex;
             align-items: center;
@@ -80,7 +80,7 @@
 
         /* Tier 2: Top Header Navbar */
         .katana-navbar {
-            background-color: #0f1d2a !important; /* Primary Accent Color */
+            background-color: #0f2133 !important; /* Dark Navy Accent Color */
             border-bottom: 1px solid #1f2d3d;
             padding: 0 24px !important; /* px-6 */
             height: 64px !important; /* h-16 */
@@ -160,7 +160,7 @@
         }
 
         .katana-nav-link.active {
-            background-color: #202e3b !important; /* Active Tab Color block */
+            background-color: #223a52 !important; /* Active Tab Color block */
             color: #ffffff !important;
         }
 
@@ -169,7 +169,7 @@
             position: relative !important;
             width: 100% !important;
             height: 44px !important;
-            background-color: #ffffff !important; /* Solid white */
+            background-color: #f4f4f4 !important; /* Light Grey background */
             border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
             padding: 0 24px !important; /* px-6 */
             display: flex !important;
@@ -196,8 +196,11 @@
             transition: color 0.15s;
             cursor: pointer;
             white-space: nowrap;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            height: 100%;
             flex-shrink: 0 !important;
+            box-sizing: border-box;
         }
 
         .sub-nav-link:hover {
@@ -205,8 +208,9 @@
         }
 
         .sub-nav-link.active {
-            color: #182c4f !important;
+            color: #2563eb !important; /* Solid blue active text */
             font-weight: 700;
+            border-bottom: 2px solid #2563eb !important; /* Solid blue active bottom border */
             background-color: transparent !important;
             box-shadow: none !important;
             border-radius: 0 !important;
@@ -612,7 +616,7 @@
             <div class="d-flex align-items-stretch h-100" style="flex-wrap: nowrap !important; flex-grow: 1;">
                 <!-- Brand logo -->
                 <a class="katana-brand" href="{% url 'landing' %}">
-                    avis ai
+                    katana
                 </a>
                 
                 <!-- Hamburger Toggle Button for Mobile Navigation -->
