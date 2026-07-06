@@ -40,15 +40,25 @@
             padding: 0;
         }
 
-        /* Tier 1: Top Utility Bar */
-        .top-utility-bar {
+        /* Unified Fixed Top Header Wrapper */
+        .fixed-top-header-wrapper {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
             width: 100% !important;
+            z-index: 1040 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            box-sizing: border-box;
+            background-color: #ffffff;
+        }
+
+        /* Tier 1: Top Utility Bar */
+        .top-utility-bar {
+            position: relative !important;
+            width: 100% !important;
             height: 38px !important;
             background-color: #f4f7f5 !important; /* Sage green / off-white */
-            z-index: 1060;
             border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
             display: flex;
             align-items: center;
@@ -68,17 +78,14 @@
             text-decoration: underline !important;
         }
 
-        /* Tier 2: Top Header Navbar - Fixed Top */
+        /* Tier 2: Top Header Navbar */
         .katana-navbar {
             background-color: #0f1d2a !important; /* Primary Accent Color */
             border-bottom: 1px solid #1f2d3d;
             padding: 0 24px !important; /* px-6 */
             height: 64px !important; /* h-16 */
-            position: fixed !important;
-            top: 38px !important; /* Below top-utility-bar */
-            left: 0 !important;
+            position: relative !important;
             width: 100% !important;
-            z-index: 9999 !important;
             display: flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
@@ -104,6 +111,8 @@
             text-decoration: none;
             margin-right: 24px;
             flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            min-width: fit-content !important;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
@@ -155,17 +164,14 @@
             color: #ffffff !important;
         }
 
-        /* Tier 3: Sub-Navigation Bar - Fixed Below Navbar */
+        /* Tier 3: Sub-Navigation Bar */
         .sub-nav-bar {
-            position: fixed !important;
-            top: 102px !important; /* 38px + 64px */
-            left: 0 !important;
+            position: relative !important;
             width: 100% !important;
             height: 44px !important;
             background-color: #ffffff !important; /* Solid white */
             border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
             padding: 0 24px !important; /* px-6 */
-            z-index: 9998 !important;
             display: flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
@@ -521,16 +527,48 @@
         }
 
         /* Responsive Navigation Overlaps Fixes */
+        .mobile-nav-dropdown {
+            background-color: #0f1d2a !important;
+            border-bottom: 1px solid #1f2d3d;
+            width: 100%;
+        }
+        .mobile-nav-list {
+            padding: 8px 16px !important;
+            margin: 0 !important;
+            list-style: none !important;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mobile-nav-link {
+            color: #9ca3af !important;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 16px !important;
+            display: block;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+        }
+        .mobile-nav-link:hover, .mobile-nav-link.active {
+            color: #ffffff !important;
+            background-color: #202e3b !important;
+        }
+
         @media (max-width: 991.98px) {
-            .katana-nav-link span {
-                display: none !important;
-            }
-            .katana-nav-link {
-                padding: 0 12px !important;
+            .katana-navbar nav {
+                display: none !important; /* Hide standard tabs row on mobile */
             }
             .katana-brand {
                 font-size: 1.25rem !important;
                 margin-right: 12px !important;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .top-utility-bar .top-utility-link {
+                display: none !important; /* Hide links on small viewports to keep single-row */
             }
         }
     </style>
@@ -538,155 +576,181 @@
 </head>
 <body>
 
-    <!-- Tier 1: Top Utility Bar -->
-    <div class="top-utility-bar">
-        <div class="d-flex align-items-center h-100 px-4 justify-content-between w-100">
-            <!-- Left Side: Sparkle Logo & Plan Details -->
-            <div class="d-flex align-items-center" style="gap: 12px;">
-                <span class="text-emerald-600 font-bold text-sm" style="font-size: 14px; font-weight: 700; color: #10b981;">✦</span>
-                <div class="d-flex flex-column text-start" style="line-height: 1.2;">
-                    <span class="font-bold text-[#2d4a3e]" style="font-weight: 700; color: #2d4a3e; font-size: 12px;">Free plan</span>
-                    <div class="d-flex align-items-center mt-0.5" style="gap: 4px;">
-                        <span class="border border-gray-400 rounded-full px-1.5 py-0.2 font-bold text-gray-700 bg-white scale-90 origin-left" style="border: 1px solid #9ca3af; border-radius: 9999px; padding: 1px 6px; font-weight: 700; color: #374151; background-color: #ffffff; font-size: 10px; transform: scale(0.9); transform-origin: left; display: inline-block;">0/30</span>
-                        <span class="text-gray-500 font-medium" style="color: #6b7280; font-weight: 500; font-size: 11px;">items in use</span>
-                        <svg class="w-3.5 h-3.5 text-gray-400 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px; color: #9ca3af; display: inline-block;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <!-- Unified Top Fixed Header Wrapper -->
+    <div class="fixed-top-header-wrapper">
+        <!-- Tier 1: Top Utility Bar -->
+        <div class="top-utility-bar">
+            <div class="d-flex align-items-center h-100 px-4 justify-content-between w-100">
+                <!-- Left Side: Sparkle Logo & Plan Details -->
+                <div class="d-flex align-items-center" style="gap: 12px;">
+                    <span class="text-emerald-600 font-bold text-sm" style="font-size: 14px; font-weight: 700; color: #10b981;">✦</span>
+                    <div class="d-flex flex-column text-start" style="line-height: 1.2;">
+                        <span class="font-bold text-[#2d4a3e]" style="font-weight: 700; color: #2d4a3e; font-size: 12px;">Free plan</span>
+                        <div class="d-flex align-items-center mt-0.5" style="gap: 4px;">
+                            <span class="border border-gray-400 rounded-full px-1.5 py-0.2 font-bold text-gray-700 bg-white scale-90 origin-left" style="border: 1px solid #9ca3af; border-radius: 9999px; padding: 1px 6px; font-weight: 700; color: #374151; background-color: #ffffff; font-size: 10px; transform: scale(0.9); transform-origin: left; display: inline-block;">0/30</span>
+                            <span class="text-gray-500 font-medium" style="color: #6b7280; font-weight: 500; font-size: 11px;">items in use</span>
+                            <svg class="w-3.5 h-3.5 text-gray-400 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px; color: #9ca3af; display: inline-block;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Right Side: Action Links -->
-            <div class="d-flex align-items-center gap-4">
-                <a href="#" class="top-utility-link d-flex align-items-center" onclick="alert('Book a demo modal...'); return false;">
-                    <svg class="w-4 h-4 text-[#2d4a3e]" fill="currentColor" viewBox="0 0 20 20" style="width: 16px; height: 16px; margin-right: 6px; color: #2d4a3e;"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
-                    <span>Book a demo</span>
-                </a>
-                <a href="#" class="top-utility-link d-flex align-items-center" onclick="switchPrimaryTab('billing'); return false;">
-                    <svg class="w-4 h-4 text-[#2d4a3e]" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; margin-right: 6px; color: #2d4a3e;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-                    <span>Upgrade to remove item limits</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- Tier 2: Primary Navigation Header -->
-    <header class="katana-navbar">
-        <div class="d-flex align-items-center h-100" style="flex-wrap: nowrap !important;">
-            <!-- Brand logo -->
-            <a class="katana-brand" href="{% url 'landing' %}">
-                avis ai
-            </a>
-            
-            <!-- Tab lists -->
-            <nav class="h-100">
-                <ul class="katana-nav-tabs" id="primary-nav-tabs" style="flex-wrap: nowrap !important;">
-                    {% if user.is_manager %}
-                        <li class="katana-nav-item">
-                            <a class="katana-nav-link active" onclick="switchPrimaryTab('home')">
-                                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                                <span>Home</span>
-                            </a>
-                        </li>
-                        <li class="katana-nav-item">
-                            <a class="katana-nav-link" onclick="switchPrimaryTab('sell')">
-                                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                <span>Sell</span>
-                            </a>
-                        </li>
-                        <li class="katana-nav-item">
-                            <a class="katana-nav-link" onclick="switchPrimaryTab('buy')">
-                                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                                <span>Buy</span>
-                            </a>
-                        </li>
-                        <li class="katana-nav-item">
-                            <a class="katana-nav-link" onclick="switchPrimaryTab('stock')">
-                                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                                <span>Stock</span>
-                            </a>
-                        </li>
-                        <li class="katana-nav-item">
-                            <a class="katana-nav-link" onclick="switchPrimaryTab('plan')">
-                                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                <span>Plan</span>
-                            </a>
-                        </li>
-                        <li class="katana-nav-item">
-                            <a class="katana-nav-link" onclick="switchPrimaryTab('insights')">
-                                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2"></path></svg>
-                                <span>Insights</span>
-                            </a>
-                        </li>
-                        <li class="katana-nav-item">
-                            <a class="katana-nav-link" onclick="switchPrimaryTab('items')">
-                                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
-                                <span>Items</span>
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="katana-nav-item">
-                            <a class="katana-nav-link active" onclick="switchPrimaryTab('fulfillment')">Fulfillment Ledger</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-        
-        <!-- Global Action & System Icons (Right Side) -->
-        <div class="header-utilities h-100 d-flex align-items-center" style="flex-wrap: nowrap !important; gap: 16px;">
-            <!-- Quick Create button -->
-            <button class="flex items-center space-x-1 bg-white text-gray-900 font-semibold px-3 py-1.5 rounded text-sm hover:bg-gray-100 transition-colors" style="background-color: #ffffff; color: #111827; font-weight: 600; padding: 6px 12px; border-radius: 4px; border: none; font-size: 14px; display: flex; align-items: center; gap: 4px; flex-shrink: 0;" onclick="alert('Creating new entry...');">
-                <svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke-width: 2; margin-right: 4px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                <span>Create</span>
-            </button>
-            
-            <!-- Divider -->
-            <div style="width: 1px; height: 24px; background-color: #374151; margin: 0 4px;"></div>
-            
-            <!-- System Utility Icons -->
-            <div class="d-flex align-items-center" style="gap: 16px;">
-                <button class="utility-icon-btn d-none d-xl-inline-flex" title="App Launcher" onclick="alert('Opening Grid Search Launcher...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-                
-                <button class="utility-icon-btn d-none d-lg-inline-flex" title="Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
-                </button>
- 
-                <button class="utility-icon-btn d-none d-md-inline-flex" title="Notifications" onclick="alert('No announcements.');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                </button>
-                
-                <button class="utility-icon-btn d-none d-lg-inline-flex" title="Help Center" onclick="alert('Opening Help Center & Knowledge Base...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </button>
-            </div>
- 
-            <!-- User Dropdown with PC initials badge -->
-            <div class="dropdown">
-                <button class="user-profile-badge dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent; border: none; padding: 0;">
-                    <div class="w-8 h-8 rounded-full bg-[#52606d] text-white flex items-center justify-center font-bold text-xs shadow-inner" style="width: 32px; height: 32px; border-radius: 50%; background-color: #52606d; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.06);">
-                        PC
-                    </div>
-                    <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 12px; height: 12px; margin-left: 4px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050; min-width: 220px;">
-                    <li class="px-3 py-2 border-bottom mb-2 text-start">
-                        <div class="small text-secondary" style="font-size: 0.72rem; word-break: break-all;">singhigone@gmail.com</div>
-                        <div class="fw-bold text-dark" style="font-size: 0.9rem;">Parth Choudhary</div>
-                    </li>
-                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to user personal data inputs...');"><i class="fa-regular fa-circle-user me-2"></i> Account</a></li>
-                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to business details panel...');"><i class="fa-solid fa-briefcase me-2"></i> Company</a></li>
-                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('settings')"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
-                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to team access management...');"><i class="fa-solid fa-users me-2"></i> Team</a></li>
-                    <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('billing')"><i class="fa-solid fa-credit-card me-2"></i> Subscription</a></li>
-                    <li><hr class="dropdown-divider border-dark"></li>
-                    <li><a class="dropdown-item fw-bold text-danger" href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
-                </ul>
+                <!-- Right Side: Action Links -->
+                <div class="d-flex align-items-center gap-4">
+                    <a href="#" class="top-utility-link d-flex align-items-center" onclick="alert('Book a demo modal...'); return false;">
+                        <svg class="w-4 h-4 text-[#2d4a3e]" fill="currentColor" viewBox="0 0 20 20" style="width: 16px; height: 16px; margin-right: 6px; color: #2d4a3e;"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                        <span>Book a demo</span>
+                    </a>
+                    <a href="#" class="top-utility-link d-flex align-items-center" onclick="switchPrimaryTab('billing'); return false;">
+                        <svg class="w-4 h-4 text-[#2d4a3e]" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; margin-right: 6px; color: #2d4a3e;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                        <span>Upgrade to remove item limits</span>
+                    </a>
+                </div>
             </div>
         </div>
-    </header>
 
-    <!-- Sub-Navigation Row -->
-    <div class="sub-nav-bar" id="sub-nav-bar-container">
-        <!-- Sub links will be injected here dynamically by JavaScript -->
+        <!-- Tier 2: Primary Navigation Header -->
+        <header class="katana-navbar">
+            <div class="d-flex align-items-center h-100" style="flex-wrap: nowrap !important; flex-grow: 1;">
+                <!-- Brand logo -->
+                <a class="katana-brand" href="{% url 'landing' %}">
+                    avis ai
+                </a>
+                
+                <!-- Hamburger Toggle Button for Mobile Navigation -->
+                <button class="mobile-nav-toggle btn text-white d-lg-none p-0 ms-auto me-3" type="button" onclick="toggleMobileNav()" style="background: transparent; border: none;">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+
+                <!-- Tab lists (Desktop) -->
+                <nav class="h-100">
+                    <ul class="katana-nav-tabs" id="primary-nav-tabs" style="flex-wrap: nowrap !important;">
+                        {% if user.is_manager %}
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link active" onclick="switchPrimaryTab('home')">
+                                    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('sell')">
+                                    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    <span>Sell</span>
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('buy')">
+                                    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                                    <span>Buy</span>
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('stock')">
+                                    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                                    <span>Stock</span>
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('plan')">
+                                    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    <span>Plan</span>
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('insights')">
+                                    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2"></path></svg>
+                                    <span>Insights</span>
+                                </a>
+                            </li>
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link" onclick="switchPrimaryTab('items')">
+                                    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-bottom: 2px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                                    <span>Items</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="katana-nav-item">
+                                <a class="katana-nav-link active" onclick="switchPrimaryTab('fulfillment')">Fulfillment Ledger</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- Global Action & System Icons (Right Side) -->
+            <div class="header-utilities h-100 d-flex align-items-center" style="flex-wrap: nowrap !important; gap: 16px;">
+                <!-- Quick Create button -->
+                <button class="flex items-center space-x-1 bg-white text-gray-900 font-semibold px-3 py-1.5 rounded text-sm hover:bg-gray-100 transition-colors" style="background-color: #ffffff; color: #111827; font-weight: 600; padding: 6px 12px; border-radius: 4px; border: none; font-size: 14px; display: flex; align-items: center; gap: 4px; flex-shrink: 0;" onclick="alert('Creating new entry...');">
+                    <svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke-width: 2; margin-right: 4px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>Create</span>
+                </button>
+                
+                <!-- Divider -->
+                <div style="width: 1px; height: 24px; background-color: #374151; margin: 0 4px;"></div>
+                
+                <!-- System Utility Icons -->
+                <div class="d-flex align-items-center" style="gap: 16px;">
+                    <button class="utility-icon-btn d-none d-xl-inline-flex" title="App Launcher" onclick="alert('Opening Grid Search Launcher...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    
+                    <button class="utility-icon-btn d-none d-lg-inline-flex" title="Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
+                    </button>
+     
+                    <button class="utility-icon-btn d-none d-md-inline-flex" title="Notifications" onclick="alert('No announcements.');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                    </button>
+                    
+                    <button class="utility-icon-btn d-none d-lg-inline-flex" title="Help Center" onclick="alert('Opening Help Center & Knowledge Base...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </button>
+                </div>
+     
+                <!-- User Dropdown with PC initials badge -->
+                <div class="dropdown">
+                    <button class="user-profile-badge dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent; border: none; padding: 0;">
+                        <div class="w-8 h-8 rounded-full bg-[#52606d] text-white flex items-center justify-center font-bold text-xs shadow-inner" style="width: 32px; height: 32px; border-radius: 50%; background-color: #52606d; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.06);">
+                            PC
+                        </div>
+                        <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 12px; height: 12px; margin-left: 4px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050; min-width: 220px;">
+                        <li class="px-3 py-2 border-bottom mb-2 text-start">
+                            <div class="small text-secondary" style="font-size: 0.72rem; word-break: break-all;">singhigone@gmail.com</div>
+                            <div class="fw-bold text-dark" style="font-size: 0.9rem;">Parth Choudhary</div>
+                        </li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to user personal data inputs...');"><i class="fa-regular fa-circle-user me-2"></i> Account</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to business details panel...');"><i class="fa-solid fa-briefcase me-2"></i> Company</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('settings')"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to team access management...');"><i class="fa-solid fa-users me-2"></i> Team</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('billing')"><i class="fa-solid fa-credit-card me-2"></i> Subscription</a></li>
+                        <li><hr class="dropdown-divider border-dark"></li>
+                        <li><a class="dropdown-item fw-bold text-danger" href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div class="mobile-nav-dropdown d-none" id="mobileNavDropdown">
+            <ul class="mobile-nav-list p-3 mb-0 list-unstyled text-start">
+                {% if user.is_manager %}
+                    <li><a class="mobile-nav-link active" onclick="switchPrimaryTab('home'); toggleMobileNav();">Home</a></li>
+                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('sell'); toggleMobileNav();">Sell</a></li>
+                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('buy'); toggleMobileNav();">Buy</a></li>
+                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('stock'); toggleMobileNav();">Stock</a></li>
+                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('plan'); toggleMobileNav();">Plan</a></li>
+                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('insights'); toggleMobileNav();">Insights</a></li>
+                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('items'); toggleMobileNav();">Items</a></li>
+                {% else %}
+                    <li><a class="mobile-nav-link active" onclick="switchPrimaryTab('fulfillment'); toggleMobileNav();">Fulfillment Ledger</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- Tier 3: Sub-Navigation Row -->
+        <div class="sub-nav-bar" id="sub-nav-bar-container">
+            <!-- Sub links will be injected here dynamically by JavaScript -->
+        </div>
     </div>
 
     <!-- Public Message Notification system -->
@@ -772,6 +836,13 @@
         // Check if the current page is the manager dashboard
         const isDashboardPage = window.location.pathname.includes('dashboard') || window.location.pathname === '/';
 
+        function toggleMobileNav() {
+            const dropdown = document.getElementById('mobileNavDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('d-none');
+            }
+        }
+
         function switchPrimaryTab(tabName, selectSubId = null) {
             // If not on the dashboard page, redirect to the dashboard with the appropriate hash
             if (!isDashboardPage) {
@@ -786,6 +857,20 @@
             const tabsContainer = document.getElementById('primary-nav-tabs');
             if (tabsContainer) {
                 const links = tabsContainer.getElementsByTagName('a');
+                for (let link of links) {
+                    const onclickAttr = link.getAttribute('onclick') || '';
+                    if (onclickAttr.includes(`'${tabName}'`)) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                }
+            }
+
+            // Update active states in Mobile nav dropdown
+            const mobileDropdown = document.getElementById('mobileNavDropdown');
+            if (mobileDropdown) {
+                const links = mobileDropdown.getElementsByTagName('a');
                 for (let link of links) {
                     const onclickAttr = link.getAttribute('onclick') || '';
                     if (onclickAttr.includes(`'${tabName}'`)) {
