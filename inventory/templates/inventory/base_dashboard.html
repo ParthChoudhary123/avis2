@@ -582,6 +582,35 @@
 
     <!-- Unified Top Fixed Header Wrapper -->
     <div class="fixed-top-header-wrapper">
+        <!-- Tier 1: Top Utility Bar -->
+        <div class="top-utility-bar">
+            <div class="d-flex align-items-center h-100 px-4 justify-content-between w-100">
+                <!-- Left Side: Sparkle Logo & Plan Details -->
+                <div class="d-flex align-items-center" style="gap: 12px;">
+                    <span class="text-emerald-600 font-bold text-sm" style="font-size: 14px; font-weight: 700; color: #10b981;">✦</span>
+                    <div class="d-flex flex-column text-start" style="line-height: 1.2;">
+                        <span class="font-bold text-[#2d4a3e]" style="font-weight: 700; color: #2d4a3e; font-size: 12px;">Free plan</span>
+                        <div class="d-flex align-items-center mt-0.5" style="gap: 4px;">
+                            <span class="border border-gray-400 rounded-full px-1.5 py-0.2 font-bold text-gray-700 bg-white scale-90 origin-left" style="border: 1px solid #9ca3af; border-radius: 9999px; padding: 1px 6px; font-weight: 700; color: #374151; background-color: #ffffff; font-size: 10px; transform: scale(0.9); transform-origin: left; display: inline-block;">0/30</span>
+                            <span class="text-gray-500 font-medium" style="color: #6b7280; font-weight: 500; font-size: 11px;">items in use</span>
+                            <svg class="w-3.5 h-3.5 text-gray-400 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px; color: #9ca3af; display: inline-block;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Side: Action Links -->
+                <div class="d-flex align-items-center gap-4">
+                    <a href="#" class="top-utility-link d-flex align-items-center" onclick="alert('Book a demo modal...'); return false;">
+                        <svg class="w-4 h-4 text-[#2d4a3e]" fill="currentColor" viewBox="0 0 20 20" style="width: 16px; height: 16px; margin-right: 6px; color: #2d4a3e;"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                        <span>Book a demo</span>
+                    </a>
+                    <a href="#" class="top-utility-link d-flex align-items-center" onclick="switchPrimaryTab('billing'); return false;">
+                        <svg class="w-4 h-4 text-[#2d4a3e]" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; margin-right: 6px; color: #2d4a3e;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                        <span>Upgrade to remove item limits</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <!-- Tier 2: Primary Navigation Header -->
         <header class="katana-navbar">
             <div class="d-flex align-items-stretch h-100" style="flex-wrap: nowrap !important; flex-grow: 1;">
@@ -653,8 +682,8 @@
             <!-- Global Action & System Icons (Right Side) -->
             <div class="header-utilities h-100 d-flex align-items-center" style="flex-wrap: nowrap !important; gap: 16px;">
                 <!-- Quick Create button -->
-                <button class="flex items-center space-x-1 bg-white text-gray-900 font-semibold px-3 py-1.5 rounded text-sm hover:bg-gray-100 transition-colors" style="background-color: #ffffff; color: #111827; font-weight: 600; padding: 6px 12px; border-radius: 4px; border: none; font-size: 14px; display: flex; align-items: center; gap: 4px; flex-shrink: 0;" onclick="alert('Creating new entry...');">
-                    <svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke-width: 2; margin-right: 4px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                <button class="btn btn-outline-light d-flex align-items-center" style="color: #ffffff; border-color: rgba(255,255,255,0.4); background-color: transparent; font-weight: 600; padding: 6px 12px; border-radius: 4px; font-size: 14px; gap: 4px; flex-shrink: 0; line-height: 1;" onclick="alert('Creating new entry...');">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px; margin-right: 2px; color: #ffffff; stroke-width: 3;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
                     <span>Create</span>
                 </button>
                 
@@ -663,20 +692,26 @@
                 
                 <!-- System Utility Icons -->
                 <div class="d-flex align-items-center" style="gap: 16px;">
-                    <button class="utility-icon-btn d-none d-xl-inline-flex" title="App Launcher" onclick="alert('Opening Grid Search Launcher...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <button class="utility-icon-btn d-none d-xl-inline-flex" title="App Launcher" onclick="alert('Opening Grid Search Launcher...');" style="background: none; border: none; padding: 0; color: #9ca3af; cursor: pointer; display: inline-flex; align-items: center;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af; stroke-width: 2;">
+                            <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+                            <rect x="13" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+                            <rect x="3" y="13" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="16" cy="16" r="2.5" stroke="currentColor" stroke-width="2"/>
+                            <path d="M18 18l2.5 2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
                     </button>
                     
-                    <button class="utility-icon-btn d-none d-lg-inline-flex" title="Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
+                    <button class="utility-icon-btn d-none d-lg-inline-flex" title="Integrations" onclick="alert('Opening Marketplace (Shopify, QuickBooks, WooCommerce)...');" style="background: none; border: none; padding: 0; color: #9ca3af; cursor: pointer;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
                     </button>
      
-                    <button class="utility-icon-btn d-none d-md-inline-flex" title="Notifications" onclick="alert('No announcements.');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                    <button class="utility-icon-btn d-none d-md-inline-flex" title="Notifications" onclick="alert('No announcements.');" style="background: none; border: none; padding: 0; color: #9ca3af; cursor: pointer;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                     </button>
                     
-                    <button class="utility-icon-btn d-none d-lg-inline-flex" title="Help Center" onclick="alert('Opening Help Center & Knowledge Base...');" style="background: none; border: none; padding: 0; color: #d1d5db; cursor: pointer;">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <button class="utility-icon-btn d-none d-lg-inline-flex" title="Help Center" onclick="alert('Opening Help Center & Knowledge Base...');" style="background: none; border: none; padding: 0; color: #9ca3af; cursor: pointer;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </button>
                 </div>
      
@@ -745,7 +780,7 @@
     </div>
 
     <!-- Main Content Panel -->
-    <main class="flex-grow-1 px-8" style="padding-top: 132px !important; padding-bottom: 24px !important; padding-left: 32px !important; padding-right: 32px !important;">
+    <main class="flex-grow-1 px-8" style="padding-top: 170px !important; padding-bottom: 24px !important; padding-left: 32px !important; padding-right: 32px !important;">
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>
