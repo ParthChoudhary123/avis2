@@ -311,7 +311,7 @@
                     <!-- Action buttons -->
                     <div class="d-flex flex-wrap gap-2">
                         <button class="btn btn-stroke-grey btn-sm" onclick="alert('Connecting Shopify API import...');">Import from Shopify</button>
-                        <button class="btn btn-stroke-grey btn-sm" onclick="alert('Select spreadsheet payload file...');">Upload from spreadsheet</button>
+                        <button class="btn btn-stroke-grey btn-sm" onclick="showAssistedImportView()">Upload from spreadsheet</button>
                         <a href="{% url 'product_create' %}" class="btn btn-solid-blue btn-sm">Create manually</a>
                     </div>
                 </div>
@@ -422,6 +422,93 @@
                     <li>Convert to an active Sales Order upon acceptance.</li>
                 </ol>
             </div>
+        </div>
+    </div>
+
+    <!-- ==================== TAB VIEW 2A: HOME / ASSISTED IMPORT ==================== -->
+    <div class="dashboard-view-container" id="view-assisted-import" style="background-color: #FFFFFF !important; padding: 0 !important;">
+        <div class="bg-white p-4 p-md-5 rounded border shadow-sm" style="border-color: #E5E7EB !important; border-radius: 8px; max-width: 1500px; margin: 0 auto; font-family: 'Inter', sans-serif;">
+            
+            <!-- HEADER ZONE -->
+            <div class="text-start mb-4">
+                <h2 style="font-size: 18px; font-weight: 600; color: #111827; margin: 0 0 4px 0; font-family: 'Outfit', 'Inter', sans-serif;">Assisted Import</h2>
+                <p style="font-size: 13px; color: #6B7280; margin: 0; line-height: 1.5;">
+                    Import your data by uploading a spreadsheet. Select the type of data you'd like to import to get started.
+                </p>
+            </div>
+
+            <!-- HORIZONTAL INTERACTIVE TABS CHIPS (6-Option Row) -->
+            <div class="d-flex flex-wrap gap-2 mb-3 align-items-center" style="margin-bottom: 16px !important;">
+                <!-- Option 1: Active Product Tab -->
+                <button class="btn btn-sm d-flex align-items-center gap-2" style="background-color: #2563EB; color: #FFFFFF; font-weight: 600; font-size: 12px; padding: 8px 16px; border: 1px solid #2563EB; border-radius: 6px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                    <i class="fa-solid fa-store" style="font-size: 12px;"></i>
+                    <span>Products</span>
+                </button>
+                <!-- Option 2: Materials -->
+                <button class="btn btn-sm d-flex align-items-center gap-2 text-secondary" style="border: 1px solid #D1D5DB; background: transparent; color: #374151; font-weight: 500; font-size: 12px; padding: 8px 16px; border-radius: 6px;">
+                    <i class="fa-solid fa-shapes" style="color: #9CA3AF; font-size: 12px;"></i>
+                    <span>Materials</span>
+                </button>
+                <!-- Option 3: Suppliers -->
+                <button class="btn btn-sm d-flex align-items-center gap-2 text-secondary" style="border: 1px solid #D1D5DB; background: transparent; color: #374151; font-weight: 500; font-size: 12px; padding: 8px 16px; border-radius: 6px;">
+                    <i class="fa-solid fa-building" style="color: #9CA3AF; font-size: 12px;"></i>
+                    <span>Suppliers</span>
+                </button>
+                <!-- Option 4: Customers -->
+                <button class="btn btn-sm d-flex align-items-center gap-2 text-secondary" style="border: 1px solid #D1D5DB; background: transparent; color: #374151; font-weight: 500; font-size: 12px; padding: 8px 16px; border-radius: 6px;">
+                    <i class="fa-solid fa-users" style="color: #9CA3AF; font-size: 12px;"></i>
+                    <span>Customers</span>
+                </button>
+                <!-- Option 5: Stock Levels -->
+                <button class="btn btn-sm d-flex align-items-center gap-2 text-secondary" style="border: 1px solid #D1D5DB; background: transparent; color: #374151; font-weight: 500; font-size: 12px; padding: 8px 16px; border-radius: 6px;">
+                    <i class="fa-solid fa-list-check" style="color: #9CA3AF; font-size: 12px;"></i>
+                    <span>Stock Levels</span>
+                </button>
+                <!-- Option 6: Recipe/BOM -->
+                <button class="btn btn-sm d-flex align-items-center gap-2 text-secondary" style="border: 1px solid #D1D5DB; background: transparent; color: #374151; font-weight: 500; font-size: 12px; padding: 8px 16px; border-radius: 6px;">
+                    <i class="fa-solid fa-sitemap" style="color: #9CA3AF; font-size: 12px;"></i>
+                    <span>Product recipe/BOM</span>
+                </button>
+            </div>
+
+            <!-- DECORATIVE/INFO COLLAPSIBLE ACCORDION CONTAINER BAR -->
+            <div class="w-full d-flex justify-content-between align-items-center mb-4" style="background-color: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 6px; padding: 12px 16px; margin-bottom: 24px !important;">
+                <div class="d-flex align-items-center gap-2 text-primary fw-medium text-xs" style="font-size: 13px; color: #1E40AF; font-weight: 500;">
+                    <i class="fa-solid fa-circle-info" style="color: #2563EB; font-size: 14px; margin-right: 4px;"></i>
+                    <span class="hover-underline" style="cursor: pointer;" onclick="alert('Information drawer details...');">About assisted importing ↓</span>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="color: #2563EB; font-size: 12px; cursor: pointer;" onclick="alert('Information drawer details...');"></i>
+            </div>
+
+            <!-- MAIN DASHED DROPZONE CANVAS INTERFACE -->
+            <div class="border-2 text-center d-flex flex-column align-items-center justify-content-center" style="border: 2px dashed #D1D5DB; border-radius: 8px; padding: 48px; background-color: #FFFFFF; min-height: 340px; transition: border-color 0.15s ease;" onmouseover="this.style.borderColor='#9CA3AF'" onmouseout="this.style.borderColor='#D1D5DB'">
+                <!-- SVG Vector Cloud Placeholder Graphic -->
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: #F9FAFB; color: #9CA3AF; margin-bottom: 16px; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.02);">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 24px;"></i>
+                </div>
+                
+                <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 4px 0;">Drag and drop your file here</h3>
+                <p style="font-size: 12px; color: #6B7280; margin: 0 0 24px 0;">Supported formats: CSV, XLSX, XLS</p>
+
+                <!-- Dynamic inline centered divider string separator widget -->
+                <div class="d-flex align-items-center justify-content-center gap-3 w-100" style="max-width: 240px; margin: 0 auto 24px auto; font-size: 12px; color: #9CA3AF;">
+                    <div style="height: 1px; background-color: #E5E7EB; flex-grow: 1;"></div>
+                    <span style="font-weight: 600; text-transform: uppercase;">or</span>
+                    <div style="height: 1px; background-color: #E5E7EB; flex-grow: 1;"></div>
+                </div>
+
+                <!-- Corporate Blue Final Command Trigger Button Action -->
+                <button class="btn btn-primary d-flex align-items-center gap-2" style="background-color: #1E3A8A !important; border: none; color: #FFFFFF; font-size: 13px; font-weight: 600; padding: 10px 24px; border-radius: 4px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); transition: background-color 0.2s ease;" onmouseover="this.style.backgroundColor='#1e40af'" onmouseout="this.style.backgroundColor='#1E3A8A'" onclick="alert('Upload file action...');">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    <span>Upload file</span>
+                </button>
+            </div>
+
+            <!-- Footer Return Option -->
+            <div class="text-start mt-3">
+                <button class="btn btn-link p-0 text-secondary text-decoration-none small" onclick="closeAssistedImportView();" style="font-size: 12px;"><i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard</button>
+            </div>
+
         </div>
     </div>
 
@@ -1584,6 +1671,28 @@
             box.classList.remove('active-view');
         });
         const activeBox = document.getElementById('view-quotes');
+        if (activeBox) {
+            activeBox.classList.add('active-view');
+        }
+    }
+
+    function showAssistedImportView() {
+        const containers = document.querySelectorAll('.dashboard-view-container');
+        containers.forEach(box => {
+            box.classList.remove('active-view');
+        });
+        const activeBox = document.getElementById('view-assisted-import');
+        if (activeBox) {
+            activeBox.classList.add('active-view');
+        }
+    }
+
+    function closeAssistedImportView() {
+        const containers = document.querySelectorAll('.dashboard-view-container');
+        containers.forEach(box => {
+            box.classList.remove('active-view');
+        });
+        const activeBox = document.getElementById('view-dashboard-overview');
         if (activeBox) {
             activeBox.classList.add('active-view');
         }
