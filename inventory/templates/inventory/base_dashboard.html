@@ -586,28 +586,6 @@
 
     <!-- Unified Top Fixed Header Wrapper -->
     <div class="fixed-top-header-wrapper">
-        <!-- Tier 1: Top Utility Bar -->
-        <div class="top-utility-bar">
-            <div class="d-flex align-items-center h-100 px-4 justify-content-between w-100">
-                <!-- Left Side: Sparkle Logo & Plan Details -->
-                <div class="d-flex align-items-center" style="gap: 8px;">
-                    <span style="background-color: #def7ec; color: #03543f; padding: 2px 8px; border-radius: 9999px; font-weight: 600; font-size: 11px; display: inline-block;">Free plan</span>
-                    <span style="color: #4b5563; font-weight: 500; font-size: 12px;">0 / 30 items in use</span>
-                    <svg class="w-3.5 h-3.5 text-gray-400 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px; color: #9ca3af; display: inline-block;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <!-- Right Side: Action Links -->
-                <div class="d-flex align-items-center" style="gap: 16px;">
-                    <a href="#" class="top-utility-link d-flex align-items-center" onclick="alert('Book a demo modal...'); return false;">
-                        <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20" style="width: 15px; height: 15px; margin-right: 6px; color: #6b7280;"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
-                        <span>Book a demo</span>
-                    </a>
-                    <button class="btn" style="background-color: #f3f4f6; color: #374151; font-weight: 600; padding: 4px 12px; border-radius: 4px; border: none; font-size: 12px;" onclick="switchPrimaryTab('billing');">
-                        Upgrade to remove item limits
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <!-- Tier 2: Primary Navigation Header -->
         <header class="katana-navbar">
             <div class="d-flex align-items-stretch h-100" style="flex-wrap: nowrap !important; flex-grow: 1;">
@@ -780,7 +758,7 @@
     </div>
 
     <!-- Main Content Panel -->
-    <main class="flex-grow-1 px-8" style="padding-top: 176px !important; padding-bottom: 24px !important; padding-left: 32px !important; padding-right: 32px !important;">
+    <main class="flex-grow-1 px-8" style="padding-top: 136px !important; padding-bottom: 24px !important; padding-left: 32px !important; padding-right: 32px !important;">
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>
