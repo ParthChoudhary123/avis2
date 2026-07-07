@@ -696,22 +696,7 @@
             </div>
         </header>
         
-        <!-- Mobile Navigation Menu Dropdown -->
-        <div class="mobile-nav-dropdown d-none" id="mobileNavDropdown">
-            <ul class="mobile-nav-list p-3 mb-0 list-unstyled text-start">
-                {% if user.is_manager %}
-                    <li><a class="mobile-nav-link active" onclick="switchPrimaryTab('home'); toggleMobileNav();">Home</a></li>
-                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('sell'); toggleMobileNav();">Sell</a></li>
-                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('buy'); toggleMobileNav();">Buy</a></li>
-                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('stock'); toggleMobileNav();">Stock</a></li>
-                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('plan'); toggleMobileNav();">Plan</a></li>
-                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('insights'); toggleMobileNav();">Insights</a></li>
-                    <li><a class="mobile-nav-link" onclick="switchPrimaryTab('items'); toggleMobileNav();">Items</a></li>
-                {% else %}
-                    <li><a class="mobile-nav-link active" onclick="switchPrimaryTab('fulfillment'); toggleMobileNav();">Fulfillment Ledger</a></li>
-                {% endif %}
-            </ul>
-        </div>
+
 
         <!-- Layer 2: Module Sub-Tabs & Contextual Utilities -->
         <div class="sub-nav-bar d-flex justify-content-between align-items-center" style="height: 40px !important;">
@@ -807,13 +792,6 @@
         // Check if the current page is the manager dashboard
         const isDashboardPage = window.location.pathname.includes('dashboard') || window.location.pathname === '/';
 
-        function toggleMobileNav() {
-            const dropdown = document.getElementById('mobileNavDropdown');
-            if (dropdown) {
-                dropdown.classList.toggle('d-none');
-            }
-        }
-
         function switchPrimaryTab(tabName, selectSubId = null) {
             // If not on the dashboard page, redirect to the dashboard with the appropriate hash
             if (!isDashboardPage) {
@@ -828,20 +806,6 @@
             const tabsContainer = document.getElementById('primary-nav-tabs');
             if (tabsContainer) {
                 const links = tabsContainer.getElementsByTagName('a');
-                for (let link of links) {
-                    const onclickAttr = link.getAttribute('onclick') || '';
-                    if (onclickAttr.includes(`'${tabName}'`)) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                }
-            }
-
-            // Update active states in Mobile nav dropdown
-            const mobileDropdown = document.getElementById('mobileNavDropdown');
-            if (mobileDropdown) {
-                const links = mobileDropdown.getElementsByTagName('a');
                 for (let link of links) {
                     const onclickAttr = link.getAttribute('onclick') || '';
                     if (onclickAttr.includes(`'${tabName}'`)) {
