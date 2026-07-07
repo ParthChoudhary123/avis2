@@ -587,14 +587,6 @@
 
     <!-- Unified Top Fixed Header Wrapper -->
     <div class="fixed-top-header-wrapper">
-        <!-- Tier 1: Top Utility Bar (Layer 2 Status & Global Sub-Utilities) -->
-        <div class="top-utility-bar">
-            <div class="d-flex align-items-center h-100 px-4 justify-content-end w-100" style="gap: 16px;">
-                <a href="#" style="color: #4B5563; font-size: 12px; font-weight: 500; text-decoration: none; margin-right: 16px;" onclick="alert('Book a demo modal...'); return false;">Book a demo</a>
-                <span style="color: #4B5563; font-size: 12px; font-weight: 500;">Active Session</span>
-            </div>
-        </div>
-
         <!-- Tier 2: Primary Navigation Header -->
         <header class="katana-navbar">
             <div class="d-flex align-items-stretch h-100" style="flex-wrap: nowrap !important; flex-grow: 1;">
@@ -744,9 +736,15 @@
             </ul>
         </div>
 
-        <!-- Tier 3: Sub-Navigation Row -->
-        <div class="sub-nav-bar" id="sub-nav-bar-container">
-            <!-- Sub links will be injected here dynamically by JavaScript -->
+        <!-- Layer 2: Module Sub-Tabs & Contextual Utilities -->
+        <div class="sub-nav-bar d-flex justify-content-between align-items-center" style="height: 40px !important;">
+            <div class="d-flex align-items-center h-100" id="sub-nav-bar-container" style="gap: 24px;">
+                <!-- Sub links will be injected here dynamically by JavaScript -->
+            </div>
+            <div class="d-none d-md-flex align-items-center" style="margin-left: auto; gap: 16px; flex-shrink: 0;">
+                <a href="#" style="color: #4B5563; font-size: 12px; font-weight: 500; text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#4B5563'" onclick="alert('Book a demo modal...'); return false;">Book a Demo</a>
+                <span style="font-size: 11px; color: #9CA3AF;">Active Session</span>
+            </div>
         </div>
     </div>
 
@@ -767,7 +765,7 @@
     </div>
 
     <!-- Main Content Panel -->
-    <main class="flex-grow-1" style="margin-top: 136px !important; padding: 24px !important; max-width: 1600px !important; margin-left: auto !important; margin-right: auto !important; width: 100%;">
+    <main class="flex-grow-1" style="margin-top: 104px !important; padding: 24px !important; max-width: 1600px !important; margin-left: auto !important; margin-right: auto !important; width: 100%;">
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>
