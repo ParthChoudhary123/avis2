@@ -411,7 +411,7 @@
                 <h1 class="h1-main-header">Quotes</h1>
                 <p class="text-secondary">Create and track quotation proposals sent to prospects. When a quote is accepted, it transitions into a sales order cleanly.</p>
                 <a href="#" class="small text-decoration-none fw-bold text-primary mb-4 d-block" onclick="alert('Quotation handbook...'); return false;">Read more about Quotes</a>
-                <button class="btn btn-solid-blue" onclick="alert('Quotes creator loaded.');"><i class="fa-solid fa-plus me-1"></i>Create a quote</button>
+                <button class="btn btn-solid-blue" onclick="showCreateQuoteView()"><i class="fa-solid fa-plus me-1"></i>Create a quote</button>
             </div>
             <!-- Right Column -->
             <div class="col-helper-right text-start p-4 border rounded" style="background-color: #F8FAFC; border-color: #E2E8F0 !important;">
@@ -421,6 +421,264 @@
                     <li>Email the quote PDF dynamically to the customer.</li>
                     <li>Convert to an active Sales Order upon acceptance.</li>
                 </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TAB VIEW 2B: SELL / CREATE QUOTE DOCUMENT ==================== -->
+    <div class="dashboard-view-container" id="view-create-quote" style="background-color: #FFFFFF !important; padding: 0 !important;">
+        <div class="bg-white min-h-screen border border-light rounded shadow-sm" style="border-color: #E5E7EB !important; border-radius: 8px;">
+            
+            <!-- TRANSACTIONAL SCREEN HEADER -->
+            <div class="px-4 py-3 border-bottom d-flex justify-content-between align-items-center bg-white" style="border-color: #E5E7EB !important; height: 56px;">
+                <span class="text-dark fw-bold" style="font-size: 1.1rem; color: #111827; font-family: 'Outfit', 'Inter', sans-serif;">Quote</span>
+                <div class="d-flex align-items-center text-sm" style="gap: 24px;">
+                    <span class="text-danger fw-bold text-uppercase" style="font-size: 12px; tracking-wider: 0.05em; color: #DC2626;">Not saved</span>
+                    <!-- Vertical three dots -->
+                    <button class="btn p-0 text-secondary" style="border: none; background: transparent;" onclick="alert('Options...');">
+                        <i class="fa-solid fa-ellipsis-vertical" style="font-size: 16px; color: #9CA3AF;"></i>
+                    </button>
+                    <!-- Close X button -->
+                    <button class="btn p-0 text-secondary" style="border: none; background: transparent;" onclick="closeCreateQuoteView();">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9CA3AF;"><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95 1.414-1.414 4.95 4.95z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-4 p-md-5" style="max-width: 1500px; margin: 0 auto; font-size: 12px; color: #4B5563; font-family: 'Inter', sans-serif;">
+                
+                <!-- METADATA FORM MATRIX -->
+                <div class="row g-4 mb-4">
+                    <!-- Column 1: Customer -->
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Customer</label>
+                            <input type="text" placeholder="Search or create customer" style="width: 100%; background: transparent; border: none; border-bottom: 2px solid #DC2626; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
+                        </div>
+                    </div>
+                    <!-- Column 2: Customer reference # -->
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Customer reference #</label>
+                            <input type="text" placeholder="Reference number" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; color: #1F2937;">
+                        </div>
+                    </div>
+                    <!-- Column 3: Delivery deadline -->
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Delivery deadline</label>
+                            <input type="text" value="2026-07-21" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
+                        </div>
+                    </div>
+                    <!-- Column 4: Created date -->
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Created date</label>
+                            <input type="text" value="2026-07-07" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="row g-4 mb-4 text-start">
+                    <!-- Sales order # -->
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Sales order #</label>
+                            <div style="width: 100%; border: none; border-bottom: 1px dotted #9CA3AF; min-height: 32px; padding: 6px 0;"></div>
+                        </div>
+                    </div>
+                    <!-- Order currency -->
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Order currency</label>
+                            <select class="form-select form-select-sm" style="border: none; border-bottom: 1px solid #E5E7EB; background-color: transparent; font-weight: 500; color: #1F2937; padding: 6px 0; border-radius: 0; box-shadow: none;">
+                                <option>INR (Base)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Ship from -->
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Ship from</label>
+                            <select class="form-select form-select-sm" style="border: none; border-bottom: 1px solid #E5E7EB; background-color: transparent; font-weight: 500; color: #1F2937; padding: 6px 0; border-radius: 0; box-shadow: none;">
+                                <option>Main Location</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="row g-4 mb-4 text-start">
+                    <!-- Bill to -->
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Bill to</label>
+                            <div class="d-flex align-items-center" style="border-bottom: 1px dotted #9CA3AF; padding: 6px 0; gap: 8px;">
+                                <i class="fa-solid fa-location-dot" style="color: #9CA3AF; font-size: 13px;"></i>
+                                <input type="text" placeholder="Enter address..." style="width: 100%; border: none; background: transparent; outline: none; color: #1F2937;">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ship to -->
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column text-start">
+                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Ship to</label>
+                            <div class="d-flex align-items-center" style="border-bottom: 1px dotted #9CA3AF; padding: 6px 0; gap: 8px;">
+                                <i class="fa-solid fa-location-dot" style="color: #9CA3AF; font-size: 13px;"></i>
+                                <input type="text" placeholder="Same as billing address" style="width: 100%; border: none; background: transparent; outline: none; color: #4B5563; font-style: italic;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LINE ITEMS INTERACTIVE TABLE MATRIX -->
+                <div class="mb-4 pt-3">
+                    <div class="table-responsive border rounded" style="border-color: #E5E7EB !important;">
+                        <table class="table table-sm align-middle text-start mb-0" style="font-size: 11px; color: #374151;">
+                            <thead>
+                                <tr style="background-color: #F9FAFB; border-bottom: 1px solid #E5E7EB; color: #6B7280; font-weight: 600;">
+                                    <th style="width: 40px; border-right: 1px solid #E5E7EB; text-align: center;"></th>
+                                    <th style="min-width: 240px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Item <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Search or select an item from catalog">i</span></th>
+                                    <th style="width: 120px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Quantity <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Specify total quantity in pieces">i</span></th>
+                                    <th style="width: 160px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Price per unit <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Rate per single unit">i</span></th>
+                                    <th style="width: 120px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Discount <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Percentage discount applied">i</span></th>
+                                    <th style="width: 140px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Total price <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Final line subtotal">i</span></th>
+                                    <th style="width: 100px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Tax % <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Tax percentage segment">i</span></th>
+                                    <th style="width: 180px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Location <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Fulfillment location">i</span></th>
+                                    <th style="width: 48px; text-align: center;"><i class="fa-solid fa-gear" style="color: #4B5563;"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #F3F4F6;">
+                                    <td style="text-align: center; background-color: #FAFAFA; border-right: 1px solid #E5E7EB; color: #9CA3AF;">1.</td>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px;">
+                                        <input type="text" placeholder="Search or create item" style="width: 100%; border: none; border-bottom: 2px solid #DC2626; outline: none; background: transparent; padding-bottom: 2px;">
+                                    </td>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px; background-color: #FAFAFA;">
+                                        <div class="d-flex align-items-center justify-content-end gap-1">
+                                            <span class="fw-semibold text-dark">1</span> <span class="text-secondary">pcs</span>
+                                        </div>
+                                    </td>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px;">
+                                        <input type="text" placeholder="Type price per unit" style="width: 100%; border: none; text-align: right; outline: none; background: transparent;">
+                                    </td>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px; background-color: #FAFAFA;">
+                                        <div class="d-flex align-items-center justify-content-end gap-1">
+                                            <span class="text-dark">0</span> <span class="text-secondary">%</span>
+                                        </div>
+                                    </td>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: right;" class="fw-semibold">
+                                        0 <span class="text-secondary font-normal" style="font-weight: normal; font-size: 10px;">INR</span>
+                                    </td>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: center; color: #9CA3AF; background-color: #FAFAFA;">-</td>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px;">
+                                        <select class="form-select form-select-sm p-0" style="border: none; outline: none; box-shadow: none; font-weight: 500; font-size: 11px; background-color: transparent;">
+                                            <option>Main Location</option>
+                                        </select>
+                                    </td>
+                                    <td style="text-align: center; background-color: #FAFAFA;">
+                                        <button class="btn btn-sm p-0" style="border: none;" onclick="alert('Copy link...'); return false;">
+                                            <i class="fa-solid fa-copy text-primary"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Table Action Row -->
+                    <div class="d-flex justify-content-between align-items-center pt-2 fw-semibold" style="font-size: 12px;">
+                        <span class="text-primary" style="color: #1A56DB; cursor: pointer;" onclick="alert('Adding row...');">+ Add row</span>
+                        <span class="text-dark">Total items not shipped (with tax): <strong class="ms-2 text-dark">0.00 <span class="text-secondary" style="font-weight: normal; font-size: 10px;">INR</span></strong></span>
+                    </div>
+                </div>
+
+                <!-- SHIPPING FEE CONFIGURATION CONTAINER -->
+                <div class="mb-4 pt-3 text-start">
+                    <h3 class="fw-bold text-dark flex-shrink-0 d-flex align-items-center mb-2" style="font-size: 13px;">
+                        Shipping fee 
+                        <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px; font-weight: bold;" title="Total packaging and shipping freight fee description">i</span>
+                    </h3>
+                    <div class="border rounded" style="border-color: #E5E7EB !important;">
+                        <table class="table table-sm align-middle text-start mb-0" style="font-size: 11px; color: #374151;">
+                            <thead>
+                                <tr style="background-color: #F9FAFB; border-bottom: 1px solid #E5E7EB; color: #6B7280; font-weight: 600;">
+                                    <th style="border-right: 1px solid #E5E7EB; padding: 8px 12px;">Description <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
+                                    <th style="width: 180px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Cost <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
+                                    <th style="width: 180px; padding: 8px 12px;">Tax <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px;">
+                                        <input type="text" class="w-full" style="width: 100%; border: none; outline: none; background: transparent;">
+                                    </td>
+                                    <td style="border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: right;">
+                                        <span class="fw-semibold">0</span> <span class="text-secondary" style="font-size: 10px;">INR</span>
+                                    </td>
+                                    <td style="text-align: center; color: #9CA3AF;">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-end pt-2 fw-semibold" style="font-size: 12px;">
+                        <span class="text-dark">Total shipping fee (with tax): <strong class="ms-2 text-dark">0.00 <span class="text-secondary" style="font-weight: normal; font-size: 10px;">INR</span></strong></span>
+                    </div>
+                </div>
+
+                <!-- TOTALS SUMMARY & ADDITIONAL INFO BLOCK CONTAINER -->
+                <div class="row g-4 pt-4 align-items-end">
+                    
+                    <!-- Left Side: Additional Info Editor Block -->
+                    <div class="col-md-7 text-start">
+                        <label class="fw-bold text-dark d-flex align-items-center mb-2" style="font-size: 13px;">
+                            Additional info 
+                            <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Type additional information and notes">i</span>
+                        </label>
+                        <div class="border rounded bg-white overflow-hidden" style="border-color: #E5E7EB !important;">
+                            <!-- Text Formatting Action Ribbon -->
+                            <div class="bg-light border-bottom px-3 py-2 d-flex align-items-center gap-3 text-secondary" style="border-color: #E5E7EB !important; font-size: 13px;">
+                                <button class="btn btn-sm p-0 fw-bold" style="border: none; background: transparent; font-weight: bold; color: #4B5563;">B</button>
+                                <button class="btn btn-sm p-0 fst-italic" style="border: none; background: transparent; font-style: italic; color: #4B5563;">I</button>
+                                <button class="btn btn-sm p-0 text-decoration-underline" style="border: none; background: transparent; text-decoration: underline; color: #4B5563;">U</button>
+                                <button class="btn btn-sm p-0" style="border: none; background: transparent; color: #4B5563;" onclick="alert('Insert Link...');"><i class="fa-solid fa-link"></i></button>
+                                <div style="width: 1px; height: 16px; background-color: #E5E7EB;"></div>
+                                <button class="btn btn-sm p-0" style="border: none; background: transparent; color: #4B5563;" onclick="alert('Bullet List...');"><i class="fa-solid fa-list-ul"></i></button>
+                                <button class="btn btn-sm p-0" style="border: none; background: transparent; color: #4B5563;" onclick="alert('Numbered List...');"><i class="fa-solid fa-list-ol"></i></button>
+                            </div>
+                            <textarea placeholder="Type comment here" class="form-control p-3 border-0" style="min-height: 80px; font-size: 12px; color: #1F2937; resize: none; box-shadow: none; outline: none;"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Calculations Panel -->
+                    <div class="col-md-5 ms-auto">
+                        <div class="d-flex flex-column gap-2 text-end fw-semibold text-secondary" style="font-size: 12px; max-width: 320px; margin-left: auto;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-dark">Total units:</span>
+                                <span class="text-dark">1 <span class="text-secondary" style="font-weight: normal; font-size: 10px;">pcs</span></span>
+                            </div>
+                            <div style="height: 1px; background-color: #E5E7EB; margin: 4px 0;"></div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Subtotal (tax excluded):</span>
+                                <span class="text-dark">0.00 <span class="text-secondary" style="font-size: 10px;">INR</span></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Shipping fee (tax excluded):</span>
+                                <span class="text-dark">0.00 <span class="text-secondary" style="font-size: 10px;">INR</span></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Plus tax:</span>
+                                <span class="text-dark">0.00 <span class="text-secondary" style="font-size: 10px;">INR</span></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2" style="font-size: 13px;">
+                                <span class="fw-bold text-dark">Total:</span>
+                                <span class="fw-bold text-dark" style="font-size: 16px;">0.00 <span class="text-secondary" style="font-weight: normal; font-size: 11px;">INR</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -1330,6 +1588,28 @@
             }
         }, 300);
     };
+
+    function showCreateQuoteView() {
+        const containers = document.querySelectorAll('.dashboard-view-container');
+        containers.forEach(box => {
+            box.classList.remove('active-view');
+        });
+        const activeBox = document.getElementById('view-create-quote');
+        if (activeBox) {
+            activeBox.classList.add('active-view');
+        }
+    }
+
+    function closeCreateQuoteView() {
+        const containers = document.querySelectorAll('.dashboard-view-container');
+        containers.forEach(box => {
+            box.classList.remove('active-view');
+        });
+        const activeBox = document.getElementById('view-quotes');
+        if (activeBox) {
+            activeBox.classList.add('active-view');
+        }
+    }
 
     // ----------------------------------------------------
     // BUY TIER: PURCHASING FILTER & DATA SEEDING
