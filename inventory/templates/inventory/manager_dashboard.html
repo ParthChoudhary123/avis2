@@ -448,86 +448,64 @@
             <div class="p-4 p-md-5" style="max-width: 1500px; margin: 0 auto; font-size: 12px; color: #4B5563; font-family: 'Inter', sans-serif;">
                 
                 <!-- METADATA FORM MATRIX -->
-                <div class="row g-4 mb-4">
+                <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-bottom: 24px;">
                     <!-- Column 1: Customer -->
-                    <div class="col-md-3">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Customer</label>
-                            <input type="text" placeholder="Search or create customer" style="width: 100%; background: transparent; border: none; border-bottom: 2px solid #DC2626; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
-                        </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Customer</label>
+                        <input type="text" placeholder="Search or create customer" style="width: 100%; background: transparent; border: none; border-bottom: 2px solid #DC2626; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
                     </div>
                     <!-- Column 2: Customer reference # -->
-                    <div class="col-md-3">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Customer reference #</label>
-                            <input type="text" placeholder="Reference number" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; color: #1F2937;">
-                        </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Customer reference #</label>
+                        <input type="text" placeholder="Reference number" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; color: #1F2937;">
                     </div>
                     <!-- Column 3: Delivery deadline -->
-                    <div class="col-md-3">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Delivery deadline</label>
-                            <input type="text" value="2026-07-21" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
-                        </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Delivery deadline</label>
+                        <input type="text" value="2026-07-21" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
                     </div>
                     <!-- Column 4: Created date -->
-                    <div class="col-md-3">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Created date</label>
-                            <input type="text" value="2026-07-07" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
-                        </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Created date</label>
+                        <input type="text" value="2026-07-07" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #E5E7EB; padding: 6px 0; outline: none; font-weight: 500; color: #1F2937;">
                     </div>
-                </div>
 
-                <!-- Row 2 -->
-                <div class="row g-4 mb-4 text-start">
+                    <!-- Row 2 -->
                     <!-- Sales order # -->
-                    <div class="col-md-3">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Sales order #</label>
-                            <div style="width: 100%; border: none; border-bottom: 1px dotted #9CA3AF; min-height: 32px; padding: 6px 0;"></div>
-                        </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Sales order #</label>
+                        <div style="width: 100%; border: none; border-bottom: 1px dotted #9CA3AF; min-height: 32px; padding: 6px 0;"></div>
                     </div>
                     <!-- Order currency -->
-                    <div class="col-md-3">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Order currency</label>
-                            <select class="form-select form-select-sm" style="border: none; border-bottom: 1px solid #E5E7EB; background-color: transparent; font-weight: 500; color: #1F2937; padding: 6px 0; border-radius: 0; box-shadow: none;">
-                                <option>INR (Base)</option>
-                            </select>
-                        </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Order currency</label>
+                        <select class="form-select form-select-sm" style="border: none; border-bottom: 1px solid #E5E7EB; background-color: transparent; font-weight: 500; color: #1F2937; padding: 6px 0; border-radius: 0; box-shadow: none;">
+                            <option>INR (Base)</option>
+                        </select>
                     </div>
-                    <!-- Ship from -->
-                    <div class="col-md-6">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Ship from</label>
-                            <select class="form-select form-select-sm" style="border: none; border-bottom: 1px solid #E5E7EB; background-color: transparent; font-weight: 500; color: #1F2937; padding: 6px 0; border-radius: 0; box-shadow: none;">
-                                <option>Main Location</option>
-                            </select>
-                        </div>
+                    <!-- Ship from (Spans 2 columns) -->
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left; grid-column: span 2 / span 2;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Ship from</label>
+                        <select class="form-select form-select-sm" style="border: none; border-bottom: 1px solid #E5E7EB; background-color: transparent; font-weight: 500; color: #1F2937; padding: 6px 0; border-radius: 0; box-shadow: none;">
+                            <option>Main Location</option>
+                        </select>
                     </div>
-                </div>
 
-                <!-- Row 3 -->
-                <div class="row g-4 mb-4 text-start">
-                    <!-- Bill to -->
-                    <div class="col-md-6">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Bill to</label>
-                            <div class="d-flex align-items-center" style="border-bottom: 1px dotted #9CA3AF; padding: 6px 0; gap: 8px;">
-                                <i class="fa-solid fa-location-dot" style="color: #9CA3AF; font-size: 13px;"></i>
-                                <input type="text" placeholder="Enter address..." style="width: 100%; border: none; background: transparent; outline: none; color: #1F2937;">
-                            </div>
+                    <!-- Row 3 -->
+                    <!-- Bill to (Spans 2 columns) -->
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left; grid-column: span 2 / span 2;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Bill to</label>
+                        <div class="d-flex align-items-center" style="border-bottom: 1px dotted #9CA3AF; padding: 6px 0; gap: 8px;">
+                            <i class="fa-solid fa-location-dot" style="color: #9CA3AF; font-size: 13px;"></i>
+                            <input type="text" placeholder="Enter address..." style="width: 100%; border: none; background: transparent; outline: none; color: #1F2937;">
                         </div>
                     </div>
-                    <!-- Ship to -->
-                    <div class="col-md-6">
-                        <div class="d-flex flex-column text-start">
-                            <label class="text-secondary fw-semibold pb-1 mb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF;">Ship to</label>
-                            <div class="d-flex align-items-center" style="border-bottom: 1px dotted #9CA3AF; padding: 6px 0; gap: 8px;">
-                                <i class="fa-solid fa-location-dot" style="color: #9CA3AF; font-size: 13px;"></i>
-                                <input type="text" placeholder="Same as billing address" style="width: 100%; border: none; background: transparent; outline: none; color: #4B5563; font-style: italic;">
-                            </div>
+                    <!-- Ship to (Spans 2 columns) -->
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left; grid-column: span 2 / span 2;">
+                        <label class="text-secondary fw-semibold pb-1" style="font-size: 11px; border-bottom: 1px dashed #CBD5E1; color: #9CA3AF; margin: 0;">Ship to</label>
+                        <div class="d-flex align-items-center" style="border-bottom: 1px dotted #9CA3AF; padding: 6px 0; gap: 8px;">
+                            <i class="fa-solid fa-location-dot" style="color: #9CA3AF; font-size: 13px;"></i>
+                            <input type="text" placeholder="Same as billing address" style="width: 100%; border: none; background: transparent; outline: none; color: #4B5563; font-style: italic;">
                         </div>
                     </div>
                 </div>
@@ -540,12 +518,12 @@
                                 <tr style="background-color: #F9FAFB; border-bottom: 1px solid #E5E7EB; color: #6B7280; font-weight: 600;">
                                     <th style="width: 40px; border-right: 1px solid #E5E7EB; text-align: center;"></th>
                                     <th style="min-width: 240px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Item <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Search or select an item from catalog">i</span></th>
-                                    <th style="width: 120px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Quantity <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Specify total quantity in pieces">i</span></th>
-                                    <th style="width: 160px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Price per unit <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Rate per single unit">i</span></th>
-                                    <th style="width: 120px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Discount <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Percentage discount applied">i</span></th>
-                                    <th style="width: 140px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Total price <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Final line subtotal">i</span></th>
-                                    <th style="width: 100px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Tax % <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Tax percentage segment">i</span></th>
-                                    <th style="width: 180px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Location <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Fulfillment location">i</span></th>
+                                    <th style="width: 128px; border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: right;">Quantity <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Specify total quantity in pieces">i</span></th>
+                                    <th style="width: 176px; border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: right;">Price per unit <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Rate per single unit">i</span></th>
+                                    <th style="width: 112px; border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: right;">Discount <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Percentage discount applied">i</span></th>
+                                    <th style="width: 144px; border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: right;">Total price <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Final line subtotal">i</span></th>
+                                    <th style="width: 96px; border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: center;">Tax % <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Tax percentage segment">i</span></th>
+                                    <th style="width: 192px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Location <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Fulfillment location">i</span></th>
                                     <th style="width: 48px; text-align: center;"><i class="fa-solid fa-gear" style="color: #4B5563;"></i></th>
                                 </tr>
                             </thead>
@@ -604,9 +582,9 @@
                         <table class="table table-sm align-middle text-start mb-0" style="font-size: 11px; color: #374151;">
                             <thead>
                                 <tr style="background-color: #F9FAFB; border-bottom: 1px solid #E5E7EB; color: #6B7280; font-weight: 600;">
-                                    <th style="border-right: 1px solid #E5E7EB; padding: 8px 12px;">Description <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
-                                    <th style="width: 180px; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Cost <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
-                                    <th style="width: 180px; padding: 8px 12px;">Tax <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
+                                    <th style="width: 50%; border-right: 1px solid #E5E7EB; padding: 8px 12px;">Description <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
+                                    <th style="width: 25%; border-right: 1px solid #E5E7EB; padding: 8px 12px; text-align: right;">Cost <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
+                                    <th style="width: 25%; padding: 8px 12px; text-align: center;">Tax <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;">i</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -628,10 +606,10 @@
                 </div>
 
                 <!-- TOTALS SUMMARY & ADDITIONAL INFO BLOCK CONTAINER -->
-                <div class="row g-4 pt-4 align-items-end">
+                <div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 32px; align-items: end; margin-top: 32px;">
                     
                     <!-- Left Side: Additional Info Editor Block -->
-                    <div class="col-md-7 text-start">
+                    <div style="grid-column: span 6 / span 6; text-align: left;">
                         <label class="fw-bold text-dark d-flex align-items-center mb-2" style="font-size: 13px;">
                             Additional info 
                             <span class="badge rounded-pill bg-secondary ms-1 cursor-help" style="font-size: 8px;" title="Type additional information and notes">i</span>
@@ -652,8 +630,8 @@
                     </div>
 
                     <!-- Right Side: Calculations Panel -->
-                    <div class="col-md-5 ms-auto">
-                        <div class="d-flex flex-column gap-2 text-end fw-semibold text-secondary" style="font-size: 12px; max-width: 320px; margin-left: auto;">
+                    <div style="grid-column: span 4 / span 4; margin-left: auto; max-width: 384px; width: 100%;">
+                        <div class="d-flex flex-column gap-2 text-end fw-semibold text-secondary" style="font-size: 12px; width: 100%;">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fw-bold text-dark">Total units:</span>
                                 <span class="text-dark">1 <span class="text-secondary" style="font-weight: normal; font-size: 10px;">pcs</span></span>
