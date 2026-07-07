@@ -326,12 +326,57 @@
                 </div>
 
                 <!-- Stock Risks Panel (Bottom) -->
-                <div class="card border border-light p-4" style="background-color: #ffffff; border-radius: 12px;">
+                <div class="card border border-light p-4 mb-4" style="background-color: #ffffff; border-radius: 12px;">
                     <h5 class="fw-bold text-dark mb-3 text-start">Stock risks</h5>
                     <div class="empty-state-container">
                         <i class="fa-regular fa-circle-check empty-state-icon text-success"></i>
                         <p class="mb-0 fw-semibold">No stockout risks detected.</p>
                     </div>
+                </div>
+
+                <!-- Add New Customer Card (Embedded Inline on Home Dashboard) -->
+                <div class="card p-4 text-start mb-4" style="border: 1px solid #E5E7EB; border-radius: 8px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); background-color: #FFFFFF;">
+                    <h5 class="fw-bold text-dark mb-4" style="font-family: 'Outfit', 'Inter', sans-serif; font-size: 1.1rem; color: #111827;">
+                        <i class="fa-solid fa-user-plus text-primary me-2"></i>Add New Customer
+                    </h5>
+                    <form onsubmit="submitNewCustomer(event)">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Name</label>
+                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-name" placeholder="e.g. Parth Choudhary">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Email address</label>
+                                <input type="email" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-email" placeholder="e.g. singhigone@gmail.com">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Currency</label>
+                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" value="INR (₹)" required id="cust-input-currency">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Phone number</label>
+                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-phone" placeholder="e.g. +91 98765 43210">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Reference ID</label>
+                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" placeholder="e.g. REF-XXX" id="cust-input-ref">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Category</label>
+                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" value="Standard" id="cust-input-category">
+                            </div>
+                            
+                            <div class="col-12">
+                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Comment</label>
+                                <textarea class="form-control" style="height: 80px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px; resize: none;" id="cust-input-comment" placeholder="Add specific notes or comments about this customer..."></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-start">
+                            <button type="submit" class="btn btn-primary px-4 py-2 text-white" style="background-color: #1A56DB !important; border: none; border-radius: 6px; font-weight: 600; font-size: 14px;">Add Customer</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -1190,60 +1235,7 @@
 
 
 <!-- CUSTOM DATA DIALOG MODALS -->
-<!-- 1. Customer Modal -->
-<div class="modal fade" id="newCustomerModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; background-color: #ffffff;">
-            <div class="modal-header px-4 py-3 border-bottom" style="background-color: #F8FAFC;">
-                <h5 class="modal-title fw-bold d-flex align-items-center" style="font-size: 1.1rem; color: #0F172A;">
-                    <i class="fa-solid fa-user-plus text-primary me-2"></i> Add New Customer
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form onsubmit="submitNewCustomer(event)">
-                <div class="modal-body p-4 text-start">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold text-secondary mb-1">Name</label>
-                            <input type="text" class="form-control" style="height: 40px; border-color: #CBD5E1; border-radius: 6px; color: #0F172A;" required id="cust-input-name" placeholder="e.g. Parth Choudhary">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold text-secondary mb-1">Email address</label>
-                            <input type="email" class="form-control" style="height: 40px; border-color: #CBD5E1; border-radius: 6px; color: #0F172A;" required id="cust-input-email" placeholder="e.g. singhigone@gmail.com">
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold text-secondary mb-1">Currency</label>
-                            <input type="text" class="form-control" style="height: 40px; border-color: #CBD5E1; border-radius: 6px; color: #0F172A;" value="INR (₹)" required id="cust-input-currency">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold text-secondary mb-1">Phone number</label>
-                            <input type="text" class="form-control" style="height: 40px; border-color: #CBD5E1; border-radius: 6px; color: #0F172A;" required id="cust-input-phone" placeholder="e.g. +91 98765 43210">
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold text-secondary mb-1">Reference ID</label>
-                            <input type="text" class="form-control" style="height: 40px; border-color: #CBD5E1; border-radius: 6px; color: #0F172A;" placeholder="e.g. REF-XXX" id="cust-input-ref">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold text-secondary mb-1">Category</label>
-                            <input type="text" class="form-control" style="height: 40px; border-color: #CBD5E1; border-radius: 6px; color: #0F172A;" value="Standard" id="cust-input-category">
-                        </div>
-                        
-                        <div class="col-12">
-                            <label class="form-label small fw-semibold text-secondary mb-1">Comment</label>
-                            <textarea class="form-control" style="height: 80px; border-color: #CBD5E1; border-radius: 6px; color: #0F172A; resize: none;" id="cust-input-comment" placeholder="Add specific notes or comments about this customer..."></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer px-4 py-3 bg-light border-top d-flex justify-content-end gap-2">
-                    <button type="button" class="btn btn-outline-secondary px-3 py-2 text-sm" style="border-radius: 6px; font-weight: 600; font-size: 13px;" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary px-3 py-2 text-sm text-white" style="background-color: #2563EB !important; border: none; border-radius: 6px; font-weight: 600; font-size: 13px;">Add Customer</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<!-- 1. Customer Modal Deleted (Moved Inline to Home Dashboard) -->
 {% endblock %}
 
 {% block extra_js %}
@@ -1396,11 +1388,6 @@
     // ----------------------------------------------------
     // CUSTOMER MATRIX LIST INTAKE & STORAGE
     // ----------------------------------------------------
-    function showNewCustomerModal() {
-        const modal = new bootstrap.Modal(document.getElementById('newCustomerModal'));
-        modal.show();
-    }
-
     function submitNewCustomer(e) {
         e.preventDefault();
         const name = document.getElementById('cust-input-name').value;
@@ -1412,23 +1399,20 @@
         const comment = document.getElementById('cust-input-comment').value || '-';
 
         const tbody = document.getElementById('customers-list-tbody');
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><input type="checkbox"></td>
-            <td>${name}</td>
-            <td>${email}</td>
-            <td>${currency}</td>
-            <td>${phone}</td>
-            <td>${ref}</td>
-            <td>${category}</td>
-            <td>${comment}</td>
-        `;
-        tbody.prepend(tr);
-
-        // Hide
-        const modalEl = document.getElementById('newCustomerModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        modal.hide();
+        if (tbody) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="checkbox"></td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${currency}</td>
+                <td>${phone}</td>
+                <td>${ref}</td>
+                <td>${category}</td>
+                <td>${comment}</td>
+            `;
+            tbody.prepend(tr);
+        }
 
         // Clear
         document.getElementById('cust-input-name').value = '';
@@ -1438,7 +1422,7 @@
         document.getElementById('cust-input-comment').value = '';
 
         updateCustomerCount();
-        alert(`Customer ${name} added.`);
+        alert(`Customer ${name} added successfully.`);
     }
 
     function updateCustomerCount() {
