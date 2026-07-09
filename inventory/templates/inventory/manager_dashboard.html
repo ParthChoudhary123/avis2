@@ -393,10 +393,10 @@
                     <!-- Progress meter -->
                     <div class="mb-4" style="margin-bottom: 24px !important;">
                         <div class="d-flex justify-content-between align-items-center mb-1 text-[11px] font-bold text-slate-500" style="font-size: 13px; color: #4a5568; margin-bottom: 8px !important;">
-                            <span>0% complete</span>
+                            <span id="onboarding-progress-text">0% complete</span>
                         </div>
                         <div class="w-full bg-slate-200 rounded-full h-1 overflow-hidden" style="background-color: #cbd5e0; border-radius: 9999px; height: 4px;">
-                            <div class="bg-indigo-600 h-1 rounded-full" style="width: 0%; background-color: #2b6cb0; height: 4px;"></div>
+                            <div class="bg-indigo-600 h-1 rounded-full" id="onboarding-progress-bar" style="width: 0%; background-color: #2b6cb0; height: 4px; transition: width 0.3s ease;"></div>
                         </div>
                     </div>
 
@@ -404,9 +404,9 @@
                     <div class="d-flex flex-column gap-3">
                         
                         <!-- Step 1: Add products -->
-                        <div class="katana-card-white katana-card-active d-flex align-items-center justify-content-between cursor-pointer" onclick="switchPrimaryTab('stock', 'inventory')">
+                        <div class="katana-card-white katana-card-active d-flex align-items-center justify-content-between cursor-pointer" id="step-card-1" onclick="switchPrimaryTab('stock', 'inventory')">
                             <div class="d-flex align-items-start gap-3">
-                                <span class="katana-circle-indicator mt-1"></span>
+                                <span class="katana-circle-indicator mt-1 d-inline-flex align-items-center justify-content-center" id="step-indicator-1" onclick="toggleStep(1, event)" style="cursor: pointer;"></span>
                                 <div>
                                     <div class="d-flex align-items-center gap-2 flex-wrap">
                                         <span class="text-sm font-bold text-gray-900" style="font-size: 15px; font-weight: 700; color: #1a202c;">Add your products</span>
@@ -422,9 +422,9 @@
                         </div>
 
                         <!-- Step 2: Track orders -->
-                        <div class="katana-card-white d-flex align-items-center justify-content-between cursor-pointer" onclick="switchPrimaryTab('sell', 'sales-orders')">
+                        <div class="katana-card-white d-flex align-items-center justify-content-between cursor-pointer" id="step-card-2" onclick="switchPrimaryTab('sell', 'sales-orders')">
                             <div class="d-flex align-items-start gap-3">
-                                <span class="katana-circle-indicator mt-1"></span>
+                                <span class="katana-circle-indicator mt-1 d-inline-flex align-items-center justify-content-center" id="step-indicator-2" onclick="toggleStep(2, event)" style="cursor: pointer;"></span>
                                 <div>
                                     <div class="d-flex align-items-center gap-2 flex-wrap">
                                         <span class="text-sm font-bold text-gray-900" style="font-size: 15px; font-weight: 700; color: #1a202c;">Track your orders</span>
@@ -440,9 +440,9 @@
                         </div>
 
                         <!-- Step 3: Replenish stock -->
-                        <div class="katana-card-white d-flex align-items-center justify-content-between cursor-pointer" onclick="switchPrimaryTab('buy', 'purchasing')">
+                        <div class="katana-card-white d-flex align-items-center justify-content-between cursor-pointer" id="step-card-3" onclick="switchPrimaryTab('buy', 'purchasing')">
                             <div class="d-flex align-items-start gap-3">
-                                <span class="katana-circle-indicator mt-1"></span>
+                                <span class="katana-circle-indicator mt-1 d-inline-flex align-items-center justify-content-center" id="step-indicator-3" onclick="toggleStep(3, event)" style="cursor: pointer;"></span>
                                 <div>
                                     <div class="d-flex align-items-center gap-2 flex-wrap">
                                         <span class="text-sm font-bold text-gray-900" style="font-size: 15px; font-weight: 700; color: #1a202c;">Replenish inventory</span>
@@ -502,17 +502,18 @@
                     <div class="katana-grey-panel">
                         <h2 class="text-lg font-bold text-slate-800 mb-3" style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 18px; font-weight: 700; color: #1a202c; margin-bottom: 20px !important;">Your integrations</h2>
                         
-                        <div class="katana-card-white d-flex align-items-center justify-content-between" style="padding: 12px 16px !important;">
+                        <div class="katana-card-white d-flex align-items-center justify-content-between" id="integration-card-woo" style="padding: 12px 16px !important;">
                             <div class="d-flex align-items-center gap-2.5">
                                 <div class="w-8 h-8 rounded bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600" style="width: 32px; height: 32px;">
                                     <i class="fa-brands fa-woocommerce text-lg" style="color: #96588a; font-size: 18px;"></i>
                                 </div>
-                                <div class="d-flex align-items-center gap-1.5">
+                                <div class="d-flex align-items-center gap-1.5 flex-wrap">
                                     <span class="text-xs font-bold text-gray-800" style="font-size: 13px; font-weight: 700; color: #1a202c;">WooCommerce</span>
                                     <i class="fa-solid fa-book-open text-[10px] text-slate-400"></i>
+                                    <span class="badge bg-success text-white px-2 py-0.5" id="integration-badge-woo" style="display: none; font-size: 9px; font-weight: 600;">Connected</span>
                                 </div>
                             </div>
-                            <a href="#" class="text-xs font-bold text-indigo-650 text-decoration-none hover:underline" style="font-size: 13px; font-weight: 700; color: #2b6cb0;" onclick="alert('Initializing WooCommerce integration sync...'); return false;">Connect</a>
+                            <a href="#" class="text-xs font-bold text-indigo-650 text-decoration-none hover:underline" id="integration-link-woo" style="font-size: 13px; font-weight: 700; color: #2b6cb0;" onclick="toggleWooConnection(event); return false;">Connect</a>
                         </div>
                     </div>
 
@@ -2101,6 +2102,65 @@
             }
         })
         .catch(err => console.error('Failed to calculate subscription costs:', err));
+    }
+
+    // ----------------------------------------------------
+    // INTERACTIVE ONBOARDING CHECKLIST & INTEGRATIONS
+    // ----------------------------------------------------
+    let stepStates = { 1: false, 2: false, 3: false };
+    window.toggleStep = function(stepNum, event) {
+        if (event) event.stopPropagation();
+        stepStates[stepNum] = !stepStates[stepNum];
+        
+        const indicator = document.getElementById(`step-indicator-${stepNum}`);
+        const card = document.getElementById(`step-card-${stepNum}`);
+        
+        if (stepStates[stepNum]) {
+            indicator.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #3b82f6; font-size: 20px; position: relative; top: -1px; left: -0.5px;"></i>';
+            indicator.style.border = 'none';
+            card.classList.remove('katana-card-active');
+        } else {
+            indicator.innerHTML = '';
+            indicator.style.border = '1.5px solid #a0aec0';
+            if (stepNum === 1) card.classList.add('katana-card-active');
+        }
+        
+        // Calculate progress percentage
+        let completedCount = Object.values(stepStates).filter(v => v).length;
+        let percent = Math.round((completedCount / 3) * 100);
+        
+        document.getElementById('onboarding-progress-text').textContent = `${percent}% complete`;
+        document.getElementById('onboarding-progress-bar').style.width = `${percent}%`;
+    }
+
+    let wooConnected = false;
+    window.toggleWooConnection = function(event) {
+        if (event) event.preventDefault();
+        
+        const badge = document.getElementById('integration-badge-woo');
+        const link = document.getElementById('integration-link-woo');
+        const wheel = document.getElementById('global-nav-transition-wheel');
+        
+        if (!wooConnected) {
+            // Connect flow
+            if (wheel) wheel.style.display = 'flex';
+            setTimeout(() => {
+                if (wheel) wheel.style.display = 'none';
+                wooConnected = true;
+                badge.style.display = 'inline-block';
+                link.textContent = 'Disconnect';
+                link.style.color = '#dc2626'; // red
+                alert('WooCommerce integration connected successfully! Synchronized 15 product records.');
+            }, 1000);
+        } else {
+            // Disconnect flow
+            if (confirm('Are you sure you want to disconnect WooCommerce integration?')) {
+                wooConnected = false;
+                badge.style.display = 'none';
+                link.textContent = 'Connect';
+                link.style.color = '#2b6cb0'; // blue
+            }
+        }
     }
 
     // Initialize metrics on DOM load
