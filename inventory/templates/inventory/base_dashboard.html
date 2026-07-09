@@ -604,64 +604,56 @@
                         <i class="fa-solid fa-house" style="width: 16px;"></i> Home
                     </a>
 
-                    <!-- Items -->
+                    <!-- Sell (Sales) -->
                     <div>
-                        <button onclick="toggleSidebarMenu('menu-items')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-boxes-stacked" style="width: 16px;"></i> Items</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-items"></i>
+                        <button onclick="toggleSidebarMenu('menu-sell')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-sack-dollar" style="width: 16px;"></i> Sell</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-sell"></i>
                         </button>
-                        <div id="menu-items" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
-                            <a onclick="switchPrimaryTab('stock', 'inventory')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Items List View</a>
-                            <a onclick="alert('Composite Items catalog empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Composite Items</a>
-                            <a onclick="alert('Item Groups catalog empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Item Groups</a>
-                            <a onclick="switchPrimaryTab('sell', 'price-lists')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Price Lists</a>
-                        </div>
-                    </div>
-
-                    <!-- Inventory -->
-                    <div>
-                        <button onclick="toggleSidebarMenu('menu-inventory')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-warehouse" style="width: 16px;"></i> Inventory</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-inventory"></i>
-                        </button>
-                        <div id="menu-inventory" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
-                            <a onclick="switchPrimaryTab('stock', 'stock-adjustments')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Inventory Adjustments</a>
-                            <a onclick="switchPrimaryTab('stock', 'stock-transfers')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Transfer Orders</a>
-                        </div>
-                    </div>
-
-                    <!-- Sales -->
-                    <div>
-                        <button onclick="toggleSidebarMenu('menu-sales')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-sack-dollar" style="width: 16px;"></i> Sales</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-sales"></i>
-                        </button>
-                        <div id="menu-sales" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
+                        <div id="menu-sell" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
                             <a onclick="switchPrimaryTab('sell', 'customers')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Customers</a>
                             <a onclick="switchPrimaryTab('sell', 'sales-orders')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Sales Orders</a>
-                            <a onclick="alert('Packages list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Packages</a>
-                            <a onclick="alert('Shipments list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Shipments</a>
-                            <a onclick="alert('Invoices list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Invoices</a>
-                            <a onclick="alert('Payments Received ledger empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Payments Received</a>
+                            <a onclick="switchPrimaryTab('sell', 'price-lists')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Price Lists</a>
                             <a onclick="switchPrimaryTab('sell', 'returns')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Sales Returns</a>
-                            <a onclick="alert('Credit Notes list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Credit Notes</a>
                         </div>
                     </div>
 
-                    <!-- Purchases -->
+                    <!-- Make (Production) -->
                     <div>
-                        <button onclick="toggleSidebarMenu('menu-purchases')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-cart-shopping" style="width: 16px;"></i> Purchases</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-purchases"></i>
+                        <button onclick="toggleSidebarMenu('menu-make')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-industry" style="width: 16px;"></i> Make</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-make"></i>
                         </button>
-                        <div id="menu-purchases" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
+                        <div id="menu-make" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
+                            <a onclick="switchPrimaryTab('plan', 'planning')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Manufacturing Orders</a>
+                            <a onclick="alert('Opening BOM Recipes catalog...');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Recipes (BOM)</a>
+                            <a onclick="switchPrimaryTab('buy', 'outsourcing')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Subcontracting</a>
+                        </div>
+                    </div>
+
+                    <!-- Buy (Purchases) -->
+                    <div>
+                        <button onclick="toggleSidebarMenu('menu-buy')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-cart-shopping" style="width: 16px;"></i> Buy</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-buy"></i>
+                        </button>
+                        <div id="menu-buy" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
                             <a onclick="switchPrimaryTab('buy', 'suppliers')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Vendors</a>
                             <a onclick="switchPrimaryTab('buy', 'purchasing')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Purchase Orders</a>
-                            <a onclick="alert('Purchase Receives list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Purchase Receives</a>
-                            <a onclick="alert('Bills ledger empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Bills</a>
-                            <a onclick="alert('Payments Made log empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Payments Made</a>
-                            <a onclick="alert('Vendor Credits list empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Vendor Credits</a>
-                            <a onclick="alert('Purchase Returns list empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Purchase Returns</a>
+                            <a onclick="alert('Bills registry empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Bills</a>
+                        </div>
+                    </div>
+
+                    <!-- Stock (Inventory) -->
+                    <div>
+                        <button onclick="toggleSidebarMenu('menu-stock')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-boxes-stacked" style="width: 16px;"></i> Stock</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-stock"></i>
+                        </button>
+                        <div id="menu-stock" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
+                            <a onclick="switchPrimaryTab('stock', 'inventory')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Items List View</a>
+                            <a onclick="switchPrimaryTab('stock', 'stock-adjustments')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Inventory Adjustments</a>
+                            <a onclick="switchPrimaryTab('stock', 'stock-transfers')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Transfer Orders</a>
                         </div>
                     </div>
 
@@ -983,5 +975,14 @@
         });
     </script>
     {% block extra_js %}{% endblock %}
+    <!-- Floating Assistance Chat Widget (Zoho styled) -->
+    <div class="position-fixed bottom-0 end-0 m-4 z-50 select-none" style="bottom: 16px !important; right: 16px !important;">
+        <button onclick="alert('Avis AI chatbot initialized. Responding to queries...')" class="btn d-flex align-items-center gap-2 shadow-lg border border-danger-subtle" style="background-color: #ffffff; border-radius: 50px; padding: 10px 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;">
+            <div class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 animate-bounce">
+                <i class="fa-solid fa-robot text-sm"></i>
+            </div>
+            <span class="text-xs font-bold text-gray-700">Need Assistance?</span>
+        </button>
+    </div>
 </body>
 </html>
