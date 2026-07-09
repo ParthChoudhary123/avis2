@@ -50,11 +50,7 @@
             display: flex !important;
             flex-direction: column !important;
             box-sizing: border-box;
-            background-color: transparent !important;
-            pointer-events: none;
-        }
-        .fixed-top-header-wrapper > * {
-            pointer-events: auto;
+            background-color: #ffffff;
         }
 
         /* Tier 1: Top Utility Bar */
@@ -84,23 +80,19 @@
 
         /* Tier 2: Top Header Navbar */
         .katana-navbar {
-            background-color: #ffffff !important; /* White background like landing */
-            border: var(--border-main) !important;
-            border-radius: 50px !important;
-            margin: 20px auto 10px !important;
+            background-color: #1A2B3C !important; /* Deep Slate Navy Blue */
+            border-bottom: 1px solid #1f2d3d;
             padding: 0 24px !important; /* px-6 */
             height: 64px !important; /* h-16 */
             position: relative !important;
-            width: calc(100% - 40px) !important;
-            max-width: 1200px !important;
+            width: 100% !important;
             display: flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
-            align-items: center !important;
+            align-items: stretch !important;
             justify-content: space-between !important;
             box-sizing: border-box;
             overflow: visible !important;
-            box-shadow: 4px 4px 0px var(--border-color) !important;
         }
 
         .katana-navbar > div {
@@ -109,10 +101,10 @@
 
         .katana-brand {
             font-weight: 900;
-            color: var(--text-dark) !important;
-            font-size: 1.45rem;
+            color: #ffffff !important;
+            font-size: 1.5rem;
             text-transform: lowercase;
-            letter-spacing: -1.2px;
+            letter-spacing: -0.025em; /* tracking-tight */
             display: flex;
             align-items: center;
             height: 100%;
@@ -121,7 +113,7 @@
             flex-shrink: 0 !important;
             white-space: nowrap !important;
             min-width: fit-content !important;
-            font-family: var(--font-family) !important;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         /* Top Navigation Tabs */
@@ -131,10 +123,9 @@
             padding-left: 0;
             list-style: none;
             height: 100%;
-            gap: 12px;
+            gap: 0px;
             flex-shrink: 0 !important;
             flex-wrap: nowrap !important;
-            align-items: center !important;
         }
 
         .katana-nav-item {
@@ -149,52 +140,44 @@
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            color: var(--text-dark) !important;
+            color: #9ca3af !important; /* text-gray-400 */
             font-size: 11px !important; /* text-[11px] */
-            font-weight: 800;
+            font-weight: 500;
             letter-spacing: 0.05em; /* tracking-wide */
-            padding: 8px 16px !important; /* px-5 */
+            padding: 0 20px !important; /* px-5 */
             text-decoration: none;
             transition: color 0.15s, background-color 0.15s;
             cursor: pointer;
-            height: auto !important;
+            height: 100% !important;
             white-space: nowrap;
             flex-shrink: 0 !important;
-            gap: 2px !important;
+            gap: 4px !important;
             border-bottom: none !important;
         }
 
         .katana-nav-link:hover {
-            color: #4f46e5 !important;
+            color: #ffffff !important;
         }
 
         .katana-nav-link.active {
-            background-color: var(--text-dark) !important; /* Dark blue background pill like active */
+            background-color: #223a52 !important; /* Active Tab Color block */
             color: #ffffff !important;
-            border-radius: 30px !important;
-            padding: 8px 16px !important;
-            border-bottom: none !important;
-        }
-        
-        .katana-nav-link.active:hover {
-            color: #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
         }
 
         /* Tier 3: Sub-Navigation Bar */
         .sub-nav-bar {
             position: relative !important;
-            width: calc(100% - 40px) !important;
-            max-width: 1200px !important;
-            margin: 0 auto 10px !important;
+            width: 100% !important;
             height: 40px !important;
-            background-color: transparent !important; /* Transparent like landing */
-            border-bottom: none !important;
-            padding: 0 !important; /* px-6 */
+            background-color: #ffffff !important; /* Pure White background */
+            border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+            padding: 0 24px !important; /* px-6 */
             display: flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
             align-items: center !important;
-            gap: 16px !important; /* space-x-6 */
+            gap: 24px !important; /* space-x-6 */
             box-sizing: border-box;
             overflow-x: auto;
             -ms-overflow-style: none;  /* IE and Edge */
@@ -208,32 +191,30 @@
             color: #4B5563;
             text-decoration: none;
             font-size: 13px; /* text-xs */
-            font-weight: 600;
-            padding: 6px 16px !important;
-            border-radius: 20px !important;
-            border: 1px solid transparent;
-            transition: all 0.15s;
+            font-weight: 500;
+            padding: 0 16px !important;
+            border-bottom: 2px solid transparent;
+            transition: color 0.15s;
             cursor: pointer;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
-            height: auto !important;
+            height: 100%;
             flex-shrink: 0 !important;
             box-sizing: border-box;
         }
 
         .sub-nav-link:hover {
-            color: var(--text-dark) !important;
-            background-color: rgba(0, 0, 0, 0.05);
+            color: #111827;
         }
 
         .sub-nav-link.active {
-            color: var(--text-dark) !important; /* Muted black active text */
-            font-weight: 800 !important;
-            background-color: #ffffff !important;
-            border: var(--border-main) !important;
-            box-shadow: 2px 2px 0px var(--border-color) !important;
-            border-radius: 20px !important;
+            color: #111827 !important; /* Muted black active text */
+            font-weight: 600;
+            border-bottom: 2px solid #111827 !important; /* Muted black active bottom border */
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
         }
 
         /* PC Initials badge style */
@@ -286,13 +267,13 @@
         .utility-icon-btn {
             background: transparent;
             border: none;
-            border-radius: 50% !important;
+            border-radius: 6px;
             width: 34px;
             height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-dark) !important;
+            color: #9CA3AF;
             text-decoration: none;
             transition: all 0.15s;
             cursor: pointer;
@@ -300,8 +281,8 @@
         }
 
         .utility-icon-btn:hover {
-            color: var(--text-dark) !important;
-            background-color: rgba(0, 0, 0, 0.05) !important;
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
         /* User Profile Badge */
@@ -317,8 +298,7 @@
             font-weight: 700;
             font-size: 0.85rem;
             cursor: pointer;
-            border: var(--border-main) !important;
-            box-shadow: 2px 2px 0px var(--border-color);
+            border: none;
         }
 
         /* User section */
@@ -673,7 +653,7 @@
             <!-- Far Right Zone: Action Control Utilities (Strict Horizontal Row) -->
             <div class="header-utilities h-100 d-flex align-items-center" style="flex-wrap: nowrap !important; gap: 16px;">
                 <!-- Primary Action Control (+ Create) -->
-                <button class="btn d-flex align-items-center" style="color: var(--text-dark) !important; background-color: var(--brand-lime) !important; border: var(--border-main) !important; box-shadow: 2px 2px 0px var(--border-color); font-weight: 800; padding: 6px 16px; border-radius: 30px; font-size: 13px; gap: 4px; flex-shrink: 0; line-height: 1; transition: all 0.1s ease-in-out;" onmouseover="this.style.transform='translate(-1px, -1px)'; this.style.boxShadow='3px 3px 0px var(--border-color)';" onmouseout="this.style.transform='none'; this.style.boxShadow='2px 2px 0px var(--border-color)';" onclick="alert('Creating new entry...');">
+                <button class="btn d-flex align-items-center" style="color: #1A2B3C !important; background-color: #ffffff !important; font-weight: 600; padding: 6px 16px; border-radius: 9999px; font-size: 13px; gap: 4px; flex-shrink: 0; line-height: 1; border: none;" onclick="alert('Creating new entry...');">
                     <span>+ Create</span>
                 </button>
                 
@@ -746,7 +726,7 @@
     </div>
 
     <!-- Main Content Panel -->
-    <main class="flex-grow-1" style="margin-top: 154px !important; padding: 24px !important; max-width: 1600px !important; margin-left: auto !important; margin-right: auto !important; width: 100%;">
+    <main class="flex-grow-1" style="margin-top: 104px !important; padding: 24px !important; max-width: 1600px !important; margin-left: auto !important; margin-right: auto !important; width: 100%;">
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>
