@@ -1116,7 +1116,7 @@
                 <span class="text-secondary small">No inventory listings generated yet. Use the intake panel on the right to import items.</span>
             </div>
             <div class="col-helper-right text-start p-4 border rounded bg-light">
-                <h5 class="fw-bold text-dark mb-3">A real-time look at your inventory</h5>
+                <h5 class="fw-bold text-dark mb-3">A real-time look at {{ company.display_name }} inventory</h5>
                 <p class="text-secondary small mb-4">Start feeding inventory metrics using one of the primary methods below:</p>
                 <div class="d-flex flex-column gap-2">
                     <button class="btn btn-stroke-grey text-start py-2.5" onclick="alert('Shopify sync...');"><i class="fa-brands fa-shopify text-success me-2"></i>Import products from Shopify</button>
@@ -1130,7 +1130,7 @@
     <!-- ==================== TAB VIEW 11: STOCK / ADJUSTMENTS ==================== -->
     <div class="dashboard-view-container" id="view-stock-adjustments">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h1-main-header mb-0 text-start">Stock adjustments</h1>
+            <h1 class="h1-main-header mb-0 text-start">Stock adjustments - {{ company.display_name }}</h1>
             <button class="btn btn-solid-blue" onclick="alert('Adding adjustment...');"><i class="fa-solid fa-plus me-1"></i>Stock adjustment</button>
         </div>
         <div class="asymmetric-layout-grid">
@@ -1208,7 +1208,7 @@
     <div class="dashboard-view-container" id="view-planning">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
             <div class="d-flex align-items-center gap-3">
-                <h1 class="h1-main-header mb-0 text-start">Planning</h1>
+                <h1 class="h1-main-header mb-0 text-start">Planning - {{ company.display_name }}</h1>
                 <!-- Row 1 filters -->
                 <div class="btn-group border border-1 border-secondary rounded" style="overflow: hidden;">
                     <button class="btn btn-sm btn-light active" onclick="alert('All category planning...');">All</button>
@@ -1317,7 +1317,7 @@
     <!-- ==================== TAB VIEW 16: INSIGHTS / SALES ==================== -->
     <div class="dashboard-view-container" id="view-insights-sales">
         <div class="card p-4 border rounded text-start">
-            <h1 class="h1-main-header">Sales Insights</h1>
+            <h1 class="h1-main-header">Sales Insights - {{ company.display_name }}</h1>
             
             <!-- Inner Header Navigation Menu -->
             <div class="d-flex align-items-center gap-3 border-bottom pb-2 mb-3" style="font-size: 0.9rem;">
@@ -1457,13 +1457,13 @@
                     <div class="mb-4">
                         <label class="form-label small fw-bold text-secondary uppercase mb-2">Set base currency</label>
                         <select class="form-select border border-dark" id="settings-currency" style="max-width: 250px;">
-                            <option value="INR" selected>INR (Base - ₹)</option>
-                            <option value="USD">USD ($)</option>
+                            <option value="INR" {% if company.base_currency == 'INR' %}selected{% endif %}>INR (Base - ₹)</option>
+                            <option value="USD" {% if company.base_currency == 'USD' %}selected{% endif %}>USD ($)</option>
                         </select>
                     </div>
 
                     <div class="form-check mb-4">
-                        <input class="form-check-input border-dark" type="checkbox" id="settings-show-fields">
+                        <input class="form-check-input border-dark" type="checkbox" id="settings-show-fields" {% if company.show_currency_on_orders %}checked{% endif %}>
                         <label class="form-check-label small fw-semibold text-dark" for="settings-show-fields">
                             Show currency fields on orders and contacts
                         </label>
@@ -1472,7 +1472,7 @@
                     <div class="mb-4">
                         <label class="form-label small fw-bold text-secondary uppercase mb-2">Default delivery time for sales orders</label>
                         <div class="d-flex align-items-center gap-2">
-                            <input type="number" class="settings-input-control" value="14" id="settings-delivery">
+                            <input type="number" class="settings-input-control" value="{{ company.default_delivery_sales_days }}" id="settings-delivery">
                             <span class="small fw-semibold text-secondary">calendar days</span>
                         </div>
                     </div>
@@ -1480,7 +1480,7 @@
                     <div class="mb-4">
                         <label class="form-label small fw-bold text-secondary uppercase mb-2">Default lead time for purchase orders</label>
                         <div class="d-flex align-items-center gap-2">
-                            <input type="number" class="settings-input-control" value="14" id="settings-lead">
+                            <input type="number" class="settings-input-control" value="{{ company.default_lead_purchase_days }}" id="settings-lead">
                             <span class="small fw-semibold text-secondary">calendar days</span>
                         </div>
                     </div>
@@ -1505,10 +1505,10 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-6">
                     <div class="border border-dark p-4 rounded bg-white h-100">
-                        <span class="badge bg-secondary text-white uppercase font-monospace mb-2" style="font-size: 0.65rem;">Current Plan</span>
-                        <h4 class="fw-bold mb-1 text-dark">Free plan</h4>
+                        <span class="badge bg-secondary text-white uppercase font-monospace mb-2" style="font-size: 0.65rem;">Current Plan for {{ company.display_name }}</span>
+                        <h4 class="fw-bold mb-1 text-dark">{{ company.current_plan_tier }} plan</h4>
                         <p class="text-secondary small mb-3">Try Avis with your business data and see how it integrates with your workflow.</p>
-                        <h2 class="fw-black text-dark mb-4">$0 <span class="small text-secondary">/ month</span></h2>
+                        <h2 class="fw-black text-dark mb-4">{% if company.current_plan_tier == 'Premium Enterprise' %}$999{% else %}$0{% endif %} <span class="small text-secondary">/ month</span></h2>
                         <button class="btn btn-stroke-grey btn-sm px-4" onclick="alert('Subscription cancelled.');">Cancel subscription</button>
                     </div>
                 </div>
