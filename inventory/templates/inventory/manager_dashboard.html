@@ -288,116 +288,182 @@
 
     <!-- ==================== TAB VIEW 1: HOME DASHBOARD ==================== -->
     <div class="dashboard-view-container active-view" id="view-dashboard-overview">
-        <div class="row mb-4">
-            <div class="col-12 text-start">
-                <h1 class="h1-main-header">Welcome to Avis, Parth!</h1>
-                <p class="text-secondary" style="font-size: 15px;">Centralize your sales orders and inventory data from all channels for complete visibility and simplified management. Eliminate stockouts and overstocks.</p>
+        <!-- HEADER ZONE -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4 bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px; margin-bottom: 24px;">
+            <div class="text-start">
+                <h1 class="text-2xl font-bold text-slate-800 tracking-tight" style="font-size: 24px; font-weight: 700; color: #1e293b; margin: 0 0 4px 0;">System Dashboard</h1>
+                <p class="text-sm text-slate-400" style="font-size: 13px; color: #94a3b8; margin: 0;">Real-time automation and fulfillment overview</p>
+            </div>
+            <div class="d-flex align-items-center gap-2 bg-success-subtle border border-success-subtle text-success px-3 py-2 rounded-3 text-xs font-bold shadow-sm" style="font-size: 12px; border-radius: 8px; font-weight: 700;">
+                <span class="spinner-grow spinner-grow-sm text-success me-1" role="status" style="width: 8px; height: 8px;"></span>
+                AI Agent: Active & Optimizing
             </div>
         </div>
 
-        <div class="asymmetric-layout-grid">
-            <!-- Left Component Frame (8 Columns) -->
-            <div class="col-main-left text-start">
-                <!-- Onboarding Progress Container -->
-                <div class="card border border-light p-4 mb-4" style="background-color: #ffffff; border-radius: 12px;">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <h5 class="fw-bold text-dark mb-0">Your first steps with Avis</h5>
-                        <span class="onboarding-progress-badge-text">0% complete</span>
-                    </div>
-                    <div class="onboarding-progress-bar-bg mb-4">
-                        <div class="onboarding-progress-bar-fill" id="home-onboarding-progress-bar" style="width: 0%;"></div>
-                    </div>
-
-                    <!-- Action buttons -->
-                    <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-stroke-grey btn-sm" onclick="alert('Connecting Shopify API import...');">Import from Shopify</button>
-                        <button class="btn btn-stroke-grey btn-sm" onclick="showAssistedImportView()">Upload from spreadsheet</button>
-                        <a href="{% url 'product_create' %}" class="btn btn-solid-blue btn-sm">Create manually</a>
-                    </div>
+        <!-- TOP SUMMARY KPI CARDS GRID -->
+        <div class="row g-3 mb-4" style="margin-bottom: 24px;">
+            <!-- KPI 1 -->
+            <div class="col-12 col-md-4 text-start">
+                <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px; height: 100%;">
+                    <p class="text-xs font-bold text-muted text-uppercase tracking-wider" style="font-size: 11px; font-weight: 700; color: #94a3b8; margin: 0 0 8px 0; text-transform: uppercase;">Total Inventory Asset Value</p>
+                    <p class="text-3xl font-extrabold text-dark mt-2" style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0;">${{ total_inventory_value|floatformat:2 }}</p>
+                    <span class="text-xs text-success font-semibold mt-2 d-block" style="font-size: 11px; font-weight: 600; color: #16a34a;">📉 -2% excess stock reduction</span>
                 </div>
-
-                <!-- Banner Widget (Promotional) -->
-                <div class="tan-promo-widget text-start mt-0 mb-4">
-                    <div>
-                        <h5 class="fw-bold text-amber-900 mb-1" style="color: #78350F;">Get implemented, or your money back</h5>
-                        <p class="text-amber-800 small mb-0" style="color: #92400E;">Join our guided setup program to configure your logistics matrices correctly and achieve positive ROI.</p>
-                    </div>
-                    <a href="#" class="btn-brown-promo" onclick="alert('Guided setup walkthrough...'); return false;">Learn more</a>
+            </div>
+            <!-- KPI 2 -->
+            <div class="col-12 col-md-4 text-start">
+                <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px; height: 100%;">
+                    <p class="text-xs font-bold text-muted text-uppercase tracking-wider" style="font-size: 11px; font-weight: 700; color: #94a3b8; margin: 0 0 8px 0; text-transform: uppercase;">Stock Units Active</p>
+                    <p class="text-3xl font-extrabold text-dark mt-2" style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0;">{{ total_stock_units }} Units</p>
+                    <span class="text-xs text-muted mt-2 d-block" style="font-size: 11px; color: #64748b;">Across {{ products_count }} tracking SKUs</span>
                 </div>
-
-                <!-- Stock Risks Panel (Bottom) -->
-                <div class="card border border-light p-4 mb-4" style="background-color: #ffffff; border-radius: 12px;">
-                    <h5 class="fw-bold text-dark mb-3 text-start">Stock risks</h5>
-                    <div class="empty-state-container">
-                        <i class="fa-regular fa-circle-check empty-state-icon text-success"></i>
-                        <p class="mb-0 fw-semibold">No stockout risks detected.</p>
-                    </div>
+            </div>
+            <!-- KPI 3 -->
+            <div class="col-12 col-md-4 text-start">
+                <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px; height: 100%;">
+                    <p class="text-xs font-bold text-muted text-uppercase tracking-wider" style="font-size: 11px; font-weight: 700; color: #94a3b8; margin: 0 0 8px 0; text-transform: uppercase;">Critical Exception Flags</p>
+                    <p class="text-3xl font-extrabold text-danger mt-2" style="font-size: 28px; font-weight: 800; color: #dc2626; margin: 0;">{{ critical_low_count }} Items</p>
+                    <span class="text-xs text-danger font-semibold mt-2 d-block" style="font-size: 11px; font-weight: 600; color: #dc2626;">⚠️ Immediate replenishment needed</span>
                 </div>
+            </div>
+        </div>
 
-                <!-- Add New Customer Card (Embedded Inline on Home Dashboard) -->
-                <div class="card p-4 text-start mb-4" style="border: 1px solid #E5E7EB; border-radius: 8px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); background-color: #FFFFFF;">
-                    <h5 class="fw-bold text-dark mb-4" style="font-family: 'Outfit', 'Inter', sans-serif; font-size: 1.1rem; color: #111827;">
-                        <i class="fa-solid fa-user-plus text-primary me-2"></i>Add New Customer
-                    </h5>
-                    <form onsubmit="submitNewCustomer(event)">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Name</label>
-                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-name" placeholder="e.g. Parth Choudhary">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Email address</label>
-                                <input type="email" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-email" placeholder="e.g. singhigone@gmail.com">
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Currency</label>
-                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" value="INR (₹)" required id="cust-input-currency">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Phone number</label>
-                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-phone" placeholder="e.g. +91 98765 43210">
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Reference ID</label>
-                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" placeholder="e.g. REF-XXX" id="cust-input-ref">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Category</label>
-                                <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" value="Standard" id="cust-input-category">
-                            </div>
-                            
-                            <div class="col-12">
-                                <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Comment</label>
-                                <textarea class="form-control" style="height: 80px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px; resize: none;" id="cust-input-comment" placeholder="Add specific notes or comments about this customer..."></textarea>
-                            </div>
-                        </div>
-                        <div class="mt-4 text-start">
-                            <button type="submit" class="btn btn-primary px-4 py-2 text-white" style="background-color: #1A56DB !important; border: none; border-radius: 6px; font-weight: 600; font-size: 14px;">Add Customer</button>
-                        </div>
-                    </form>
+        <!-- SPLIT CONTENT SECTION -->
+        <div class="row g-4">
+            <!-- AVIS AI Action Matrix (8 Columns) -->
+            <div class="col-12 col-lg-8 text-start">
+                <div class="bg-white p-4 rounded-3 border h-100" style="border-color: #E2E8F0 !important; border-radius: 12px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="text-lg font-bold text-dark mb-0" style="font-size: 16px; font-weight: 700; color: #0f172a;">AVIS AI Action Matrix</h3>
+                        <span class="text-xs text-muted" style="font-size: 11px; color: #94a3b8;">Prioritized by Urgency</span>
+                    </div>
+
+                    <div class="table-responsive" style="border: none !important;">
+                        <table class="table align-middle text-start mb-0" style="font-size: 13px; color: #334155;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid #f1f5f9; color: #64748b; font-weight: 700; font-size: 11px; text-transform: uppercase;">
+                                    <th class="pb-3 text-start">Item Details</th>
+                                    <th class="pb-3 text-start">Current Stock</th>
+                                    <th class="pb-3 text-start">AI Live Status / Recommendation</th>
+                                    <th class="pb-3 text-end">Operation</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50">
+                                {% for item in datagrid_items %}
+                                    {% if item.triggered %}
+                                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                                        <td class="py-3 font-semibold text-dark">
+                                            {{ item.product.name }} <br/>
+                                            <span class="text-muted font-monospace font-normal" style="font-size: 11px;">{{ item.product.sku }}</span>
+                                        </td>
+                                        <td class="py-3 text-secondary">
+                                            <span class="{% if item.qty == 0 %}text-danger fw-bold{% else %}text-warning fw-bold{% endif %}">{{ item.qty }}</span> / {{ item.rop }} units
+                                        </td>
+                                        <td class="py-3">
+                                            {% if item.qty == 0 %}
+                                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1" style="font-size: 10px; font-weight: 700; border-radius: 6px;">🔴 Stockout</span>
+                                            {% else %}
+                                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1" style="font-size: 10px; font-weight: 700; border-radius: 6px; color: #b45309 !important;">⚠️ Low Threshold</span>
+                                            {% endif %}
+                                            <p class="text-muted small mt-1 mb-0" style="font-size: 11px;">Below threshold safety margins. Lead Time: {{ item.forecast.lead_time }} Days.</p>
+                                        </td>
+                                        <td class="py-3 text-end">
+                                            <a href="{% url 'manager_quick_order' item.product.id %}" class="btn btn-primary btn-sm px-3 py-1.5" style="background-color: #2563EB !important; border: none; border-radius: 8px; font-weight: 600; font-size: 11px; color: #ffffff !important;">Auto-PO</a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="py-4 text-center text-muted">All stock volumes optimal. No anomalies detected.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- Right Component Frame (4 Columns): Sidebar / Reference Info -->
-            <div class="col-helper-right text-start">
-                <div class="card border border-light p-4 h-100" style="background-color: #ffffff; border-radius: 12px;">
-                    <h5 class="fw-bold text-dark mb-3">Learn Avis Faster</h5>
-                    <ul class="list-unstyled d-flex flex-column gap-3 small text-secondary">
-                        <li class="border-bottom pb-2">
-                            <a href="#" class="text-decoration-none fw-semibold text-primary d-block mb-1" onclick="alert('Opening Shopify integration guide...'); return false;">Shopify integration</a>
-                            <span class="text-muted" style="font-size: 0.75rem;">Connect store channels and automate product flows.</span>
-                        </li>
-                        <li class="border-bottom pb-2">
-                            <a href="#" class="text-decoration-none fw-semibold text-primary d-block mb-1" onclick="alert('Opening workflow basics guide...'); return false;">Workflow basics</a>
-                            <span class="text-muted" style="font-size: 0.75rem;">Learn product catalogs, item statuses, and lead tracking.</span>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none fw-semibold text-primary d-block mb-1" onclick="alert('Opening inventory control guide...'); return false;">Inventory control</a>
-                            <span class="text-muted" style="font-size: 0.75rem;">Reorder alerts, safety levels, and purchase expectations.</span>
-                        </li>
-                    </ul>
+            <!-- Engine Controls and Top Items (4 Columns) -->
+            <div class="col-12 col-lg-4 text-start">
+                <div class="d-flex flex-column gap-4">
+                    <!-- AI Engine Controls -->
+                    <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px;">
+                        <h3 class="text-lg font-bold text-dark mb-4" style="font-size: 16px; font-weight: 700; color: #0f172a;">AI Engine Controls</h3>
+                        
+                        <div class="d-flex flex-column gap-3">
+                            <!-- Toggle 1 -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="small fw-bold text-dark mb-0" style="font-size: 13px; font-weight: 600;">Autonomous Procurement</p>
+                                    <p class="text-muted mb-0" style="font-size: 11px;">Instantly draft restock POs</p>
+                                </div>
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="toggle-procurement-live" checked style="width: 2.5em; height: 1.25em; cursor: pointer;">
+                                </div>
+                            </div>
+                            <!-- Toggle 2 -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="small fw-bold text-dark mb-0" style="font-size: 13px; font-weight: 600;">Dynamic Routing</p>
+                                    <p class="text-muted mb-0" style="font-size: 11px;">Select lowest cost vendors</p>
+                                </div>
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="toggle-routing-live" checked style="width: 2.5em; height: 1.25em; cursor: pointer;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fastest Moving Items -->
+                    <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px;">
+                        <h3 class="text-md font-bold text-dark mb-3" style="font-size: 14px; font-weight: 700; color: #0f172a;">Fastest Moving Items</h3>
+                        <div class="d-flex flex-column gap-2" style="font-size: 13px;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold text-slate-700">🥇 LED Light Strip</span>
+                                <span class="badge bg-light text-dark px-2 py-1" style="font-size: 11px;">450 Sold</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold text-slate-700">🥈 Monitor Mounts</span>
+                                <span class="badge bg-light text-dark px-2 py-1" style="font-size: 11px;">120 Sold</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add New Customer Card (Embedded Inline on Home Dashboard) -->
+                    <div class="card p-4 text-start" style="border: 1px solid #E5E7EB; border-radius: 8px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); background-color: #FFFFFF;">
+                        <h5 class="fw-bold text-dark mb-4" style="font-family: 'Outfit', 'Inter', sans-serif; font-size: 1.1rem; color: #111827;">
+                            <i class="fa-solid fa-user-plus text-primary me-2"></i>Add New Customer
+                        </h5>
+                        <form onsubmit="submitNewCustomer(event)">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Name</label>
+                                    <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-name" placeholder="e.g. Parth Choudhary">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Email address</label>
+                                    <input type="email" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-email" placeholder="e.g. singhigone@gmail.com">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-semibold text-secondary mb-1" style="font-size: 12px; color: #4B5563;">Phone number</label>
+                                    <input type="text" class="form-control" style="height: 40px; border-color: #E5E7EB; border-radius: 6px; color: #111827; font-size: 13px;" required id="cust-input-phone" placeholder="e.g. +91 98765 43210">
+                                </div>
+                            </div>
+                            <div class="mt-3 text-start">
+                                <button type="submit" class="btn btn-primary px-3 py-2 text-white" style="background-color: #1A56DB !important; border: none; border-radius: 6px; font-weight: 600; font-size: 13px;">Add Customer</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Onboarding actions -->
+                    <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px;">
+                        <h3 class="text-md font-bold text-dark mb-3" style="font-size: 14px; font-weight: 700; color: #0f172a;">Quick Actions</h3>
+                        <div class="d-flex flex-column gap-2">
+                            <button class="btn btn-stroke-grey btn-sm text-start w-100" style="font-size: 12px;" onclick="alert('Connecting Shopify API import...');"><i class="fa-brands fa-shopify me-2"></i>Import from Shopify</button>
+                            <button class="btn btn-stroke-grey btn-sm text-start w-100" style="font-size: 12px;" onclick="showAssistedImportView()"><i class="fa-solid fa-file-excel me-2"></i>Upload from spreadsheet</button>
+                            <a href="{% url 'product_create' %}" class="btn btn-solid-blue btn-sm text-center w-100" style="font-size: 12px; font-weight: 600;"><i class="fa-solid fa-plus me-2"></i>Create manually</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

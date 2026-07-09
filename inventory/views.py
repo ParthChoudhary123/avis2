@@ -105,6 +105,9 @@ def manager_dashboard(request):
     ledger_valid, ledger_errors = verify_chain_integrity()
     recent_blocks = AuditBlock.objects.order_by('-index')[:5]
 
+    total_inventory_value = sum(p.price * p.stock.current_quantity for p in products if hasattr(p, 'stock'))
+    total_stock_units = sum(p.stock.current_quantity for p in products if hasattr(p, 'stock'))
+
     context = {
         'products_count': products.count(),
         'orders_count': orders.count(),
@@ -116,7 +119,9 @@ def manager_dashboard(request):
         'ledger_errors': ledger_errors,
         'recent_blocks': recent_blocks,
         'datagrid_items': datagrid_items,
-        'orders': orders[:8]
+        'orders': orders[:8],
+        'total_inventory_value': total_inventory_value,
+        'total_stock_units': total_stock_units,
     }
     return render(request, 'inventory/manager_dashboard.html', context)
 
