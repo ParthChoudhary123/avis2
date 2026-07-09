@@ -56,21 +56,24 @@ def dashboard_redirect(request):
 
 @manager_required
 def manager_dashboard(request):
-    # Load or create demo company for manager user
-    company = Company.objects.filter(owner=request.user).first()
-    if not company:
-        company = Company.objects.create(
-            id=1,
-            owner=request.user,
-            display_name="Avis Global Operations Ltd",
-            legal_name="Avis Global Operations Private Limited",
-            street_address="100 Innovation Way, Tech Park, Bangalore",
-            base_currency="INR",
-            show_currency_on_orders=True,
-            default_delivery_sales_days=14,
-            default_lead_purchase_days=14,
-            current_plan_tier="Premium Enterprise"
-        )
+    # Load or create demo company with ID=1 safely
+    company, created = Company.objects.get_or_create(
+        id=1,
+        defaults={
+            'owner': request.user,
+            'display_name': "Avis Global Operations Ltd",
+            'legal_name': "Avis Global Operations Private Limited",
+            'street_address': "100 Innovation Way, Tech Park, Bangalore",
+            'base_currency': "INR",
+            'show_currency_on_orders': True,
+            'default_delivery_sales_days': 14,
+            'default_lead_purchase_days': 14,
+            'current_plan_tier': "Premium Enterprise"
+        }
+    )
+    if not created and company.owner != request.user:
+        company.owner = request.user
+        company.save()
     products = Product.objects.all().select_related('stock')
     orders = Order.objects.all().select_related('product', 'vendor').order_by('-created_at')
     vendors = Vendor.objects.all()
