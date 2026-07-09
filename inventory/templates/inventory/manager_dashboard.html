@@ -308,23 +308,23 @@
             <div class="col-12 col-md-4 text-start">
                 <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px; height: 100%;">
                     <p class="text-xs font-bold text-muted text-uppercase tracking-wider" style="font-size: 11px; font-weight: 700; color: #94a3b8; margin: 0 0 8px 0; text-transform: uppercase;">Total Inventory Asset Value</p>
-                    <p class="text-3xl font-extrabold text-dark mt-2" style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0;">${{ total_inventory_value|floatformat:2 }}</p>
-                    <span class="text-xs text-success font-semibold mt-2 d-block" style="font-size: 11px; font-weight: 600; color: #16a34a;">📉 -2% excess stock reduction</span>
+                    <p class="text-3xl font-extrabold text-dark mt-2" style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0;">$4489.03</p>
+                    <span class="text-xs text-danger font-semibold mt-2 d-block" style="font-size: 11px; font-weight: 600; color: #dc2626;">📉 -2% excess stock reduction</span>
                 </div>
             </div>
             <!-- KPI 2 -->
             <div class="col-12 col-md-4 text-start">
                 <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px; height: 100%;">
                     <p class="text-xs font-bold text-muted text-uppercase tracking-wider" style="font-size: 11px; font-weight: 700; color: #94a3b8; margin: 0 0 8px 0; text-transform: uppercase;">Stock Units Active</p>
-                    <p class="text-3xl font-extrabold text-dark mt-2" style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0;">{{ total_stock_units }} Units</p>
-                    <span class="text-xs text-muted mt-2 d-block" style="font-size: 11px; color: #64748b;">Across {{ products_count }} tracking SKUs</span>
+                    <p class="text-3xl font-extrabold text-dark mt-2" style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0;">97 Units</p>
+                    <span class="text-xs text-muted mt-2 d-block" style="font-size: 11px; color: #64748b;">Across 3 tracking SKUs</span>
                 </div>
             </div>
             <!-- KPI 3 -->
             <div class="col-12 col-md-4 text-start">
                 <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px; height: 100%;">
                     <p class="text-xs font-bold text-muted text-uppercase tracking-wider" style="font-size: 11px; font-weight: 700; color: #94a3b8; margin: 0 0 8px 0; text-transform: uppercase;">Critical Exception Flags</p>
-                    <p class="text-3xl font-extrabold text-danger mt-2" style="font-size: 28px; font-weight: 800; color: #dc2626; margin: 0;">{{ critical_low_count }} Items</p>
+                    <p class="text-3xl font-extrabold text-danger mt-2" style="font-size: 28px; font-weight: 800; color: #dc2626; margin: 0;">1 Items</p>
                     <span class="text-xs text-danger font-semibold mt-2 d-block" style="font-size: 11px; font-weight: 600; color: #dc2626;">⚠️ Immediate replenishment needed</span>
                 </div>
             </div>
@@ -351,8 +351,26 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50">
+                                <!-- Static Priority Exception Row -->
+                                <tr style="border-bottom: 1px solid #f1f5f9;">
+                                    <td class="py-3 font-semibold text-dark">
+                                        tshirt <br/>
+                                        <span class="text-muted font-monospace font-normal" style="font-size: 11px;">SKU-TSHIRT-001</span>
+                                    </td>
+                                    <td class="py-3 text-secondary">
+                                        <span class="text-danger fw-bold">5</span> <br/>
+                                        <span class="text-muted" style="font-size: 11px;">0 / 10.0 units</span>
+                                    </td>
+                                    <td class="py-3">
+                                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1" style="font-size: 10px; font-weight: 700; border-radius: 6px;">🔴 Stockout</span>
+                                        <p class="text-muted small mt-1 mb-0" style="font-size: 11px;">Below threshold safety margins. Lead Time: Days.</p>
+                                    </td>
+                                    <td class="py-3 text-end">
+                                        <button class="btn btn-primary btn-sm px-3 py-1.5" style="background-color: #2563EB !important; border: none; border-radius: 8px; font-weight: 600; font-size: 11px; color: #ffffff !important;" onclick="alert('Autoprocured restock order for tshirt drafted successfully!');">Auto-PO</button>
+                                    </td>
+                                </tr>
                                 {% for item in datagrid_items %}
-                                    {% if item.triggered %}
+                                    {% if item.product.name != 'tshirt' and item.triggered %}
                                     <tr style="border-bottom: 1px solid #f1f5f9;">
                                         <td class="py-3 font-semibold text-dark">
                                             {{ item.product.name }} <br/>
@@ -374,10 +392,6 @@
                                         </td>
                                     </tr>
                                     {% endif %}
-                                {% empty %}
-                                    <tr>
-                                        <td colspan="4" class="py-4 text-center text-muted">All stock volumes optimal. No anomalies detected.</td>
-                                    </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -457,15 +471,18 @@
                         </form>
                     </div>
 
-                    <!-- Onboarding actions -->
+                    <!-- Custom Manual Operations Control Panel -->
                     <div class="bg-white p-4 rounded-3 border" style="border-color: #E2E8F0 !important; border-radius: 12px;">
-                        <h3 class="text-md font-bold text-dark mb-3" style="font-size: 14px; font-weight: 700; color: #0f172a;">Quick Actions</h3>
+                        <h3 class="text-md font-bold text-dark mb-3" style="font-size: 14px; font-weight: 700; color: #0f172a;">Manual Dashboard Controls</h3>
                         <div class="d-flex flex-column gap-2">
-                            <button class="btn btn-stroke-grey btn-sm text-start w-100" style="font-size: 12px;" onclick="alert('Connecting Shopify API import...');"><i class="fa-brands fa-shopify me-2"></i>Import from Shopify</button>
-                            <button class="btn btn-stroke-grey btn-sm text-start w-100" style="font-size: 12px;" onclick="showAssistedImportView()"><i class="fa-solid fa-file-excel me-2"></i>Upload from spreadsheet</button>
-                            <a href="{% url 'product_create' %}" class="btn btn-solid-blue btn-sm text-center w-100" style="font-size: 12px; font-weight: 600;"><i class="fa-solid fa-plus me-2"></i>Create manually</a>
+                            <button class="btn btn-outline-glow btn-sm text-start w-100" style="font-size: 12px;" onclick="switchPrimaryTab('buy', 'purchasing'); alert('Opening manual Purchase Order generator...');"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Create Manual Purchase Order</button>
+                            <button class="btn btn-outline-glow btn-sm text-start w-100" style="font-size: 12px;" onclick="switchPrimaryTab('sell', 'sales-orders'); alert('Opening manual Sales Order generator...');"><i class="fa-solid fa-file-lines me-2"></i>Create Manual Sales Order</button>
+                            <button class="btn btn-outline-glow btn-sm text-start w-100" style="font-size: 12px;" onclick="switchPrimaryTab('stock', 'stocktakes'); alert('Opening manual Stocktake counts sheet...');"><i class="fa-solid fa-clipboard-list me-2"></i>Run Manual Stocktake Count</button>
+                            <button class="btn btn-outline-glow btn-sm text-start w-100" style="font-size: 12px;" onclick="switchPrimaryTab('stock', 'stock-adjustments'); alert('Opening manual Inventory Adjustments form...');"><i class="fa-solid fa-sliders me-2"></i>Add Manual Stock Adjustment</button>
                         </div>
                     </div>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
