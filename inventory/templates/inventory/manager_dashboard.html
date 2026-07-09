@@ -1237,7 +1237,7 @@
                     <option value="all">All locations</option>
                     <option value="mumbai">Mumbai Warehouse</option>
                 </select>
-                <button class="btn btn-solid-blue" onclick="alert('Starting stocktake...');"><i class="fa-solid fa-plus me-1"></i>Stocktake</button>
+                <button class="btn btn-solid-blue" onclick="triggerNewStocktake();"><i class="fa-solid fa-plus me-1"></i>Stocktake</button>
             </div>
         </div>
         <div class="table-container-custom mb-2">
@@ -1251,14 +1251,14 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="stocktakes-tbody">
+                    <tr id="stocktakes-empty-row">
                         <td colspan="5" class="text-center py-4 text-secondary small">No stocktakes schedule entries written.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="text-start text-secondary small">0 orders</div>
+        <div class="text-start text-secondary small" id="stocktakes-count-label">0 counts</div>
     </div>
 
     <!-- ==================== TAB VIEW 14: PLAN / PLANNING ==================== -->
@@ -1268,21 +1268,21 @@
                 <h1 class="h1-main-header mb-0 text-start">Planning - {{ company.display_name }}</h1>
                 <!-- Row 1 filters -->
                 <div class="btn-group border border-1 border-secondary rounded" style="overflow: hidden;">
-                    <button class="btn btn-sm btn-light active" onclick="alert('All category planning...');">All</button>
-                    <button class="btn btn-sm btn-light" onclick="alert('Products planning...');">Products</button>
-                    <button class="btn btn-sm btn-light" onclick="alert('Materials planning...');">Materials</button>
+                    <button class="btn btn-sm btn-light active" id="planning-cat-all" onclick="filterPlanningCategory('all');">All</button>
+                    <button class="btn btn-sm btn-light" id="planning-cat-prod" onclick="filterPlanningCategory('products');">Products</button>
+                    <button class="btn btn-sm btn-light" id="planning-cat-mat" onclick="filterPlanningCategory('materials');">Materials</button>
                 </div>
                 <!-- Row 2 Weekly/Monthly toggle -->
                 <div class="btn-group border border-1 border-secondary rounded" style="overflow: hidden;">
-                    <button class="btn btn-sm btn-light active">Weekly</button>
-                    <button class="btn btn-sm btn-light">Monthly</button>
+                    <button class="btn btn-sm btn-light active" id="planning-time-weekly" onclick="togglePlanningTimeline('weekly');">Weekly</button>
+                    <button class="btn btn-sm btn-light" id="planning-time-monthly" onclick="togglePlanningTimeline('monthly');">Monthly</button>
                 </div>
             </div>
             
             <div class="d-flex align-items-center gap-2">
                 <!-- Forecast switch -->
                 <div class="form-check form-switch d-inline-flex align-items-center gap-1">
-                    <input class="form-check-input" type="checkbox" role="switch" id="forecastDemandSwitch" onchange="alert('Forecast Demand: ' + this.checked);">
+                    <input class="form-check-input" type="checkbox" role="switch" id="forecastDemandSwitch" onchange="toggleForecast(this.checked);">
                     <label class="form-check-label small fw-bold" for="forecastDemandSwitch">Activate forecast demand</label>
                 </div>
                 <div class="btn-group border border-secondary" style="font-size: 0.8rem;">
@@ -1301,7 +1301,7 @@
         <div class="table-container-custom">
             <table class="table-custom text-center">
                 <thead>
-                    <tr>
+                    <tr id="planning-thead-row">
                         <th class="text-start">Item</th>
                         <th>Existing stock</th>
                         <th>Present week</th>
@@ -1313,25 +1313,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="planning-row-product">
                         <td class="text-start"><strong>Industrial Valve X2</strong></td>
                         <td>45 units</td>
-                        <td><span class="text-success fw-bold">45</span></td>
-                        <td>45</td>
-                        <td>40</td>
-                        <td><span class="text-danger fw-bold">12 (Trigger)</span></td>
-                        <td>12</td>
-                        <td>50</td>
+                        <td class="planning-cell-val" data-week="45" data-month="180"><span class="text-success fw-bold">45</span></td>
+                        <td class="planning-cell-val" data-week="45" data-month="180">45</td>
+                        <td class="planning-cell-val" data-week="40" data-month="160">40</td>
+                        <td class="planning-cell-val" data-week="12" data-month="48"><span class="text-danger fw-bold">12 (Trigger)</span></td>
+                        <td class="planning-cell-val" data-week="12" data-month="48">12</td>
+                        <td class="planning-cell-val" data-week="50" data-month="200">50</td>
                     </tr>
-                    <tr>
+                    <tr class="planning-row-material">
                         <td class="text-start"><strong>Quantum Gear</strong></td>
                         <td>85 units</td>
-                        <td><span class="text-success fw-bold">85</span></td>
-                        <td>85</td>
-                        <td>85</td>
-                        <td>85</td>
-                        <td>80</td>
-                        <td>80</td>
+                        <td class="planning-cell-val" data-week="85" data-month="340"><span class="text-success fw-bold">85</span></td>
+                        <td class="planning-cell-val" data-week="85" data-month="340">85</td>
+                        <td class="planning-cell-val" data-week="85" data-month="340">85</td>
+                        <td class="planning-cell-val" data-week="85" data-month="340">85</td>
+                        <td class="planning-cell-val" data-week="80" data-month="320">80</td>
+                        <td class="planning-cell-val" data-week="80" data-month="320">80</td>
                     </tr>
                 </tbody>
             </table>
@@ -1345,7 +1345,7 @@
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th style="width: 40px;"><input type="checkbox" disabled></th>
+                        <th style="width: 40px;"><input type="checkbox" checked id="replenish-chk-all"></th>
                         <th>Item</th>
                         <th>Supplier</th>
                         <th>Below safety level</th>
@@ -1353,11 +1353,12 @@
                         <th>Suggested order qty</th>
                         <th>Purchase cost</th>
                         <th>Suggested order by</th>
+                        <th>Operation</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="checkbox" disabled></td>
+                        <td><input type="checkbox" checked id="replenish-chk-1" style="cursor: pointer;"></td>
                         <td><strong>VAL-IND-X2 (Industrial Valve)</strong></td>
                         <td>Mumbai Steel Works</td>
                         <td><span class="text-danger fw-bold">Yes (ROP Crossed)</span></td>
@@ -1365,6 +1366,9 @@
                         <td>50 units</td>
                         <td>₹600,000.00</td>
                         <td>2026-07-05</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm px-3 py-1.5" style="background-color: #2563EB !important; border: none; border-radius: 8px; font-weight: 600; font-size: 11px; color: #ffffff !important;" onclick="triggerReplenishmentOrder(1);">Reorder</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -1378,10 +1382,10 @@
             
             <!-- Inner Header Navigation Menu -->
             <div class="d-flex align-items-center gap-3 border-bottom pb-2 mb-3" style="font-size: 0.9rem;">
-                <a href="#" class="text-primary fw-bold text-decoration-none">Sales Overview</a>
-                <a href="#" class="text-secondary text-decoration-none hover-white" onclick="alert('Products insights...'); return false;">Products</a>
-                <a href="#" class="text-secondary text-decoration-none hover-white" onclick="alert('Customers insights...'); return false;">Customers</a>
-                <a href="#" class="text-secondary text-decoration-none hover-white" onclick="alert('Orders insights...'); return false;">Orders</a>
+                <a href="#" class="text-primary fw-bold text-decoration-none sales-insight-tab" id="sales-insight-tab-overview" onclick="switchSalesInsightTab('overview', event);">Sales Overview</a>
+                <a href="#" class="text-secondary text-decoration-none hover-white sales-insight-tab" id="sales-insight-tab-products" onclick="switchSalesInsightTab('products', event);">Products</a>
+                <a href="#" class="text-secondary text-decoration-none hover-white sales-insight-tab" id="sales-insight-tab-customers" onclick="switchSalesInsightTab('customers', event);">Customers</a>
+                <a href="#" class="text-secondary text-decoration-none hover-white sales-insight-tab" id="sales-insight-tab-orders" onclick="switchSalesInsightTab('orders', event);">Orders</a>
             </div>
 
             <!-- Meta Timestamp -->
@@ -1392,7 +1396,7 @@
                 </button>
             </div>
 
-            <div class="border rounded p-4 text-center bg-light" style="min-height: 180px;">
+            <div class="border rounded p-4 text-center bg-light" id="sales-insights-content-box" style="min-height: 180px;">
                 <p class="text-secondary small mb-0">Sales statistics and trends loops processed successfully.</p>
             </div>
         </div>
@@ -2162,6 +2166,178 @@
             }
         }
     }
+
+    // ----------------------------------------------------
+    // INSIGHTS, PLANNING, BUY, & STOCKS INTERACTIVE FLOWS
+    // ----------------------------------------------------
+    
+    // 1. Stocktakes Creation Handler
+    let stocktakesList = [];
+    window.triggerNewStocktake = function() {
+        const date = new Date().toISOString().split('T')[0];
+        const newStocktake = {
+            id: stocktakesList.length + 1,
+            schedule: `Variance count #${stocktakesList.length + 1}`,
+            location: 'Mumbai Warehouse',
+            created: date,
+            variance: '+2 units',
+            status: 'Draft'
+        };
+        
+        stocktakesList.push(newStocktake);
+        
+        // hide empty row
+        const emptyRow = document.getElementById('stocktakes-empty-row');
+        if (emptyRow) emptyRow.style.display = 'none';
+        
+        // prepend row to table
+        const tbody = document.getElementById('stocktakes-tbody');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>${newStocktake.schedule}</strong></td>
+            <td>${newStocktake.location}</td>
+            <td>${newStocktake.created}</td>
+            <td><span class="text-success fw-bold">${newStocktake.variance}</span></td>
+            <td><span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-0.5" style="font-size: 10px; font-weight: 600;">${newStocktake.status}</span></td>
+        `;
+        tbody.insertBefore(tr, tbody.firstChild);
+        
+        document.getElementById('stocktakes-count-label').textContent = `${stocktakesList.length} counts`;
+        alert(`Successfully generated stocktake schedule count draft: ${newStocktake.schedule}`);
+    };
+
+    // 2. Planning category filters and forecast switches
+    let currentPlanningCategory = 'all';
+    let currentPlanningTimeline = 'weekly';
+    let currentForecastActive = false;
+
+    window.filterPlanningCategory = function(cat) {
+        currentPlanningCategory = cat;
+        document.getElementById('planning-cat-all').classList.toggle('active', cat === 'all');
+        document.getElementById('planning-cat-prod').classList.toggle('active', cat === 'products');
+        document.getElementById('planning-cat-mat').classList.toggle('active', cat === 'materials');
+        
+        document.querySelectorAll('.planning-row-product').forEach(row => {
+            row.style.display = (cat === 'all' || cat === 'products') ? '' : 'none';
+        });
+        document.querySelectorAll('.planning-row-material').forEach(row => {
+            row.style.display = (cat === 'all' || cat === 'materials') ? '' : 'none';
+        });
+    };
+
+    window.togglePlanningTimeline = function(mode) {
+        currentPlanningTimeline = mode;
+        document.getElementById('planning-time-weekly').classList.toggle('active', mode === 'weekly');
+        document.getElementById('planning-time-monthly').classList.toggle('active', mode === 'monthly');
+        
+        const headers = document.querySelectorAll('#planning-thead-row th');
+        if (mode === 'weekly') {
+            headers[2].textContent = 'Present week';
+            headers[3].textContent = 'Week 27';
+            headers[4].textContent = 'Week 28';
+            headers[5].textContent = 'Week 29';
+            headers[6].textContent = 'Week 30';
+            headers[7].textContent = 'Week 52';
+        } else {
+            headers[2].textContent = 'July';
+            headers[3].textContent = 'August';
+            headers[4].textContent = 'September';
+            headers[5].textContent = 'October';
+            headers[6].textContent = 'November';
+            headers[7].textContent = 'December';
+        }
+        
+        updatePlanningValues();
+    };
+
+    window.toggleForecast = function(chk) {
+        currentForecastActive = chk;
+        updatePlanningValues();
+    };
+
+    function updatePlanningValues() {
+        document.querySelectorAll('.planning-cell-val').forEach(cell => {
+            let baseVal = currentPlanningTimeline === 'weekly' ? parseInt(cell.getAttribute('data-week')) : parseInt(cell.getAttribute('data-month'));
+            let displayVal = baseVal;
+            
+            if (currentForecastActive) {
+                let forecastVal = Math.round(baseVal * 1.3);
+                if (cell.innerHTML.includes('Trigger') || baseVal < 20) {
+                    cell.innerHTML = `<span class="text-danger fw-bold">${displayVal} (+${forecastVal - baseVal} forecast)</span>`;
+                } else {
+                    cell.innerHTML = `<span class="text-success fw-bold">${displayVal} (+${forecastVal - baseVal} forecast)</span>`;
+                }
+            } else {
+                if (baseVal < 20) {
+                    cell.innerHTML = `<span class="text-danger fw-bold">${displayVal} (Trigger)</span>`;
+                } else if (baseVal > 50) {
+                    cell.innerHTML = `<span class="text-success fw-bold">${displayVal}</span>`;
+                } else {
+                    cell.innerHTML = displayVal;
+                }
+            }
+        });
+    }
+
+    // 3. Replenishment PO generation trigger
+    window.triggerReplenishmentOrder = function(rowId) {
+        if (typeof addNewPurchaseOrder === 'function') {
+            addNewPurchaseOrder('Open');
+            alert('A dynamic Purchase Order for Mumbai Steel Works has been automatically drafted and dispatched inside Buy -> Purchasing tab!');
+        } else {
+            alert('Connecting purchase order parameters to Buy flows...');
+        }
+    };
+
+    // 4. Sales Insights sub-tabs selection switcher
+    window.switchSalesInsightTab = function(tabName, event) {
+        if (event) event.preventDefault();
+        
+        document.querySelectorAll('.sales-insight-tab').forEach(tab => {
+            tab.classList.remove('text-primary', 'fw-bold');
+            tab.classList.add('text-secondary');
+        });
+        const activeTab = document.getElementById(`sales-insight-tab-${tabName}`);
+        if (activeTab) {
+            activeTab.classList.remove('text-secondary');
+            activeTab.classList.add('text-primary', 'fw-bold');
+        }
+        
+        const contentBox = document.getElementById('sales-insights-content-box');
+        if (!contentBox) return;
+        
+        if (tabName === 'overview') {
+            contentBox.innerHTML = `<p class="text-secondary small mb-0">Sales statistics and trends loops processed successfully.</p>`;
+        } else if (tabName === 'products') {
+            contentBox.innerHTML = `
+                <div class="text-start select-none">
+                    <h6 class="fw-bold mb-3" style="font-size: 14px; color: #1e293b;">Top Performing Products</h6>
+                    <ul class="list-group list-group-flush small" style="font-size: 13px;">
+                        <li class="list-group-item d-flex justify-content-between py-2 bg-transparent"><span>🥇 LED Light Strip</span> <strong class="text-dark">450 Sold</strong></li>
+                        <li class="list-group-item d-flex justify-content-between py-2 bg-transparent"><span>🥈 Monitor Mounts</span> <strong class="text-dark">120 Sold</strong></li>
+                        <li class="list-group-item d-flex justify-content-between py-2 bg-transparent"><span>🥉 Industrial Valve X2</span> <strong class="text-dark">80 Sold</strong></li>
+                    </ul>
+                </div>`;
+        } else if (tabName === 'customers') {
+            contentBox.innerHTML = `
+                <div class="text-start select-none">
+                    <h6 class="fw-bold mb-3" style="font-size: 14px; color: #1e293b;">Top Active Customers</h6>
+                    <ul class="list-group list-group-flush small" style="font-size: 13px;">
+                        <li class="list-group-item d-flex justify-content-between py-2 bg-transparent"><span>Parth Choudhary</span> <strong class="text-dark">parth@example.com</strong></li>
+                        <li class="list-group-item d-flex justify-content-between py-2 bg-transparent"><span>singhigone@gmail.com</span> <strong class="text-dark">+91 98765 43210</strong></li>
+                    </ul>
+                </div>`;
+        } else if (tabName === 'orders') {
+            contentBox.innerHTML = `
+                <div class="text-start select-none">
+                    <h6 class="fw-bold mb-3" style="font-size: 14px; color: #1e293b;">Recent Sales Orders</h6>
+                    <ul class="list-group list-group-flush small" style="font-size: 13px;">
+                        <li class="list-group-item d-flex justify-content-between py-2 bg-transparent"><span>Order #95 - WooCommerce Customer</span> <strong class="text-success">Completed</strong></li>
+                        <li class="list-group-item d-flex justify-content-between py-2 bg-transparent"><span>Order #55 - HubSpot Customer</span> <strong class="text-warning">Processed</strong></li>
+                    </ul>
+                </div>`;
+        }
+    };
 
     // Initialize metrics on DOM load
     window.addEventListener('DOMContentLoaded', () => {
