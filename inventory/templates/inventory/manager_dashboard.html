@@ -4,6 +4,86 @@
 
 {% block extra_css %}
 <style>
+    /* Katana Dashboard Layout Styling Override */
+    .katana-container {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #ffffff !important;
+        color: #1a202c;
+    }
+    
+    .katana-title {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-weight: 700;
+        font-size: 32px;
+        color: #000000;
+        letter-spacing: -0.5px;
+    }
+
+    .katana-subtitle {
+        font-size: 15px;
+        color: #4a5568;
+        line-height: 1.5;
+    }
+
+    .katana-grey-panel {
+        background-color: #f1f2f4 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 32px !important;
+    }
+
+    .katana-card-white {
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 6px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        padding: 16px !important;
+        transition: border-color 0.15s ease-in-out;
+    }
+
+    .katana-card-active {
+        border: 2px solid #3b82f6 !important; /* Blue outline */
+    }
+
+    .katana-circle-indicator {
+        width: 20px;
+        height: 20px;
+        border: 1.5px solid #a0aec0;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+    }
+
+    .katana-badge-grey {
+        background-color: #e2e8f0;
+        color: #4a5568;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 2px 6px;
+        border-radius: 4px;
+        text-transform: none;
+    }
+
+    .katana-badge-beige {
+        background-color: #eceae0;
+        color: #5c594c;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 4px;
+        letter-spacing: 0.2px;
+    }
+
+    .katana-learn-item {
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .katana-learn-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
     /* Fixed top navigation layout content area overrides */
     .workspace-content {
         padding-left: 0;
@@ -290,11 +370,12 @@
 
     <!-- ==================== TAB VIEW 1: HOME DASHBOARD ==================== -->
     <!-- ==================== TAB VIEW 1: HOME DASHBOARD ==================== -->
-    <div class="dashboard-view-container active-view" id="view-dashboard-overview">
+    <!-- ==================== TAB VIEW 1: HOME DASHBOARD ==================== -->
+    <div class="dashboard-view-container active-view katana-container p-4 p-md-5" id="view-dashboard-overview">
         <!-- 1. WELCOME HEADER SECTION -->
         <div class="mb-5 text-start select-none">
-            <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2" style="font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 800; color: #0f172a;">Welcome to Katana, Parth!</h1>
-            <p class="text-slate-500 text-sm max-w-4xl leading-relaxed" style="font-size: 14px; color: #475569; max-width: 900px; line-height: 1.6;">
+            <h1 class="katana-title mb-2">Welcome to Katana, Parth!</h1>
+            <p class="katana-subtitle max-w-4xl leading-relaxed">
                 Centralize your sales orders and inventory data from all channels for complete visibility and simplified management. Eliminate stockouts and overstock.
             </p>
         </div>
@@ -303,19 +384,19 @@
         <div class="row g-4 select-none">
             <!-- Left Column: Your first steps with Katana -->
             <div class="col-12 col-lg-8 text-start">
-                <div class="p-4 p-md-5 rounded-3 border" style="background-color: #f1f2f4; border-color: #e5e7eb !important; border-radius: 12px; height: 100%;">
-                    <h2 class="text-xl font-bold text-slate-800 mb-2" style="font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; color: #1e293b;">Your first steps with Katana</h2>
-                    <p class="text-slate-500 text-xs mb-4" style="font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div class="katana-grey-panel">
+                    <h2 class="text-xl font-bold text-slate-800 mb-2" style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 22px; font-weight: 700; color: #1a202c; letter-spacing: -0.3px;">Your first steps with Katana</h2>
+                    <p class="text-slate-500 text-xs mb-4" style="font-size: 13px; color: #4a5568; line-height: 1.5; margin-bottom: 24px !important;">
                         Connect your sales tools to import your data into Katana. Check real-time inventory requirements and movements on the Stock screen based on sales and purchasing.
                     </p>
                     
                     <!-- Progress meter -->
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between align-items-center mb-1 text-[11px] font-bold text-slate-500">
+                    <div class="mb-4" style="margin-bottom: 24px !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-1 text-[11px] font-bold text-slate-500" style="font-size: 13px; color: #4a5568; margin-bottom: 8px !important;">
                             <span>0% complete</span>
                         </div>
-                        <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden" style="background-color: #d1d5db; border-radius: 9999px;">
-                            <div class="bg-indigo-600 h-1.5 rounded-full" style="width: 0%; background-color: #3b82f6;"></div>
+                        <div class="w-full bg-slate-200 rounded-full h-1 overflow-hidden" style="background-color: #cbd5e0; border-radius: 9999px; height: 4px;">
+                            <div class="bg-indigo-600 h-1 rounded-full" style="width: 0%; background-color: #2b6cb0; height: 4px;"></div>
                         </div>
                     </div>
 
@@ -323,62 +404,56 @@
                     <div class="d-flex flex-column gap-3">
                         
                         <!-- Step 1: Add products -->
-                        <div class="p-3 bg-white border-2 border-indigo-600 rounded-xl flex items-center justify-between cursor-pointer hover:shadow-md transition-all" onclick="switchPrimaryTab('stock', 'inventory')" style="border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-                            <div class="d-flex items-center gap-3">
-                                <div class="w-6 h-6 rounded-full border border-gray-400 flex items-center justify-center text-gray-300">
-                                    <i class="fa-regular fa-circle text-lg"></i>
-                                </div>
+                        <div class="katana-card-white katana-card-active d-flex align-items-center justify-content-between cursor-pointer" onclick="switchPrimaryTab('stock', 'inventory')">
+                            <div class="d-flex align-items-start gap-3">
+                                <span class="katana-circle-indicator mt-1"></span>
                                 <div>
-                                    <div class="d-flex items-center gap-2">
-                                        <span class="text-sm font-bold text-gray-800">Add your products</span>
-                                        <span class="badge bg-slate-100 text-slate-500 border border-slate-200 text-[10px] px-2 py-0.5 rounded" style="font-size: 10px; font-weight: 600;">1-2 mins</span>
+                                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                                        <span class="text-sm font-bold text-gray-900" style="font-size: 15px; font-weight: 700; color: #1a202c;">Add your products</span>
+                                        <span class="katana-badge-grey">1-2 mins</span>
                                     </div>
-                                    <p class="text-slate-450 text-[11px] mt-0.5" style="font-size: 11px; color: #64748b; margin-top: 2px;">Get your product catalog into Katana to start tracking inventory across all channels</p>
+                                    <p class="text-slate-500 text-[12px] mt-1 mb-0" style="font-size: 13px; color: #4a5568; margin-top: 4px !important;">Get your product catalog into Katana to start tracking inventory across all channels</p>
                                 </div>
                             </div>
-                            <div class="d-flex items-center gap-3 text-slate-400">
+                            <div class="d-flex align-items-center gap-3 text-slate-400">
                                 <i class="fa-solid fa-book-open text-xs"></i>
-                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                                <span class="text-xs font-bold" style="font-size: 14px; font-family: monospace;">&rsaquo;</span>
                             </div>
                         </div>
 
                         <!-- Step 2: Track orders -->
-                        <div class="p-3 bg-white border border-gray-200 rounded-xl flex items-center justify-between cursor-pointer hover:shadow-md transition-all" onclick="switchPrimaryTab('sell', 'sales-orders')" style="border-radius: 10px;">
-                            <div class="d-flex items-center gap-3">
-                                <div class="w-6 h-6 rounded-full border border-gray-400 flex items-center justify-center text-gray-300">
-                                    <i class="fa-regular fa-circle text-lg"></i>
-                                </div>
+                        <div class="katana-card-white d-flex align-items-center justify-content-between cursor-pointer" onclick="switchPrimaryTab('sell', 'sales-orders')">
+                            <div class="d-flex align-items-start gap-3">
+                                <span class="katana-circle-indicator mt-1"></span>
                                 <div>
-                                    <div class="d-flex items-center gap-2">
-                                        <span class="text-sm font-bold text-gray-800">Track your orders</span>
-                                        <span class="badge bg-slate-100 text-slate-500 border border-slate-200 text-[10px] px-2 py-0.5 rounded" style="font-size: 10px; font-weight: 600;">1-2 mins</span>
+                                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                                        <span class="text-sm font-bold text-gray-900" style="font-size: 15px; font-weight: 700; color: #1a202c;">Track your orders</span>
+                                        <span class="katana-badge-grey">1-2 mins</span>
                                     </div>
-                                    <p class="text-slate-450 text-[11px] mt-0.5" style="font-size: 11px; color: #64748b; margin-top: 2px;">Add your orders to track sales and stock requirements</p>
+                                    <p class="text-slate-500 text-[12px] mt-1 mb-0" style="font-size: 13px; color: #4a5568; margin-top: 4px !important;">Add your orders to track sales and stock requirements</p>
                                 </div>
                             </div>
-                            <div class="d-flex items-center gap-3 text-slate-400">
+                            <div class="d-flex align-items-center gap-3 text-slate-400">
                                 <i class="fa-solid fa-book-open text-xs"></i>
-                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                                <span class="text-xs font-bold" style="font-size: 14px; font-family: monospace;">&rsaquo;</span>
                             </div>
                         </div>
 
                         <!-- Step 3: Replenish stock -->
-                        <div class="p-3 bg-white border border-gray-200 rounded-xl flex items-center justify-between cursor-pointer hover:shadow-md transition-all" onclick="switchPrimaryTab('buy', 'purchasing')" style="border-radius: 10px;">
-                            <div class="d-flex items-center gap-3">
-                                <div class="w-6 h-6 rounded-full border border-gray-400 flex items-center justify-center text-gray-300">
-                                    <i class="fa-regular fa-circle text-lg"></i>
-                                </div>
+                        <div class="katana-card-white d-flex align-items-center justify-content-between cursor-pointer" onclick="switchPrimaryTab('buy', 'purchasing')">
+                            <div class="d-flex align-items-start gap-3">
+                                <span class="katana-circle-indicator mt-1"></span>
                                 <div>
-                                    <div class="d-flex items-center gap-2">
-                                        <span class="text-sm font-bold text-gray-800">Replenish inventory</span>
-                                        <span class="badge bg-slate-100 text-slate-500 border border-slate-200 text-[10px] px-2 py-0.5 rounded" style="font-size: 10px; font-weight: 600;">1 min</span>
+                                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                                        <span class="text-sm font-bold text-gray-900" style="font-size: 15px; font-weight: 700; color: #1a202c;">Replenish inventory</span>
+                                        <span class="katana-badge-grey">1 min</span>
                                     </div>
-                                    <p class="text-slate-450 text-[11px] mt-0.5" style="font-size: 11px; color: #64748b; margin-top: 2px;">Create purchase orders for products that are running low on stock</p>
+                                    <p class="text-slate-500 text-[12px] mt-1 mb-0" style="font-size: 13px; color: #4a5568; margin-top: 4px !important;">Create purchase orders for products that are running low on stock</p>
                                 </div>
                             </div>
-                            <div class="d-flex items-center gap-3 text-slate-400">
+                            <div class="d-flex align-items-center gap-3 text-slate-400">
                                 <i class="fa-solid fa-book-open text-xs"></i>
-                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                                <span class="text-xs font-bold" style="font-size: 14px; font-family: monospace;">&rsaquo;</span>
                             </div>
                         </div>
 
@@ -391,53 +466,53 @@
                 <div class="d-flex flex-column gap-4">
                     
                     <!-- Learn Katana Faster -->
-                    <div class="p-4 rounded-3 border" style="background-color: #f1f2f4; border-color: #e5e7eb !important; border-radius: 12px;">
-                        <h2 class="text-lg font-bold text-slate-800 mb-3" style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: #1e293b;">Learn Katana faster</h2>
+                    <div class="katana-grey-panel">
+                        <h2 class="text-lg font-bold text-slate-800 mb-3" style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 18px; font-weight: 700; color: #1a202c; margin-bottom: 20px !important;">Learn Katana faster</h2>
                         
                         <div class="d-flex flex-column gap-3">
                             <!-- Link 1 -->
-                            <div class="pb-2 border-b border-gray-250 flex flex-col gap-1 cursor-pointer hover:opacity-85" onclick="alert('Opening video tutorial Shopify integration overview...');">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <span class="text-xs font-bold text-slate-700"><i class="fa-regular fa-file-video me-1.5 text-slate-500"></i>Shopify integration overview</span>
-                                    <span class="badge text-[10px] px-2 py-0.5 text-slate-600 bg-amber-100 border border-amber-200" style="font-size: 9px; font-weight: 600;">Recommended</span>
+                            <div class="katana-learn-item flex justify-between items-start cursor-pointer hover:opacity-85" onclick="alert('Opening video tutorial Shopify integration overview...');">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1" style="font-size: 13px; font-weight: 700; color: #2d3748;"><i class="fa-regular fa-file-video me-1.5 text-slate-500"></i>Shopify integration overview</div>
+                                    <span class="text-[10px] text-gray-400" style="font-size: 11px;"><i class="fa-regular fa-clock me-1"></i>7 min</span>
                                 </div>
-                                <span class="text-[10px] text-gray-400"><i class="fa-regular fa-clock me-1"></i>7 min</span>
+                                <span class="katana-badge-beige flex-shrink-0">Recommended</span>
                             </div>
 
                             <!-- Link 2 -->
-                            <div class="pb-2 border-b border-gray-250 flex flex-col gap-1 cursor-pointer hover:opacity-85" onclick="alert('Opening video tutorial Workflow basics...');">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <span class="text-xs font-bold text-slate-700"><i class="fa-regular fa-file-video me-1.5 text-slate-500"></i>Workflow basics</span>
-                                    <span class="badge text-[10px] px-2 py-0.5 text-slate-600 bg-amber-100 border border-amber-200" style="font-size: 9px; font-weight: 600;">Popular</span>
+                            <div class="katana-learn-item flex justify-between items-start cursor-pointer hover:opacity-85" onclick="alert('Opening video tutorial Workflow basics...');">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1" style="font-size: 13px; font-weight: 700; color: #2d3748;"><i class="fa-regular fa-file-video me-1.5 text-slate-500"></i>Workflow basics</div>
+                                    <span class="text-[10px] text-gray-400" style="font-size: 11px;"><i class="fa-regular fa-clock me-1"></i>3 min</span>
                                 </div>
-                                <span class="text-[10px] text-gray-400"><i class="fa-regular fa-clock me-1"></i>3 min</span>
+                                <span class="katana-badge-beige flex-shrink-0">Popular</span>
                             </div>
 
                             <!-- Link 3 -->
-                            <div class="flex flex-col gap-1 cursor-pointer hover:opacity-85" onclick="alert('Opening video tutorial Using Insights...');">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <span class="text-xs font-bold text-slate-700"><i class="fa-regular fa-file-video me-1.5 text-slate-500"></i>Using Insights</span>
+                            <div class="katana-learn-item flex justify-between items-start cursor-pointer hover:opacity-85" onclick="alert('Opening video tutorial Using Insights...');">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 mb-1" style="font-size: 13px; font-weight: 700; color: #2d3748;"><i class="fa-regular fa-file-video me-1.5 text-slate-500"></i>Using Insights</div>
+                                    <span class="text-[10px] text-gray-400" style="font-size: 11px;"><i class="fa-regular fa-clock me-1"></i>3 min</span>
                                 </div>
-                                <span class="text-[10px] text-gray-400"><i class="fa-regular fa-clock me-1"></i>3 min</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Your Integrations -->
-                    <div class="p-4 rounded-3 border" style="background-color: #f1f2f4; border-color: #e5e7eb !important; border-radius: 12px;">
-                        <h2 class="text-lg font-bold text-slate-800 mb-3" style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: #1e293b;">Your integrations</h2>
+                    <div class="katana-grey-panel">
+                        <h2 class="text-lg font-bold text-slate-800 mb-3" style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 18px; font-weight: 700; color: #1a202c; margin-bottom: 20px !important;">Your integrations</h2>
                         
-                        <div class="p-3 bg-white border border-gray-200 rounded-xl flex items-center justify-between" style="border-radius: 10px;">
+                        <div class="katana-card-white d-flex align-items-center justify-content-between" style="padding: 12px 16px !important;">
                             <div class="d-flex align-items-center gap-2.5">
-                                <div class="w-8 h-8 rounded bg-green-50 border border-green-200 flex items-center justify-center text-green-600">
-                                    <i class="fa-brands fa-shopify text-lg" style="color: #96bf48;"></i>
+                                <div class="w-8 h-8 rounded bg-green-50 border border-green-200 flex items-center justify-center text-green-600" style="width: 32px; height: 32px;">
+                                    <i class="fa-brands fa-shopify text-lg" style="color: #96bf48; font-size: 18px;"></i>
                                 </div>
-                                <div>
-                                    <span class="text-xs font-bold text-gray-800">Shopify</span>
-                                    <i class="fa-solid fa-book-open text-[10px] text-slate-400 ms-1.5"></i>
+                                <div class="d-flex align-items-center gap-1.5">
+                                    <span class="text-xs font-bold text-gray-800" style="font-size: 13px; font-weight: 700; color: #1a202c;">Shopify</span>
+                                    <i class="fa-solid fa-book-open text-[10px] text-slate-400"></i>
                                 </div>
                             </div>
-                            <a href="#" class="text-xs font-bold text-indigo-600 text-decoration-none hover:underline" onclick="alert('Initializing Shopify integration sync...'); return false;">Connect</a>
+                            <a href="#" class="text-xs font-bold text-indigo-650 text-decoration-none hover:underline" style="font-size: 13px; font-weight: 700; color: #2b6cb0;" onclick="alert('Initializing Shopify integration sync...'); return false;">Connect</a>
                         </div>
                     </div>
 
