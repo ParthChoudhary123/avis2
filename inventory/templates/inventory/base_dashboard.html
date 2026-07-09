@@ -600,22 +600,28 @@
             <nav class="p-4 space-y-1" id="primary-nav-tabs">
                 {% if user.is_manager %}
                     <a onclick="switchPrimaryTab('home')" class="flex items-center gap-3 px-4 py-3 bg-indigo-600 rounded-lg text-white font-medium transition-all cursor-pointer">
-                        <i class="fa-solid fa-house" style="font-size: 14px;"></i> Home
+                        <i class="fa-solid fa-house" style="font-size: 14px;"></i> Dashboard Overview
                     </a>
                     <a onclick="switchPrimaryTab('stock')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-database" style="font-size: 14px;"></i> Datasets & Stock
+                        <i class="fa-solid fa-database" style="font-size: 14px;"></i> Items & Groups
+                    </a>
+                    <a onclick="switchPrimaryTab('sell')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
+                        <i class="fa-solid fa-receipt" style="font-size: 14px;"></i> Sales Orders
+                    </a>
+                    <a onclick="switchPrimaryTab('buy')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
+                        <i class="fa-solid fa-cart-shopping" style="font-size: 14px;"></i> Purchase Orders
                     </a>
                     <a onclick="switchPrimaryTab('plan')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-cpu" style="font-size: 14px;"></i> Models & Planning
+                        <i class="fa-solid fa-cpu" style="font-size: 14px;"></i> Planning & Models
                     </a>
                     <a onclick="switchPrimaryTab('insights')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-chart-line" style="font-size: 14px;"></i> Analytics & Insights
+                        <i class="fa-solid fa-chart-line" style="font-size: 14px;"></i> Reports & Insights
                     </a>
                     <a onclick="switchPrimaryTab('settings')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-gear" style="font-size: 14px;"></i> Settings
+                        <i class="fa-solid fa-gear" style="font-size: 14px;"></i> Settings Config
                     </a>
                     <a onclick="switchPrimaryTab('billing')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-credit-card" style="font-size: 14px;"></i> Billing Plan
+                        <i class="fa-solid fa-credit-card" style="font-size: 14px;"></i> Billing & Tiers
                     </a>
                 {% else %}
                     <a onclick="switchPrimaryTab('fulfillment')" class="flex items-center gap-3 px-4 py-3 bg-indigo-600 rounded-lg text-white font-medium transition-all cursor-pointer">

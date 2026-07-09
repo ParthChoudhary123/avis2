@@ -377,9 +377,15 @@
     <!-- ==================== TAB VIEW 1: HOME DASHBOARD ==================== -->
     <div class="dashboard-view-container active-view" id="view-dashboard-overview">
         <!-- GREETING & CONTEXT HEADER CONTAINER -->
-        <div class="mb-4 text-start">
-            <h1 class="text-2xl font-bold text-gray-900">Welcome Back, Parth</h1>
-            <p class="text-sm text-gray-500 mt-1">Here is a summary of your active production infrastructure models.</p>
+        <div class="mb-5 text-start bg-white p-4 border border-gray-200 rounded-xl flex justify-between items-center select-none">
+            <div>
+                <h1 class="text-xl font-bold text-gray-900">{{ company.display_name }}</h1>
+                <p class="text-xs text-gray-450 mt-1"><i class="fa-solid fa-location-dot me-1"></i>{{ company.street_address }} &middot; Base: {{ company.base_currency }}</p>
+            </div>
+            <div class="bg-indigo-50 border border-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 shrink-0">
+                <span class="w-2 h-2 rounded-full bg-indigo-500 inline-block animate-pulse"></span>
+                Plan: {{ company.current_plan_tier }}
+            </div>
         </div>
 
         <!-- TAB SYSTEM NAVIGATION -->
@@ -397,10 +403,57 @@
 
         <!-- SUBVIEW 1: DASHBOARD MAIN ROW -->
         <div id="home-subview-dashboard" class="home-subview space-y-6">
-            <!-- Row 1: High Priority Chart Status -->
+            <!-- Zoho Sales Activity Ribbon -->
+            <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm text-start">
+                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Sales Activity</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="border border-slate-100 hover:border-indigo-100 p-4 rounded-xl text-center transition-all bg-slate-50/50 hover:bg-indigo-50/20 cursor-pointer" onclick="switchPrimaryTab('stock')">
+                        <h4 class="text-2xl font-black text-indigo-600 mb-1">{{ critical_low_count }}</h4>
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Qty To Pack</span>
+                    </div>
+                    <div class="border border-slate-100 hover:border-indigo-100 p-4 rounded-xl text-center transition-all bg-slate-50/50 hover:bg-indigo-50/20 cursor-pointer" onclick="switchPrimaryTab('sell')">
+                        <h4 class="text-2xl font-black text-amber-600 mb-1">{{ pending_orders_count }}</h4>
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Qty To Ship</span>
+                    </div>
+                    <div class="border border-slate-100 hover:border-indigo-100 p-4 rounded-xl text-center transition-all bg-slate-50/50 hover:bg-indigo-50/20 cursor-pointer" onclick="switchPrimaryTab('sell')">
+                        <h4 class="text-2xl font-black text-emerald-600 mb-1">{{ products_count }}</h4>
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Qty To Invoice</span>
+                    </div>
+                    <div class="border border-slate-100 hover:border-indigo-100 p-4 rounded-xl text-center transition-all bg-slate-50/50 hover:bg-indigo-50/20 cursor-pointer" onclick="switchPrimaryTab('sell')">
+                        <h4 class="text-2xl font-black text-sky-600 mb-1">{{ weather_warnings_count }}</h4>
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Qty To Deliver</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zoho Inventory Summary Ribbon -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm text-start flex justify-between items-center">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Quantity in Hand</h4>
+                        <h2 class="text-2xl font-extrabold text-gray-800">{{ total_stock_units }} Units</h2>
+                        <span class="text-[10px] text-gray-500 mt-1 d-block">Across {{ products_count }} tracking SKUs</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-400">
+                        <i class="fa-solid fa-boxes-stacked" style="font-size: 20px;"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm text-start flex justify-between items-center">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Total Inventory Value</h4>
+                        <h2 class="text-2xl font-extrabold text-emerald-600">₹{{ total_inventory_value|floatformat:2 }}</h2>
+                        <span class="text-[10px] text-gray-500 mt-1 d-block">Asset valuation ledger basis</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500">
+                        <i class="fa-solid fa-wallet" style="font-size: 20px;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zoho Chart Widget -->
             <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm">
                 <div class="flex justify-between items-center mb-4 text-start">
-                    <h3 class="font-bold text-gray-800 flex items-center gap-2" style="font-size: 15px;"><i class="fa-solid fa-chart-line text-indigo-600"></i> Top Performing Model Inferences</h3>
+                    <h3 class="font-bold text-gray-800 flex items-center gap-2" style="font-size: 15px;"><i class="fa-solid fa-chart-line text-indigo-600"></i> Sales Order Summary</h3>
                     <select class="border border-gray-300 rounded-md text-xs px-2 py-1 bg-white outline-none"><option>This Month</option></select>
                 </div>
                 <div style="height: 240px; position: relative;">
@@ -408,60 +461,87 @@
                 </div>
             </div>
 
-            <!-- Row 2: 2 Column Metric Canvas -->
+            <!-- Zoho Lower Grids -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Left: Live Agent Inventory Grid -->
+                <!-- Left: Top Selling Items -->
                 <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm text-start">
-                    <h4 class="font-bold text-gray-800 mb-4" style="font-size: 14px;">API Token Resource Capacity</h4>
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-gray-800" style="font-size: 14px;">Top Selling Items</h4>
+                        <span class="text-[10px] text-gray-400 font-bold uppercase">Ranked by volume</span>
+                    </div>
                     <div class="table-responsive">
                         <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
                             <thead>
-                              <tr style="background: #F1F5F9; border-bottom: 1px solid var(--border-light); color: var(--text-muted); font-size: 10px; font-weight: bold; text-transform: uppercase;">
-                                <th style="padding: 8px 12px;">Agent Name</th>
-                                <th style="padding: 8px 12px;">SKU / ID</th>
-                                <th style="padding: 8px 12px;">Status</th>
-                                <th style="padding: 8px 12px;">Current Action</th>
+                              <tr style="background: #F8FAFC; border-bottom: 1px solid #E2E8F0; color: #64748B; font-size: 10px; font-weight: bold; text-transform: uppercase;">
+                                <th style="padding: 10px 12px;">Item Name</th>
+                                <th style="padding: 10px 12px;">Stock In Hand</th>
+                                <th style="padding: 10px 12px;">Status</th>
+                                <th style="padding: 10px 12px; text-align: right;">ROP Alert</th>
                               </tr>
                             </thead>
                             <tbody>
                               {% for item in datagrid_items %}
-                                  <tr style="border-bottom: 1px solid #EDF2F7;">
-                                    <td style="padding: 8px 12px; font-weight: 500;">{{ item.product.name }}</td>
-                                    <td style="padding: 8px 12px; color: var(--text-muted); font-family: monospace;">{{ item.product.sku }}</td>
-                                    <td style="padding: 8px 12px; display: flex; align-items: center; gap: 8px;">
+                                  <tr style="border-bottom: 1px solid #F1F5F9;">
+                                    <td style="padding: 10px 12px; font-weight: 500;">
+                                        {{ item.product.name }}
+                                        <div class="text-[10px] text-gray-455 font-mono mt-0.5">{{ item.product.sku }}</div>
+                                    </td>
+                                    <td style="padding: 10px 12px;">{{ item.qty }} units</td>
+                                    <td style="padding: 10px 12px;">
                                         {% if item.triggered %}
-                                            <span style="width: 8px; height: 8px; background: var(--color-error); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--color-error);"></span>
-                                            Failed
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-0.5 text-[10px]" style="font-weight: 700; border-radius: 4px;">Low Stock</span>
                                         {% else %}
-                                            <span style="width: 8px; height: 8px; background: var(--color-success); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--color-success);"></span>
-                                            Active
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-0.5 text-[10px]" style="font-weight: 700; border-radius: 4px;">Optimal</span>
                                         {% endif %}
                                     </td>
-                                    <td style="padding: 8px 12px; font-size: 11px; color: var(--text-muted);">{{ item.qty }} / {{ item.rop }} units</td>
+                                    <td style="padding: 10px 12px; text-align: right; font-weight: bold;">
+                                        {% if item.triggered %}
+                                            <span class="text-red-500 animate-pulse">{{ item.rop }}</span>
+                                        {% else %}
+                                            <span class="text-slate-400">{{ item.rop }}</span>
+                                        {% endif %}
+                                    </td>
                                   </tr>
                               {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <!-- Right: Regional Node Map -->
+
+                <!-- Right: Sales by Channel -->
                 <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm text-start flex flex-col justify-between">
-                    <h4 class="font-bold text-gray-800 mb-4" style="font-size: 14px;">Distribution Vectors By Region</h4>
-                    <div style="height: 180px; display: flex; align-items: center; justify-content: center;">
-                        <svg class="w-full h-full" viewBox="0 0 1000 480" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-height: 160px;">
-                          <!-- NA active green -->
-                          <path d="M120 80 L220 80 L300 120 L300 240 L220 280 L140 240 L100 140 Z" fill="#2E7D32" opacity="0.85" />
-                          <!-- SA light gray -->
-                          <path d="M260 290 L320 290 L380 340 L340 460 L280 460 L240 380 Z" fill="#E2E8F0" />
-                          <!-- EU active green -->
-                          <path d="M460 80 L560 80 L600 140 L560 220 L480 200 L440 140 Z" fill="#2E7D32" opacity="0.85" />
-                          <!-- AF light gray -->
-                          <path d="M460 230 L540 210 L600 250 L580 380 L520 400 L460 300 Z" fill="#E2E8F0" />
-                          <!-- AS light gray -->
-                          <path d="M580 60 L800 60 L880 180 L840 320 L680 340 L600 220 Z" fill="#E2E8F0" />
-                          <!-- AU light gray -->
-                          <path d="M780 340 L860 340 L900 420 L840 440 L780 400 Z" fill="#E2E8F0" />
-                        </svg>
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-gray-800" style="font-size: 14px;">Sales by Channel</h4>
+                        <span class="text-[10px] text-gray-400 font-bold uppercase">Integration flows</span>
+                    </div>
+                    <div class="space-y-4 my-auto">
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-gray-600">
+                                <span>Shopify API Integration</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-indigo-600 h-full rounded-full" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-gray-600">
+                                <span>Direct Manual Sales</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-600 h-full rounded-full" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-gray-600">
+                                <span>WooCommerce Store API</span>
+                                <span>10%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-amber-500 h-full rounded-full" style="width: 10%;"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
