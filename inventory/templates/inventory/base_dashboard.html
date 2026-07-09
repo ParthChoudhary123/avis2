@@ -592,36 +592,97 @@
 <body class="flex w-screen h-screen overflow-hidden bg-slate-50 text-[#333] font-sans">
 
     <!-- 1. LEFT SIDEBAR NAVIGATION -->
-    <aside class="w-[240px] bg-[#1e293b] text-white flex flex-col justify-between shrink-0 z-10 select-none">
-        <div>
-            <div class="p-5 text-xl font-bold border-b border-slate-700 tracking-wide text-indigo-400">
+    <aside class="w-[240px] bg-[#1e293b] text-white flex flex-col justify-between shrink-0 z-10 select-none h-screen overflow-hidden">
+        <div class="flex flex-col h-full overflow-hidden">
+            <div class="p-5 text-xl font-bold border-b border-slate-700 tracking-wide text-indigo-400 shrink-0">
                 Avis AI
             </div>
-            <nav class="p-4 space-y-1" id="primary-nav-tabs">
+            <nav class="p-4 space-y-1 overflow-y-auto flex-1 select-none" id="primary-nav-tabs">
                 {% if user.is_manager %}
-                    <a onclick="switchPrimaryTab('home')" class="flex items-center gap-3 px-4 py-3 bg-indigo-600 rounded-lg text-white font-medium transition-all cursor-pointer">
-                        <i class="fa-solid fa-house" style="font-size: 14px;"></i> Dashboard Overview
+                    <!-- Home -->
+                    <a onclick="switchPrimaryTab('home')" class="flex items-center gap-3 px-4 py-2.5 bg-indigo-600 rounded-lg text-white font-medium transition-all cursor-pointer text-sm">
+                        <i class="fa-solid fa-house" style="width: 16px;"></i> Home
                     </a>
-                    <a onclick="switchPrimaryTab('stock')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-database" style="font-size: 14px;"></i> Items & Groups
+
+                    <!-- Items -->
+                    <div>
+                        <button onclick="toggleSidebarMenu('menu-items')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-boxes-stacked" style="width: 16px;"></i> Items</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-items"></i>
+                        </button>
+                        <div id="menu-items" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
+                            <a onclick="switchPrimaryTab('stock', 'inventory')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Items List View</a>
+                            <a onclick="alert('Composite Items catalog empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Composite Items</a>
+                            <a onclick="alert('Item Groups catalog empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Item Groups</a>
+                            <a onclick="switchPrimaryTab('sell', 'price-lists')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Price Lists</a>
+                        </div>
+                    </div>
+
+                    <!-- Inventory -->
+                    <div>
+                        <button onclick="toggleSidebarMenu('menu-inventory')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-warehouse" style="width: 16px;"></i> Inventory</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-inventory"></i>
+                        </button>
+                        <div id="menu-inventory" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
+                            <a onclick="switchPrimaryTab('stock', 'stock-adjustments')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Inventory Adjustments</a>
+                            <a onclick="switchPrimaryTab('stock', 'stock-transfers')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Transfer Orders</a>
+                        </div>
+                    </div>
+
+                    <!-- Sales -->
+                    <div>
+                        <button onclick="toggleSidebarMenu('menu-sales')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-sack-dollar" style="width: 16px;"></i> Sales</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-sales"></i>
+                        </button>
+                        <div id="menu-sales" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
+                            <a onclick="switchPrimaryTab('sell', 'customers')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Customers</a>
+                            <a onclick="switchPrimaryTab('sell', 'sales-orders')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Sales Orders</a>
+                            <a onclick="alert('Packages list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Packages</a>
+                            <a onclick="alert('Shipments list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Shipments</a>
+                            <a onclick="alert('Invoices list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Invoices</a>
+                            <a onclick="alert('Payments Received ledger empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Payments Received</a>
+                            <a onclick="switchPrimaryTab('sell', 'returns')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Sales Returns</a>
+                            <a onclick="alert('Credit Notes list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Credit Notes</a>
+                        </div>
+                    </div>
+
+                    <!-- Purchases -->
+                    <div>
+                        <button onclick="toggleSidebarMenu('menu-purchases')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-sm font-semibold select-none">
+                            <span class="flex items-center gap-3"><i class="fa-solid fa-cart-shopping" style="width: 16px;"></i> Purchases</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]" id="chevron-menu-purchases"></i>
+                        </button>
+                        <div id="menu-purchases" class="hidden pl-8 pr-2 py-1 space-y-1 text-xs">
+                            <a onclick="switchPrimaryTab('buy', 'suppliers')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Vendors</a>
+                            <a onclick="switchPrimaryTab('buy', 'purchasing')" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Purchase Orders</a>
+                            <a onclick="alert('Purchase Receives list is empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Purchase Receives</a>
+                            <a onclick="alert('Bills ledger empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Bills</a>
+                            <a onclick="alert('Payments Made log empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Payments Made</a>
+                            <a onclick="alert('Vendor Credits list empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Vendor Credits</a>
+                            <a onclick="alert('Purchase Returns list empty.');" class="block py-1.5 text-slate-400 hover:text-white cursor-pointer transition-all">Purchase Returns</a>
+                        </div>
+                    </div>
+
+                    <!-- Reports -->
+                    <a onclick="switchPrimaryTab('insights')" class="flex items-center gap-3 px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer text-sm font-semibold">
+                        <i class="fa-solid fa-chart-pie" style="width: 16px;"></i> Reports
                     </a>
-                    <a onclick="switchPrimaryTab('sell')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-receipt" style="font-size: 14px;"></i> Sales Orders
+
+                    <!-- Documents -->
+                    <a onclick="alert('Opening Document Management system...');" class="flex items-center gap-3 px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer text-sm font-semibold">
+                        <i class="fa-solid fa-folder-open" style="width: 16px;"></i> Documents
                     </a>
-                    <a onclick="switchPrimaryTab('buy')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-cart-shopping" style="font-size: 14px;"></i> Purchase Orders
+
+                    <!-- Settings Config -->
+                    <a onclick="switchPrimaryTab('settings')" class="flex items-center gap-3 px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer text-sm font-semibold">
+                        <i class="fa-solid fa-gear" style="width: 16px;"></i> Settings Config
                     </a>
-                    <a onclick="switchPrimaryTab('plan')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-cpu" style="font-size: 14px;"></i> Planning & Models
-                    </a>
-                    <a onclick="switchPrimaryTab('insights')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-chart-line" style="font-size: 14px;"></i> Reports & Insights
-                    </a>
-                    <a onclick="switchPrimaryTab('settings')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-gear" style="font-size: 14px;"></i> Settings Config
-                    </a>
-                    <a onclick="switchPrimaryTab('billing')" class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-credit-card" style="font-size: 14px;"></i> Billing & Tiers
+
+                    <!-- Billing Plan -->
+                    <a onclick="switchPrimaryTab('billing')" class="flex items-center gap-3 px-4 py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg transition-all cursor-pointer text-sm font-semibold">
+                        <i class="fa-solid fa-credit-card" style="width: 16px;"></i> Billing & Tiers
                     </a>
                 {% else %}
                     <a onclick="switchPrimaryTab('fulfillment')" class="flex items-center gap-3 px-4 py-3 bg-indigo-600 rounded-lg text-white font-medium transition-all cursor-pointer">
@@ -843,6 +904,18 @@
             // Trigger content visibility switcher on dashboard
             if (typeof window.onDashboardSubTabActive === 'function') {
                 window.onDashboardSubTabActive(currentPrimary, subTabId);
+            }
+        }
+
+        function toggleSidebarMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            const chevron = document.getElementById(`chevron-${menuId}`);
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                if (chevron) chevron.className = "fa-solid fa-chevron-up text-[10px]";
+            } else {
+                menu.classList.add('hidden');
+                if (chevron) chevron.className = "fa-solid fa-chevron-down text-[10px]";
             }
         }
 
