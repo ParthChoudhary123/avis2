@@ -330,7 +330,7 @@
                 
                 <!-- Graph Canvas -->
                 <div style="height: 240px; position: relative;">
-                    <canvas id="profitChart"></canvas>
+                    <canvas id="efficiencyChart" style="width: 100%; height: 240px;"></canvas>
                 </div>
             </section>
 
@@ -381,11 +381,14 @@
                                   <tr style="border-bottom: 1px solid #EDF2F7;">
                                     <td style="padding: 8px 12px; font-weight: 500;">{{ item.product.name }}</td>
                                     <td style="padding: 8px 12px; color: var(--text-muted); font-family: monospace;">{{ item.product.sku }}</td>
-                                    <td style="padding: 8px 12px;">
-                                        <span class="inline-flex align-items-center gap-1.5 font-medium text-slate-700">
-                                            <span class="d-inline-block rounded-circle {% if item.triggered %}bg-danger{% else %}bg-success{% endif %}" style="width: 8px; height: 8px; display: inline-block;"></span>
-                                            {% if item.triggered %}Failed{% else %}Active{% endif %}
-                                        </span>
+                                    <td style="padding: 8px 12px; display: flex; align-items: center; gap: 8px;">
+                                        {% if item.triggered %}
+                                            <span style="width: 8px; height: 8px; background: var(--color-error); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--color-error);"></span>
+                                            Failed
+                                        {% else %}
+                                            <span style="width: 8px; height: 8px; background: var(--color-success); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--color-success);"></span>
+                                            Active
+                                        {% endif %}
                                     </td>
                                     <td style="padding: 8px 12px; font-size: 11px; color: var(--text-muted);">{{ item.qty }} / {{ item.rop }} units</td>
                                   </tr>
@@ -1932,46 +1935,37 @@
         if (document.getElementById('calc-locations')) {
             calculateInvoicedCost();
         }
-        initProfitChart();
+        initEfficiencyChart();
     });
 
     // Chart.js Line Graph Initializer
-    function initProfitChart() {
-        const canvas = document.getElementById('profitChart');
+    function initEfficiencyChart() {
+        const canvas = document.getElementById('efficiencyChart');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        const labels = Array.from({length: 30}, (_, i) => `Day ${i + 1}`);
         
-        // Successful executions (spiky waves)
-        const dataGreen = [15, 18, 12, 28, 30, 14, 25, 45, 50, 20, 22, 18, 35, 40, 12, 15, 38, 55, 60, 22, 28, 14, 45, 48, 20, 25, 52, 65, 58, 70];
-        // Timeouts / Errs (flat baseline)
-        const dataRed = [1, 2, 1, 1, 3, 1, 2, 1, 1, 1, 2, 1, 3, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 3, 1, 1];
-
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: ['Aug 1', 'Aug 3', 'Aug 5', 'Aug 7', 'Aug 9', 'Aug 11', 'Aug 13', 'Aug 15', 'Aug 17', 'Aug 19', 'Aug 31'],
                 datasets: [
                     {
-                        label: 'Successful Executions',
-                        data: dataGreen,
+                        label: 'SUCCESSFUL COMPLETIONS',
+                        data: [0, 0, 0, 0, 200, 780, 0, 780, 0, 0, 0],
                         borderColor: '#2E7D32',
                         backgroundColor: 'rgba(46, 125, 50, 0.05)',
                         borderWidth: 2,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#2E7D32',
                         tension: 0.4,
                         fill: true
                     },
                     {
-                        label: 'Timeouts / Errs',
-                        data: dataRed,
+                        label: 'TIMEOUTS / FAULTS',
+                        data: [0, 0, 0, 0, 0, 0, 100, 100, 0, 0, 0],
                         borderColor: '#D84315',
-                        backgroundColor: 'transparent',
+                        backgroundColor: 'rgba(216, 67, 21, 0.05)',
                         borderWidth: 1.5,
-                        pointRadius: 2,
-                        pointBackgroundColor: '#D84315',
-                        tension: 0.1
+                        tension: 0.1,
+                        fill: true
                     }
                 ]
             },
@@ -1984,14 +1978,8 @@
                     }
                 },
                 scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: { font: { size: 9 } }
-                    },
-                    y: {
-                        grid: { color: '#f1f5f9' },
-                        ticks: { font: { size: 9 } }
-                    }
+                    y: { grid: { color: '#E2E8F0' }, ticks: { color: '#718096', font: { size: 9 } } },
+                    x: { grid: { display: false }, ticks: { color: '#718096', font: { size: 9 } } }
                 }
             }
         });

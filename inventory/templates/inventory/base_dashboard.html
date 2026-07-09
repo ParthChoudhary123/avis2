@@ -533,6 +533,12 @@
             100% { border-color: #ef4444; }
         }
 
+        tbody tr:hover {
+            background-color: #F8F9FA !important;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
         /* Responsive Navigation Overlaps Fixes */
         .mobile-nav-dropdown {
             background-color: #0f1d2a !important;
@@ -957,6 +963,23 @@
                     }
                 }
             }
+
+            // Target all sub-tab action buttons (Left Sub-Tabs Interactive)
+            document.querySelectorAll('aside button').forEach(button => {
+              button.addEventListener('click', function() {
+                // Reset all previous buttons to inactive transparent styles
+                document.querySelectorAll('aside button').forEach(b => {
+                  b.style.background = 'transparent';
+                  b.style.color = 'var(--text-main)';
+                });
+                
+                // Set the clicked button to active focus state
+                this.style.background = '#2D3748';
+                this.style.color = '#FFFFFF';
+                
+                console.log(`Loading dataset view for: ${this.innerText}`);
+              });
+            });
         });
     </script>
     {% block extra_js %}{% endblock %}
