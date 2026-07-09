@@ -288,176 +288,134 @@
 
     <!-- ==================== TAB VIEW 1: HOME DASHBOARD ==================== -->
     <div class="dashboard-view-container active-view" id="view-dashboard-overview">
-        <div class="d-flex flex-column flex-lg-row gap-4" style="align-items: stretch;">
+        <div class="space-y-4" style="display: flex; flex-direction: column; gap: 20px;">
             
-            <!-- SUB-NAV / CONTROL PILLAR (Left side, 240px width) -->
-            <aside class="bg-white border p-4 rounded-3 text-start shrink-0 flex flex-col justify-between" style="width: 240px; border-color: #E2E8F0 !important;">
-                <div class="space-y-4">
-                    <div>
-                        <p class="text-uppercase tracking-widest text-slate-400 font-bold mb-2" style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">AI Sub-Tabs</p>
-                        <div class="d-flex flex-column gap-1">
-                            <button id="tab-health-live" onclick="alert('Viewing general AI Health metrics...')" class="btn btn-sm btn-dark text-start w-100 px-3 py-2 fw-semibold" style="font-size: 12px; border-radius: 8px;">
-                                General AI Health
-                            </button>
-                            <button id="tab-metrics-live" onclick="alert('Viewing detailed Agent performance metrics...')" class="btn btn-sm btn-light text-start w-100 px-3 py-2 fw-semibold border border-light" style="font-size: 12px; border-radius: 8px; color: #4B5563;">
-                                Agent Metrics
-                            </button>
-                            <button id="tab-cost-live" onclick="alert('Loading cost optimization suggestions...')" class="btn btn-sm btn-light text-start w-100 px-3 py-2 fw-semibold border border-light" style="font-size: 12px; border-radius: 8px; color: #4B5563;">
-                                Cost Optimization
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Date range inputs -->
-                    <div class="pt-3 border-t" style="border-top: 1px solid #f1f5f9;">
-                        <p class="text-uppercase tracking-widest text-slate-400 font-bold mb-2" style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Time Ranges</p>
-                        
-                        <!-- Range Box A -->
-                        <div class="bg-light border p-2.5 rounded-3 mb-2" style="border-color: #E2E8F0 !important;">
-                            <label class="block text-uppercase text-slate-400 font-bold mb-1" style="font-size: 9px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">From: Month to Date</label>
-                            <div class="d-flex align-items-center justify-content-between cursor-pointer" onclick="alert('Modify date limits...')">
-                                <span class="font-mono font-bold text-dark" style="font-size: 11px; color: #334155;">07/01/2026 &gt; 07/09/2026</span>
-                                <span style="font-size: 11px;">📅</span>
-                            </div>
-                        </div>
-
-                        <!-- Range Box B -->
-                        <div class="bg-light border p-2.5 rounded-3" style="border-color: #E2E8F0 !important;">
-                            <label class="block text-uppercase text-slate-400 font-bold mb-1" style="font-size: 9px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Compared to: Prev Month</label>
-                            <div class="d-flex align-items-center justify-content-between cursor-pointer" onclick="alert('Modify comparative window...')">
-                                <span class="font-mono font-bold text-slate-500" style="font-size: 11px; color: #64748b;">06/01/2026 &gt; 06/30/2026</span>
-                                <span style="font-size: 11px;">📅</span>
-                            </div>
-                        </div>
-                    </div>
+            <!-- 1. HORIZONTAL METRIC RIBBON ROW -->
+            <section style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                <!-- Card Item A -->
+                <div style="background: #FFFFFF; border: 1px solid var(--border-light); padding: 16px; border-radius: 4px; border-top: 3px solid var(--color-success); text-align: left;">
+                  <div style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">Active Agents</div>
+                  <div style="font-size: 24px; font-weight: bold; color: #1A202C; margin-top: 4px;">{{ products_count }} / 20</div>
                 </div>
-
-                <div class="pt-3 border-t mt-4" style="border-top: 1px solid #f1f5f9;">
-                  <p class="text-muted leading-normal mb-0" style="font-size: 9px; font-weight: 500;">AVIS Optimization Engine<br/>Version v4.9 (Fishbowl Layout)</p>
+                <!-- Card Item B -->
+                <div style="background: #FFFFFF; border: 1px solid var(--border-light); padding: 16px; border-radius: 4px; border-top: 3px solid var(--color-success); text-align: left;">
+                  <div style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">API Total (24h)</div>
+                  <div style="font-size: 24px; font-weight: bold; color: #1A202C; margin-top: 4px;">142,391 reqs</div>
                 </div>
-            </aside>
+                <!-- Card Item C -->
+                <div style="background: #FFFFFF; border: 1px solid var(--border-light); padding: 16px; border-radius: 4px; border-top: 3px solid var(--color-success); text-align: left;">
+                  <div style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">Avg Response</div>
+                  <div style="font-size: 24px; font-weight: bold; color: #1A202C; margin-top: 4px;">340 ms</div>
+                </div>
+                <!-- Card Item D -->
+                <div style="background: #FFFFFF; border: 1px solid var(--border-light); padding: 16px; border-radius: 4px; border-top: 3px solid var(--color-success); text-align: left;">
+                  <div style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">Token Balance</div>
+                  <div style="font-size: 24px; font-weight: bold; color: #1A202C; margin-top: 4px;">78.2% Left</div>
+                </div>
+            </section>
 
-            <!-- MAIN STAGE (Right side, flexible width) -->
-            <div class="flex-grow-1 space-y-4" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- 2. CENTRAL CHART DECK (Fills out the empty page center) -->
+            <section style="background: #FFFFFF; border: 1px solid var(--border-light); padding: 20px; border-radius: 4px; text-align: left;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                  <div>
+                    <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin: 0; color: var(--text-muted);">Profit & Efficiency <span style="color: var(--color-success); margin-left: 6px;">100.00%</span></h2>
+                    <div style="font-size: 20px; font-weight: bold; margin-top: 4px;">$1,895.70 <span style="font-size: 14px; font-weight: normal; color: var(--text-muted);">- $0.00</span></div>
+                  </div>
+                  <!-- Legend markers -->
+                  <div style="display: flex; gap: 16px; font-size: 11px; font-weight: bold;">
+                    <span style="color: var(--color-success);">● INCOME / COMPLETIONS</span>
+                    <span style="color: var(--color-error);">● EXPENSES / TIMEOUTS</span>
+                  </div>
+                </div>
                 
-                <!-- TOP ROW: Metric Counter Blocks -->
-                <div class="row g-3">
-                    <div class="col-6 col-md-3 text-start">
-                        <div class="border p-3 bg-white shadow-sm rounded-3" style="border-color: #E2E8F0 !important;">
-                            <p class="text-uppercase tracking-widest text-slate-400 font-bold mb-1" style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Active Agents</p>
-                            <p class="h5 fw-bold text-dark mb-0" style="font-size: 18px; font-weight: 800; color: #0f172a;">{{ products_count }} / 20</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3 text-start">
-                        <div class="border p-3 bg-white shadow-sm rounded-3" style="border-color: #E2E8F0 !important;">
-                            <p class="text-uppercase tracking-widest text-slate-400 font-bold mb-1" style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">API Total (24h)</p>
-                            <p class="h5 fw-bold text-dark mb-0" style="font-size: 18px; font-weight: 800; color: #0f172a;">142,391 reqs</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3 text-start">
-                        <div class="border p-3 bg-white shadow-sm rounded-3" style="border-color: #E2E8F0 !important;">
-                            <p class="text-uppercase tracking-widest text-slate-400 font-bold mb-1" style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Avg Response</p>
-                            <p class="h5 fw-bold text-dark mb-0" style="font-size: 18px; font-weight: 800; color: #0f172a;">340 ms</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3 text-start">
-                        <div class="border p-3 bg-white shadow-sm rounded-3" style="border-color: #E2E8F0 !important;">
-                            <p class="text-uppercase tracking-widest text-slate-400 font-bold mb-1" style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Token Balance</p>
-                            <p class="h5 fw-bold text-dark mb-0" style="font-size: 18px; font-weight: 800; color: #0f172a;">78.2% Left</p>
-                        </div>
-                    </div>
+                <!-- Graph Canvas -->
+                <div style="height: 240px; position: relative;">
+                    <canvas id="profitChart"></canvas>
+                </div>
+            </section>
+
+            <!-- 3. SPLIT BOTTOM ROW: REGIONAL DATA MAP & MATRIX LEDGER -->
+            <section style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left;">
+                
+                <!-- Left Side Geospatial Module -->
+                <div style="background: #FFFFFF; border: 1px solid var(--border-light); padding: 20px; border-radius: 4px; display: flex; flex-direction: column; justify-content: space-between;">
+                  <h3 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 12px;">Requests by Region</h3>
+                  <div style="height: 180px; display: flex; align-items: center; justify-content: center;">
+                    <svg class="w-full h-full" viewBox="0 0 1000 480" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-height: 160px;">
+                      <!-- NA active green -->
+                      <path d="M120 80 L220 80 L300 120 L300 240 L220 280 L140 240 L100 140 Z" fill="#2E7D32" opacity="0.85" />
+                      <!-- SA light gray -->
+                      <path d="M260 290 L320 290 L380 340 L340 460 L280 460 L240 380 Z" fill="#E2E8F0" />
+                      <!-- EU active green -->
+                      <path d="M460 80 L560 80 L600 140 L560 220 L480 200 L440 140 Z" fill="#2E7D32" opacity="0.85" />
+                      <!-- AF light gray -->
+                      <path d="M460 230 L540 210 L600 250 L580 380 L520 400 L460 300 Z" fill="#E2E8F0" />
+                      <!-- AS light gray -->
+                      <path d="M580 60 L800 60 L880 180 L840 320 L680 340 L600 220 Z" fill="#E2E8F0" />
+                      <!-- AU light gray -->
+                      <path d="M780 340 L860 340 L900 420 L840 440 L780 400 Z" fill="#E2E8F0" />
+                    </svg>
+                  </div>
                 </div>
 
-                <!-- MIDDLE ROW: Split (70% Left / 30% Right) -->
-                <div class="row g-4 items-stretch">
-                    <!-- Left Panel: Live Agent Inventory Grid -->
-                    <div class="col-12 col-lg-8 text-start">
-                        <div class="border bg-white p-4 rounded-3 shadow-sm h-100 flex-grow-1" style="border-color: #E2E8F0 !important; display: flex; flex-direction: column; justify-content: space-between; min-height: 320px;">
-                            <div>
-                                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                                    <h3 class="text-uppercase tracking-widest text-slate-400 font-bold mb-0" style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Live Agent Inventory Grid</h3>
-                                    <span class="font-mono text-slate-400" style="font-size: 9px;">System Matrix</span>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table align-middle text-start text-xs border-collapse mb-0" style="font-size: 12px;">
-                                        <thead>
-                                            <tr class="bg-light text-slate-600 border-bottom">
-                                                <th class="p-2 font-bold uppercase text-start" style="font-size: 9px; tracking-wider">Agent Name</th>
-                                                <th class="p-2 font-bold uppercase text-start" style="font-size: 9px; tracking-wider">SKU</th>
-                                                <th class="p-2 font-bold uppercase text-start" style="font-size: 9px; tracking-wider">Status</th>
-                                                <th class="p-2 font-bold uppercase text-start" style="font-size: 9px; tracking-wider">Unit Value</th>
-                                                <th class="p-2 font-bold uppercase text-start" style="font-size: 9px; tracking-wider">Current Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="divide-y divide-gray-200">
-                                            {% for item in datagrid_items %}
-                                                <tr class="hover:bg-slate-50 border-bottom">
-                                                    <td class="p-2 font-semibold text-dark text-start">{{ item.product.name }}</td>
-                                                    <td class="p-2 font-mono text-slate-500 text-start">{{ item.product.sku }}</td>
-                                                    <td class="p-2 text-start">
-                                                        <span class="inline-flex align-items-center gap-1.5 font-medium text-slate-700">
-                                                            <span class="d-inline-block rounded-circle {% if item.triggered %}bg-danger{% else %}bg-success{% endif %}" style="width: 8px; height: 8px;"></span>
-                                                            {% if item.triggered %}Critical{% else %}Optimal{% endif %}
-                                                        </span>
-                                                    </td>
-                                                    <td class="p-2 text-slate-700 text-start">${{ item.product.price|floatformat:2 }}</td>
-                                                    <td class="p-2 font-mono text-[10px] text-slate-500 text-start">
-                                                        {{ item.qty }} / {{ item.rop }} units
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            
-                            <div class="text-slate-400 font-medium text-start border-top pt-2 mt-3" style="font-size: 10px;">
-                                💡 Live pipeline tracking index hydrates data automatically.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Panel: Quick Action Launchpad -->
-                    <div class="col-12 col-lg-4 text-start">
-                        <div class="border bg-white p-4 rounded-3 shadow-sm h-100" style="border-color: #E2E8F0 !important; display: flex; flex-direction: column; justify-content: space-between;">
-                            <div>
-                                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                                    <h3 class="text-uppercase tracking-widest text-slate-400 font-bold mb-0" style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Quick Action Launchpad</h3>
-                                </div>
-                                <div class="d-flex flex-column gap-2">
-                                    <button onclick="triggerDashboardConsoleAction('deploy')" class="btn btn-dark w-100 text-start px-3 py-2.5 fw-bold shadow-sm d-flex justify-content-between align-items-center" style="font-size: 12px; border-radius: 8px;">
-                                        <span>Deploy New Agent</span>
-                                        <span class="text-slate-500">[+]</span>
-                                    </button>
-                                    <button onclick="triggerDashboardConsoleAction('playground')" class="btn btn-dark w-100 text-start px-3 py-2.5 fw-bold shadow-sm d-flex justify-content-between align-items-center" style="font-size: 12px; border-radius: 8px;">
-                                        <span>Prompt Playground</span>
-                                        <span class="text-slate-500">[↗]</span>
-                                    </button>
-                                    <button onclick="triggerDashboardConsoleAction('import')" class="btn btn-dark w-100 text-start px-3 py-2.5 fw-bold shadow-sm d-flex justify-content-between align-items-center" style="font-size: 12px; border-radius: 8px;">
-                                        <span>Import Knowledge Base</span>
-                                        <span class="text-slate-500">[↓]</span>
-                                    </button>
-                                    <button onclick="triggerDashboardConsoleAction('sync')" class="btn btn-dark w-100 text-start px-3 py-2.5 fw-bold shadow-sm d-flex justify-content-between align-items-center" style="font-size: 12px; border-radius: 8px;">
-                                        <span>Run Pipeline Sync</span>
-                                        <span class="text-slate-500">[⚡]</span>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="text-slate-400 font-medium text-start border-top pt-2 mt-4 leading-normal" style="font-size: 9px;">
-                                AVIS AI dispatcher dispatches actions to background execution threads.
-                            </div>
-                        </div>
-                    </div>
+                <!-- Right Side Live System Ledger (Refactoring your table) -->
+                <div style="background: #FFFFFF; border: 1px solid var(--border-light); padding: 20px; border-radius: 4px; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px;">
+                  <div>
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--border-light); padding-bottom: 6px;">
+                        <h3 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin: 0;">Live Agent Inventory Grid</h3>
+                        <a href="#" onclick="switchPrimaryTab('items')" style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-decoration: none;">GO TO ALL INSTANCES →</a>
+                      </div>
+                      
+                      <div class="table-responsive">
+                          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12px;">
+                            <thead>
+                              <tr style="background: #F1F5F9; border-bottom: 1px solid var(--border-light); color: var(--text-muted); font-size: 10px; font-weight: bold; text-transform: uppercase;">
+                                <th style="padding: 8px 12px;">Agent Name</th>
+                                <th style="padding: 8px 12px;">SKU / ID</th>
+                                <th style="padding: 8px 12px;">Status</th>
+                                <th style="padding: 8px 12px;">Current Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for item in datagrid_items %}
+                                  <tr style="border-bottom: 1px solid #EDF2F7;">
+                                    <td style="padding: 8px 12px; font-weight: 500;">{{ item.product.name }}</td>
+                                    <td style="padding: 8px 12px; color: var(--text-muted); font-family: monospace;">{{ item.product.sku }}</td>
+                                    <td style="padding: 8px 12px;">
+                                        <span class="inline-flex align-items-center gap-1.5 font-medium text-slate-700">
+                                            <span class="d-inline-block rounded-circle {% if item.triggered %}bg-danger{% else %}bg-success{% endif %}" style="width: 8px; height: 8px; display: inline-block;"></span>
+                                            {% if item.triggered %}Failed{% else %}Active{% endif %}
+                                        </span>
+                                    </td>
+                                    <td style="padding: 8px 12px; font-size: 11px; color: var(--text-muted);">{{ item.qty }} / {{ item.rop }} units</td>
+                                  </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                      </div>
+                  </div>
                 </div>
 
-                <!-- BOTTOM ROW: Raw Execution Stream (Console View) -->
-                <div class="bg-slate-900 border border-slate-800 rounded-3 shadow-inner p-4 text-start font-mono shrink-0 select-text" style="background-color: #0f172a !important;">
-                    <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary">
-                        <span class="font-bold text-slate-500 uppercase tracking-widest" style="font-size: 10px; color: #64748b;">Raw Execution Stream (stdout)</span>
-                        <button onclick="clearDashboardConsoleLog()" class="btn btn-link p-0 text-slate-500 hover:text-slate-350 font-bold uppercase transition" style="font-size: 9px; text-decoration: none; color: #64748b;">Clear Buffer</button>
-                    </div>
-                    <div id="dashboard-console-log" class="text-xs text-green-400 space-y-1 overflow-y-auto leading-relaxed" style="max-h: 120px; font-family: 'Fira Code', 'Courier New', Courier, monospace; color: #4ade80 !important;">
+            </section>
+
+            <!-- BOTTOM ROW: Raw Execution Stream (Console View) -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3 shadow-inner p-4 text-start font-mono shrink-0 select-text" style="background-color: #0f172a !important;">
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary">
+                    <span class="font-bold text-slate-500 uppercase tracking-widest" style="font-size: 10px; color: #64748b;">Raw Execution Stream (stdout)</span>
+                    <button onclick="clearDashboardConsoleLog()" class="btn btn-link p-0 text-slate-500 hover:text-slate-350 font-bold uppercase transition" style="font-size: 9px; text-decoration: none; color: #64748b;">Clear Buffer</button>
+                </div>
+                <div id="dashboard-console-log" class="text-xs text-green-400 space-y-1 overflow-y-auto leading-relaxed" style="max-h: 120px; font-family: 'Fira Code', 'Courier New', Courier, monospace; color: #4ade80 !important;">
+                    <div>[12:58:01] INFO: Initializing connection handshakes to primary LLM cluster...</div>
+                    <div>[12:58:02] SUCCESS: Route check stable. Response received in 110ms.</div>
+                    <div>[12:58:15] RUN: AuditBlock index verified chain integrity (status: {{ ledger_valid }}).</div>
+                    {% if not ledger_valid %}
+                        <div class="text-danger">[12:58:19] ERROR: Ledger verification failure: {{ ledger_errors }}.</div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
                         <div>[12:58:01] INFO: Initializing connection handshakes to primary LLM cluster...</div>
                         <div>[12:58:02] SUCCESS: Route check stable. Response received in 110ms.</div>
                         <div>[12:58:15] RUN: AuditBlock index verified chain integrity (status: {{ ledger_valid }}).</div>
@@ -1974,7 +1932,70 @@
         if (document.getElementById('calc-locations')) {
             calculateInvoicedCost();
         }
+        initProfitChart();
     });
+
+    // Chart.js Line Graph Initializer
+    function initProfitChart() {
+        const canvas = document.getElementById('profitChart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const labels = Array.from({length: 30}, (_, i) => `Day ${i + 1}`);
+        
+        // Successful executions (spiky waves)
+        const dataGreen = [15, 18, 12, 28, 30, 14, 25, 45, 50, 20, 22, 18, 35, 40, 12, 15, 38, 55, 60, 22, 28, 14, 45, 48, 20, 25, 52, 65, 58, 70];
+        // Timeouts / Errs (flat baseline)
+        const dataRed = [1, 2, 1, 1, 3, 1, 2, 1, 1, 1, 2, 1, 3, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 3, 1, 1];
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Successful Executions',
+                        data: dataGreen,
+                        borderColor: '#2E7D32',
+                        backgroundColor: 'rgba(46, 125, 50, 0.05)',
+                        borderWidth: 2,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#2E7D32',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Timeouts / Errs',
+                        data: dataRed,
+                        borderColor: '#D84315',
+                        backgroundColor: 'transparent',
+                        borderWidth: 1.5,
+                        pointRadius: 2,
+                        pointBackgroundColor: '#D84315',
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 9 } }
+                    },
+                    y: {
+                        grid: { color: '#f1f5f9' },
+                        ticks: { font: { size: 9 } }
+                    }
+                }
+            }
+        });
+    }
 
     // Console Logging Dispatcher (Fishbowl ERP Redesign)
     function triggerDashboardConsoleAction(actionName) {
