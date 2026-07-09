@@ -6,27 +6,28 @@
     <title>{% block title %}avis ai - Operations Portal{% endblock %}</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
-    <!-- Neo-Brutalist Dashboard Stylesheet -->
+    <!-- Premium SaaS Dashboard Stylesheet -->
     <style>
         :root {
-            --bg-lavender: #D2C4FB;
-            --brand-lime: #DFFF00;
-            --bg-cream: #FAF9F6;
-            --text-dark: #1A1A24;
-            --status-green-bg: #E2F6D3;
-            --status-green-text: #2E6B12;
-            --status-red-bg: #FFE5E5;
-            --status-red-text: #CC0000;
-            --status-yellow-bg: #FFF2CC;
-            --status-yellow-text: #8C6B00;
-            --border-color: #1A1A24;
-            --border-main: 2px solid var(--border-color);
+            --bg-lavender: #EEF2F6;
+            --brand-lime: #4f46e5; /* Indigo Accent */
+            --bg-cream: #F8FAFC; /* Light slate grey */
+            --text-dark: #0f172a; /* Slate 900 */
+            --status-green-bg: #dcfce7;
+            --status-green-text: #16a34a;
+            --status-red-bg: #fee2e2;
+            --status-red-text: #dc2626;
+            --status-yellow-bg: #fef3c7;
+            --status-yellow-text: #d97706;
+            --border-color: #e2e8f0; /* Soft borders */
+            --border-main: 1px solid var(--border-color);
             --font-family: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
         }
 
         body {
@@ -361,24 +362,24 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Neo-Brutalist Card Panels */
+        /* Premium SaaS Card Panels */
         .glass-card {
             background: #ffffff;
-            border: var(--border-main);
-            border-radius: 16px;
-            box-shadow: 4px 4px 0px var(--border-color);
-            transition: all 0.15s ease-out;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px var(--border-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
         }
 
-        /* Neo-Brutalist Grid Tables */
+        /* Clean SaaS Grid Tables */
         .table-responsive {
-            border: var(--border-main);
-            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
             overflow: hidden;
             background: #ffffff;
         }
@@ -389,84 +390,86 @@
         }
 
         .table th {
-            background-color: var(--text-dark) !important;
-            color: #ffffff !important;
-            font-weight: 800;
+            background-color: #f8fafc !important;
+            color: #475569 !important;
+            font-weight: 700;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding: 12px 16px;
-            border-bottom: var(--border-main);
+            padding: 14px 16px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .table td {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             padding: 14px 16px;
-            border-bottom: var(--border-main);
+            border-bottom: 1px solid #f1f5f9;
             background-color: #ffffff;
+            color: #334155;
         }
 
         .table-hover tbody tr:hover td {
-            background-color: var(--bg-lavender) !important;
+            background-color: #f8fafc !important;
         }
 
         .table tr:nth-child(even) td {
-            background-color: var(--bg-cream);
+            background-color: #fafbfc;
         }
 
-        /* Neo-Brutalist Form Inputs */
+        /* Clean SaaS Form Inputs */
         .form-control, .form-select {
             background-color: #ffffff !important;
-            border: var(--border-main) !important;
+            border: 1px solid #cbd5e1 !important;
             color: var(--text-dark) !important;
-            border-radius: 8px !important;
-            padding: 12px 16px !important;
-            font-size: 0.95rem;
-            font-weight: 600;
-            box-shadow: 2px 2px 0px var(--border-color);
+            border-radius: 6px !important;
+            padding: 10px 14px !important;
+            font-size: 0.9rem;
+            font-weight: 500;
             transition: all 0.15s ease-in-out;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
         }
 
         .form-control:focus, .form-select:focus {
-            transform: translate(-1px, -1px);
-            box-shadow: 4px 4px 0px var(--border-color);
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
             outline: none;
         }
 
-        /* Neo-Brutalist Button Tokens */
+        /* Premium Button Styles */
         .btn-glow {
             background-color: var(--brand-lime) !important;
-            color: var(--text-dark) !important;
-            border: var(--border-main) !important;
-            border-radius: 8px !important;
-            font-weight: 800;
-            font-size: 0.88rem;
-            padding: 10px 20px !important;
-            box-shadow: 3px 3px 0px var(--border-color);
-            transition: all 0.1s ease-in-out;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 6px !important;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 10px 18px !important;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.15);
+            transition: all 0.2s ease;
         }
 
         .btn-glow:hover {
-            transform: translate(-1px, -1px);
-            box-shadow: 4px 4px 0px var(--border-color);
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
         }
 
         .btn-outline-glow {
             background-color: #ffffff !important;
-            color: var(--text-dark) !important;
-            border: var(--border-main) !important;
-            border-radius: 8px !important;
-            font-weight: 800;
-            font-size: 0.88rem;
-            padding: 10px 20px !important;
-            box-shadow: 3px 3px 0px var(--border-color);
-            transition: all 0.1s ease-in-out;
+            color: #4f46e5 !important;
+            border: 1px solid #e0e7ff !important;
+            border-radius: 6px !important;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 10px 18px !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
         }
 
         .btn-outline-glow:hover {
-            transform: translate(-1px, -1px);
-            box-shadow: 4px 4px 0px var(--border-color);
-            background-color: var(--bg-cream) !important;
+            background-color: #f5f3ff !important;
+            border-color: #c7d2fe !important;
+            transform: translateY(-1px);
         }
 
         /* KPI widgets */
