@@ -10,26 +10,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Neo-Brutalist Dashboard Stylesheet -->
     <style>
         :root {
-            --bg-canvas: #F4F5F7;       /* Off-white/light gray workspace background */
-            --bg-sidebar: #1E2530;      /* Dark slate navy navigation panel */
-            --bg-card: #FFFFFF;         /* Pure white container modules */
-            --border-light: #E2E8F0;    /* Soft borders separating grids */
-            --text-main: #2D3748;       /* Primary typography color */
-            --text-muted: #718096;      /* Sub-labels and metadata text */
-            --color-success: #2E7D32;   /* Forest green for active trends/metrics */
-            --color-error: #D84315;     /* Dark orange/red for faults and warnings */
+            --bg-lavender: #D2C4FB;
+            --brand-lime: #DFFF00;
+            --bg-cream: #FAF9F6;
+            --text-dark: #1A1A24;
+            --status-green-bg: #E2F6D3;
+            --status-green-text: #2E6B12;
+            --status-red-bg: #FFE5E5;
+            --status-red-text: #CC0000;
+            --status-yellow-bg: #FFF2CC;
+            --status-yellow-text: #8C6B00;
+            --border-color: #1A1A24;
+            --border-main: 2px solid var(--border-color);
             --font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: var(--bg-canvas);
-            color: var(--text-main);
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
             font-family: var(--font-family);
             min-height: 100vh;
             display: flex;
@@ -533,12 +535,6 @@
             100% { border-color: #ef4444; }
         }
 
-        tbody tr:hover {
-            background-color: #F8F9FA !important;
-            cursor: pointer;
-            transition: background-color 0.15s ease-in-out;
-        }
-
         /* Responsive Navigation Overlaps Fixes */
         .mobile-nav-dropdown {
             background-color: #0f1d2a !important;
@@ -668,122 +664,73 @@
                 
                 <!-- Support Hub Icon -->
                 <button class="utility-icon-btn" title="Help Center" onclick="alert('Opening Help Center & Knowledge Base...');" style="background: none; border: none; padding: 0; color: #9ca3af; cursor: pointer; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </button>
                 
                 <!-- Settings Navigation Icon -->
                 <button class="utility-icon-btn" title="Settings" onclick="switchPrimaryTab('settings');" style="background: none; border: none; padding: 0; color: #9ca3af; cursor: pointer; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><circle cx="12" cy="12" r="3"></circle></svg>    <!-- Main Application Wrapper Framework -->
-    <div style="min-height: 100vh; display: flex; flex-direction: column; font-family: 'Inter', sans-serif; color: var(--text-main); background-color: var(--bg-canvas);">
-      
-      <!-- 🧭 TOP HEADER NAVIGATION ROW -->
-      <header style="height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; color: #FFFFFF; background: #1e2530; shrink-0; select-none;">
-        <div style="display: flex; align-items: center; gap: 24px;">
-          <span style="font-weight: bold; letter-spacing: 0.05em; font-size: 16px; color: #3b82f6;">🤖 avis ai</span>
-          <nav style="display: flex; gap: 16px; font-size: 13px; color: #A0AEC0; margin-top: 2px;">
-            <span id="nav-tab-home" style="color: #FFFFFF; font-weight: 700; border-bottom: 2px solid #FFFFFF; padding-bottom: 18px; margin-top: 4px; cursor: pointer;" onclick="switchPrimaryTab('home')">Home</span>
-            <span id="nav-tab-sell" style="cursor: pointer;" onclick="switchPrimaryTab('sell')">Sell</span>
-            <span id="nav-tab-buy" style="cursor: pointer;" onclick="switchPrimaryTab('buy')">Buy</span>
-            <span id="nav-tab-stock" style="cursor: pointer;" onclick="switchPrimaryTab('stock')">Stock</span>
-            <span id="nav-tab-plan" style="cursor: pointer;" onclick="switchPrimaryTab('plan')">Plan</span>
-            <span id="nav-tab-insights" style="cursor: pointer;" onclick="switchPrimaryTab('insights')">Insights</span>
-            <span id="nav-tab-items" style="cursor: pointer;" onclick="switchPrimaryTab('items')">Items</span>
-          </nav>
-        </div>
-        <div style="display: flex; align-items: center; gap: 16px;">
-          <button style="background: #FFFFFF; color: #1E2530; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; font-size: 12px; cursor: pointer;" onclick="alert('Creating manual entry...')">+ Create</button>
-          
-          <!-- User Dropdown with PC initials badge -->
-          <div class="dropdown">
-              <button class="user-profile-badge dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent; border: none; padding: 0;">
-                  <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs" style="width: 32px; height: 32px; border-radius: 50%; background-color: #2563eb; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; text-transform: uppercase; border: 1px solid #60a5fa;">
-                      PC
-                  </div>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050; min-width: 220px;">
-                  <li class="px-3 py-2 border-bottom mb-2 text-start">
-                      <div class="small text-secondary" style="font-size: 0.72rem; word-break: break-all;">singhigone@gmail.com</div>
-                      <div class="fw-bold text-dark" style="font-size: 0.9rem;">Parth Choudhary</div>
-                  </li>
-                  <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to user personal data inputs...');"><i class="fa-regular fa-circle-user me-2"></i> Account</a></li>
-                  <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to business details panel...');"><i class="fa-solid fa-briefcase me-2"></i> Company</a></li>
-                  <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('settings')"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
-                  <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to team access management...');"><i class="fa-solid fa-users me-2"></i> Team</a></li>
-                  <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('billing')"><i class="fa-solid fa-credit-card me-2"></i> Subscription</a></li>
-                  <li><hr class="dropdown-divider border-dark"></li>
-                  <li><a class="dropdown-item fw-bold text-danger" href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
-              </ul>
-          </div>
-        </div>
-      </header>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #9ca3af;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
 
-      <!-- 🏛========= MAIN PAGE DUAL-COLUMN GRID WRAPPER ========= -->
-      <div style="display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 56px);">
-        
-        <!-- LEFT PILLAR PANEL: FILTERS & TIMEFRAMES -->
-        <aside style="background: #FFFFFF; border-right: 1px solid var(--border-light); padding: 20px; display: flex; flex-direction: column; gap: 24px; text-align: left; select-none;">
-          <!-- Sub-Tabs Node Group -->
-          <div>
-            <h3 style="font-size: 10px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;">AI Sub-Tabs</h3>
-            <div style="display: flex; flex-direction: column; gap: 4px;">
-              <button id="aside-tab-health" onclick="switchPrimaryTab('home')" style="text-align: left; padding: 8px 12px; font-size: 13px; font-weight: 500; border: none; border-radius: 4px; background: #2D3748; color: #FFFFFF; cursor: pointer; width: 100%;">General AI Health</button>
-              <button id="aside-tab-metrics" onclick="alert('Opening Agent Metrics...')" style="text-align: left; padding: 8px 12px; font-size: 13px; font-weight: 500; border: none; border-radius: 4px; background: transparent; color: var(--text-main); cursor: pointer; width: 100%;">Agent Metrics</button>
-              <button id="aside-tab-cost" onclick="alert('Opening Cost Optimization...')" style="text-align: left; padding: 8px 12px; font-size: 13px; font-weight: 500; border: none; border-radius: 4px; background: transparent; color: var(--text-main); cursor: pointer; width: 100%;">Cost Optimization</button>
-            </div>
-          </div>
-
-          <!-- Date Filter Node Group -->
-          <div>
-            <h3 style="font-size: 10px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;">Time Ranges</h3>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-              <div>
-                <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px; font-weight: 600;">FROM: MONTH TO DATE</label>
-                <div style="border: 1px solid var(--border-light); padding: 6px 10px; font-size: 12px; border-radius: 4px; background: #F8F9FA; cursor: pointer;" onclick="alert('Change start date...')">07/01/2026 > 07/09/2026 📅</div>
-              </div>
-              <div>
-                <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px; font-weight: 600;">COMPARED TO: PREV MONTH</label>
-                <div style="border: 1px solid var(--border-light); padding: 6px 10px; font-size: 12px; border-radius: 4px; background: #F8F9FA; cursor: pointer;" onclick="alert('Change comparison date...')">06/01/2026 > 06/30/2026 📅</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- App Metadata Footer Node -->
-          <div style="margin-top: auto; font-size: 11px; color: var(--text-muted); line-height: 1.4;">
-            <strong>AVIS Optimization Engine</strong><br>
-            Version v4.9 (Fishbowl Layout)
-          </div>
-        </aside>
-
-        <!-- RIGHT MAIN WORKSPACE CANVAS AREA -->
-        <main style="padding: 24px; display: flex; flex-direction: column; gap: 24px; background-color: var(--bg-canvas); overflow-y: auto;">
-          
-          <!-- Module Sub-Tabs Container (Injected by JS) -->
-          <div id="sub-nav-bar" style="display: flex; gap: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 8px; font-size: 13px;">
-              <div id="sub-nav-bar-container" style="display: flex; gap: 16px;"></div>
-          </div>
-
-          <!-- Django messages notifier -->
-          <div>
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% else %}info{% endif %} alert-dismissible fade show border-0 shadow-sm" role="alert" style="background-color: #ffffff; border: 1px solid var(--border-light); border-radius: 8px;">
-                        <div class="d-flex align-items-center">
-                            <i class="fa-solid fa-circle-info me-2 fs-5"></i>
-                            <div>{{ message }}</div>
+                <!-- User Dropdown with PC initials badge -->
+                <div class="dropdown">
+                    <button class="user-profile-badge dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent; border: none; padding: 0;">
+                        <div class="w-8 h-8 rounded-full bg-[#4B5563] text-white flex items-center justify-center font-bold text-xs" style="width: 32px; height: 32px; border-radius: 50%; background-color: #4B5563; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12px; text-transform: uppercase;">
+                            PC
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-          </div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end border border-2 border-dark shadow" aria-labelledby="userDropdown" style="border-radius: 12px; padding: 8px; z-index: 1050; min-width: 220px;">
+                        <li class="px-3 py-2 border-bottom mb-2 text-start">
+                            <div class="small text-secondary" style="font-size: 0.72rem; word-break: break-all;">singhigone@gmail.com</div>
+                            <div class="fw-bold text-dark" style="font-size: 0.9rem;">Parth Choudhary</div>
+                        </li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to user personal data inputs...');"><i class="fa-regular fa-circle-user me-2"></i> Account</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to business details panel...');"><i class="fa-solid fa-briefcase me-2"></i> Company</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('settings')"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="alert('Routing to team access management...');"><i class="fa-solid fa-users me-2"></i> Team</a></li>
+                        <li><a class="dropdown-item fw-bold text-dark py-2" onclick="switchPrimaryTab('billing')"><i class="fa-solid fa-credit-card me-2"></i> Subscription</a></li>
+                        <li><hr class="dropdown-divider border-dark"></li>
+                        <li><a class="dropdown-item fw-bold text-danger" href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        
 
-          <!-- Injected views block -->
-          <div style="flex-grow: 1;">
-              {% block content %}{% endblock %}
-          </div>
-        </main>
-      </div>
+
+        <!-- Layer 2: Module Sub-Tabs & Contextual Utilities -->
+        <div class="sub-nav-bar d-flex justify-content-between align-items-center" style="height: 40px !important;">
+            <div class="d-flex align-items-center h-100" id="sub-nav-bar-container" style="gap: 24px;">
+                <!-- Sub links will be injected here dynamically by JavaScript -->
+            </div>
+            <div class="d-none d-md-flex align-items-center" style="margin-left: auto; flex-shrink: 0;">
+                <a href="#" style="color: #4B5563; font-size: 12px; font-weight: 500; text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#4B5563'" onclick="alert('Book a demo modal...'); return false;">Book a demo</a>
+            </div>
+        </div>
     </div>
+
+    <!-- Public Message Notification system -->
+    <div class="container-fluid px-4 mt-3">
+        {% if messages %}
+            <!-- message logic -->
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% else %}info{% endif %} alert-dismissible fade show border-0" role="alert" style="background-color: #ffffff; border: var(--border-main) !important; box-shadow: 3px 3px 0px var(--border-color);">
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-circle-info me-2 fs-5"></i>
+                        <div>{{ message }}</div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Main Content Panel -->
+    <main class="flex-grow-1" style="margin-top: 104px !important; padding: 24px !important; max-width: 1600px !important; margin-left: auto !important; margin-right: auto !important; width: 100%;">
+        <div class="container-fluid">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
 
     <!-- Footer -->
     <footer class="text-center py-3 border-top mt-auto" style="background-color: #ffffff; border-top: var(--border-main) !important;">
@@ -854,25 +801,18 @@
             currentPrimary = tabName;
             
             // Update active states in Navbar tabs
-            const tabIds = ['home', 'sell', 'buy', 'stock', 'plan', 'insights', 'items'];
-            tabIds.forEach(tab => {
-                const el = document.getElementById(`nav-tab-${tab}`);
-                if (el) {
-                    if (tab === tabName) {
-                        el.style.color = '#FFFFFF';
-                        el.style.fontWeight = '700';
-                        el.style.borderBottom = '2px solid #FFFFFF';
-                        el.style.paddingBottom = '18px';
-                        el.style.marginTop = '4px';
+            const tabsContainer = document.getElementById('primary-nav-tabs');
+            if (tabsContainer) {
+                const links = tabsContainer.getElementsByTagName('a');
+                for (let link of links) {
+                    const onclickAttr = link.getAttribute('onclick') || '';
+                    if (onclickAttr.includes(`'${tabName}'`)) {
+                        link.classList.add('active');
                     } else {
-                        el.style.color = '#A0AEC0';
-                        el.style.fontWeight = 'normal';
-                        el.style.borderBottom = 'none';
-                        el.style.paddingBottom = '0';
-                        el.style.marginTop = '0';
+                        link.classList.remove('active');
                     }
                 }
-            });
+            }
 
             // Build Sub-Navigation Bar
             const subNavContainer = document.getElementById('sub-nav-bar-container');
@@ -886,7 +826,6 @@
                     a.id = `sub-nav-link-${item.id}`;
                     a.textContent = item.name;
                     a.onclick = () => switchSubTab(item.id);
-                    a.style.cssText = "color: #718096; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer; padding-bottom: 6px; border-bottom: 2px solid transparent; transition: all 0.15s; margin-right: 16px;";
                     subNavContainer.appendChild(a);
                 });
             }
@@ -910,13 +849,9 @@
                 const links = subNavContainer.getElementsByTagName('a');
                 for (let link of links) {
                     if (link.id === `sub-nav-link-${subTabId}`) {
-                        link.style.color = '#2D3748';
-                        link.style.fontWeight = 'bold';
-                        link.style.borderBottom = '2px solid #2D3748';
+                        link.classList.add('active');
                     } else {
-                        link.style.color = '#718096';
-                        link.style.fontWeight = '500';
-                        link.style.borderBottom = '2px solid transparent';
+                        link.classList.remove('active');
                     }
                 }
             }
@@ -963,23 +898,6 @@
                     }
                 }
             }
-
-            // Target all sub-tab action buttons (Left Sub-Tabs Interactive)
-            document.querySelectorAll('aside button').forEach(button => {
-              button.addEventListener('click', function() {
-                // Reset all previous buttons to inactive transparent styles
-                document.querySelectorAll('aside button').forEach(b => {
-                  b.style.background = 'transparent';
-                  b.style.color = 'var(--text-main)';
-                });
-                
-                // Set the clicked button to active focus state
-                this.style.background = '#2D3748';
-                this.style.color = '#FFFFFF';
-                
-                console.log(`Loading dataset view for: ${this.innerText}`);
-              });
-            });
         });
     </script>
     {% block extra_js %}{% endblock %}
