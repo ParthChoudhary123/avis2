@@ -15,7 +15,7 @@
     <style>
         :root {
             --bg-lavender: #EEF2F6;
-            --brand-lime: #4f46e5; /* Indigo Accent */
+            --brand-lime: #6366f1; /* Indigo Accent */
             --bg-cream: #F8FAFC; /* Light slate grey */
             --text-dark: #0f172a; /* Slate 900 */
             --status-green-bg: #dcfce7;
@@ -31,7 +31,12 @@
         }
 
         body {
-            background-color: var(--bg-cream);
+            background-color: #f4f6fa;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.03) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.04) 0px, transparent 50%);
+            background-attachment: fixed;
             color: var(--text-dark);
             font-family: var(--font-family);
             min-height: 100vh;
@@ -51,7 +56,7 @@
             display: flex !important;
             flex-direction: column !important;
             box-sizing: border-box;
-            background-color: #ffffff;
+            background-color: transparent !important;
         }
 
         /* Tier 1: Top Utility Bar */
@@ -59,8 +64,9 @@
             position: relative !important;
             width: 100% !important;
             height: 32px !important;
-            background-color: #ffffff !important; /* Pure White background */
-            border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+            background-color: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             display: flex;
             align-items: center;
             box-sizing: border-box;
@@ -81,8 +87,9 @@
 
         /* Tier 2: Top Header Navbar */
         .katana-navbar {
-            background-color: #1A2B3C !important; /* Deep Slate Navy Blue */
-            border-bottom: 1px solid #1f2d3d;
+            background: rgba(15, 23, 42, 0.92) !important; /* Deep Slate Glass */
+            backdrop-filter: blur(16px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding: 0 24px !important; /* px-6 */
             height: 64px !important; /* h-16 */
             position: relative !important;
@@ -101,11 +108,13 @@
         }
 
         .katana-brand {
-            font-weight: 900;
-            color: #ffffff !important;
-            font-size: 1.5rem;
-            text-transform: lowercase;
-            letter-spacing: -0.025em; /* tracking-tight */
+            font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+            font-weight: 800;
+            font-size: 1.58rem;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
             height: 100%;
@@ -114,7 +123,6 @@
             flex-shrink: 0 !important;
             white-space: nowrap !important;
             min-width: fit-content !important;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         /* Top Navigation Tabs */
@@ -124,7 +132,7 @@
             padding-left: 0;
             list-style: none;
             height: 100%;
-            gap: 0px;
+            gap: 4px;
             flex-shrink: 0 !important;
             flex-wrap: nowrap !important;
         }
@@ -141,44 +149,48 @@
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            color: #9ca3af !important; /* text-gray-400 */
-            font-size: 11px !important; /* text-[11px] */
-            font-weight: 500;
-            letter-spacing: 0.05em; /* tracking-wide */
-            padding: 0 20px !important; /* px-5 */
+            color: #94a3b8 !important;
+            font-size: 11.5px !important;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 0 16px !important;
+            margin: 8px 0;
+            height: calc(100% - 16px) !important;
+            border-radius: 8px !important;
             text-decoration: none;
-            transition: color 0.15s, background-color 0.15s;
+            transition: all 0.2s ease;
             cursor: pointer;
-            height: 100% !important;
             white-space: nowrap;
             flex-shrink: 0 !important;
-            gap: 4px !important;
+            gap: 3px !important;
             border-bottom: none !important;
         }
 
         .katana-nav-link:hover {
-            color: #ffffff !important;
+            color: #f1f5f9 !important;
+            background-color: rgba(255, 255, 255, 0.05) !important;
         }
 
         .katana-nav-link.active {
-            background-color: #223a52 !important; /* Active Tab Color block */
+            background-color: rgba(255, 255, 255, 0.08) !important;
             color: #ffffff !important;
-            border-bottom: 2px solid #ffffff !important;
+            border-bottom: none !important;
         }
 
         /* Tier 3: Sub-Navigation Bar */
         .sub-nav-bar {
             position: relative !important;
             width: 100% !important;
-            height: 40px !important;
-            background-color: #ffffff !important; /* Pure White background */
-            border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+            height: 48px !important;
+            background-color: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             padding: 0 24px !important; /* px-6 */
             display: flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
             align-items: center !important;
-            gap: 24px !important; /* space-x-6 */
+            gap: 12px !important;
             box-sizing: border-box;
             overflow-x: auto;
             -ms-overflow-style: none;  /* IE and Edge */
@@ -189,33 +201,31 @@
         }
 
         .sub-nav-link {
-            color: #4B5563;
+            color: #4b5563;
             text-decoration: none;
-            font-size: 13px; /* text-xs */
-            font-weight: 500;
-            padding: 0 16px !important;
-            border-bottom: 2px solid transparent;
-            transition: color 0.15s;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 16px !important;
+            border-radius: 9999px;
+            transition: all 0.2s ease;
             cursor: pointer;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
-            height: 100%;
-            flex-shrink: 0 !important;
-            box-sizing: border-box;
+            height: auto;
         }
 
         .sub-nav-link:hover {
-            color: #111827;
+            color: #0f172a;
+            background-color: rgba(0, 0, 0, 0.04);
         }
 
         .sub-nav-link.active {
-            color: #111827 !important; /* Muted black active text */
+            color: #ffffff !important;
             font-weight: 600;
-            border-bottom: 2px solid #111827 !important; /* Muted black active bottom border */
-            background-color: transparent !important;
-            box-shadow: none !important;
-            border-radius: 0 !important;
+            background-color: #0f172a !important;
+            border-bottom: none !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12) !important;
         }
 
         /* PC Initials badge style */
@@ -729,7 +739,7 @@
     </div>
 
     <!-- Main Content Panel -->
-    <main class="flex-grow-1" style="margin-top: 104px !important; padding: 24px !important; max-width: 1600px !important; margin-left: auto !important; margin-right: auto !important; width: 100%;">
+    <main class="flex-grow-1" style="margin-top: 148px !important; padding: 24px !important; max-width: 1600px !important; margin-left: auto !important; margin-right: auto !important; width: 100%;">
         <div class="container-fluid">
             {% block content %}{% endblock %}
         </div>

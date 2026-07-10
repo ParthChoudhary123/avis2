@@ -6,77 +6,94 @@
 <style>
     /* Katana Dashboard Layout Styling Override */
     .katana-container {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        background-color: #ffffff !important;
-        color: #1a202c;
+        font-family: var(--font-family), system-ui, sans-serif;
+        background-color: transparent !important;
+        color: #1e293b;
     }
     
     .katana-title {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        font-weight: 700;
-        font-size: 32px;
-        color: #000000;
-        letter-spacing: -0.5px;
+        font-family: var(--font-heading), sans-serif;
+        font-weight: 800;
+        font-size: 36px;
+        letter-spacing: -0.8px;
+        background: linear-gradient(135deg, #0f172a 0%, #4f46e5 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .katana-subtitle {
         font-size: 15px;
-        color: #4a5568;
-        line-height: 1.5;
+        color: #64748b;
+        line-height: 1.6;
     }
 
     .katana-grey-panel {
-        background-color: #f1f2f4 !important;
-        border: none !important;
-        border-radius: 8px !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(248, 250, 252, 0.4) 100%) !important;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.8) !important;
+        border-radius: 16px !important;
         padding: 32px !important;
+        box-shadow: 0 10px 30px rgba(31, 38, 135, 0.02) !important;
     }
 
     .katana-card-white {
         background-color: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 6px !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-        padding: 16px !important;
-        transition: border-color 0.15s ease-in-out;
+        border: 1px solid rgba(226, 232, 240, 0.8) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01) !important;
+        padding: 18px !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    .katana-card-white:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08) !important;
+        border-color: rgba(99, 102, 241, 0.3) !important;
     }
 
     .katana-card-active {
-        border: 2px solid #3b82f6 !important; /* Blue outline */
+        border: 1.5px solid #6366f1 !important; /* Indigo outline */
+        box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.1) !important;
     }
 
     .katana-circle-indicator {
-        width: 20px;
-        height: 20px;
-        border: 1.5px solid #a0aec0;
+        width: 22px;
+        height: 22px;
+        border: 2px solid #cbd5e1;
         border-radius: 50%;
         display: inline-block;
         flex-shrink: 0;
+        transition: all 0.2s ease;
+    }
+    
+    .katana-circle-indicator:hover {
+        border-color: #6366f1;
+        background-color: rgba(99, 102, 241, 0.05);
     }
 
     .katana-badge-grey {
-        background-color: #e2e8f0;
-        color: #4a5568;
+        background-color: #f1f5f9;
+        color: #475569;
         font-size: 11px;
-        font-weight: 500;
-        padding: 2px 6px;
-        border-radius: 4px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 6px;
         text-transform: none;
     }
 
     .katana-badge-beige {
-        background-color: #eceae0;
-        color: #5c594c;
+        background-color: #fef3c7;
+        color: #d97706;
         font-size: 10px;
-        font-weight: 600;
-        padding: 2px 6px;
-        border-radius: 4px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 6px;
         letter-spacing: 0.2px;
     }
 
     .katana-learn-item {
-        padding-bottom: 12px;
-        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #f1f5f9;
     }
 
     .katana-learn-item:last-child {
@@ -104,49 +121,50 @@
     .h1-main-header {
         font-family: var(--font-heading), sans-serif;
         font-size: 32px;
-        font-weight: 700;
+        font-weight: 800;
         color: #0f172a;
+        letter-spacing: -0.6px;
         margin-bottom: 8px;
     }
 
     .h2-section-title {
         font-family: var(--font-heading), sans-serif;
         font-size: 22px;
-        font-weight: 600;
+        font-weight: 700;
         color: #1e293b;
         margin-bottom: 16px;
     }
 
     /* Buttons */
     .btn-solid-blue {
-        background-color: #2563EB !important;
+        background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%) !important;
         color: #ffffff !important;
         border: none !important;
-        border-radius: 6px !important;
+        border-radius: 8px !important;
         font-size: 14px !important;
         font-weight: 600 !important;
-        padding: 10px 18px !important;
-        box-shadow: none !important;
-        transition: all 0.15s;
+        padding: 10px 20px !important;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2) !important;
+        transition: all 0.25s ease;
     }
     .btn-solid-blue:hover {
-        background-color: #1D4ED8 !important;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3) !important;
     }
 
     .btn-stroke-grey {
         background-color: #ffffff !important;
-        color: #1E293B !important;
-        border: 1px solid #CBD5E1 !important;
-        border-radius: 6px !important;
+        color: #334155 !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
         font-size: 14px !important;
         font-weight: 600 !important;
-        padding: 10px 18px !important;
-        box-shadow: none !important;
-        transition: all 0.15s;
+        padding: 10px 20px !important;
+        transition: all 0.2s ease;
     }
     .btn-stroke-grey:hover {
-        background-color: #F8FAFC !important;
-        border-color: #94A3B8 !important;
+        background-color: #f8fafc !important;
+        border-color: #cbd5e1 !important;
     }
 
     /* Standard Data Tables styling */
